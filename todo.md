@@ -119,3 +119,6 @@
 - [ ] CMS de Eventos (criar, editar, gerenciar eventos)
 - [ ] Sistema de notificações admin
 - [ ] Relatórios e analytics
+
+## Bugs Reportados
+- [x] Corrigir erro de tags <a> aninhadas no AdminLayout (Link do wouter já renderiza <a>)

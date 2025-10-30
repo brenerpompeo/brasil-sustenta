@@ -65,7 +65,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 const isActive = location === item.href;
                 return (
                   <Link key={item.href} href={item.href}>
-                    <a
+                    <div
                       className={`
                         flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium
                         transition-colors cursor-pointer
@@ -78,7 +78,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                     >
                       <Icon className="w-5 h-5 flex-shrink-0" />
                       <span>{item.label}</span>
-                    </a>
+                    </div>
                   </Link>
                 );
               })}
@@ -86,10 +86,10 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
             <div className="mt-6 pt-6 border-t border-border">
               <Link href="/admin/configuracoes">
-                <a className="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer">
+                <div className="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer">
                   <Settings className="w-5 h-5 flex-shrink-0" />
                   <span>Configurações</span>
-                </a>
+                </div>
               </Link>
             </div>
           </nav>
