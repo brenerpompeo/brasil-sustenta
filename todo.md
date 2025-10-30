@@ -122,3 +122,6 @@
 
 ## Bugs Reportados
 - [x] Corrigir erro de tags <a> aninhadas no AdminLayout (Link do wouter já renderiza <a>)
+
+## Melhorias de Performance
+- [x] Implementar paginação na tabela de usuários
