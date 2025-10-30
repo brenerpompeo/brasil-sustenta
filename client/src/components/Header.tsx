@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
@@ -46,11 +46,25 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Desktop Login Button */}
-          <div className="hidden lg:block">
-            <Button variant="default" className="bg-primary hover:bg-primary/90 text-black font-semibold">
+          {/* Desktop Login Button with Dropdown */}
+          <div className="hidden lg:block relative group">
+            <Button variant="default" className="bg-primary hover:bg-primary/90 text-black font-semibold flex items-center gap-2">
               Login
+              <ChevronDown className="w-4 h-4" />
             </Button>
+            <div className="absolute right-0 mt-2 w-56 bg-card border border-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="py-2">
+                <a href="/login/empresa" className="block px-4 py-3 text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                  Para Empresas
+                </a>
+                <a href="/login/jovem" className="block px-4 py-3 text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                  Para Jovens
+                </a>
+                <a href="/login/universidade" className="block px-4 py-3 text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                  Para Universidades
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -78,10 +92,23 @@ const Header = () => {
                 {item.label}
               </a>
             ))}
-            <div className="pt-4 border-t border-border">
-              <Button variant="default" className="w-full bg-primary hover:bg-primary/90 text-black font-semibold">
-                Login
-              </Button>
+            <div className="pt-4 border-t border-border space-y-2">
+              <p className="text-sm text-muted-foreground mb-2">Fazer login como:</p>
+              <a href="/login/empresa" className="block">
+                <Button variant="default" className="w-full bg-primary hover:bg-primary/90 text-black font-semibold">
+                  Empresa
+                </Button>
+              </a>
+              <a href="/login/jovem" className="block">
+                <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10">
+                  Jovem Talento
+                </Button>
+              </a>
+              <a href="/login/universidade" className="block">
+                <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10">
+                  Universidade
+                </Button>
+              </a>
             </div>
           </nav>
         </div>

@@ -43,3 +43,57 @@
 
 ## Novas Features
 - [x] Seção de Perguntas Frequentes (FAQ)
+
+## Rebranding e Novas Funcionalidades de Marketplace
+
+### Rebranding Visual
+- [x] Atualizar paleta de cores para #1ED760 (verde primário) e #121212 (base escura)
+- [x] Mudar tipografia para Poppins
+- [x] Adicionar gradientes radiais em botões principais
+- [x] Revisar contraste e acessibilidade em todas as páginas
+
+### Schema do Banco de Dados
+- [x] Criar tabela users com userType
+- [x] Criar tabelas de perfis (company, talent, university)
+- [x] Criar tabelas de projetos e aplicações
+- [x] Criar tabelas de squads e membros
+- [x] Criar tabelas de avaliações
+- [x] Criar tabelas de blog e eventos (CMS)
+- [x] Criar tabela de notificações
+- [x] Executar migrações do banco
+
+### Navegação e Autenticação
+- [x] Modificar botão Login para dropdown com 3 opções (Empresas, Jovens, Universidades)
+- [ ] Criar página de Login para Empresas
+- [ ] Criar página de Login para Jovens Talentos
+- [ ] Criar página de Login para Universidades
+- [ ] Criar página de Cadastro para Empresas
+- [ ] Criar página de Cadastro para Jovens Talentos
+- [ ] Criar página de Cadastro para Universidades
+
+### Dashboard da Empresa
+- [ ] Área para criar novos projetos (Squad Boxes)
+- [ ] Painel para gerenciar projetos existentes
+- [ ] Interface para revisar aplicações de jovens talentos
+
+### Dashboard do Jovem Talento
+- [ ] Área para construir e editar perfil
+- [ ] Painel de Oportunidades (projetos abertos)
+- [ ] Área para acompanhar candidaturas e projetos
+
+### Dashboard da Universidade
+- [ ] Painel para gerenciar convênio de extensão
+- [ ] Visualizar alunos participando de projetos
+- [ ] Acesso a relatórios de impacto e horas de extensão
+
+### Painel Admin com CMS
+- [ ] Blog - Interface CRUD para posts
+- [ ] Eventos - Interface CRUD com campos (capa, título, data, local, link Sympla)
+- [ ] Gestão de Projetos e Matching
+- [ ] Gestão de Usuários (CRUD para todos os tipos)
+
+### Páginas Adicionais
+- [ ] Página de Blog (listagem de posts)
+- [ ] Página de Eventos (listagem de eventos)
+- [ ] Página individual de Post
+- [ ] Página individual de Evento
