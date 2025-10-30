@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Filter, MoreVertical, Eye, Edit, Trash2, Ban, CheckCircle, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
+import ConfirmationModal from '@/components/ConfirmationModal';
+import { toast } from 'sonner';
 
 const Usuarios = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,6 +14,13 @@ const Usuarios = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [sortColumn, setSortColumn] = useState<'name' | 'email' | 'createdAt' | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    action: 'delete' | 'deactivate' | 'activate' | null;
+    userId: number | null;
+    userName: string;
+  }>({ isOpen: false, action: null, userId: null, userName: '' });
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const users = [
     { id: 1, name: 'Maria Silva', email: 'maria@email.com', type: 'jovem', status: 'active', createdAt: '15/01/2025' },
@@ -128,6 +137,81 @@ const Usuarios = () => {
     return sortDirection === 'asc' 
       ? <ArrowUp className="w-4 h-4 ml-1 text-primary" />
       : <ArrowDown className="w-4 h-4 ml-1 text-primary" />;
+  };
+
+  const handleDeleteClick = (userId: number, userName: string) => {
+    setConfirmModal({
+      isOpen: true,
+      action: 'delete',
+      userId,
+      userName,
+    });
+  };
+
+  const handleStatusClick = (userId: number, userName: string, currentStatus: string) => {
+    setConfirmModal({
+      isOpen: true,
+      action: currentStatus === 'active' ? 'deactivate' : 'activate',
+      userId,
+      userName,
+    });
+  };
+
+  const handleConfirmAction = async () => {
+    setIsProcessing(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    if (confirmModal.action === 'delete') {
+      toast.success(`Usuário "${confirmModal.userName}" excluído com sucesso!`);
+    } else if (confirmModal.action === 'deactivate') {
+      toast.success(`Usuário "${confirmModal.userName}" desativado com sucesso!`);
+    } else if (confirmModal.action === 'activate') {
+      toast.success(`Usuário "${confirmModal.userName}" ativado com sucesso!`);
+    }
+
+    setIsProcessing(false);
+    setConfirmModal({ isOpen: false, action: null, userId: null, userName: '' });
+  };
+
+  const handleCloseModal = () => {
+    if (!isProcessing) {
+      setConfirmModal({ isOpen: false, action: null, userId: null, userName: '' });
+    }
+  };
+
+  const getModalConfig = () => {
+    switch (confirmModal.action) {
+      case 'delete':
+        return {
+          title: 'Excluir Usuário',
+          description: `Tem certeza que deseja excluir o usuário "${confirmModal.userName}"? Esta ação não pode ser desfeita e todos os dados associados serão permanentemente removidos.`,
+          confirmText: 'Excluir',
+          variant: 'danger' as const,
+        };
+      case 'deactivate':
+        return {
+          title: 'Desativar Usuário',
+          description: `Tem certeza que deseja desativar o usuário "${confirmModal.userName}"? O usuário não poderá mais acessar a plataforma até ser reativado.`,
+          confirmText: 'Desativar',
+          variant: 'warning' as const,
+        };
+      case 'activate':
+        return {
+          title: 'Ativar Usuário',
+          description: `Tem certeza que deseja ativar o usuário "${confirmModal.userName}"? O usuário poderá acessar a plataforma novamente.`,
+          confirmText: 'Ativar',
+          variant: 'info' as const,
+        };
+      default:
+        return {
+          title: '',
+          description: '',
+          confirmText: 'Confirmar',
+          variant: 'warning' as const,
+        };
+    }
   };
 
   return (
@@ -292,19 +376,47 @@ const Usuarios = () => {
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex items-center justify-end space-x-2">
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="h-8 w-8 p-0"
+                            onClick={() => toast.info('Visualizar usuário em desenvolvimento')}
+                          >
                             <Eye className="w-4 h-4" />
                           </Button>
                           {user.status === 'pending' && (
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-green-500 hover:text-green-600">
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="h-8 w-8 p-0 text-green-500 hover:text-green-600"
+                              onClick={() => handleStatusClick(user.id, user.name, user.status)}
+                            >
                               <CheckCircle className="w-4 h-4" />
                             </Button>
                           )}
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="h-8 w-8 p-0"
+                            onClick={() => toast.info('Editar usuário em desenvolvimento')}
+                          >
                             <Edit className="w-4 h-4" />
                           </Button>
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500 hover:text-red-600">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="h-8 w-8 p-0 text-red-500 hover:text-red-600"
+                            onClick={() => handleStatusClick(user.id, user.name, user.status)}
+                          >
                             <Ban className="w-4 h-4" />
+                          </Button>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="h-8 w-8 p-0 text-red-500 hover:text-red-600"
+                            onClick={() => handleDeleteClick(user.id, user.name)}
+                          >
+                            <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>
                       </td>
@@ -385,6 +497,15 @@ const Usuarios = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={confirmModal.isOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmAction}
+        isLoading={isProcessing}
+        {...getModalConfig()}
+      />
     </AdminLayout>
   );
 };

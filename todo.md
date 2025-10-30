@@ -126,3 +126,4 @@
 ## Melhorias de Performance
 - [x] Implementar paginação na tabela de usuários
 - [x] Implementar ordenação por colunas na tabela de usuários
+- [x] Criar modal de confirmação para ações críticas (excluir, alterar status)
