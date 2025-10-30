@@ -261,4 +261,41 @@
   .delay-1000 {
     animation-delay: 1000ms;
   }
+
+  /* Gradientes Premium */
+  .gradient-radial-primary {
+    background: radial-gradient(circle at center, rgba(30, 215, 96, 0.15) 0%, transparent 70%);
+  }
+
+  .gradient-linear-primary {
+    background: linear-gradient(135deg, #1ED760 0%, rgba(30, 215, 96, 0.8) 100%);
+  }
+
+  .gradient-cta {
+    background: linear-gradient(135deg, #1ED760 0%, #17a34a 100%);
+    transition: all 0.3s ease;
+  }
+
+  .gradient-cta:hover {
+    background: linear-gradient(135deg, #22ff70 0%, #1ED760 100%);
+    box-shadow: 0 8px 24px rgba(30, 215, 96, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .gradient-banner {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gradient-banner::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(30, 215, 96, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
 }

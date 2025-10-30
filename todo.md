@@ -127,3 +127,47 @@
 - [x] Implementar paginação na tabela de usuários
 - [x] Implementar ordenação por colunas na tabela de usuários
 - [x] Criar modal de confirmação para ações críticas (excluir, alterar status)
+
+## SPRINT 1: Rebranding Visual e Design System
+- [x] Refatorar Landing Page com diretrizes rigorosas (#121212, #1ED760, Poppins)
+- [x] Implementar gradientes radiais em banners
+- [x] Implementar gradientes lineares em botões CTA
+- [x] Criar componentes reutilizáveis de Botões (primário, secundário)
+- [x] Criar componentes reutilizáveis de Cards
+- [x] Criar componentes reutilizáveis de Inputs
+- [x] Documentar Design System
+
+## SPRINT 2: Fluxo de Autenticação Completo (JÁ INICIADO)
+- [x] Modificar botão Login para dropdown (Empresas, Jovens, Universidades)
+- [x] Criar páginas de Login e Cadastro segmentadas
+- [ ] Integrar autenticação com backend (tRPC + Drizzle)
+- [ ] Implementar lógica de criação de usuários por tipo
+- [ ] Testar fluxo completo de autenticação
+
+## SPRINT 3: Dashboard da Empresa
+- [ ] Criar estrutura do Dashboard com sidebar
+- [ ] Implementar formulário "Criar Novo Projeto"
+- [ ] Criar listagem de projetos em cards
+- [ ] Integrar criação de projetos com backend
+- [ ] Implementar edição e visualização de projetos
+
+## SPRINT 4: Dashboard do Jovem Talento
+- [ ] Criar estrutura do Dashboard com abas
+- [ ] Implementar formulário "Meu Perfil"
+- [ ] Criar listagem de "Oportunidades" (projetos abertos)
+- [ ] Implementar botão "Tenho Interesse" e lógica de candidatura
+- [ ] Criar aba "Meus Projetos" com projetos em andamento
+
+## SPRINT 5: Painel Admin e Matching
+- [ ] Criar estrutura do Painel Admin com acesso restrito
+- [ ] Implementar aprovação de projetos (aguardando → aberto)
+- [ ] Criar interface de matching (seleção de projeto + talentos)
+- [ ] Implementar lógica de formação de Squad
+- [ ] Atualizar status de projeto para "em_andamento"
+
+## SPRINT 6: CMS para Blog e Eventos
+- [ ] Criar CRUD de Blog no Painel Admin
+- [ ] Criar CRUD de Eventos no Painel Admin
+- [ ] Criar página pública /blog
+- [ ] Criar página pública /eventos
+- [ ] Implementar integração com Sympla para eventos
