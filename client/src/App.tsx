@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet';
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -6,12 +5,18 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import LoginEmpresa from "./pages/LoginEmpresa";
+import LoginJovem from "./pages/LoginJovem";
+import LoginUniversidade from "./pages/LoginUniversidade";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path="/login/empresa" component={LoginEmpresa} />
+      <Route path="/login/jovem" component={LoginJovem} />
+      <Route path="/login/universidade" component={LoginUniversidade} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -27,15 +32,6 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <Helmet>
-        <title>Brasil Sustenta - Conectando Empresas e Talentos para Impacto ESG</title>
-        <meta name="description" content="Plataforma que conecta empresas a jovens talentos universitários para projetos de sustentabilidade e inovação através do modelo Squad as a Service. Transforme desafios ESG em resultados concretos." />
-        <meta name="keywords" content="ESG, sustentabilidade, talentos jovens, squad as a service, impacto social, Brasil, universidades, projetos ESG" />
-        <meta property="og:title" content="Brasil Sustenta - ESG Marketplace" />
-        <meta property="og:description" content="Conectamos empresas e jovens talentos para projetos de sustentabilidade e inovação" />
-        <meta property="og:type" content="website" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Helmet>
       <ThemeProvider
         defaultTheme="dark"
         // switchable

@@ -97,3 +97,11 @@
 - [ ] Página de Eventos (listagem de eventos)
 - [ ] Página individual de Post
 - [ ] Página individual de Evento
+
+## Páginas de Autenticação em Desenvolvimento
+- [x] Implementar página de Login/Registro para Empresas
+- [x] Implementar página de Login/Registro para Jovens Talentos
+- [x] Implementar página de Login/Registro para Universidades
+- [x] Criar rotas no App.tsx
+- [x] Integrar com Manus OAuth
+- [ ] Criar procedimentos tRPC para registro de perfis
