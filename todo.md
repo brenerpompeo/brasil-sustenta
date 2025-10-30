@@ -105,3 +105,17 @@
 - [x] Criar rotas no App.tsx
 - [x] Integrar com Manus OAuth
 - [ ] Criar procedimentos tRPC para registro de perfis
+
+## Painel de Administração em Desenvolvimento
+- [x] Criar layout do painel admin com sidebar
+- [x] Dashboard principal com estatísticas
+- [x] Gestão de Usuários (listar, visualizar, editar, desativar)
+- [ ] Gestão de Empresas (aprovar cadastros, visualizar perfis)
+- [ ] Gestão de Talentos (visualizar perfis, aprovar/rejeitar)
+- [ ] Gestão de Universidades (aprovar parcerias, visualizar dados)
+- [ ] Gestão de Projetos (visualizar, aprovar, gerenciar status)
+- [ ] Gestão de Squads (formar equipes, gerenciar membros)
+- [ ] CMS de Blog (criar, editar, publicar posts)
+- [ ] CMS de Eventos (criar, editar, gerenciar eventos)
+- [ ] Sistema de notificações admin
+- [ ] Relatórios e analytics

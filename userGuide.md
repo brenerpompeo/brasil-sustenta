@@ -14,9 +14,11 @@ Este site foi desenvolvido com tecnologias modernas e de ponta para garantir a m
 
 **Frontend:** React 19 com TypeScript, Tailwind CSS 4, e componentes shadcn/ui para uma interface elegante e responsiva.
 
+**Backend:** tRPC para APIs type-safe, MySQL para banco de dados relacional, e sistema de autenticação OAuth integrado.
+
 **Deployment:** Infraestrutura auto-escalável com CDN global, garantindo velocidade e disponibilidade em qualquer lugar do Brasil e do mundo.
 
-**Design System:** Paleta de cores customizada com tema escuro e verde vibrante (#4ade80), tipografia Inter para máxima legibilidade, e animações sutis para uma experiência fluida.
+**Design System:** Paleta de cores rebrandizada com verde #1ED760 e base escura #121212, tipografia Poppins para sofisticação, e animações sutis para uma experiência fluida.
 
 **Performance:** Otimizado para carregamento rápido, responsividade mobile-first, e acessibilidade completa em todos os dispositivos.
 
@@ -24,9 +26,13 @@ Este site foi desenvolvido com tecnologias modernas e de ponta para garantir a m
 
 ## Usando Seu Website
 
-### Navegação Principal
+### Navegação e Login
 
-Clique no menu hamburguer no canto superior direito (mobile) ou use a navegação horizontal (desktop) para acessar "Início", "Para Empresas", "Para Jovens", "Blog", "Eventos" e "Projetos". O botão "Login" verde no cabeçalho permite acesso à área restrita.
+Clique no menu hamburguer no canto superior direito (mobile) ou use a navegação horizontal (desktop) para acessar "Início", "Para Empresas", "Para Jovens", "Blog", "Eventos" e "Projetos". O botão "Login" verde no cabeçalho abre um dropdown com 3 opções: "Empresas", "Jovens Talentos" e "Universidades". Cada opção leva para uma página de login/cadastro específica com formulários personalizados.
+
+### Painel Administrativo
+
+Administradores podem acessar "/admin" para gerenciar a plataforma. O painel possui sidebar com navegação para Dashboard (estatísticas gerais), Usuários (listar e gerenciar todos os cadastros), Empresas, Talentos, Universidades, Projetos, Squads, Blog e Eventos. O dashboard mostra métricas em tempo real, projetos recentes e aprovações pendentes.
 
 ### Conhecendo Talentos
 
