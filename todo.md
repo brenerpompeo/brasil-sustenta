@@ -125,3 +125,4 @@
 
 ## Melhorias de Performance
 - [x] Implementar paginação na tabela de usuários
+- [x] Implementar ordenação por colunas na tabela de usuários

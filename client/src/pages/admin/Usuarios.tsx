@@ -3,13 +3,15 @@ import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, Filter, MoreVertical, Eye, Edit, Trash2, Ban, CheckCircle } from 'lucide-react';
+import { Search, Filter, MoreVertical, Eye, Edit, Trash2, Ban, CheckCircle, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 
 const Usuarios = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('todos');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [sortColumn, setSortColumn] = useState<'name' | 'email' | 'createdAt' | null>(null);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   const users = [
     { id: 1, name: 'Maria Silva', email: 'maria@email.com', type: 'jovem', status: 'active', createdAt: '15/01/2025' },
@@ -58,20 +60,44 @@ const Usuarios = () => {
     );
   };
 
-  const filteredUsers = useMemo(() => {
-    return users.filter(user => {
+  const filteredAndSortedUsers = useMemo(() => {
+    let filtered = users.filter(user => {
       const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            user.email.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesFilter = filterType === 'todos' || user.type === filterType;
       return matchesSearch && matchesFilter;
     });
-  }, [searchTerm, filterType]);
+
+    // Apply sorting
+    if (sortColumn) {
+      filtered = [...filtered].sort((a, b) => {
+        let aValue: string | number = a[sortColumn];
+        let bValue: string | number = b[sortColumn];
+
+        // Convert dates to comparable format
+        if (sortColumn === 'createdAt') {
+          const parseDate = (dateStr: string) => {
+            const [day, month, year] = dateStr.split('/');
+            return new Date(`${year}-${month}-${day}`).getTime();
+          };
+          aValue = parseDate(aValue as string);
+          bValue = parseDate(bValue as string);
+        }
+
+        if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+        if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+
+    return filtered;
+  }, [searchTerm, filterType, sortColumn, sortDirection]);
 
   // Pagination logic
-  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredAndSortedUsers.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
+  const paginatedUsers = filteredAndSortedUsers.slice(startIndex, endIndex);
 
   // Reset to page 1 when filters change
   const handleFilterChange = (newFilter: string) => {
@@ -82,6 +108,26 @@ const Usuarios = () => {
   const handleSearchChange = (value: string) => {
     setSearchTerm(value);
     setCurrentPage(1);
+  };
+
+  const handleSort = (column: 'name' | 'email' | 'createdAt') => {
+    if (sortColumn === column) {
+      // Toggle direction if same column
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Set new column with ascending direction
+      setSortColumn(column);
+      setSortDirection('asc');
+    }
+  };
+
+  const getSortIcon = (column: 'name' | 'email' | 'createdAt') => {
+    if (sortColumn !== column) {
+      return <ArrowUpDown className="w-4 h-4 ml-1 text-muted-foreground" />;
+    }
+    return sortDirection === 'asc' 
+      ? <ArrowUp className="w-4 h-4 ml-1 text-primary" />
+      : <ArrowDown className="w-4 h-4 ml-1 text-primary" />;
   };
 
   return (
@@ -170,7 +216,7 @@ const Usuarios = () => {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>Usuários ({filteredUsers.length})</CardTitle>
+              <CardTitle>Usuários ({filteredAndSortedUsers.length})</CardTitle>
               <div className="flex items-center space-x-2">
                 <span className="text-sm text-muted-foreground">Itens por página:</span>
                 <select
@@ -194,12 +240,36 @@ const Usuarios = () => {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-border">
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-muted-foreground">Nome</th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-muted-foreground">Email</th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-muted-foreground">Tipo</th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-muted-foreground">Status</th>
-                    <th className="text-left py-3 px-4 text-sm font-semibold text-muted-foreground">Cadastro</th>
-                    <th className="text-right py-3 px-4 text-sm font-semibold text-muted-foreground">Ações</th>
+                    <th 
+                      className="text-left py-3 px-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                      onClick={() => handleSort('name')}
+                    >
+                      <div className="flex items-center">
+                        Nome
+                        {getSortIcon('name')}
+                      </div>
+                    </th>
+                    <th 
+                      className="text-left py-3 px-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                      onClick={() => handleSort('email')}
+                    >
+                      <div className="flex items-center">
+                        Email
+                        {getSortIcon('email')}
+                      </div>
+                    </th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Tipo</th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Status</th>
+                    <th 
+                      className="text-left py-3 px-4 text-sm font-medium text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                      onClick={() => handleSort('createdAt')}
+                    >
+                      <div className="flex items-center">
+                        Cadastro
+                        {getSortIcon('createdAt')}
+                      </div>
+                    </th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -248,7 +318,7 @@ const Usuarios = () => {
             {totalPages > 1 && (
               <div className="flex items-center justify-between mt-6 pt-6 border-t border-border">
                 <div className="text-sm text-muted-foreground">
-                  Mostrando {startIndex + 1} a {Math.min(endIndex, filteredUsers.length)} de {filteredUsers.length} usuários
+                  Mostrando {startIndex + 1} a {Math.min(endIndex, filteredAndSortedUsers.length)} de {filteredAndSortedUsers.length} usuários
                 </div>
                 <div className="flex items-center space-x-2">
                   <Button
