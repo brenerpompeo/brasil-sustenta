@@ -8,6 +8,7 @@ import ImpactModelSection from '@/components/ImpactModelSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import UniversityPartnersSection from '@/components/UniversityPartnersSection';
 import StatsSection from '@/components/StatsSection';
+import FAQSection from '@/components/FAQSection';
 import CTASection from '@/components/CTASection';
 import NewsletterSection from '@/components/NewsletterSection';
 import Footer from '@/components/Footer';
@@ -25,6 +26,7 @@ export default function Home() {
       <TestimonialsSection />
       <UniversityPartnersSection />
       <StatsSection />
+      <FAQSection />
       <CTASection />
       <NewsletterSection />
       <Footer />

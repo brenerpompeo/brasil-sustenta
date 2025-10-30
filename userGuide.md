@@ -44,6 +44,10 @@ Na seção "Squads Sob Medida", navegue pelos 8 tipos de especialidades disponí
 
 Explore os dois modelos na seção "Nosso Modelo de Impacto": Squad Box de Impacto (a partir de R$2.500) com 3 pacotes diferentes, ou Soluções Premium para desafios complexos. Clique em "Ver Pacotes e Preços" ou "Falar com um Consultor" para avançar.
 
+### Perguntas Frequentes
+
+Na seção "Tire suas Dúvidas", encontre respostas para as perguntas mais comuns. Use as abas "Para Empresas", "Para Estudantes" ou "Geral" para filtrar por categoria. Clique em qualquer pergunta para expandir e ver a resposta completa. Se não encontrar sua dúvida, clique em "Entre em contato com nossa equipe".
+
 ### Newsletter
 
 Role até o final da página para encontrar o formulário de newsletter. Digite seu e-mail no campo com ícone de envelope e clique em "Inscrever-se" para receber oportunidades de impacto, insights do mercado e networking qualificado.

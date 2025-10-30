@@ -40,3 +40,6 @@
 - [x] Implementar lazy loading
 - [x] Adicionar meta tags SEO
 - [x] Testar performance e acessibilidade
+
+## Novas Features
+- [x] Seção de Perguntas Frequentes (FAQ)
