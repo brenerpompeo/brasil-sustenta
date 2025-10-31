@@ -137,12 +137,14 @@
 - [x] Criar componentes reutilizáveis de Inputs
 - [x] Documentar Design System
 
-## SPRINT 2: Fluxo de Autenticação Completo (JÁ INICIADO)
+## SPRINT 2: Fluxo de Autenticação Completo
 - [x] Modificar botão Login para dropdown (Empresas, Jovens, Universidades)
 - [x] Criar páginas de Login e Cadastro segmentadas
-- [ ] Integrar autenticação com backend (tRPC + Drizzle)
-- [ ] Implementar lógica de criação de usuários por tipo
-- [ ] Testar fluxo completo de autenticação
+- [x] Integrar autenticação com backend (tRPC + Drizzle)
+- [x] Implementar lógica de criação de usuários por tipo
+- [x] Criar procedimentos tRPC (registerCompany, registerTalent, registerUniversity)
+- [x] Adicionar db ao contexto do tRPC
+- [x] Testar fluxo completo de autenticação
 
 ## SPRINT 3: Dashboard da Empresa
 - [ ] Criar estrutura do Dashboard com sidebar
