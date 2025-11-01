@@ -173,3 +173,10 @@
 - [ ] Criar página pública /blog
 - [ ] Criar página pública /eventos
 - [ ] Implementar integração com Sympla para eventos
+
+## Páginas de Perfil de Usuário
+- [x] Criar página de perfil para Empresa
+- [ ] Criar página de perfil para Jovem Talento
+- [ ] Criar página de perfil para Universidade
+- [x] Implementar procedimentos tRPC para atualizar perfis (updateCompanyProfile, updateTalentProfile, updateUniversityProfile)
+- [ ] Adicionar upload de logo/foto de perfil
