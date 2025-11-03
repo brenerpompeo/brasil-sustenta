@@ -187,3 +187,10 @@
 - [x] Adicionar componente de upload na página de perfil empresa
 - [x] Implementar preview de imagem antes do upload
 - [x] Adicionar validação de tipo e tamanho de arquivo
+
+## Páginas Públicas
+- [x] Criar página "Para Empresas" (/para-empresas)
+- [x] Vincular link no menu Header
+- [ ] Criar página "Para Jovens" (/para-jovens)
+- [ ] Criar página "Blog" (/blog)
+- [ ] Criar página "Eventos" (/eventos)
