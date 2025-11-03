@@ -2,6 +2,7 @@ import { Link } from 'wouter';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
+import { ContactForm } from '@/components/ContactForm';
 import { 
   Building2, 
   Users, 
@@ -315,6 +316,15 @@ const ParaEmpresas = () => {
                 <p className="text-muted-foreground italic">"{testimonial.text}"</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Form Section */}
+      <section className="py-20">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <ContactForm />
           </div>
         </div>
       </section>

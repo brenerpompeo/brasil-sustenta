@@ -50,6 +50,10 @@ Na seção "Squads Sob Medida", navegue pelos 8 tipos de especialidades disponí
 
 Explore os dois modelos na seção "Nosso Modelo de Impacto": Squad Box de Impacto (a partir de R$2.500) com 3 pacotes diferentes, ou Soluções Premium para desafios complexos. Clique em "Ver Pacotes e Preços" ou "Falar com um Consultor" para avançar.
 
+### Solicitando Orçamento
+
+Na página "Para Empresas", role até o formulário "Solicite um Orçamento Personalizado". Preencha informações da empresa (nome, CNPJ, setor, porte), dados de contato (nome, email, telefone) e detalhes do projeto (tipo, orçamento, prazo, mensagem). Clique em "Solicitar Orçamento" para enviar. Após o envio, você verá uma confirmação na tela e receberá um email. Nossa equipe entrará em contato em até 24 horas úteis.
+
 ### Perguntas Frequentes
 
 Na seção "Tire suas Dúvidas", encontre respostas para as perguntas mais comuns. Use as abas "Para Empresas", "Para Estudantes" ou "Geral" para filtrar por categoria. Clique em qualquer pergunta para expandir e ver a resposta completa. Se não encontrar sua dúvida, clique em "Entre em contato com nossa equipe".

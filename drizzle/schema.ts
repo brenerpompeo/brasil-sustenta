@@ -197,6 +197,27 @@ export const events = mysqlTable("events", {
 });
 
 /**
+ * Contact Requests - Companies requesting quotes
+ */
+export const contactRequests = mysqlTable("contact_requests", {
+  id: int("id").autoincrement().primaryKey(),
+  companyName: varchar("companyName", { length: 255 }).notNull(),
+  contactName: varchar("contactName", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  phone: varchar("phone", { length: 20 }),
+  cnpj: varchar("cnpj", { length: 18 }),
+  industry: varchar("industry", { length: 100 }),
+  companySize: mysqlEnum("companySize", ["pequena", "media", "grande"]),
+  projectType: varchar("projectType", { length: 100 }),
+  budget: varchar("budget", { length: 50 }),
+  timeline: varchar("timeline", { length: 50 }),
+  message: text("message"),
+  status: mysqlEnum("status", ["pending", "contacted", "converted", "rejected"]).default("pending").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+/**
  * Notifications
  */
 export const notifications = mysqlTable("notifications", {
@@ -290,3 +311,5 @@ export type Event = typeof events.$inferSelect;
 export type InsertEvent = typeof events.$inferInsert;
 export type Notification = typeof notifications.$inferSelect;
 export type InsertNotification = typeof notifications.$inferInsert;
+export type ContactRequest = typeof contactRequests.$inferSelect;
+export type InsertContactRequest = typeof contactRequests.$inferInsert;

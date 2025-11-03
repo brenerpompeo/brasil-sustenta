@@ -194,3 +194,11 @@
 - [ ] Criar página "Para Jovens" (/para-jovens)
 - [ ] Criar página "Blog" (/blog)
 - [ ] Criar página "Eventos" (/eventos)
+
+## Formulário de Contato/Orçamento
+- [x] Criar schema no banco para armazenar solicitações de contato
+- [x] Criar procedimento tRPC para enviar solicitação
+- [x] Criar componente de formulário de contato
+- [x] Adicionar validação de campos
+- [x] Integrar formulário na página Para Empresas
+- [x] Criar página de confirmação de envio (inline no componente)
