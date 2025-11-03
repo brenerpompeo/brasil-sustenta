@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Building2, Mail, Globe, Briefcase, Users, Edit, Save, X } from 'lucide-react';
 import { toast } from 'sonner';
+import { LogoUpload } from '@/components/LogoUpload';
 import { Link } from 'wouter';
 
 const PerfilEmpresa = () => {
@@ -33,6 +34,7 @@ const PerfilEmpresa = () => {
     size: profile?.size || 'media',
     description: profile?.description || '',
     website: profile?.website || '',
+    logo: profile?.logo || '',
   });
 
   const handleSave = () => {
@@ -48,8 +50,13 @@ const PerfilEmpresa = () => {
       size: profile?.size || 'media',
       description: profile?.description || '',
       website: profile?.website || '',
+      logo: profile?.logo || '',
     });
     setIsEditing(false);
+  };
+
+  const handleLogoUpload = (url: string) => {
+    setFormData({...formData, logo: url});
   };
 
   if (!user) {
@@ -156,6 +163,19 @@ const PerfilEmpresa = () => {
           <h2 className="text-2xl font-bold text-foreground mb-6">Informações da Empresa</h2>
           
           <div className="space-y-6">
+            {/* Logo Upload */}
+            <div>
+              <Label>Logo da Empresa</Label>
+              <div className="mt-2">
+                <LogoUpload
+                  currentLogo={formData.logo}
+                  onUploadSuccess={handleLogoUpload}
+                  type="logo"
+                />
+              </div>
+            </div>
+
+            <div className="border-t border-border my-6"></div>
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <Label htmlFor="companyName">Nome da Empresa *</Label>

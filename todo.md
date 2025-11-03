@@ -180,3 +180,10 @@
 - [ ] Criar página de perfil para Universidade
 - [x] Implementar procedimentos tRPC para atualizar perfis (updateCompanyProfile, updateTalentProfile, updateUniversityProfile)
 - [ ] Adicionar upload de logo/foto de perfil
+
+## Upload de Logo/Imagem
+- [x] Criar procedimento tRPC para upload de imagem (uploadLogo)
+- [x] Integrar com S3 storage usando storagePut
+- [x] Adicionar componente de upload na página de perfil empresa
+- [x] Implementar preview de imagem antes do upload
+- [x] Adicionar validação de tipo e tamanho de arquivo
