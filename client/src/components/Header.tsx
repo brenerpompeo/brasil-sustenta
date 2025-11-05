@@ -12,6 +12,7 @@ const Header = () => {
     { label: 'Início', href: '/' },
     { label: 'Para Empresas', href: '/para-empresas' },
     { label: 'Para Jovens', href: '/para-jovens' },
+    { label: 'Para Universidades', href: '/para-universidades' },
     { label: 'Blog', href: '#blog' },
     { label: 'Eventos', href: '#eventos' },
     { label: 'Projetos', href: '#projetos' },

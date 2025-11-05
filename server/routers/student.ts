@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { publicProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
-import { studentQuestions, universityInvitations } from "../../drizzle/schema";
+import { studentQuestions, universityInvitations, universityPartnershipRequests } from "../../drizzle/schema";
 
 /**
  * Student Router
@@ -84,6 +84,56 @@ export const studentRouter = router({
       return {
         success: true,
         message: "Convite enviado! Entraremos em contato com a universidade.",
+        id: result.insertId,
+      };
+    }),
+
+  /**
+   * Request partnership
+   * Public endpoint - universities can request to become partners
+   */
+  requestPartnership: publicProcedure
+    .input(
+      z.object({
+        universityName: z.string().min(2, "Nome da universidade é obrigatório"),
+        cnpj: z.string().optional(),
+        state: z.string().length(2, "UF deve ter 2 caracteres"),
+        city: z.string().min(2, "Cidade é obrigatória"),
+        website: z.string().url("Website inválido").optional().or(z.literal("")),
+        contactName: z.string().min(2, "Nome do contato é obrigatório"),
+        contactRole: z.string().optional(),
+        contactEmail: z.string().email("Email inválido"),
+        contactPhone: z.string().optional(),
+        studentsCount: z.string().optional(),
+        coursesOffered: z.string().optional(),
+        message: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const db = await getDb();
+      if (!db) {
+        throw new Error("Database not available");
+      }
+      
+      const [result] = await db.insert(universityPartnershipRequests).values({
+        universityName: input.universityName,
+        cnpj: input.cnpj,
+        state: input.state,
+        city: input.city,
+        website: input.website || undefined,
+        contactName: input.contactName,
+        contactRole: input.contactRole,
+        contactEmail: input.contactEmail,
+        contactPhone: input.contactPhone,
+        studentsCount: input.studentsCount,
+        coursesOffered: input.coursesOffered,
+        message: input.message,
+        status: "pending",
+      });
+
+      return {
+        success: true,
+        message: "Solicitação de parceria enviada! Entraremos em contato em breve.",
         id: result.insertId,
       };
     }),

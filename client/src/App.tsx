@@ -10,7 +10,8 @@ import LoginJovem from "./pages/LoginJovem";
 import LoginUniversidade from "./pages/LoginUniversidade";
 import PerfilEmpresa from "./pages/PerfilEmpresa";
 import ParaEmpresas from "./pages/ParaEmpresas";
-import ParaJovens from "./pages/ParaJovens";
+import ParaJovens from './pages/ParaJovens';
+import ParaUniversidades from './pages/ParaUniversidades';
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminUsuarios from "./pages/admin/Usuarios";
 
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/perfil/empresa" component={PerfilEmpresa} />
       <Route path="/para-empresas" component={ParaEmpresas} />
       <Route path="/para-jovens" component={ParaJovens} />
+      <Route path="/para-universidades" component={ParaUniversidades} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/usuarios" component={AdminUsuarios} />
       <Route path={"/404"} component={NotFound} />

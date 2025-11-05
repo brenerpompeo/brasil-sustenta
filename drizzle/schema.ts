@@ -252,6 +252,28 @@ export const universityInvitations = mysqlTable("university_invitations", {
 });
 
 /**
+ * University Partnership Requests - Universities requesting partnership
+ */
+export const universityPartnershipRequests = mysqlTable("university_partnership_requests", {
+  id: int("id").autoincrement().primaryKey(),
+  universityName: varchar("universityName", { length: 255 }).notNull(),
+  cnpj: varchar("cnpj", { length: 18 }),
+  state: varchar("state", { length: 2 }).notNull(),
+  city: varchar("city", { length: 100 }).notNull(),
+  website: varchar("website", { length: 255 }),
+  contactName: varchar("contactName", { length: 255 }).notNull(),
+  contactRole: varchar("contactRole", { length: 255 }),
+  contactEmail: varchar("contactEmail", { length: 320 }).notNull(),
+  contactPhone: varchar("contactPhone", { length: 20 }),
+  studentsCount: varchar("studentsCount", { length: 50 }),
+  coursesOffered: text("coursesOffered"),
+  message: text("message"),
+  status: mysqlEnum("status", ["pending", "in_review", "approved", "rejected"]).default("pending").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+/**
  * Notifications
  */
 export const notifications = mysqlTable("notifications", {
@@ -351,3 +373,5 @@ export type StudentQuestion = typeof studentQuestions.$inferSelect;
 export type InsertStudentQuestion = typeof studentQuestions.$inferInsert;
 export type UniversityInvitation = typeof universityInvitations.$inferSelect;
 export type InsertUniversityInvitation = typeof universityInvitations.$inferInsert;
+export type UniversityPartnershipRequest = typeof universityPartnershipRequests.$inferSelect;
+export type InsertUniversityPartnershipRequest = typeof universityPartnershipRequests.$inferInsert;

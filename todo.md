@@ -216,3 +216,15 @@
 - [x] Criar schema no banco para indicações de universidades (universityInvitations)
 - [x] Criar procedimento tRPC para enviar indicações (student.inviteUniversity)
 - [x] Vincular link no Header
+
+## Página Para Universidades
+- [x] Criar página Para Universidades (/para-universidades)
+- [x] Adicionar seção Hero com proposta de valor para universidades
+- [x] Criar seção de benefícios da parceria (6 cards)
+- [x] Adicionar seção sobre o modelo de convênio (4 etapas)
+- [x] Criar formulário de interesse em parceria
+- [x] Criar schema no banco para solicitações de parceria (universityPartnershipRequests)
+- [x] Criar procedimento tRPC para enviar solicitações (student.requestPartnership)
+- [x] Adicionar FAQ específica para universidades (8 perguntas)
+- [x] Adicionar seção de estatísticas
+- [x] Vincular link no Header

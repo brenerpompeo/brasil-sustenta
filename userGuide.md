@@ -34,6 +34,10 @@ Clique no menu hamburguer no canto superior direito (mobile) ou use a navegaçã
 
 Acesse "/para-jovens" para explorar oportunidades para estudantes universitários. A página apresenta 6 benefícios (experiência profissional, remuneração R$800-2.500, networking, certificações, desenvolvimento de habilidades e oportunidades de carreira). Role até a seção FAQ para encontrar respostas organizadas em 3 categorias (Geral, Processo, Benefícios). Se sua dúvida não estiver na FAQ, preencha o formulário "Envie sua Dúvida" com nome, email, universidade, curso e pergunta. Para convidar sua universidade a se tornar parceira, role até "Convide sua Universidade", preencha seus dados, informações da universidade e envie o convite. Nossa equipe entrará em contato com a instituição.
 
+### Página Para Universidades
+
+Acesse "/para-universidades" para conhecer como instituições de ensino podem se tornar parceiras. A página apresenta 6 benefícios da parceria (empregabilidade, conexão com mercado, desenvolvimento integral, reconhecimento, alinhamento com ODS e relatórios de impacto), processo em 4 etapas (solicitação, reunião, assinatura, ativação), estatísticas (200+ universidades, 8.5k+ alunos, 500+ projetos, 95% satisfação) e FAQ com 8 perguntas. Role até "Solicite uma Parceria", preencha dados da universidade (nome, CNPJ, estado, cidade, website, número de alunos, cursos) e dados do contato (nome, cargo, email, telefone). Após enviar, você verá confirmação e nossa equipe entrará em contato em até 48 horas.
+
 ### Painel Administrativo
 
 Administradores podem acessar "/admin" para gerenciar a plataforma. O painel possui sidebar com navegação para Dashboard (estatísticas gerais), Usuários (listar e gerenciar todos os cadastros), Empresas, Talentos, Universidades, Projetos, Squads, Blog e Eventos. O dashboard mostra métricas em tempo real, projetos recentes e aprovações pendentes.
