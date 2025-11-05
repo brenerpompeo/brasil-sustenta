@@ -218,6 +218,40 @@ export const contactRequests = mysqlTable("contact_requests", {
 });
 
 /**
+ * Student Questions - Questions from students
+ */
+export const studentQuestions = mysqlTable("student_questions", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  university: varchar("university", { length: 255 }),
+  course: varchar("course", { length: 255 }),
+  question: text("question").notNull(),
+  status: mysqlEnum("status", ["pending", "answered", "archived"]).default("pending").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  answeredAt: timestamp("answeredAt"),
+});
+
+/**
+ * University Invitations - Students inviting their universities
+ */
+export const universityInvitations = mysqlTable("university_invitations", {
+  id: int("id").autoincrement().primaryKey(),
+  studentName: varchar("studentName", { length: 255 }).notNull(),
+  studentEmail: varchar("studentEmail", { length: 320 }).notNull(),
+  universityName: varchar("universityName", { length: 255 }).notNull(),
+  state: varchar("state", { length: 2 }),
+  city: varchar("city", { length: 100 }),
+  course: varchar("course", { length: 255 }),
+  contactName: varchar("contactName", { length: 255 }),
+  contactEmail: varchar("contactEmail", { length: 320 }),
+  message: text("message"),
+  status: mysqlEnum("status", ["pending", "contacted", "partnered", "rejected"]).default("pending").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+/**
  * Notifications
  */
 export const notifications = mysqlTable("notifications", {
@@ -313,3 +347,7 @@ export type Notification = typeof notifications.$inferSelect;
 export type InsertNotification = typeof notifications.$inferInsert;
 export type ContactRequest = typeof contactRequests.$inferSelect;
 export type InsertContactRequest = typeof contactRequests.$inferInsert;
+export type StudentQuestion = typeof studentQuestions.$inferSelect;
+export type InsertStudentQuestion = typeof studentQuestions.$inferInsert;
+export type UniversityInvitation = typeof universityInvitations.$inferSelect;
+export type InsertUniversityInvitation = typeof universityInvitations.$inferInsert;

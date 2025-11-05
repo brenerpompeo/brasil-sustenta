@@ -30,6 +30,10 @@ Este site foi desenvolvido com tecnologias modernas e de ponta para garantir a m
 
 Clique no menu hamburguer no canto superior direito (mobile) ou use a navegação horizontal (desktop) para acessar "Início", "Para Empresas", "Para Jovens", "Blog", "Eventos" e "Projetos". O botão "Login" verde no cabeçalho abre um dropdown com 3 opções: "Empresas", "Jovens Talentos" e "Universidades". Cada opção leva para uma página de login/cadastro específica com formulários personalizados.
 
+### Página Para Jovens
+
+Acesse "/para-jovens" para explorar oportunidades para estudantes universitários. A página apresenta 6 benefícios (experiência profissional, remuneração R$800-2.500, networking, certificações, desenvolvimento de habilidades e oportunidades de carreira). Role até a seção FAQ para encontrar respostas organizadas em 3 categorias (Geral, Processo, Benefícios). Se sua dúvida não estiver na FAQ, preencha o formulário "Envie sua Dúvida" com nome, email, universidade, curso e pergunta. Para convidar sua universidade a se tornar parceira, role até "Convide sua Universidade", preencha seus dados, informações da universidade e envie o convite. Nossa equipe entrará em contato com a instituição.
+
 ### Painel Administrativo
 
 Administradores podem acessar "/admin" para gerenciar a plataforma. O painel possui sidebar com navegação para Dashboard (estatísticas gerais), Usuários (listar e gerenciar todos os cadastros), Empresas, Talentos, Universidades, Projetos, Squads, Blog e Eventos. O dashboard mostra métricas em tempo real, projetos recentes e aprovações pendentes.
@@ -50,9 +54,9 @@ Na seção "Squads Sob Medida", navegue pelos 8 tipos de especialidades disponí
 
 Explore os dois modelos na seção "Nosso Modelo de Impacto": Squad Box de Impacto (a partir de R$2.500) com 3 pacotes diferentes, ou Soluções Premium para desafios complexos. Clique em "Ver Pacotes e Preços" ou "Falar com um Consultor" para avançar.
 
-### Solicitando Orçamento
+### Página Para Empresas
 
-Na página "Para Empresas", role até o formulário "Solicite um Orçamento Personalizado". Preencha informações da empresa (nome, CNPJ, setor, porte), dados de contato (nome, email, telefone) e detalhes do projeto (tipo, orçamento, prazo, mensagem). Clique em "Solicitar Orçamento" para enviar. Após o envio, você verá uma confirmação na tela e receberá um email. Nossa equipe entrará em contato em até 24 horas úteis.
+Acesse "/para-empresas" para conhecer como empresas podem contratar squads ESG. A página apresenta 6 benefícios, processo em 4 etapas e 3 modelos de Squad com pricing. Role até o formulário "Solicite um Orçamento Personalizado", preencha informações da empresa (nome, CNPJ, setor, porte), dados de contato (nome, email, telefone) e detalhes do projeto (tipo, orçamento, prazo, mensagem). Clique em "Solicitar Orçamento" para enviar. Após o envio, você verá uma confirmação na tela e receberá um email. Nossa equipe entrará em contato em até 24 horas úteis.
 
 ### Perguntas Frequentes
 

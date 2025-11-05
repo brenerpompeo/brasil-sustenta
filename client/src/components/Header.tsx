@@ -11,7 +11,7 @@ const Header = () => {
   const navItems = [
     { label: 'Início', href: '/' },
     { label: 'Para Empresas', href: '/para-empresas' },
-    { label: 'Para Jovens', href: '#jovens' },
+    { label: 'Para Jovens', href: '/para-jovens' },
     { label: 'Blog', href: '#blog' },
     { label: 'Eventos', href: '#eventos' },
     { label: 'Projetos', href: '#projetos' },

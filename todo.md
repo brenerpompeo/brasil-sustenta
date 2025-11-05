@@ -202,3 +202,17 @@
 - [x] Adicionar validação de campos
 - [x] Integrar formulário na página Para Empresas
 - [x] Criar página de confirmação de envio (inline no componente)
+
+## Página Para Jovens
+- [x] Criar página Para Jovens (/para-jovens)
+- [x] Adicionar seção Hero com proposta de valor para estudantes
+- [x] Criar seção de benefícios para jovens talentos (6 cards)
+- [x] Adicionar FAQ específica para estudantes (3 categorias, 12 perguntas)
+- [x] Criar formulário de dúvidas
+- [x] Criar schema no banco para dúvidas de jovens (studentQuestions)
+- [x] Criar procedimento tRPC para enviar dúvidas (student.submitQuestion)
+- [x] Adicionar seção "Convide sua Universidade"
+- [x] Criar formulário para indicação de universidade
+- [x] Criar schema no banco para indicações de universidades (universityInvitations)
+- [x] Criar procedimento tRPC para enviar indicações (student.inviteUniversity)
+- [x] Vincular link no Header
