@@ -9,6 +9,7 @@ import LoginEmpresa from "./pages/LoginEmpresa";
 import LoginJovem from "./pages/LoginJovem";
 import LoginUniversidade from "./pages/LoginUniversidade";
 import PerfilEmpresa from "./pages/PerfilEmpresa";
+import DashboardEmpresa from "./pages/DashboardEmpresa";
 import ParaEmpresas from "./pages/ParaEmpresas";
 import ParaJovens from './pages/ParaJovens';
 import ParaUniversidades from './pages/ParaUniversidades';
@@ -19,11 +20,12 @@ function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
+      <Route path={"/ "} component={Home} />
       <Route path="/login/empresa" component={LoginEmpresa} />
       <Route path="/login/jovem" component={LoginJovem} />
       <Route path="/login/universidade" component={LoginUniversidade} />
       <Route path="/perfil/empresa" component={PerfilEmpresa} />
+      <Route path="/dashboard/empresa" component={DashboardEmpresa} />
       <Route path="/para-empresas" component={ParaEmpresas} />
       <Route path="/para-jovens" component={ParaJovens} />
       <Route path="/para-universidades" component={ParaUniversidades} />

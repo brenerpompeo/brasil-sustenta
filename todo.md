@@ -228,3 +228,24 @@
 - [x] Adicionar FAQ específica para universidades (8 perguntas)
 - [x] Adicionar seção de estatísticas
 - [x] Vincular link no Header
+
+## SPRINT 3: Dashboard da Empresa
+- [x] Criar schema para projetos (já existia no banco)
+- [x] Criar schema para applications (já existia no banco)
+- [x] Criar procedimento tRPC company.createProject com validacao Zod
+- [x] Criar procedimento tRPC company.getMyProjects com filtros
+- [x] Criar procedimento tRPC company.getProject para obter detalhes
+- [x] Criar procedimento tRPC company.getProjectApplications
+- [x] Criar procedimento tRPC company.approveApplication
+- [x] Criar procedimento tRPC company.rejectApplication
+- [x] Criar procedimento tRPC company.updateProjectStatus
+- [x] Criar procedimento tRPC company.deleteProject
+- [x] Criar pagina /dashboard/empresa com layout completo
+- [x] Criar componente FormularioCriarProjeto com campos completos
+- [x] Criar componente ListagemProjetos com cards e informacoes
+- [x] Adicionar rota /dashboard/empresa no App.tsx
+- [x] Registrar company router em server/routers.ts
+- [ ] Criar componente VisualizacaoCandidatos com tabela detalhada
+- [ ] Implementar upload de capa do projeto para S3
+- [ ] Testar fluxo completo com vitest
+- [ ] Implementar formacao de squads
