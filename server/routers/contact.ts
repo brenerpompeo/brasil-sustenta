@@ -53,7 +53,7 @@ export const contactRouter = router({
       return {
         success: true,
         message: "Solicitação enviada com sucesso! Entraremos em contato em breve.",
-        id: result.insertId,
+        id: (result as any).insertId,
       };
     }),
 });

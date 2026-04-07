@@ -1,13 +1,27 @@
 import { z } from "zod";
-import { protectedProcedure, router } from "../_core/trpc";
-import { projects, applications, companyProfiles, talentProfiles } from "../../drizzle/schema";
-import { eq, and, desc } from "drizzle-orm";
+import { protectedProcedure, adminProcedure, router } from "../_core/trpc";
+import { projects, applications, companyProfiles, talentProfiles, squads, squadMembers } from "../../drizzle/schema";
+import { eq, and, desc, inArray, count } from "drizzle-orm";
 
 /**
  * Company Router
  * Handles project management and company-specific operations
  */
 export const companyRouter = router({
+  /**
+   * Get all companies (Admin)
+   */
+  getAll: adminProcedure
+    .input(z.object({ limit: z.number().default(50), offset: z.number().default(0), search: z.string().optional() }))
+    .query(async ({ ctx, input }) => {
+      const rows = await ctx.db.select().from(companyProfiles).orderBy(desc(companyProfiles.createdAt)).limit(input.limit).offset(input.offset);
+      const enriched = await Promise.all(rows.map(async (c) => {
+        const [projectCountResult] = await ctx.db.select({ value: count() }).from(projects).where(eq(projects.companyId, c.id));
+        return { ...c, projectCount: projectCountResult?.value || 0 };
+      }));
+      return { companies: enriched, total: rows.length };
+    }),
+
   /**
    * Create a new project
    */
@@ -252,6 +266,123 @@ export const companyRouter = router({
 
       return {
         applications: appsList,
+        total: countResult.length,
+      };
+    }),
+
+  /**
+   * Get squads for a company's projects
+   */
+  getMySquads: protectedProcedure
+    .input(
+      z.object({
+        projectId: z.number().optional(),
+        status: z.enum(["forming", "active", "completed"]).optional(),
+        limit: z.number().min(1).max(100).default(20),
+        offset: z.number().min(0).default(0),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (!ctx.db || !ctx.user) {
+        throw new Error("Unauthorized");
+      }
+
+      if (ctx.user.userType !== "empresa") {
+        throw new Error("Only companies can view squads");
+      }
+
+      const companyProfile = await ctx.db
+        .select()
+        .from(companyProfiles)
+        .where(eq(companyProfiles.userId, ctx.user.id))
+        .limit(1);
+
+      if (!companyProfile || companyProfile.length === 0) {
+        return { squads: [], total: 0 };
+      }
+
+      // If projectId is provided, verify it belongs to the company
+      if (input.projectId) {
+        const project = await ctx.db
+          .select()
+          .from(projects)
+          .where(and(eq(projects.id, input.projectId), eq(projects.companyId, companyProfile[0].id)))
+          .limit(1);
+
+        if (!project || project.length === 0) {
+          throw new Error("Project not found or doesn't belong to your company");
+        }
+      }
+
+      // Get project IDs for the company
+      const companyProjects = await ctx.db
+        .select({ id: projects.id })
+        .from(projects)
+        .where(eq(projects.companyId, companyProfile[0].id));
+
+      if (companyProjects.length === 0) {
+        return { squads: [], total: 0 };
+      }
+
+      const projectIds = companyProjects.map((p) => p.id);
+      
+      const targetProjectIds = input.projectId ? [input.projectId] : projectIds;
+
+      const conditions = [inArray(squads.projectId, targetProjectIds)];
+
+      if (input.status) {
+        conditions.push(eq(squads.status, input.status));
+      }
+
+      // Fetch squads with basic project details
+      const squadsList = await ctx.db
+        .select({
+          id: squads.id,
+          name: squads.name,
+          status: squads.status,
+          formedAt: squads.formedAt,
+          completedAt: squads.completedAt,
+          project: {
+            id: projects.id,
+            title: projects.title,
+            status: projects.status,
+          }
+        })
+        .from(squads)
+        .innerJoin(projects, eq(squads.projectId, projects.id))
+        .where(and(...conditions))
+        .orderBy(desc(squads.formedAt))
+        .limit(input.limit)
+        .offset(input.offset);
+
+      // Now fetch members for these squads
+      const squadsWithMembers = await Promise.all(
+        squadsList.map(async (squad) => {
+          const membersList = await ctx.db!
+            .select({
+              id: squadMembers.id,
+              role: squadMembers.role,
+              talent: {
+                fullName: talentProfiles.fullName,
+                course: talentProfiles.course,
+                avatar: talentProfiles.avatar,
+              }
+            })
+            .from(squadMembers)
+            .innerJoin(talentProfiles, eq(squadMembers.talentId, talentProfiles.id))
+            .where(eq(squadMembers.squadId, squad.id));
+            
+          return { ...squad, members: membersList };
+        })
+      );
+
+      const countResult = await ctx.db
+        .select({ count: squads.id })
+        .from(squads)
+        .where(and(...conditions));
+
+      return {
+        squads: squadsWithMembers,
         total: countResult.length,
       };
     }),

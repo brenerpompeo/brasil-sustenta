@@ -19,7 +19,11 @@ import {
   ChevronUp,
   Loader2,
   CheckCircle2,
-  School
+  School,
+  Star,
+  Target,
+  Zap,
+  ArrowRight
 } from 'lucide-react';
 
 export default function ParaJovens() {
@@ -147,470 +151,314 @@ export default function ParaJovens() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-paper overflow-x-hidden">
       <Header />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-radial from-primary/20 via-primary/5 to-transparent">
-        <div className="container">
+      {/* Hero Section - Sky Theme */}
+      <section className="relative pt-40 pb-32 flex items-center justify-center overflow-hidden bg-white">
+        {/* Animated Background Elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-sky/5 blur-[120px] animate-pulse"></div>
+          <div className="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-sky-2/5 blur-[100px]"></div>
+          <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] rounded-full bg-sky-5 blur-[80px] opacity-20"></div>
+        </div>
+
+        <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <Rocket className="w-4 h-4" />
-              <span>Oportunidades para Jovens Talentos</span>
+            <div className="inline-flex items-center gap-2 bg-sky/5 border border-sky-3/20 text-sky-1 px-5 py-2 rounded-full text-[11px] font-black uppercase tracking-[0.2em] mb-8 animate-fade-in">
+              <Star className="w-3.5 h-3.5 fill-current" />
+              <span>Futuro & Carreira com Propósito</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Transforme seu{' '}
-              <span className="text-primary">Talento</span>
-              <br />
-              em Experiência Real
+            <h1 className="text-6xl md:text-8xl font-black text-ink font-display leading-[0.85] tracking-tight mb-8 animate-fade-in-up">
+              Seu <span className="text-sky italic font-light">Talento</span>,<br />
+              Gerando <span className="underline decoration-sky-4/30 underline-offset-8">Impacto Real</span>.
             </h1>
             
-            <p className="text-xl text-muted-foreground mb-10 max-w-3xl mx-auto">
-              Participe de projetos ESG em empresas reais, desenvolva habilidades práticas,
-              construa seu portfólio e receba remuneração enquanto ainda está na universidade.
+            <p className="text-xl md:text-2xl text-ink-3 font-medium mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
+              Trabalhe em projetos ESG de grandes empresas, receba remuneração digna e construa um currículo que o mercado disputa.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
               <Link href="/login/jovem">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-black font-semibold">
-                  Criar Meu Perfil Gratuito
+                <Button size="lg" className="h-16 px-10 rounded-2xl bg-sky hover:bg-sky-1 text-white font-black uppercase tracking-widest text-xs shadow-2xl shadow-sky/20 transition-all hover:scale-105 active:scale-95">
+                  Quero ser um Talento
                 </Button>
               </Link>
-              <Button size="lg" variant="outline">
-                Ver Projetos Disponíveis
-              </Button>
+              <Link href="/dashboard/jovem?preview=true">
+                <Button size="lg" variant="outline" className="h-16 px-10 rounded-2xl border-2 border-paper-3 text-ink-2 bg-white/50 backdrop-blur-sm font-black uppercase tracking-widest text-xs hover:bg-white hover:border-sky/30">
+                  Explorar Projetos
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-20">
+      {/* Value Proposition Bento Grid */}
+      <section className="py-24 bg-paper-2 border-y border-paper-3">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Por que Participar?
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Vantagens exclusivas para jovens talentos que querem fazer a diferença
-            </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="max-w-2xl">
+               <h2 className="text-4xl md:text-6xl font-black text-ink font-display leading-[0.9] tracking-tighter mb-6">
+                Mais que um <span className="italic font-light text-sky">Estágio</span>. <br />Uma experiência de <span className="text-ink-4">Elite</span>.
+              </h2>
+              <p className="text-lg text-ink-3 font-medium">Conectamos as mentes mais inquietas das universidades aos desafios reais das organizações contemporâneas.</p>
+            </div>
+            <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-sky bg-white border border-paper-3 px-4 py-2 rounded-xl h-fit">
+              <Zap className="w-4 h-4 fill-current" />
+              Upgrade na sua Carreira
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Briefcase,
-                title: 'Experiência Profissional Real',
-                description: 'Trabalhe em projetos reais de empresas, não simulações. Construa um portfólio sólido que impressiona recrutadores.',
-              },
-              {
-                icon: TrendingUp,
-                title: 'Remuneração Justa',
-                description: 'Receba entre R$ 800 e R$ 2.500/mês por projeto. Seu talento tem valor e você merece ser recompensado.',
-              },
-              {
-                icon: Users,
-                title: 'Networking Profissional',
-                description: 'Conecte-se com líderes de empresas, mentores experientes e outros talentos universitários de todo o Brasil.',
-              },
-              {
-                icon: Award,
-                title: 'Certificações Reconhecidas',
-                description: 'Certificados digitais da Brasil Sustenta e das empresas parceiras para valorizar seu currículo.',
-              },
-              {
-                icon: GraduationCap,
-                title: 'Desenvolvimento de Habilidades',
-                description: 'Aprenda na prática: gestão de projetos, trabalho em equipe, comunicação corporativa e resolução de problemas.',
-              },
-              {
-                icon: Rocket,
-                title: 'Oportunidades de Carreira',
-                description: '30% dos talentos são contratados pelas empresas após o projeto. Seu próximo emprego pode começar aqui.',
-              },
-            ].map((benefit, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Bento Card 1 */}
+            <div className="md:col-span-2 bg-white border border-paper-3 rounded-[2.5rem] p-10 relative overflow-hidden group hover:border-sky/30 transition-all">
+              <div className="relative z-10 h-full flex flex-col">
+                <div className="w-16 h-16 bg-sky/5 rounded-2xl flex items-center justify-center mb-8 border border-sky/10">
+                  <Briefcase className="w-8 h-8 text-sky" />
+                </div>
+                <h3 className="text-3xl font-black text-ink font-display mb-4">Experiência Profissional Direta</h3>
+                <p className="text-ink-3 font-medium text-lg max-w-md">Esqueça as simulações. No Brasil Sustenta você entra no core de projetos reais de sustentabilidade e inovação social de empresas líderes.</p>
+                <div className="mt-auto pt-8 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-sky">
+                  Ver portfólios de exemplo <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="absolute top-1/2 -right-10 w-64 h-64 bg-sky/5 rounded-full blur-3xl group-hover:scale-150 transition-all duration-700"></div>
+            </div>
+
+            {/* Bento Card 2 */}
+            <div className="bg-sky text-white rounded-[2.5rem] p-10 flex flex-col shadow-2xl shadow-sky/30">
+               <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-8 border border-white/20">
+                  <TrendingUp className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-2xl font-black font-display mb-4 leading-tight">Remuneração Acima da Média</h3>
+                <p className="text-white/80 font-medium mb-6">Receba entre R$ 800 e R$ 2.500 por projeto. Valorizamos seu tempo e seu conhecimento técnico.</p>
+                <div className="mt-auto bg-white/10 rounded-2xl p-4 border border-white/20">
+                  <span className="text-[11px] font-black uppercase tracking-widest block mb-1">Média Mensal</span>
+                  <p className="text-3xl font-black">R$ 1.850,00</p>
+                </div>
+            </div>
+
+            {/* Bento Card 3 */}
+            <div className="bg-white border border-paper-3 rounded-[2.5rem] p-10 group hover:border-sky/30 transition-all">
+               <div className="w-14 h-14 bg-paper-3 rounded-2xl flex items-center justify-center mb-8 border border-paper-4/30">
+                  <Users className="w-7 h-7 text-ink-2" />
+                </div>
+                <h3 className="text-2xl font-black font-display mb-4">Networking de Alto Nível</h3>
+                <p className="text-ink-3 font-medium">Acesso direto a CXOs e gestores de ESG que estão moldando o futuro das grandes corporações.</p>
+            </div>
+
+            {/* Bento Card 4 */}
+            <div className="bg-white border border-paper-3 rounded-[2.5rem] p-10 group hover:border-sky/30 transition-all">
+               <div className="w-14 h-14 bg-paper-3 rounded-2xl flex items-center justify-center mb-8 border border-paper-4/30">
+                  <Award className="w-7 h-7 text-ink-2" />
+                </div>
+                <h3 className="text-2xl font-black font-display mb-4">Certificação com Peso</h3>
+                <p className="text-ink-3 font-medium">Certificados digitais endossados pelas empresas e pela plataforma, validando sua entrega de impacto.</p>
+            </div>
+
+            {/* Bento Card 5 */}
+            <div className="bg-paper text-ink rounded-[2.5rem] p-10 border border-paper-3 relative overflow-hidden group hover:border-sky/30 transition-all">
+               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 border border-paper-4/30">
+                  <Rocket className="w-7 h-7 text-sky" />
+                </div>
+                <h3 className="text-2xl font-black font-display mb-4 leading-tight">Carreira Acelerada</h3>
+                <p className="text-ink-3 font-medium mb-6">30% dos talentos que passam por nossos squads são contratados permanentemente pelas empresas.</p>
+                <div className="flex gap-1 animate-pulse">
+                  {[1,2,3,4,5].map(i => <div key={i} className="w-8 h-1.5 bg-sky/20 rounded-full"></div>)}
+                </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ System - Redesigned */}
+      <section className="py-24 bg-white relative">
+        <div className="container">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-[11px] font-black uppercase tracking-[0.3em] text-sky-2 mb-4">Knowledge Hub</div>
+            <h2 className="text-5xl font-black text-ink font-display tracking-tight mb-6">Tire suas <span className="italic font-light text-ink-4">Dúvidas</span>.</h2>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {['geral', 'processo', 'beneficios'].map((c) => (
+                <button
+                  key={c}
+                  onClick={() => { setActiveCategory(c as any); setExpandedFaq(null); }}
+                  className={`px-6 h-11 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${
+                    activeCategory === c 
+                    ? 'bg-ink text-white shadow-xl shadow-ink/20 transform -translate-y-1' 
+                    : 'bg-paper-2 text-ink-4 hover:bg-paper-3 hover:text-ink'
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-3">
+            {faqData[activeCategory].map((faq, index) => (
               <div
                 key={index}
-                className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10"
+                className={`bg-paper-2 rounded-2xl border transition-all duration-300 ${expandedFaq === index ? 'border-sky-3/30 bg-white shadow-xl shadow-sky/5' : 'border-paper-3'}`}
               >
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                  <benefit.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{benefit.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{benefit.description}</p>
+                <button
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                  className="w-full px-8 py-6 flex items-center justify-between text-left group"
+                >
+                  <span className={`text-lg font-bold transition-colors ${expandedFaq === index ? 'text-sky' : 'text-ink'}`}>{faq.question}</span>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${expandedFaq === index ? 'bg-sky text-white rotate-180' : 'bg-paper-3 text-ink-4'}`}>
+                    <ChevronDown className="w-5 h-5" />
+                  </div>
+                </button>
+                {expandedFaq === index && (
+                  <div className="px-8 pb-8 text-ink-3 font-medium leading-relaxed animate-fade-in-up">
+                    {faq.answer}
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-                Tire suas Dúvidas
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Respostas para as perguntas mais frequentes de estudantes
-              </p>
-            </div>
-
-            {/* Category Tabs */}
-            <div className="flex flex-wrap gap-3 justify-center mb-10">
-              {[
-                { id: 'geral' as const, label: 'Geral' },
-                { id: 'processo' as const, label: 'Processo' },
-                { id: 'beneficios' as const, label: 'Benefícios' },
-              ].map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => {
-                    setActiveCategory(category.id);
-                    setExpandedFaq(null);
-                  }}
-                  className={`px-6 py-3 rounded-full font-medium transition-all ${
-                    activeCategory === category.id
-                      ? 'bg-primary text-black'
-                      : 'bg-card text-muted-foreground hover:bg-card/80 border border-border'
-                  }`}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
-
-            {/* FAQ Items */}
-            <div className="space-y-4">
-              {faqData[activeCategory].map((faq, index) => (
-                <div
-                  key={index}
-                  className="bg-card border border-border rounded-xl overflow-hidden"
-                >
-                  <button
-                    onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-muted/50 transition-colors"
-                  >
-                    <span className="font-semibold text-foreground pr-4">{faq.question}</span>
-                    {expandedFaq === index ? (
-                      <ChevronUp className="w-5 h-5 text-primary flex-shrink-0" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                    )}
-                  </button>
-                  {expandedFaq === index && (
-                    <div className="px-6 pb-5 text-muted-foreground leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 text-center">
-              <p className="text-muted-foreground mb-4">
-                Não encontrou sua dúvida? Envie sua pergunta abaixo!
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Question Form Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
-              <h2 className="text-4xl font-bold text-foreground mb-4">
-                Envie sua Dúvida
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Nossa equipe responderá por email em até 24 horas
-              </p>
-            </div>
-
-            {questionSubmitted ? (
-              <div className="bg-card border border-primary/50 rounded-2xl p-12 text-center">
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle2 className="w-10 h-10 text-primary" />
-                </div>
-                <h3 className="text-3xl font-bold text-foreground mb-4">
-                  Dúvida Enviada!
-                </h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Recebemos sua pergunta e responderemos em breve no email <strong>{questionForm.email}</strong>
-                </p>
+      {/* Split Form Section - Dual Purpose */}
+      <section className="py-24 bg-paper-2 border-t border-paper-3 overflow-hidden relative">
+        <div className="container relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Left: Invitation Form */}
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-black text-ink font-display tracking-tight mb-6">Não viu sua <span className="text-sky underline decoration-sky-3/20">Instituição</span>?</h2>
+                <p className="text-lg text-ink-3 font-medium">Convide sua universidade para fazer parte do hub e abra portas para centenas de colegas.</p>
               </div>
-            ) : (
-              <form onSubmit={handleQuestionSubmit} className="bg-card border border-border rounded-2xl p-8 space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="q-name">Seu Nome *</Label>
-                    <Input
-                      id="q-name"
-                      value={questionForm.name}
-                      onChange={(e) => setQuestionForm({ ...questionForm, name: e.target.value })}
-                      placeholder="Nome completo"
-                      required
-                    />
+
+              {invitationSubmitted ? (
+                <div className="bg-white border border-emerald-100 rounded-[2.5rem] p-12 text-center shadow-xl shadow-emerald-500/5 animate-fade-in">
+                  <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-100">
+                    <CheckCircle2 className="w-10 h-10 text-emerald-500" />
                   </div>
-
-                  <div>
-                    <Label htmlFor="q-email">Seu Email *</Label>
-                    <Input
-                      id="q-email"
-                      type="email"
-                      value={questionForm.email}
-                      onChange={(e) => setQuestionForm({ ...questionForm, email: e.target.value })}
-                      placeholder="seu@email.com"
-                      required
-                    />
-                  </div>
+                  <h3 className="text-2xl font-black text-ink mb-2">Convite Protocolado!</h3>
+                  <p className="text-ink-3 font-medium mb-6">Entraremos em contato com a <strong>{invitationForm.universityName}</strong> em seu nome.</p>
+                  <Button variant="outline" onClick={() => setInvitationSubmitted(false)} className="rounded-xl border-paper-3 font-black uppercase tracking-widest text-[11px]">Novo Convite</Button>
                 </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="q-university">Universidade</Label>
-                    <Input
-                      id="q-university"
-                      value={questionForm.university}
-                      onChange={(e) => setQuestionForm({ ...questionForm, university: e.target.value })}
-                      placeholder="Ex: USP, UNICAMP, UFMG"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="q-course">Curso</Label>
-                    <Input
-                      id="q-course"
-                      value={questionForm.course}
-                      onChange={(e) => setQuestionForm({ ...questionForm, course: e.target.value })}
-                      placeholder="Ex: Administração, Design"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="q-question">Sua Dúvida *</Label>
-                  <Textarea
-                    id="q-question"
-                    value={questionForm.question}
-                    onChange={(e) => setQuestionForm({ ...questionForm, question: e.target.value })}
-                    placeholder="Descreva sua dúvida com o máximo de detalhes possível..."
-                    rows={5}
-                    required
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={questionMutation.isPending}
-                  className="w-full bg-primary hover:bg-primary/90 text-black font-semibold text-lg py-6"
-                >
-                  {questionMutation.isPending ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Enviando...
-                    </>
-                  ) : (
-                    'Enviar Dúvida'
-                  )}
-                </Button>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* University Invitation Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent">
-        <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <School className="w-8 h-8 text-primary" />
-              </div>
-              <h2 className="text-4xl font-bold text-foreground mb-4">
-                Convide sua Universidade
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Ajude sua universidade a se tornar parceira e traga mais oportunidades para seus colegas
-              </p>
-            </div>
-
-            {invitationSubmitted ? (
-              <div className="bg-card border border-primary/50 rounded-2xl p-12 text-center">
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle2 className="w-10 h-10 text-primary" />
-                </div>
-                <h3 className="text-3xl font-bold text-foreground mb-4">
-                  Convite Enviado!
-                </h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Entraremos em contato com <strong>{invitationForm.universityName}</strong> para apresentar nossa proposta de parceria.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Você receberá atualizações no email <strong>{invitationForm.studentEmail}</strong>
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleInvitationSubmit} className="bg-card border border-border rounded-2xl p-8 space-y-6">
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-foreground">Seus Dados</h4>
-                  
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="i-student-name">Seu Nome *</Label>
+              ) : (
+                <form onSubmit={handleInvitationSubmit} className="bg-white border border-paper-3 rounded-[2.5rem] p-10 space-y-6 shadow-sm">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="i-student-name" className="text-[11px] font-black uppercase tracking-widest text-ink-4">Seu Nome</Label>
                       <Input
                         id="i-student-name"
+                        className="h-14 rounded-xl border-paper-3 bg-paper-2 focus:bg-white focus:ring-4 focus:ring-sky/10 transition-all font-bold"
                         value={invitationForm.studentName}
                         onChange={(e) => setInvitationForm({ ...invitationForm, studentName: e.target.value })}
                         placeholder="Nome completo"
                         required
                       />
                     </div>
-
-                    <div>
-                      <Label htmlFor="i-student-email">Seu Email *</Label>
-                      <Input
+                    <div className="space-y-2">
+                       <Label htmlFor="i-student-email" className="text-[11px] font-black uppercase tracking-widest text-ink-4">Seu Email</Label>
+                       <Input
                         id="i-student-email"
                         type="email"
+                        className="h-14 rounded-xl border-paper-3 bg-paper-2 focus:bg-white focus:ring-4 focus:ring-sky/10 transition-all font-bold"
                         value={invitationForm.studentEmail}
                         onChange={(e) => setInvitationForm({ ...invitationForm, studentEmail: e.target.value })}
-                        placeholder="seu@email.com"
+                        placeholder="email@univ.edu"
                         required
                       />
                     </div>
                   </div>
-
-                  <div>
-                    <Label htmlFor="i-course">Seu Curso</Label>
-                    <Input
-                      id="i-course"
-                      value={invitationForm.course}
-                      onChange={(e) => setInvitationForm({ ...invitationForm, course: e.target.value })}
-                      placeholder="Ex: Engenharia Ambiental"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-foreground">Dados da Universidade</h4>
-                  
-                  <div>
-                    <Label htmlFor="i-university-name">Nome da Universidade *</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="i-university-name" className="text-[11px] font-black uppercase tracking-widest text-ink-4">Nome da Universidade</Label>
                     <Input
                       id="i-university-name"
+                      className="h-14 rounded-xl border-paper-3 bg-paper-2 focus:bg-white focus:ring-4 focus:ring-sky/10 transition-all font-bold"
                       value={invitationForm.universityName}
                       onChange={(e) => setInvitationForm({ ...invitationForm, universityName: e.target.value })}
-                      placeholder="Ex: Universidade Federal de Minas Gerais"
+                      placeholder="Ex: USP, Federal do Ceará..."
                       required
                     />
                   </div>
+                  <Button type="submit" disabled={invitationMutation.isPending} className="w-full h-16 rounded-2xl bg-sky hover:bg-sky-1 text-white font-black uppercase tracking-widest text-xs group">
+                    {invitationMutation.isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <span>Enviar Convite Formal <ArrowRight className="inline ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>}
+                  </Button>
+                </form>
+              )}
+            </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="i-state">Estado (UF)</Label>
-                      <Input
-                        id="i-state"
-                        value={invitationForm.state}
-                        onChange={(e) => setInvitationForm({ ...invitationForm, state: e.target.value.toUpperCase().slice(0, 2) })}
-                        placeholder="MG"
-                        maxLength={2}
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="i-city">Cidade</Label>
-                      <Input
-                        id="i-city"
-                        value={invitationForm.city}
-                        onChange={(e) => setInvitationForm({ ...invitationForm, city: e.target.value })}
-                        placeholder="Belo Horizonte"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-foreground">Contato da Universidade (Opcional)</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Se você conhece alguém da coordenação ou reitoria, nos ajude com o contato
-                  </p>
+            {/* Right: Question Form */}
+            <div className="space-y-8 lg:mt-24">
+              <div className="bg-sky-1 text-white rounded-[2.5rem] p-10 relative overflow-hidden shadow-2xl shadow-sky/20">
+                <div className="relative z-10">
+                  <h3 className="text-3xl font-black font-display mb-6">Atendimento ao Talento</h3>
+                  <p className="text-white/80 font-medium mb-8 leading-relaxed">Nossa equipe de mentoria e suporte está pronta para te ajudar a navegar pela plataforma e encontrar a melhor oportunidade.</p>
                   
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="i-contact-name">Nome do Contato</Label>
-                      <Input
-                        id="i-contact-name"
-                        value={invitationForm.contactName}
-                        onChange={(e) => setInvitationForm({ ...invitationForm, contactName: e.target.value })}
-                        placeholder="Prof. João Silva"
-                      />
+                  {questionSubmitted ? (
+                    <div className="bg-white/10 border border-white/20 rounded-2xl p-6 backdrop-blur-sm">
+                       <p className="font-bold flex items-center gap-2 mb-2"><CheckCircle2 className="w-5 h-5 text-emerald-400" /> Dúvida recebida!</p>
+                       <p className="text-sm opacity-80">Responderemos em até 24h úteis.</p>
                     </div>
-
-                    <div>
-                      <Label htmlFor="i-contact-email">Email do Contato</Label>
-                      <Input
-                        id="i-contact-email"
-                        type="email"
-                        value={invitationForm.contactEmail}
-                        onChange={(e) => setInvitationForm({ ...invitationForm, contactEmail: e.target.value })}
-                        placeholder="contato@universidade.edu.br"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="i-message">Mensagem (Opcional)</Label>
-                  <Textarea
-                    id="i-message"
-                    value={invitationForm.message}
-                    onChange={(e) => setInvitationForm({ ...invitationForm, message: e.target.value })}
-                    placeholder="Conte-nos por que sua universidade seria uma ótima parceira..."
-                    rows={4}
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={invitationMutation.isPending}
-                  className="w-full bg-primary hover:bg-primary/90 text-black font-semibold text-lg py-6"
-                >
-                  {invitationMutation.isPending ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Enviando Convite...
-                    </>
                   ) : (
-                    'Enviar Convite'
+                    <form onSubmit={handleQuestionSubmit} className="space-y-4">
+                      <Input
+                        value={questionForm.name}
+                        onChange={(e) => setQuestionForm({ ...questionForm, name: e.target.value })}
+                        className="h-14 rounded-xl border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:ring-white/30 font-bold"
+                        placeholder="Seu Nome"
+                      />
+                      <Input
+                        value={questionForm.email}
+                        type="email"
+                        onChange={(e) => setQuestionForm({ ...questionForm, email: e.target.value })}
+                        className="h-14 rounded-xl border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:ring-white/30 font-bold"
+                        placeholder="Seu melhor email"
+                      />
+                      <Textarea
+                        value={questionForm.question}
+                        onChange={(e) => setQuestionForm({ ...questionForm, question: e.target.value })}
+                        className="rounded-xl border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:ring-white/30 font-bold min-h-[120px]"
+                        placeholder="Fale conosco..."
+                      />
+                      <Button type="submit" disabled={questionMutation.isPending} className="w-full h-14 rounded-xl bg-white text-sky hover:bg-paper font-black uppercase tracking-widest text-[11px]">
+                        {questionMutation.isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Protocolar Pergunta'}
+                      </Button>
+                    </form>
                   )}
-                </Button>
-              </form>
-            )}
+                </div>
+                <Users className="absolute -bottom-10 -right-10 w-48 h-48 opacity-10" />
+              </div>
+            </div>
           </div>
         </div>
+        {/* Background Graphic */}
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-sky/5 skew-x-[15deg] origin-top translate-x-1/2 pointer-events-none"></div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-3xl p-12 border border-primary/30">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Pronto para Começar?
+      {/* Closing CTA */}
+      <section className="py-32 bg-white relative overflow-hidden">
+        <div className="container text-center relative z-10">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-5xl md:text-7xl font-black text-ink font-display tracking-tight leading-[0.9] mb-10">
+              O futuro <span className="italic font-light text-sky">não espera</span>.<br />Seja o <span className="text-ink-4">Protagonista</span>.
             </h2>
-            <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Junte-se a centenas de estudantes que já estão transformando talento em experiência real
-            </p>
-            <Link href="/login/jovem">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-black font-semibold text-lg px-10">
-                Criar Meu Perfil Agora
-              </Button>
-            </Link>
+            <div className="bg-paper-2 border border-paper-3 p-2 rounded-2xl flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
+              <Link href="/login/jovem" className="flex-1">
+                <Button className="w-full h-14 rounded-xl bg-ink text-white font-black uppercase tracking-widest text-[11px] shadow-xl shadow-ink/20">
+                  Cadastrar Agora
+                </Button>
+              </Link>
+              <Link href="/" className="flex-1">
+                <Button variant="ghost" className="w-full h-14 rounded-xl text-ink-3 font-black uppercase tracking-widest text-[11px] hover:bg-white">
+                  Voltar para Home
+                </Button>
+              </Link>
+            </div>
           </div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none opacity-30">
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-sky/20 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-sky/20 to-transparent"></div>
         </div>
       </section>
 

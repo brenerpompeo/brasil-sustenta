@@ -48,7 +48,7 @@ export const authRouter = router({
 
       // Create company profile
       await ctx.db.insert(companyProfiles).values({
-        userId: user.insertId,
+        userId: (user as any).insertId,
         companyName: input.companyName,
         cnpj: input.cnpj,
         industry: input.industry,
@@ -59,7 +59,7 @@ export const authRouter = router({
 
       return {
         success: true,
-        userId: user.insertId,
+        userId: (user as any).insertId,
         message: "Empresa cadastrada com sucesso!",
       };
     }),
@@ -110,7 +110,7 @@ export const authRouter = router({
 
       // Create talent profile
       await ctx.db.insert(talentProfiles).values({
-        userId: user.insertId,
+        userId: (user as any).insertId,
         fullName: input.fullName,
         cpf: input.cpf,
         phone: input.phone,
@@ -126,7 +126,7 @@ export const authRouter = router({
 
       return {
         success: true,
-        userId: user.insertId,
+        userId: (user as any).insertId,
         message: "Cadastro realizado com sucesso!",
       };
     }),
@@ -174,7 +174,7 @@ export const authRouter = router({
 
       // Create university profile
       await ctx.db.insert(universityProfiles).values({
-        userId: user.insertId,
+        userId: (user as any).insertId,
         universityName: input.universityName,
         acronym: input.acronym,
         state: input.state,
@@ -185,7 +185,7 @@ export const authRouter = router({
 
       return {
         success: true,
-        userId: user.insertId,
+        userId: (user as any).insertId,
         message: "Universidade cadastrada com sucesso!",
       };
     }),

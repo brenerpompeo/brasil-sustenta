@@ -1,84 +1,47 @@
 import { Target, Heart, CheckCircle, MessageSquare, Briefcase, Palette, Lightbulb, Globe } from 'lucide-react';
 
 const squads = [
-  {
-    icon: Target,
-    title: 'ESG',
-    description: 'Estratégias de sustentabilidade empresarial',
-  },
-  {
-    icon: Heart,
-    title: 'Direitos Humanos',
-    description: 'Políticas inclusivas e equitativas',
-  },
-  {
-    icon: CheckCircle,
-    title: 'ODS',
-    description: 'Objetivos de Desenvolvimento Sustentável',
-  },
-  {
-    icon: MessageSquare,
-    title: 'Comunicação',
-    description: 'Estratégias de comunicação corporativa',
-  },
-  {
-    icon: Briefcase,
-    title: 'Marketing',
-    description: 'Campanhas de marketing com propósito',
-  },
-  {
-    icon: Palette,
-    title: 'UI e UX Design',
-    description: 'Experiências digitais inovadoras',
-  },
-  {
-    icon: Lightbulb,
-    title: 'Design Thinking',
-    description: 'Inovação centrada no usuário',
-  },
-  {
-    icon: Globe,
-    title: 'Website',
-    description: 'Desenvolvimento web e digital',
-  },
+  { icon: Target, title: 'ESG Core', desc: 'Estratégias centrais de sustentabilidade' },
+  { icon: Heart, title: 'Sociedade', desc: 'Diversidade, política pública e inclusão' },
+  { icon: CheckCircle, title: 'Compliance ODS', desc: 'Auditorias voltadas para métricas da ONU' },
+  { icon: MessageSquare, title: 'Comunicação', desc: 'Branding e relatórios para Stakeholders' },
+  { icon: Briefcase, title: 'Operações Verdes', desc: 'Supply Chain sustentável e logística' },
+  { icon: Palette, title: 'UI/UX Impact', desc: 'Design e interface para causas ambientais' },
+  { icon: Lightbulb, title: 'Inovação Aberta', desc: 'Design Thinking para novos produtos' },
+  { icon: Globe, title: 'Engenharia', desc: 'Infraestrutura tecnológica escalável' },
 ];
 
 const SquadsSection = () => {
   return (
-    <section className="py-20 lg:py-32 bg-secondary/20 relative overflow-hidden">
-      <div className="container px-4 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-            Squads Sob Medida para sua Empresa
+    <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
+      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
+        <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
+          <div className="text-[11px] font-bold tracking-widest uppercase text-leaf-2 mb-4">Múltiplas Frentes</div>
+          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-black text-ink leading-[1.1] mb-6">
+            Soluções modeladas em <span className="italic font-light text-leaf-1">Squads</span>
           </h2>
-          <p className="text-xl text-muted-foreground">
-            Montamos equipes de acordo com a sua necessidade.
+          <p className="text-[1.125rem] text-ink-3 font-medium">
+            Escalonamos as expertises acadêmicas na nuvem exata da dores corporativas.
           </p>
         </div>
 
-        {/* Squads Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {squads.map((squad, index) => {
             const Icon = squad.icon;
             return (
               <div
                 key={index}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group cursor-pointer"
+                className="bg-paper border border-paper-3 rounded-2xl p-8 hover:bg-white hover:border-leaf-2/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.05)] transition-all duration-300 group cursor-pointer animate-fade-in-up"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                {/* Icon */}
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                  <Icon className="w-7 h-7 text-primary" />
+                <div className="w-12 h-12 bg-white border border-paper-3 rounded-[10px] flex items-center justify-center mb-6 group-hover:bg-leaf/5 transition-colors">
+                  <Icon className="w-5 h-5 text-ink group-hover:text-leaf-1 transition-colors" />
                 </div>
-
-                {/* Title */}
-                <h3 className="text-xl font-bold text-foreground mb-2">
+                <h3 className="font-display text-xl font-bold text-ink mb-2 leading-tight">
                   {squad.title}
                 </h3>
-
-                {/* Description */}
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {squad.description}
+                <p className="text-[13px] text-ink-3 font-medium leading-relaxed">
+                  {squad.desc}
                 </p>
               </div>
             );

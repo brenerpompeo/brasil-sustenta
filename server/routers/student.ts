@@ -40,7 +40,7 @@ export const studentRouter = router({
       return {
         success: true,
         message: "Dúvida enviada com sucesso! Responderemos em breve.",
-        id: result.insertId,
+        id: (result as any).insertId,
       };
     }),
 
@@ -84,7 +84,7 @@ export const studentRouter = router({
       return {
         success: true,
         message: "Convite enviado! Entraremos em contato com a universidade.",
-        id: result.insertId,
+        id: (result as any).insertId,
       };
     }),
 
@@ -134,7 +134,7 @@ export const studentRouter = router({
       return {
         success: true,
         message: "Solicitação de parceria enviada! Entraremos em contato em breve.",
-        id: result.insertId,
+        id: (result as any).insertId,
       };
     }),
 });

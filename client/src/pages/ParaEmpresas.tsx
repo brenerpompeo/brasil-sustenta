@@ -13,7 +13,8 @@ import {
   CheckCircle2,
   ArrowRight,
   Sparkles,
-  BarChart3
+  BarChart3,
+  Zap
 } from 'lucide-react';
 
 const ParaEmpresas = () => {
@@ -121,14 +122,14 @@ const ParaEmpresas = () => {
   const testimonials = [
     {
       company: 'TechCorp Brasil',
-      logo: '🏢',
+      logo: <Building2 className="text-primary" size={36} />,
       text: 'O Brasil Sustenta nos conectou com talentos excepcionais que transformaram nossa estratégia ESG. Em 4 meses, desenvolvemos 3 projetos de impacto com ROI comprovado.',
       author: 'Maria Silva',
       role: 'Diretora de Sustentabilidade'
     },
     {
       company: 'GreenEnergy SA',
-      logo: '⚡',
+      logo: <Zap className="text-sun-2" size={36} />,
       text: 'Contratamos um squad para desenvolver nossa plataforma de monitoramento de carbono. O resultado superou expectativas e ainda ganhamos o prêmio de inovação sustentável.',
       author: 'João Santos',
       role: 'CEO'

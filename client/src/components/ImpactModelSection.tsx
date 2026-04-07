@@ -1,135 +1,141 @@
-import { Check } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Check, ArrowRight } from 'lucide-react';
+import { Link } from 'wouter';
 
 const impactModels = [
   {
     type: 'impact',
-    title: 'Squad Box de Impacto: Talento Jovem, Soluções Reais.',
+    label: 'Squad Box',
+    title: 'Talento Jovem, Soluções Reais.',
     description:
-      'Modelos flexíveis de squads, com estudantes das jovens talentos universitários que trazem novas ideias para resolver desafios de sustentabilidade da Brasil Sustenta. Experiência e inovação em cada projeto.',
-    highlight: 'A partir de R$2.500,00 para um Squad de 3 profissionais por 15 dias',
+      'Squads com universitários de elite que levam inovação e velocidade aos seus desafios ESG. Experiência acadêmica aplicada com rigor prático.',
+    highlight: 'A partir de R$2.500 por Sprint de 15 dias',
     packages: [
-      { name: 'Squad ESG Starter', duration: '15 dias', price: 'R$ 12.500' },
-      { name: 'Squad Digital Impact', duration: '30 dias', price: 'R$ 18.500' },
-      { name: 'Squad ODS Accelerator', duration: '60 dias', price: 'R$ 28.500' },
+      { name: 'ESG Starter', duration: '15 dias', price: 'R$ 12.500' },
+      { name: 'Digital Impact', duration: '30 dias', price: 'R$ 18.500' },
+      { name: 'ODS Accelerator', duration: '60 dias', price: 'R$ 28.500' },
     ],
-    cta: 'Ver Pacotes e Preços',
-    bgColor: 'from-emerald-900/40 to-green-900/40',
-    borderColor: 'border-primary/30',
+    cta: 'Ver Pacotes',
+    accent: 'leaf',
+    borderTop: 'bg-leaf-1',
   },
   {
     type: 'premium',
-    title: 'Soluções Premium: Estratégia e Liderança.',
+    label: 'Premium',
+    title: 'Estratégia e Liderança Sênior.',
     description:
-      'Para desafios complexos que necessitam estratégias avançadas, nossos squads premium oferecem liderança sênior e expertise especializada.',
+      'Para desafios complexos que exigem expertise avançada. Liderança em campo, gestão executiva e entregáveis de alto calibre.',
     services: [
       'Consultoria estratégica personalizada',
       'Squad dedicado de especialistas sênior',
-      'Acompanhamento executivo de perto',
+      'Acompanhamento executivo contínuo',
       'Relatórios detalhados de impacto',
-      'Suporte técnico prioritário',
+      'Suporte técnico e operacional prioritário',
     ],
-    cta: 'Falar com um Consultor',
-    bgColor: 'from-yellow-900/30 to-amber-900/30',
-    borderColor: 'border-yellow-600/30',
+    cta: 'Falar com Consultor',
+    accent: 'earth',
+    borderTop: 'bg-earth-1',
   },
 ];
 
 const ImpactModelSection = () => {
   return (
-    <section className="py-20 lg:py-32 bg-background relative overflow-hidden">
-      <div className="container px-4 lg:px-8">
+    <section className="py-24 lg:py-32 bg-[#F8FAFC] border-y border-paper-3 relative overflow-hidden">
+      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-            Nosso Modelo de Impacto
+        <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
+          <div className="text-[11px] font-bold tracking-widest uppercase text-earth-1 mb-4">Investimento</div>
+          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-black text-ink leading-[1.1] mb-6">
+            Modelos de <span className="italic font-light text-leaf-1">Impacto</span>
           </h2>
-          <p className="text-xl text-muted-foreground">
-            Oferecemos diferentes níveis de serviço, com foco nas soluções de
-            impacto da proposta do MVP.
+          <p className="text-[1.125rem] text-ink-3 font-medium">
+            Diferentes níveis de engajamento para qualquer escala organizacional.
           </p>
         </div>
 
         {/* Models Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-[1100px] mx-auto">
           {impactModels.map((model, index) => (
             <div
               key={index}
-              className={`bg-gradient-to-br ${model.bgColor} border ${model.borderColor} rounded-2xl p-8 hover:shadow-xl transition-all duration-300`}
+              className="bg-white border border-paper-3 rounded-[1.5rem] overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col animate-fade-in-up"
+              style={{ animationDelay: `${index * 150}ms` }}
             >
-              {/* Title */}
-              <h3 className="text-2xl font-bold text-foreground mb-4">
-                {model.title}
-              </h3>
+              {/* Top accent bar */}
+              <div className={`h-1.5 ${model.borderTop}`}></div>
 
-              {/* Description */}
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                {model.description}
-              </p>
+              <div className="p-10 flex flex-col flex-1">
+                {/* Label */}
+                <span className="inline-block self-start px-3 py-1 bg-paper border border-paper-3 rounded-lg text-[11px] font-bold tracking-widest uppercase text-ink-3 mb-6">
+                  {model.label}
+                </span>
 
-              {/* Highlight (for impact model) */}
-              {model.highlight && (
-                <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 mb-6">
-                  <p className="text-primary font-semibold text-sm">
-                    {model.highlight}
-                  </p>
-                </div>
-              )}
+                {/* Title */}
+                <h3 className="font-display text-[1.75rem] font-bold text-ink mb-4 leading-[1.2]">
+                  {model.title}
+                </h3>
 
-              {/* Packages (for impact model) */}
-              {model.packages && (
-                <div className="space-y-3 mb-6">
-                  {model.packages.map((pkg, i) => (
-                    <div
-                      key={i}
-                      className="bg-card/50 border border-border rounded-lg p-4 flex items-center justify-between"
-                    >
-                      <div>
-                        <p className="font-semibold text-foreground">{pkg.name}</p>
-                        <p className="text-sm text-muted-foreground">{pkg.duration}</p>
+                {/* Description */}
+                <p className="text-[15px] text-ink-3 mb-8 font-medium leading-relaxed">
+                  {model.description}
+                </p>
+
+                {/* Highlight (for impact model) */}
+                {model.highlight && (
+                  <div className="bg-leaf/5 border border-leaf-2/20 rounded-xl p-4 mb-8">
+                    <p className="text-leaf-1 font-bold text-[14px]">
+                      {model.highlight}
+                    </p>
+                  </div>
+                )}
+
+                {/* Packages (for impact model) */}
+                {model.packages && (
+                  <div className="space-y-3 mb-8">
+                    {model.packages.map((pkg, i) => (
+                      <div
+                        key={i}
+                        className="bg-paper border border-paper-3 rounded-xl p-5 flex items-center justify-between hover:bg-white transition-colors"
+                      >
+                        <div>
+                          <p className="font-bold text-[15px] text-ink">{pkg.name}</p>
+                          <p className="text-[12px] font-semibold text-ink-3 uppercase tracking-widest mt-0.5">{pkg.duration}</p>
+                        </div>
+                        <p className="font-display text-xl font-black text-leaf-1">{pkg.price}</p>
                       </div>
-                      <p className="text-lg font-bold text-primary">{pkg.price}</p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                )}
+
+                {/* Services (for premium model) */}
+                {model.services && (
+                  <ul className="space-y-4 mb-8">
+                    {model.services.map((service, i) => (
+                      <li key={i} className="flex items-start space-x-3">
+                        <div className="w-5 h-5 bg-earth/10 border border-earth-2/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Check className="w-3 h-3 text-earth-1" />
+                        </div>
+                        <span className="text-[14px] font-medium text-ink-2">{service}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* CTA Button */}
+                <div className="mt-auto">
+                  <Link
+                    href={model.type === 'impact' ? '/para-empresas' : '/para-empresas'}
+                    className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-[15px] transition-all hover:scale-[1.02] active:scale-[0.98] ${
+                      model.type === 'impact'
+                        ? 'bg-ink text-white hover:bg-ink-1 shadow-lg'
+                        : 'border-2 border-earth-1 text-earth-1 hover:bg-earth/5'
+                    }`}
+                  >
+                    {model.cta} <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </div>
-              )}
-
-              {/* Services (for premium model) */}
-              {model.services && (
-                <ul className="space-y-3 mb-6">
-                  {model.services.map((service, i) => (
-                    <li key={i} className="flex items-start space-x-3">
-                      <div className="w-5 h-5 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="w-3 h-3 text-primary" />
-                      </div>
-                      <span className="text-muted-foreground">{service}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* CTA Button */}
-              <Button
-                className={`w-full ${
-                  model.type === 'impact'
-                    ? 'bg-primary hover:bg-primary/90 text-black'
-                    : 'bg-transparent border-2 border-yellow-600 text-yellow-500 hover:bg-yellow-600/10'
-                } font-semibold`}
-              >
-                {model.cta}
-              </Button>
+              </div>
             </div>
           ))}
-        </div>
-
-        {/* Bottom Note */}
-        <div className="text-center mt-12">
-          <p className="text-sm text-muted-foreground">
-            Modelo flexível participante e disponibilidade conforme a demanda.{' '}
-            <button className="text-primary hover:underline">
-              Conheça mais a respeito dos serviços
-            </button>
-          </p>
         </div>
       </div>
     </section>

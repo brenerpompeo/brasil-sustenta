@@ -8,9 +8,19 @@ import { uploadRouter } from "./routers/upload";
 import { contactRouter } from "./routers/contact";
 import { studentRouter } from "./routers/student";
 import { companyRouter } from "./routers/company";
+import { talentRouter } from "./routers/talent";
+import { universityRouter } from "./routers/university";
+import { blogRouter } from "./routers/blog";
+import { projectRouter } from "./routers/project";
+import { dashboardRouter } from "./routers/dashboard";
+import { aiRouter } from "./routers/ai";
+import { articleRouter } from "./routers/article";
+import { reportRouter } from "./routers/report";
+import { materialRouter } from "./routers/material";
+import { eventRouter } from "./routers/event";
+import { userRouter } from "./routers/user";
 
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -29,6 +39,17 @@ export const appRouter = router({
   contact: contactRouter,
   student: studentRouter,
   company: companyRouter,
+  talent: talentRouter,
+  university: universityRouter,
+  blog: blogRouter,
+  project: projectRouter,
+  dashboard: dashboardRouter,
+  ai: aiRouter,
+  event: eventRouter,
+  article: articleRouter,
+  report: reportRouter,
+  material: materialRouter,
+  user: userRouter,
 });
 
 export type AppRouter = typeof appRouter;

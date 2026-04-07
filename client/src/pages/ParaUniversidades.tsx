@@ -26,7 +26,11 @@ import {
   ChevronUp,
   Loader2,
   CheckCircle2,
-  Handshake
+  Handshake,
+  Globe,
+  ShieldCheck,
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 
 export default function ParaUniversidades() {
@@ -106,450 +110,293 @@ export default function ParaUniversidades() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-paper overflow-x-hidden">
       <Header />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-radial from-primary/20 via-primary/5 to-transparent">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <School className="w-4 h-4" />
-              <span>Parcerias Universitárias</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Conecte seus Alunos ao{' '}
-              <span className="text-primary">Mercado ESG</span>
-            </h1>
-            
-            <p className="text-xl text-muted-foreground mb-10 max-w-3xl mx-auto">
-              Torne-se uma universidade parceira e ofereça aos seus estudantes oportunidades
-              reais de trabalho remunerado em projetos de sustentabilidade e inovação social.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-primary hover:bg-primary/90 text-black font-semibold"
-                onClick={() => document.getElementById('partnership-form')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Solicitar Parceria
-              </Button>
-              <Link href="/login/universidade">
-                <Button size="lg" variant="outline">
-                  Já sou Parceiro
-                </Button>
-              </Link>
-            </div>
-          </div>
+      {/* Hero Section - Violet Theme */}
+      <section className="relative pt-40 pb-32 flex items-center justify-center overflow-hidden bg-white">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[-10%] right-[-5%] w-[50%] h-[50%] bg-violet/5 blur-[120px] rounded-full"></div>
+          <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-violet-2/5 blur-[100px] rounded-full"></div>
         </div>
-      </section>
 
-      {/* Benefits Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Por que ser Parceiro?
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Benefícios exclusivos para universidades que querem preparar alunos para o futuro
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Briefcase,
-                title: 'Empregabilidade dos Alunos',
-                description: 'Aumente a taxa de empregabilidade oferecendo experiências profissionais reais enquanto os alunos ainda estão cursando. Mais de 30% são efetivados após os projetos.',
-              },
-              {
-                icon: Handshake,
-                title: 'Conexão com o Mercado',
-                description: 'Fortaleça o relacionamento da universidade com empresas líderes em ESG, criando pontes entre academia e mercado de trabalho.',
-              },
-              {
-                icon: Users,
-                title: 'Desenvolvimento Integral',
-                description: 'Seus alunos desenvolvem habilidades técnicas e soft skills essenciais: trabalho em equipe, gestão de projetos e resolução de problemas reais.',
-              },
-              {
-                icon: Award,
-                title: 'Reconhecimento e Certificações',
-                description: 'Alunos recebem certificações reconhecidas pelo mercado, valorizando o currículo e a reputação da instituição.',
-              },
-              {
-                icon: Target,
-                title: 'Alinhamento com ODS',
-                description: 'Contribua para os Objetivos de Desenvolvimento Sustentável da ONU através de projetos práticos de impacto social e ambiental.',
-              },
-              {
-                icon: TrendingUp,
-                title: 'Relatórios de Impacto',
-                description: 'Receba relatórios semestrais com métricas de participação, desempenho dos alunos e impacto gerado pelos projetos.',
-              },
-            ].map((benefit, index) => (
-              <div
-                key={index}
-                className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10"
-              >
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                  <benefit.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{benefit.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-                Como Funciona a Parceria?
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Processo simples e sem burocracia
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {[
-                {
-                  step: '01',
-                  title: 'Solicitação de Parceria',
-                  description: 'Preencha o formulário abaixo com os dados da universidade e aguarde nosso contato em até 48 horas.',
-                },
-                {
-                  step: '02',
-                  title: 'Reunião de Alinhamento',
-                  description: 'Agendamos uma reunião online para apresentar a plataforma, tirar dúvidas e alinhar expectativas.',
-                },
-                {
-                  step: '03',
-                  title: 'Assinatura do Convênio',
-                  description: 'Formalizamos a parceria com um termo de convênio digital. Processo rápido e sem custos.',
-                },
-                {
-                  step: '04',
-                  title: 'Ativação e Divulgação',
-                  description: 'Criamos materiais de divulgação personalizados e começamos a conectar seus alunos a oportunidades reais.',
-                },
-              ].map((item, index) => (
-                <div key={index} className="flex gap-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center">
-                      <span className="text-2xl font-bold text-primary">{item.step}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-8 text-center">
-              {[
-                { value: '200+', label: 'Universidades Parceiras' },
-                { value: '8.5k+', label: 'Alunos Participantes' },
-                { value: '500+', label: 'Projetos Concluídos' },
-                { value: '95%', label: 'Satisfação das IES' },
-              ].map((stat, index) => (
-                <div key={index} className="bg-card border border-border rounded-2xl p-8">
-                  <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container">
+        <div className="container relative z-10 text-center">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-                Perguntas Frequentes
+             <div className="inline-flex items-center gap-2 bg-violet/5 border border-violet-3/20 text-violet px-5 py-2 rounded-full text-[11px] font-black uppercase tracking-[0.2em] mb-8 animate-fade-in shadow-sm">
+                <School className="w-3.5 h-3.5 fill-current" />
+                <span>Alianças Estratégicas e Extensão</span>
+             </div>
+             
+             <h1 className="text-6xl md:text-8xl font-black text-ink font-display leading-[0.85] tracking-tight mb-8 animate-fade-in-up">
+                Eleve o <span className="text-violet italic font-light">Impacto</span> da sua <span className="underline decoration-violet-4/30 underline-offset-8">Instituição</span>.
+             </h1>
+             
+             <p className="text-xl md:text-2xl text-ink-3 font-medium mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in-up delay-100">
+                Conecte seus estudantes ao mercado ESG global através de squads multidisciplinares e projetos de impacto real, sem burocracia ou custos para a IES.
+             </p>
+
+             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
+                <Button 
+                   size="lg" 
+                   className="h-16 px-10 rounded-2xl bg-violet hover:bg-violet-1 text-white font-black uppercase tracking-widest text-xs shadow-2xl shadow-violet/20 transition-all hover:scale-105 active:scale-95"
+                   onClick={() => document.getElementById('partnership-form')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                   Solicitar Parceria Formal
+                </Button>
+                <Link href="/login/universidade">
+                   <Button size="lg" variant="outline" className="h-16 px-10 rounded-2xl border-2 border-paper-3 text-ink-2 bg-white/50 backdrop-blur-sm font-black uppercase tracking-widest text-xs hover:bg-white hover:border-violet/30">
+                      Painel do Parceiro
+                   </Button>
+                </Link>
+             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Institutional Value Bento Grid */}
+      <section className="py-24 bg-paper-2 border-y border-paper-3">
+        <div className="container">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="max-w-2xl">
+               <h2 className="text-4xl md:text-6xl font-black text-ink font-display leading-[0.9] tracking-tighter mb-6">
+                 Proposta de <span className="italic font-light text-violet text-center">Valor</span> <br />para a <span className="text-ink-4">Academia</span>.
               </h2>
-              <p className="text-lg text-muted-foreground">
-                Respostas para as dúvidas mais comuns sobre a parceria
-              </p>
+            </div>
+            <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-violet bg-white border border-paper-3 px-4 py-2 rounded-xl h-fit">
+              <Sparkles className="w-4 h-4 fill-current" />
+              Impacto Mensurável
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            {/* Empregabilidade */}
+            <div className="md:col-span-8 bg-white border border-paper-3 rounded-[2.5rem] p-10 relative overflow-hidden group hover:border-violet/30 transition-all shadow-sm">
+                <div className="relative z-10">
+                   <div className="w-16 h-16 bg-violet/5 rounded-2xl flex items-center justify-center mb-8 border border-violet/10">
+                      <Briefcase className="w-8 h-8 text-violet" />
+                   </div>
+                   <h3 className="text-3xl font-black text-ink font-display mb-4">Empregabilidade e Carreira</h3>
+                   <p className="text-ink-3 font-medium text-lg max-w-lg leading-relaxed">
+                      Mais de 30% dos alunos que participam dos squads são efetivados. Transforme sua taxa de empregabilidade através de experiência prática em projetos de ponta.
+                   </p>
+                </div>
+                <div className="absolute top-0 right-0 w-64 h-full bg-violet/5 skew-x-[-15deg] translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
 
-            <div className="space-y-4">
-              {faqData.map((faq, index) => (
-                <div
-                  key={index}
-                  className="bg-card border border-border rounded-xl overflow-hidden"
-                >
-                  <button
-                    onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-muted/50 transition-colors"
-                  >
-                    <span className="font-semibold text-foreground pr-4">{faq.question}</span>
-                    {expandedFaq === index ? (
-                      <ChevronUp className="w-5 h-5 text-primary flex-shrink-0" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                    )}
-                  </button>
-                  {expandedFaq === index && (
-                    <div className="px-6 pb-5 text-muted-foreground leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  )}
+            {/* Certificação */}
+            <div className="md:col-span-4 bg-violet text-white rounded-[2.5rem] p-10 shadow-2xl shadow-violet/30 flex flex-col">
+                <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-8 border border-white/20">
+                   <Award className="w-7 h-7" />
+                </div>
+                <h3 className="text-2xl font-black font-display mb-4 leading-tight">Certificações de Mercado</h3>
+                <p className="opacity-80 font-medium mb-6">Validação de horas complementares e competências alinhadas aos Objetivos de Desenvolvimento Sustentável (ODS).</p>
+                <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between">
+                   <span className="text-[11px] font-black uppercase tracking-widest">Reconhecido pela ONU</span>
+                   <ShieldCheck className="w-5 h-5 opacity-60" />
+                </div>
+            </div>
+
+            {/* Networking */}
+            <div className="md:col-span-4 bg-white border border-paper-3 rounded-[2.5rem] p-10 group hover:border-violet/30 transition-all shadow-sm">
+                <div className="w-14 h-14 bg-paper-3 rounded-2xl flex items-center justify-center mb-8">
+                   <Handshake className="w-7 h-7 text-ink" />
+                </div>
+                <h3 className="text-2xl font-black font-display mb-4">Conexão Corporativa</h3>
+                <p className="text-ink-3 font-medium">Sua universidade em contato direto com as maiores empresas do Brasil através de convênios estratégicos.</p>
+            </div>
+
+            {/* Métricas */}
+            <div className="md:col-span-4 bg-white border border-paper-3 rounded-[2.5rem] p-10 group hover:border-violet/30 transition-all shadow-sm">
+                <div className="w-14 h-14 bg-paper-3 rounded-2xl flex items-center justify-center mb-8">
+                   <Target className="w-7 h-7 text-ink" />
+                </div>
+                <h3 className="text-2xl font-black font-display mb-4">Relatórios ODS</h3>
+                <p className="text-ink-3 font-medium">Métricas de impacto social e ambiental geradas por seus alunos, prontas para seu relatório anual de sustentabilidade.</p>
+            </div>
+
+            {/* Zero Custo */}
+            <div className="md:col-span-4 bg-ink text-white rounded-[2.5rem] p-10 flex flex-col shadow-xl">
+                 <div className="w-14 h-14 bg-paper/10 rounded-2xl flex items-center justify-center mb-8 border border-paper/10">
+                    <Globe className="w-7 h-7 text-violet" />
+                 </div>
+                 <h3 className="text-2xl font-black font-display mb-4">Parceria Gratuita</h3>
+                 <p className="text-ink-5 font-medium leading-relaxed">Sem taxas de adesão, mensalidades ou burocracia excessiva. Foco total no sucesso do educando.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Board */}
+      <section className="py-24 bg-white">
+        <div className="container">
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { value: '200+', label: 'IES Parceiras', color: 'text-violet' },
+                { value: '8.5k+', label: 'Alunos Impactados', color: 'text-sky' },
+                { value: '500+', label: 'Projetos Verificados', color: 'text-emerald-600' },
+                { value: '98%', label: 'Taxa de Retenção', color: 'text-amber-500' },
+              ].map((stat, i) => (
+                <div key={i} className="bg-paper border border-paper-3 rounded-[2rem] p-8 text-center group hover:shadow-xl transition-all">
+                   <div className={`text-4xl md:text-6xl font-black font-display mb-2 ${stat.color}`}>{stat.value}</div>
+                   <div className="text-[11px] font-black uppercase tracking-widest text-ink-4">{stat.label}</div>
                 </div>
               ))}
-            </div>
-          </div>
+           </div>
         </div>
       </section>
 
-      {/* Partnership Form Section */}
-      <section id="partnership-form" className="py-20">
+      {/* Accordion FAQ - Redesigned */}
+      <section className="py-24 bg-paper-2 border-t border-paper-3">
         <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
-              <h2 className="text-4xl font-bold text-foreground mb-4">
-                Solicite uma Parceria
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Preencha o formulário e nossa equipe entrará em contato em até 48 horas
-              </p>
-            </div>
-
-            {partnershipSubmitted ? (
-              <div className="bg-card border border-primary/50 rounded-2xl p-12 text-center">
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle2 className="w-10 h-10 text-primary" />
-                </div>
-                <h3 className="text-3xl font-bold text-foreground mb-4">
-                  Solicitação Enviada!
-                </h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Recebemos a solicitação de parceria da <strong>{partnershipForm.universityName}</strong>
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Nossa equipe entrará em contato com <strong>{partnershipForm.contactName}</strong> no email{' '}
-                  <strong>{partnershipForm.contactEmail}</strong> em até 48 horas úteis.
-                </p>
+           <div className="max-w-3xl mx-auto flex flex-col gap-12">
+              <div className="text-center">
+                 <h2 className="text-5xl font-black text-ink font-display tracking-tight mb-4">Acordo de <span className="italic font-light text-violet">Impacto</span>.</h2>
+                 <p className="text-ink-3 font-medium">As respostas que a coordenação e reitoria buscam.</p>
               </div>
-            ) : (
-              <form onSubmit={handlePartnershipSubmit} className="bg-card border border-border rounded-2xl p-8 space-y-6">
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-foreground">Dados da Universidade</h4>
-                  
-                  <div>
-                    <Label htmlFor="p-university-name">Nome da Universidade *</Label>
-                    <Input
-                      id="p-university-name"
-                      value={partnershipForm.universityName}
-                      onChange={(e) => setPartnershipForm({ ...partnershipForm, universityName: e.target.value })}
-                      placeholder="Ex: Universidade Federal de Minas Gerais"
-                      required
-                    />
+
+              <div className="space-y-3">
+                {faqData.map((faq, index) => (
+                  <div
+                    key={index}
+                    className={`bg-white rounded-3xl border transition-all duration-300 ${expandedFaq === index ? 'border-violet/30 shadow-2xl shadow-violet/5' : 'border-paper-3 shadow-sm'}`}
+                  >
+                    <button
+                      onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                      className="w-full px-8 py-7 flex items-center justify-between text-left"
+                    >
+                      <span className={`text-xl font-bold transition-colors ${expandedFaq === index ? 'text-violet' : 'text-ink'}`}>{faq.question}</span>
+                      <div className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all ${expandedFaq === index ? 'bg-violet text-white rotate-180 shadow-lg shadow-violet/20' : 'bg-paper-2 text-ink-4'}`}>
+                        <ChevronDown className="w-5 h-5 font-black" />
+                      </div>
+                    </button>
+                    {expandedFaq === index && (
+                      <div className="px-8 pb-8 text-ink-3 font-medium text-lg leading-relaxed animate-fade-in-up">
+                        {faq.answer}
+                      </div>
+                    )}
                   </div>
+                ))}
+              </div>
+           </div>
+        </div>
+      </section>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="p-cnpj">CNPJ</Label>
-                      <Input
-                        id="p-cnpj"
-                        value={partnershipForm.cnpj}
-                        onChange={(e) => setPartnershipForm({ ...partnershipForm, cnpj: e.target.value })}
-                        placeholder="00.000.000/0000-00"
-                      />
-                    </div>
+      {/* Main Partnership Form */}
+      <section id="partnership-form" className="py-32 bg-white relative">
+        <div className="container relative z-10">
+          <div className="max-w-4xl mx-auto">
+             <div className="text-center mb-16">
+                <h2 className="text-5xl md:text-7xl font-black text-ink font-display tracking-tighter leading-[0.9] mb-8">
+                  Solicite a <span className="text-violet italic font-light">Homologação</span> da sua Instituição.
+                </h2>
+                <p className="text-xl text-ink-3 font-medium max-w-2xl mx-auto">Nossos especialistas em parcerias acadêmicas retornarão em até 48 horas úteis.</p>
+             </div>
 
-                    <div>
-                      <Label htmlFor="p-website">Website</Label>
-                      <Input
-                        id="p-website"
-                        type="url"
-                        value={partnershipForm.website}
-                        onChange={(e) => setPartnershipForm({ ...partnershipForm, website: e.target.value })}
-                        placeholder="https://universidade.edu.br"
-                      />
-                    </div>
+             {partnershipSubmitted ? (
+               <div className="bg-paper-2 border border-violet/20 rounded-[3rem] p-16 text-center animate-fade-in shadow-2xl shadow-violet/5">
+                  <div className="w-24 h-24 bg-violet/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-violet/20">
+                    <CheckCircle2 className="w-12 h-12 text-violet" />
                   </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="p-state">Estado (UF) *</Label>
-                      <Input
-                        id="p-state"
-                        value={partnershipForm.state}
-                        onChange={(e) => setPartnershipForm({ ...partnershipForm, state: e.target.value.toUpperCase().slice(0, 2) })}
-                        placeholder="MG"
-                        maxLength={2}
-                        required
-                      />
+                  <h3 className="text-3xl font-black text-ink mb-4 font-display">Solicitação Recebida!</h3>
+                  <p className="text-xl text-ink-3 font-medium mb-10 leading-relaxed">
+                    Agradecemos o interesse da <strong>{partnershipForm.universityName}</strong>. Protocolo: BS-{Math.floor(Math.random()*10000)}
+                  </p>
+                  <Button variant="outline" onClick={() => setPartnershipSubmitted(false)} className="h-12 px-8 rounded-xl border-paper-3 font-black uppercase tracking-widest text-[11px]">Nova Solicitação</Button>
+               </div>
+             ) : (
+               <form onSubmit={handlePartnershipSubmit} className="bg-white border border-paper-3 rounded-[3.5rem] p-12 space-y-10 shadow-2xl shadow-ink/5">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                       <div className="w-8 h-8 rounded-full bg-violet text-white text-[11px] font-black flex items-center justify-center shadow-lg shadow-violet/20">01</div>
+                       <h4 className="text-lg font-black text-ink uppercase tracking-tight">Identificação Institucional</h4>
                     </div>
-
-                    <div>
-                      <Label htmlFor="p-city">Cidade *</Label>
-                      <Input
-                        id="p-city"
-                        value={partnershipForm.city}
-                        onChange={(e) => setPartnershipForm({ ...partnershipForm, city: e.target.value })}
-                        placeholder="Belo Horizonte"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="p-students-count">Número de Alunos</Label>
-                      <Select
-                        value={partnershipForm.studentsCount}
-                        onValueChange={(value) => setPartnershipForm({ ...partnershipForm, studentsCount: value })}
-                      >
-                        <SelectTrigger id="p-students-count">
-                          <SelectValue placeholder="Selecione" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="< 1.000">Menos de 1.000</SelectItem>
-                          <SelectItem value="1.000 - 5.000">1.000 a 5.000</SelectItem>
-                          <SelectItem value="5.000 - 10.000">5.000 a 10.000</SelectItem>
-                          <SelectItem value="10.000 - 20.000">10.000 a 20.000</SelectItem>
-                          <SelectItem value="> 20.000">Mais de 20.000</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="p-courses">Principais Cursos</Label>
-                      <Input
-                        id="p-courses"
-                        value={partnershipForm.coursesOffered}
-                        onChange={(e) => setPartnershipForm({ ...partnershipForm, coursesOffered: e.target.value })}
-                        placeholder="Ex: Administração, Engenharia, Design"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-foreground">Dados do Contato</h4>
-                  
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="p-contact-name">Nome Completo *</Label>
-                      <Input
-                        id="p-contact-name"
-                        value={partnershipForm.contactName}
-                        onChange={(e) => setPartnershipForm({ ...partnershipForm, contactName: e.target.value })}
-                        placeholder="Nome do responsável"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="p-contact-role">Cargo/Função</Label>
-                      <Input
-                        id="p-contact-role"
-                        value={partnershipForm.contactRole}
-                        onChange={(e) => setPartnershipForm({ ...partnershipForm, contactRole: e.target.value })}
-                        placeholder="Ex: Coordenador de Extensão"
-                      />
+                    <div className="grid md:grid-cols-2 gap-6">
+                       <div className="space-y-2 md:col-span-2">
+                          <Label className="text-[11px] font-black uppercase tracking-widest text-ink-4 ml-1">Nome Fantasia da Universidade</Label>
+                          <Input
+                             className="h-16 rounded-2xl border-paper-3 bg-paper-2 focus:bg-white focus:ring-4 focus:ring-violet/10 transition-all font-bold text-lg"
+                             value={partnershipForm.universityName}
+                             onChange={(e) => setPartnershipForm({ ...partnershipForm, universityName: e.target.value })}
+                             placeholder="Ex: Mackenzie, USP, PUC..."
+                             required
+                          />
+                       </div>
+                       <div className="space-y-2">
+                          <Label className="text-[11px] font-black uppercase tracking-widest text-ink-4 ml-1">CNPJ Principal</Label>
+                          <Input
+                             className="h-14 rounded-xl border-paper-3 bg-paper-2 focus:bg-white transition-all font-bold"
+                             value={partnershipForm.cnpj}
+                             onChange={(e) => setPartnershipForm({ ...partnershipForm, cnpj: e.target.value })}
+                             placeholder="00.000.000/0001-00"
+                          />
+                       </div>
+                       <div className="space-y-2">
+                          <Label className="text-[11px] font-black uppercase tracking-widest text-ink-4 ml-1">Website Institucional</Label>
+                          <Input
+                             type="url"
+                             className="h-14 rounded-xl border-paper-3 bg-paper-2 focus:bg-white transition-all font-bold"
+                             value={partnershipForm.website}
+                             onChange={(e) => setPartnershipForm({ ...partnershipForm, website: e.target.value })}
+                             placeholder="www.univ.edu.br"
+                          />
+                       </div>
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="p-contact-email">Email *</Label>
-                      <Input
-                        id="p-contact-email"
-                        type="email"
-                        value={partnershipForm.contactEmail}
-                        onChange={(e) => setPartnershipForm({ ...partnershipForm, contactEmail: e.target.value })}
-                        placeholder="contato@universidade.edu.br"
-                        required
-                      />
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                       <div className="w-8 h-8 rounded-full bg-ink text-white text-[11px] font-black flex items-center justify-center">02</div>
+                       <h4 className="text-lg font-black text-ink uppercase tracking-tight">Ponto de Contato Direto</h4>
                     </div>
-
-                    <div>
-                      <Label htmlFor="p-contact-phone">Telefone</Label>
-                      <Input
-                        id="p-contact-phone"
-                        value={partnershipForm.contactPhone}
-                        onChange={(e) => setPartnershipForm({ ...partnershipForm, contactPhone: e.target.value })}
-                        placeholder="(00) 00000-0000"
-                      />
+                    <div className="grid md:grid-cols-2 gap-6">
+                       <div className="space-y-2">
+                          <Label className="text-[11px] font-black uppercase tracking-widest text-ink-4 ml-1">Nome do Responsável</Label>
+                          <Input
+                             className="h-14 rounded-xl border-paper-3 bg-paper-2 focus:bg-white transition-all font-bold"
+                             value={partnershipForm.contactName}
+                             onChange={(e) => setPartnershipForm({ ...partnershipForm, contactName: e.target.value })}
+                             placeholder="Prof. ou Gestor(a)"
+                             required
+                          />
+                       </div>
+                       <div className="space-y-2">
+                          <Label className="text-[11px] font-black uppercase tracking-widest text-ink-4 ml-1">Email Governamental/Educacional</Label>
+                          <Input
+                             type="email"
+                             className="h-14 rounded-xl border-paper-3 bg-paper-2 focus:bg-white transition-all font-bold"
+                             value={partnershipForm.contactEmail}
+                             onChange={(e) => setPartnershipForm({ ...partnershipForm, contactEmail: e.target.value })}
+                             placeholder="nome@univ.edu.br"
+                             required
+                          />
+                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <Label htmlFor="p-message">Mensagem (Opcional)</Label>
-                  <Textarea
-                    id="p-message"
-                    value={partnershipForm.message}
-                    onChange={(e) => setPartnershipForm({ ...partnershipForm, message: e.target.value })}
-                    placeholder="Conte-nos mais sobre o interesse da universidade em se tornar parceira..."
-                    rows={4}
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={partnershipMutation.isPending}
-                  className="w-full bg-primary hover:bg-primary/90 text-black font-semibold text-lg py-6"
-                >
-                  {partnershipMutation.isPending ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Enviando Solicitação...
-                    </>
-                  ) : (
-                    'Solicitar Parceria'
-                  )}
-                </Button>
-              </form>
-            )}
+                  <Button 
+                    type="submit" 
+                    disabled={partnershipMutation.isPending} 
+                    className="w-full h-20 rounded-[1.5rem] bg-violet hover:bg-violet-1 text-white font-black uppercase tracking-[0.2em] text-sm shadow-2xl shadow-violet/30 transition-all active:scale-[0.98] group"
+                  >
+                    {partnershipMutation.isPending ? <Loader2 className="w-6 h-6 animate-spin" /> : <span>Formalizar Pedido de Parceria <ArrowRight className="inline ml-2 group-hover:translate-x-2 transition-transform" /></span>}
+                  </Button>
+               </form>
+             )}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Junte-se às Universidades Parceiras
-            </h2>
-            <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Mais de 200 instituições de ensino já confiam na Brasil Sustenta para conectar seus alunos ao mercado ESG
-            </p>
-            <Button 
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-black font-semibold text-lg px-10"
-              onClick={() => document.getElementById('partnership-form')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Solicitar Parceria Agora
-            </Button>
-          </div>
-        </div>
+      {/* Footer Closing */}
+      <section className="py-24 bg-paper border-t border-paper-3">
+         <div className="container text-center">
+            <h2 className="text-4xl font-black text-ink font-display tracking-tight mb-8">Integre sua Universidade ao ecossistema <span className="text-violet">Brasil Sustenta</span>.</h2>
+            <Link href="/">
+               <Button variant="ghost" className="text-ink-4 font-black uppercase tracking-widest text-[11px] hover:bg-white hover:text-ink">
+                  Voltar ao Portal Principal
+               </Button>
+            </Link>
+         </div>
       </section>
 
       <Footer />

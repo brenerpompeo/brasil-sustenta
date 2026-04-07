@@ -7,7 +7,7 @@ export type TrpcContext = {
   req: CreateExpressContextOptions["req"];
   res: CreateExpressContextOptions["res"];
   user: User | null;
-  db: Awaited<ReturnType<typeof getDb>>;
+  db: Exclude<Awaited<ReturnType<typeof getDb>>, null>;
 };
 
 export async function createContext(
@@ -23,6 +23,9 @@ export async function createContext(
   }
 
   const db = await getDb();
+  if (!db) {
+    throw new Error("Database initialization failed");
+  }
 
   return {
     req: opts.req,

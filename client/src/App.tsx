@@ -10,27 +10,63 @@ import LoginJovem from "./pages/LoginJovem";
 import LoginUniversidade from "./pages/LoginUniversidade";
 import PerfilEmpresa from "./pages/PerfilEmpresa";
 import DashboardEmpresa from "./pages/DashboardEmpresa";
+import DashboardJovem from "./pages/DashboardJovem";
+import DashboardUniversidade from "./pages/DashboardUniversidade";
 import ParaEmpresas from "./pages/ParaEmpresas";
 import ParaJovens from './pages/ParaJovens';
 import ParaUniversidades from './pages/ParaUniversidades';
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminUsuarios from "./pages/admin/Usuarios";
+import AdminEmpresas from "./pages/admin/Empresas";
+import AdminTalentos from "./pages/admin/Talentos";
+import AdminUniversidades from "./pages/admin/Universidades";
+import AdminProjetos from "./pages/admin/Projetos";
+import AdminSquads from "./pages/admin/Squads";
+import AdminBlog from "./pages/admin/Blog";
+import AdminEventos from "./pages/admin/Eventos";
+import AdminArtigos from "./pages/admin/Artigos.tsx";
+import AdminRelatorios from "./pages/admin/Relatorios.tsx";
+import AdminMateriais from "./pages/admin/Materiais.tsx";
+import Oportunidades from "./pages/Oportunidades";
+import Blog from "./pages/Blog";
+import Eventos from "./pages/Eventos";
+import Artigos from "./pages/Artigos";
+import Relatorios from "./pages/Relatorios";
+import Biblioteca from "./pages/Biblioteca";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
-      <Route path={"/ "} component={Home} />
+      <Route path="/" component={Home} />
       <Route path="/login/empresa" component={LoginEmpresa} />
       <Route path="/login/jovem" component={LoginJovem} />
       <Route path="/login/universidade" component={LoginUniversidade} />
       <Route path="/perfil/empresa" component={PerfilEmpresa} />
       <Route path="/dashboard/empresa" component={DashboardEmpresa} />
+      <Route path="/dashboard/jovem" component={DashboardJovem} />
+      <Route path="/dashboard/universidade" component={DashboardUniversidade} />
       <Route path="/para-empresas" component={ParaEmpresas} />
       <Route path="/para-jovens" component={ParaJovens} />
       <Route path="/para-universidades" component={ParaUniversidades} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/usuarios" component={AdminUsuarios} />
+      <Route path="/admin/empresas" component={AdminEmpresas} />
+      <Route path="/admin/talentos" component={AdminTalentos} />
+      <Route path="/admin/universidades" component={AdminUniversidades} />
+      <Route path="/admin/projetos" component={AdminProjetos} />
+      <Route path="/admin/squads" component={AdminSquads} />
+      <Route path="/admin/blog" component={AdminBlog} />
+      <Route path="/admin/eventos" component={AdminEventos} />
+      <Route path="/admin/artigos" component={AdminArtigos} />
+      <Route path="/admin/relatorios" component={AdminRelatorios} />
+      <Route path="/admin/materiais" component={AdminMateriais} />
+      <Route path="/oportunidades" component={Oportunidades} />
+      <Route path="/blog" component={Blog} />
+      <Route path="/eventos" component={Eventos} />
+      <Route path="/artigos" component={Artigos} />
+      <Route path="/relatorios" component={Relatorios} />
+      <Route path="/biblioteca" component={Biblioteca} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
