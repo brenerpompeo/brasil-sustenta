@@ -31,10 +31,10 @@ export default function DashboardEmpresa() {
   // Redirecionar se não autenticado
   if (loading) {
     return (
-      <div className="min-h-screen bg-paper flex items-center justify-center">
-        <div className="text-center text-ink">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-leaf-3 mx-auto mb-4"></div>
-          <p className="font-body opacity-60">Carregando interface corporativa...</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center text-foreground">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="opacity-60">Carregando interface corporativa...</p>
         </div>
       </div>
     );

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { protectedProcedure, adminProcedure, router } from "../_core/trpc";
-import { projects, applications, companyProfiles, talentProfiles } from "../../drizzle/schema";
-import { eq, desc, count } from "drizzle-orm";
+import { projects, applications, companyProfiles, talentProfiles, squads, squadMembers } from "../../drizzle/schema";
+import { eq, desc, count, and } from "drizzle-orm";
 
 /**
  * Talent Router
@@ -89,11 +89,69 @@ export const talentRouter = router({
     }),
 
   getMySquads: protectedProcedure
-    .query(async () => {
-      // TODO: Implementar lógica real de squads quando a tabela estiver pronta com membros
+    .query(async ({ ctx }) => {
+      if (!ctx.db || !ctx.user) return { squads: [], total: 0 };
+
+      // Get talent ID
+      const talentResult = await ctx.db
+        .select()
+        .from(talentProfiles)
+        .where(eq(talentProfiles.userId, ctx.user.id))
+        .limit(1);
+
+      const talent = talentResult[0];
+      if (!talent) return { squads: [], total: 0 };
+
+      // Get squads where this talent is a member
+      const squadsList = await ctx.db
+        .select({
+          id: squads.id,
+          name: squads.name,
+          status: squads.status,
+          formedAt: squads.formedAt,
+          completedAt: squads.completedAt,
+          project: {
+            id: projects.id,
+            title: projects.title,
+            status: projects.status,
+          }
+        })
+        .from(squadMembers)
+        .innerJoin(squads, eq(squadMembers.squadId, squads.id))
+        .innerJoin(projects, eq(squads.projectId, projects.id))
+        .where(eq(squadMembers.talentId, talent.id))
+        .orderBy(desc(squads.formedAt));
+
+      // Get members for each squad
+      const squadsWithMembers = await Promise.all(
+        squadsList.map(async (squad) => {
+          const membersList = await ctx.db
+            .select({
+              id: squadMembers.id,
+              role: squadMembers.role,
+              talent: {
+                fullName: talentProfiles.fullName,
+                course: talentProfiles.course,
+                avatar: talentProfiles.avatar,
+              }
+            })
+            .from(squadMembers)
+            .innerJoin(talentProfiles, eq(squadMembers.talentId, talentProfiles.id))
+            .where(eq(squadMembers.squadId, squad.id));
+
+          return { ...squad, members: membersList };
+        })
+      );
+
+      const countResult = await ctx.db
+        .select({ count: squads.id })
+        .from(squadMembers)
+        .innerJoin(squads, eq(squadMembers.squadId, squads.id))
+        .where(eq(squadMembers.talentId, talent.id));
+
       return {
-        squads: [],
-        total: 0
+        squads: squadsWithMembers,
+        total: countResult[0]?.count || 0
       };
     }),
 

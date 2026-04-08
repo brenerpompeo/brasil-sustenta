@@ -26,15 +26,15 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-white relative overflow-hidden border-y border-paper-3">
+    <section className="py-24 lg:py-32 bg-background relative overflow-hidden border-y border-border">
       <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-widest uppercase text-ink-4 mb-4">Social Proof</div>
-          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-black text-ink leading-[1.1] mb-6">
-            O que dizem os <span className="italic font-light text-leaf-1">Parceiros</span>
+          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Depoimentos</div>
+          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
+            O que dizem os <span className="italic font-light text-primary">Parceiros</span>
           </h2>
-          <p className="text-[1.125rem] text-ink-3 font-medium">
+          <p className="text-[1.125rem] text-muted-foreground font-medium">
             Líderes de multinacionais brasileiras já transformaram seus desafios com a nossa plataforma.
           </p>
         </div>
@@ -44,32 +44,32 @@ const TestimonialsSection = () => {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-paper border border-paper-3 rounded-[1.5rem] p-10 hover:bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 relative group animate-fade-in-up flex flex-col"
+              className="bg-card border border-border rounded-[1.5rem] p-10 hover:border-primary/30 transition-all duration-300 relative group animate-fade-in-up flex flex-col shadow-sm hover:shadow-primary/5"
               style={{ animationDelay: `${index * 150}ms` }}
             >
               {/* Quote Icon */}
               <div className="mb-8">
-                <Quote className="w-10 h-10 text-leaf-2/30 group-hover:text-leaf-1/30 transition-colors" />
+                <Quote className="w-10 h-10 text-primary/20 group-hover:text-primary transition-colors" />
               </div>
 
               {/* Testimonial Text */}
-              <p className="text-[16px] font-medium text-ink-2 leading-relaxed mb-10 flex-1">
+              <p className="text-[16px] font-medium text-foreground/90 leading-relaxed mb-10 flex-1 italic">
                 "{testimonial.text}"
               </p>
 
               {/* Author Info */}
-              <div className="flex items-center space-x-4 pt-6 border-t border-paper-3">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-paper-3 flex-shrink-0 bg-paper">
+              <div className="flex items-center space-x-4 pt-6 border-t border-border">
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-border flex-shrink-0 bg-secondary">
                   <img
                     src={testimonial.image}
                     alt={testimonial.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
                   />
                 </div>
                 <div>
-                  <p className="font-bold text-[15px] text-ink">{testimonial.name}</p>
-                  <p className="text-[12px] font-semibold text-ink-3">
-                    {testimonial.role} · <span className="text-leaf-1">{testimonial.company}</span>
+                  <p className="font-bold text-[15px] text-foreground">{testimonial.name}</p>
+                  <p className="text-[12px] font-semibold text-muted-foreground">
+                    {testimonial.role} · <span className="text-primary">{testimonial.company}</span>
                   </p>
                 </div>
               </div>

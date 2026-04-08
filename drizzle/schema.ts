@@ -128,6 +128,7 @@ export const projects = pgTable("projects", {
   teamSize: integer("team_size").notNull(),
   requiredSkills: json("required_skills").$type<string[]>(),
   budget: integer("budget"), // in cents
+  coverImage: varchar("cover_image", { length: 500 }),
   status: projectStatusEnum("status").default("draft").notNull(),
   startDate: timestamp("start_date"),
   endDate: timestamp("end_date"),

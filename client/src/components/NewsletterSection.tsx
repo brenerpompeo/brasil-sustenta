@@ -30,16 +30,16 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="py-24 lg:py-32 bg-[#F8FAFC] border-y border-paper-3 relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-background border-y border-border relative overflow-hidden">
       <div className="container px-6 lg:px-8 max-w-[800px] mx-auto">
-        <div className="bg-white border border-paper-3 rounded-[2rem] p-10 lg:p-16 shadow-sm animate-fade-in-up">
+        <div className="bg-card border border-border rounded-[2rem] p-10 lg:p-16 shadow-2xl animate-fade-in-up shadow-primary/5">
           {/* Header */}
           <div className="text-center mb-10">
-            <div className="text-[11px] font-bold tracking-widest uppercase text-leaf-2 mb-4">Comunidade</div>
-            <h2 className="font-display text-[2rem] lg:text-[2.5rem] font-black text-ink leading-[1.1] mb-4">
-              Fique por dentro do <span className="italic font-light text-leaf-1">ESG</span>
+            <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Comunidade</div>
+            <h2 className="font-display text-[2rem] lg:text-[3rem] font-bold text-foreground leading-[1.1] mb-4">
+              Fique por dentro do <span className="italic font-light text-primary">ESG</span>
             </h2>
-            <p className="text-[15px] text-ink-3 font-medium max-w-lg mx-auto">
+            <p className="text-[15px] text-muted-foreground font-medium max-w-lg mx-auto">
               Insights, oportunidades e tendências do mercado ESG direto no seu e-mail.
             </p>
           </div>
@@ -49,9 +49,9 @@ const NewsletterSection = () => {
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <div key={index} className="flex items-center space-x-2.5 text-[13px] font-semibold text-ink-2">
-                  <div className="w-8 h-8 bg-paper border border-paper-3 rounded-lg flex items-center justify-center">
-                    <Icon className="w-4 h-4 text-leaf-1" />
+                <div key={index} className="flex items-center space-x-2.5 text-[13px] font-semibold text-foreground/80">
+                  <div className="w-8 h-8 bg-secondary border border-border rounded-lg flex items-center justify-center">
+                    <Icon className="w-4 h-4 text-primary" />
                   </div>
                   <span>{feature.label}</span>
                 </div>
@@ -69,18 +69,18 @@ const NewsletterSection = () => {
                   placeholder="Seu melhor e-mail"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-11 pr-4 h-12 bg-paper border border-paper-3 rounded-xl text-[14px] font-medium text-ink placeholder:text-ink-4 focus:outline-none focus:ring-2 focus:ring-leaf-2/30 focus:border-leaf-2 transition-all"
+                  className="w-full pl-11 pr-4 h-12 bg-secondary border border-border rounded-xl text-[14px] font-medium text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-ink hover:bg-ink-1 text-white font-bold text-[14px] h-12 px-8 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+                className="bg-primary hover:bg-primary/90 text-black font-bold text-[14px] h-12 px-8 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 {loading ? 'Inscrevendo...' : 'Inscrever-se'}
               </button>
             </div>
-            <p className="text-[11px] text-ink-4 text-center mt-4 font-medium">
+            <p className="text-[11px] text-muted-foreground text-center mt-4 font-medium">
               Sem spam. Cancele quando quiser.
             </p>
           </form>

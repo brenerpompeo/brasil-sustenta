@@ -72,15 +72,15 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
       <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-widest uppercase text-ink-4 mb-4">Suporte</div>
-          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-black text-ink leading-[1.1] mb-6">
-            Perguntas <span className="italic font-light text-leaf-1">Frequentes</span>
+          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Suporte</div>
+          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
+            Perguntas <span className="italic font-light text-primary">Frequentes</span>
           </h2>
-          <p className="text-[1.125rem] text-ink-3 font-medium">
+          <p className="text-[1.125rem] text-muted-foreground font-medium">
             Esclarecimentos sobre o ecossistema Brasil Sustenta.
           </p>
         </div>
@@ -91,46 +91,45 @@ const FAQSection = () => {
             <button
               key={tab.id}
               onClick={() => { setActiveTab(tab.id); setOpenIndex(0); }}
-              className={`px-6 py-3 rounded-xl text-[13px] font-bold tracking-wider uppercase transition-all ${
+              className={`px-6 py-3 rounded-xl text-[12px] font-bold tracking-widest uppercase transition-all shadow-sm ${
                 activeTab === tab.id
-                  ? 'bg-ink text-white shadow-lg'
-                  : 'bg-paper border border-paper-3 text-ink-3 hover:bg-white hover:border-ink/10'
+                  ? 'bg-primary text-black'
+                  : 'bg-card border border-border text-muted-foreground hover:bg-white/5 hover:border-primary/50'
               }`}
             >
-              <span className={`inline-block w-2 h-2 rounded-full mr-2 ${tab.color}`}></span>
               {tab.label}
             </button>
           ))}
         </div>
 
         {/* FAQ Accordion */}
-        <div className="max-w-3xl mx-auto space-y-3">
+        <div className="max-w-3xl mx-auto space-y-4">
           {filteredFaqs.map((faq, index) => (
             <div
               key={`${activeTab}-${index}`}
-              className="bg-paper border border-paper-3 rounded-2xl overflow-hidden hover:bg-white hover:border-ink/10 transition-all duration-200"
+              className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 group"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-8 py-6 flex items-center justify-between text-left group"
+                className="w-full px-8 py-6 flex items-center justify-between text-left"
               >
-                <span className="text-[16px] font-bold text-ink pr-6 group-hover:text-leaf-1 transition-colors">
+                <span className="text-[17px] font-semibold text-foreground pr-6 group-hover:text-primary transition-colors">
                   {faq.question}
                 </span>
                 <ChevronDown
-                  className={`w-5 h-5 text-ink-3 flex-shrink-0 transition-transform duration-300 ${
-                    openIndex === index ? 'rotate-180 text-leaf-1' : ''
+                  className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-500 ${
+                    openIndex === index ? 'rotate-180 text-primary' : ''
                   }`}
                 />
               </button>
               
               <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === index ? 'max-h-96' : 'max-h-0'
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                  openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
                 <div className="px-8 pb-6 pt-0">
-                  <p className="text-[15px] text-ink-2 leading-relaxed font-medium">
+                  <p className="text-[15px] text-muted-foreground leading-relaxed font-medium">
                     {faq.answer}
                   </p>
                 </div>
@@ -141,10 +140,10 @@ const FAQSection = () => {
 
         {/* Contact CTA */}
         <div className="text-center mt-16">
-          <p className="text-[14px] text-ink-3 font-medium mb-3">
+          <p className="text-[14px] text-muted-foreground font-medium mb-3">
             Não encontrou o que procurava?
           </p>
-          <button className="text-[14px] text-leaf-1 hover:text-leaf-2 font-bold transition-colors">
+          <button className="text-[14px] text-primary hover:text-primary/80 font-bold tracking-tight transition-colors">
             Contato Direto →
           </button>
         </div>

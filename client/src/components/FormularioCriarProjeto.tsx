@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { X } from "lucide-react";
+import { X, Image } from "lucide-react";
+import { CoverUpload } from "./CoverUpload";
 
 interface CreateProjectInput {
   title: string;
@@ -17,6 +18,7 @@ interface CreateProjectInput {
   teamSize: number;
   budget: number;
   deliverables?: string;
+  coverImage?: string;
 }
 
 interface FormularioCriarProjetoProps {
@@ -52,6 +54,7 @@ const skillsOptions = [
 
 export default function FormularioCriarProjeto({ onSuccess, onCancel }: FormularioCriarProjetoProps) {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [coverImage, setCoverImage] = useState<string>("");
   const [formData, setFormData] = useState<Partial<CreateProjectInput>>({
     title: "",
     description: "",
@@ -109,6 +112,7 @@ export default function FormularioCriarProjeto({ onSuccess, onCancel }: Formular
         budget: formData.budget!,
         deliverables: formData.deliverables,
         requiredSkills: selectedSkills,
+        coverImage: coverImage || undefined,
       });
 
       if (result.success) {
@@ -286,6 +290,17 @@ export default function FormularioCriarProjeto({ onSuccess, onCancel }: Formular
             onChange={(e) => setFormData({ ...formData, deliverables: e.target.value })}
             placeholder="Descreva os entregáveis esperados..."
             className="bg-background border border-border text-foreground min-h-[80px]"
+          />
+        </div>
+
+        {/* Capa do Projeto */}
+        <div>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Imagem de Capa (opcional)
+          </label>
+          <CoverUpload
+            currentCover={coverImage}
+            onUploadSuccess={setCoverImage}
           />
         </div>
 

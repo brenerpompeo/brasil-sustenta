@@ -69,6 +69,7 @@ export const companyRouter = router({
         requiredSkills: input.requiredSkills,
         budget: input.budget,
         deliverables: input.deliverables || null,
+        coverImage: input.coverImage || null,
         status: "draft",
       });
 
@@ -139,13 +140,13 @@ export const companyRouter = router({
 
       // Get total count
       const countResult = await ctx.db
-        .select({ count: projects.id })
+        .select({ count: count() })
         .from(projects)
         .where(and(...conditions));
 
       return {
         projects: projectsList,
-        total: countResult.length,
+        total: countResult[0]?.count || 0,
       };
     }),
 
@@ -246,9 +247,11 @@ export const companyRouter = router({
           talent: {
             fullName: talentProfiles.fullName,
             course: talentProfiles.course,
+            semester: talentProfiles.semester,
             skills: talentProfiles.skills,
             avatar: talentProfiles.avatar,
             linkedin: talentProfiles.linkedin,
+            github: talentProfiles.github,
           },
         })
         .from(applications)
@@ -260,13 +263,13 @@ export const companyRouter = router({
 
       // Get total count
       const countResult = await ctx.db
-        .select({ count: applications.id })
+        .select({ count: count() })
         .from(applications)
         .where(and(...conditions));
 
       return {
         applications: appsList,
-        total: countResult.length,
+        total: countResult[0]?.count || 0,
       };
     }),
 
@@ -437,12 +440,79 @@ export const companyRouter = router({
         throw new Error("You don't have permission to approve this application");
       }
 
-      await ctx.db
-        .update(applications)
-        .set({ status: "accepted", reviewedAt: new Date() })
-        .where(eq(applications.id, input.applicationId));
+       await ctx.db
+         .update(applications)
+         .set({ status: "accepted", reviewedAt: new Date() })
+         .where(eq(applications.id, input.applicationId));
 
-      return { success: true, message: "Candidatura aprovada com sucesso!" };
+       // Create squad if it doesn't exist and add talent as member
+       const application = await ctx.db
+         .select()
+         .from(applications)
+         .where(eq(applications.id, input.applicationId))
+         .limit(1);
+
+       if (application && application.length > 0) {
+         const project = await ctx.db
+           .select()
+           .from(projects)
+           .where(eq(projects.id, application[0].projectId))
+           .limit(1);
+
+         if (project && project.length > 0) {
+           // Check if squad already exists for this project
+           const existingSquad = await ctx.db
+             .select()
+             .from(squads)
+             .where(eq(squads.projectId, project[0].id))
+             .limit(1);
+
+           if (!existingSquad || existingSquad.length === 0) {
+             // Create new squad
+             const [newSquad] = await ctx.db
+               .insert(squads)
+               .values({
+                 projectId: project[0].id,
+                 name: `Squad ${project[0].title}`,
+                 status: "forming",
+               })
+               .returning();
+
+             // Add talent as squad member
+             await ctx.db
+               .insert(squadMembers)
+               .values({
+                 squadId: newSquad.id,
+                 talentId: application[0].talentId,
+                 role: "Member",
+               });
+           } else {
+             // Squad exists, add talent as member (if not already a member)
+             const alreadyMember = await ctx.db
+               .select()
+               .from(squadMembers)
+               .where(
+                 and(
+                   eq(squadMembers.squadId, existingSquad[0].id),
+                   eq(squadMembers.talentId, application[0].talentId)
+                 )
+               )
+               .limit(1);
+
+             if (!alreadyMember || alreadyMember.length === 0) {
+               await ctx.db
+                 .insert(squadMembers)
+                 .values({
+                   squadId: existingSquad[0].id,
+                   talentId: application[0].talentId,
+                   role: "Member",
+                 });
+             }
+           }
+         }
+       }
+
+       return { success: true, message: "Candidatura aprovada com sucesso!" };
     }),
 
   /**
@@ -495,12 +565,52 @@ export const companyRouter = router({
         throw new Error("You don't have permission to reject this application");
       }
 
-      await ctx.db
-        .update(applications)
-        .set({ status: "rejected", reviewedAt: new Date() })
-        .where(eq(applications.id, input.applicationId));
+       await ctx.db
+         .update(applications)
+         .set({ status: "rejected", reviewedAt: new Date() })
+         .where(eq(applications.id, input.applicationId));
 
-      return { success: true, message: "Candidatura rejeitada com sucesso!" };
+       // If squad exists and this was the only member, consider removing squad or updating status
+       const application = await ctx.db
+         .select()
+         .from(applications)
+         .where(eq(applications.id, input.applicationId))
+         .limit(1);
+
+       if (application && application.length > 0) {
+         const project = await ctx.db
+           .select()
+           .from(projects)
+           .where(eq(projects.id, application[0].projectId))
+           .limit(1);
+
+         if (project && project.length > 0) {
+           const squad = await ctx.db
+             .select()
+             .from(squads)
+             .where(eq(squads.projectId, project[0].id))
+             .limit(1);
+
+           if (squad && squad.length > 0) {
+             // Check remaining members in squad
+             const members = await ctx.db
+               .select()
+               .from(squadMembers)
+               .where(eq(squadMembers.squadId, squad[0].id))
+               .limit(100);
+
+             if (members.length === 0) {
+               // No members left, update squad status or delete
+               await ctx.db
+                 .update(squads)
+                 .set({ status: "forming" }) // Keep forming but empty
+                 .where(eq(squads.id, squad[0].id));
+             }
+           }
+         }
+       }
+
+       return { success: true, message: "Candidatura rejeitada com sucesso!" };
     }),
 
   /**

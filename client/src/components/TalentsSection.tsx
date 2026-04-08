@@ -39,22 +39,22 @@ const talents = [
 
 const TalentsSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-ink relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-full h-[600px] bg-sky-2/10 rounded-bl-full blur-[120px] pointer-events-none"></div>
+    <section className="py-24 lg:py-32 bg-background relative overflow-hidden border-t border-border">
+      <div className="absolute top-0 right-0 w-full h-[600px] bg-primary/5 rounded-bl-full blur-[120px] pointer-events-none"></div>
 
       <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 animate-fade-in-up">
           <div className="max-w-2xl">
-            <div className="text-[11px] font-bold tracking-widest uppercase text-sky-1 mb-4">Elite Acadêmica</div>
-            <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-black text-white leading-[1.1] mb-6">
-              O futuro <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-4 to-violet-3">começa com eles.</span>
+            <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Elite Acadêmica</div>
+            <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6 tracking-tighter">
+              O futuro <span className="italic font-light text-primary">começa com eles.</span>
             </h2>
-            <p className="text-[1.125rem] text-white/70 font-medium">
+            <p className="text-[1.125rem] text-muted-foreground font-medium">
               Vistos rigorosamente pelas melhores universidades do país.
             </p>
           </div>
-          <Link href="/para-empresas" className="inline-flex items-center justify-center bg-white text-ink text-[14px] font-bold px-8 py-3.5 rounded-xl hover:bg-paper hover:shadow-lg hover:-translate-y-0.5 transition-all w-full md:w-auto">
+          <Link href="/para-empresas" className="inline-flex items-center justify-center bg-primary text-black text-[14px] font-bold px-8 py-3.5 rounded-xl hover:bg-primary/90 hover:shadow-primary/10 hover:-translate-y-0.5 transition-all w-full md:w-auto">
             Explorar Perfis
           </Link>
         </div>
@@ -64,30 +64,30 @@ const TalentsSection = () => {
           {talents.map((talent, index) => (
             <div
               key={index}
-              className="bg-[#0A1128] border border-[#1E293B] rounded-[1.5rem] p-8 hover:border-sky-1/30 hover:bg-[#0D1530] transition-all duration-300 group flex flex-col h-full animate-fade-in-up"
+              className="bg-card border border-border rounded-[1.5rem] p-8 hover:border-primary/30 transition-all duration-300 group flex flex-col h-full animate-fade-in-up shadow-sm hover:shadow-primary/5"
               style={{ animationDelay: `${index * 150}ms` }}
             >
               {/* Header Box */}
               <div className="flex items-start gap-4 mb-6">
-                <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-sky-1/10 flex-shrink-0 border border-[#1E293B]">
-                  <img src={talent.image} alt={talent.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-secondary border border-border flex-shrink-0">
+                  <img src={talent.image} alt={talent.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500" />
                 </div>
                 <div>
-                  <h3 className="font-display text-xl font-bold text-white leading-tight mb-1">{talent.name}</h3>
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-sky-1">
-                    <Star className="w-3.5 h-3.5 fill-sky-1" /> {talent.rating} Rating
+                  <h3 className="font-display text-xl font-bold text-foreground leading-tight mb-1 tracking-tighter">{talent.name}</h3>
+                  <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-primary">
+                    <Star className="w-3 h-3 fill-primary" /> {talent.rating} Rating
                   </div>
                 </div>
               </div>
 
               {/* Data Rows */}
               <div className="mb-6 space-y-3">
-                <div className="flex items-center gap-3 text-[13px] text-white/70 font-medium">
-                  <Calendar className="w-4 h-4 text-white/50" />
+                <div className="flex items-center gap-3 text-[13px] text-muted-foreground font-medium">
+                  <Calendar className="w-4 h-4 text-muted-foreground/40" />
                   {talent.course} ({talent.university})
                 </div>
-                <div className="flex items-center gap-3 text-[13px] text-white/70 font-medium">
-                  <MapPin className="w-4 h-4 text-white/50" />
+                <div className="flex items-center gap-3 text-[13px] text-muted-foreground font-medium">
+                  <MapPin className="w-4 h-4 text-muted-foreground/40" />
                   {talent.location}
                 </div>
               </div>
@@ -95,14 +95,14 @@ const TalentsSection = () => {
               {/* Skills */}
               <div className="flex flex-wrap gap-2 mb-6">
                 {talent.skills.map((skill, i) => (
-                  <span key={i} className="px-3 py-1 bg-white/5 text-white/80 border border-white/10 text-[11px] font-bold tracking-wider uppercase rounded-lg">
+                  <span key={i} className="px-3 py-1 bg-secondary text-muted-foreground border border-border text-[10px] font-bold tracking-[0.1em] uppercase rounded-lg">
                     {skill}
                   </span>
                 ))}
               </div>
 
               {/* Bio */}
-              <p className="text-[14px] text-white/60 leading-relaxed mt-auto pt-6 border-t border-white/5">
+              <p className="text-[14px] text-muted-foreground/80 leading-relaxed mt-auto pt-6 border-t border-border italic">
                 "{talent.bio}"
               </p>
             </div>

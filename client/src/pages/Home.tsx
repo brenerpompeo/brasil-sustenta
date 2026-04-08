@@ -17,7 +17,7 @@ import ODSSection from '@/components/ODSSection';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-paper font-body text-ink selection:bg-leaf selection:text-white">
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-black">
       <Header />
       <HeroSection />
       <HowItWorksSection />

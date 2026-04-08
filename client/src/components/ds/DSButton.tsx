@@ -35,9 +35,9 @@ const DSButton = forwardRef<HTMLButtonElement, DSButtonProps>(
 
     const variantStyles = {
       primary: 'gradient-cta text-white shadow-lg',
-      secondary: 'bg-card text-foreground border-2 border-primary hover:bg-primary/10 hover:border-primary/80',
-      outline: 'bg-transparent text-foreground border-2 border-border hover:border-primary hover:text-primary',
-      ghost: 'bg-transparent text-muted-foreground hover:text-primary hover:bg-primary/5',
+      secondary: 'bg-card text-foreground border-2 border-primary hover:bg-primary/10 hover:border-primary/80 shadow-md',
+      outline: 'bg-transparent text-foreground border-2 border-border hover:border-primary hover:text-primary hover:bg-primary/5',
+      ghost: 'bg-transparent text-foreground/80 hover:text-primary hover:bg-primary/5',
     };
 
     const sizeStyles = {

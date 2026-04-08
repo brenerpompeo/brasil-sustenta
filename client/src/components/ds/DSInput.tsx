@@ -49,7 +49,7 @@ const DSInput = forwardRef<HTMLInputElement, DSInputProps>(
         
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/70">
               {leftIcon}
             </div>
           )}
@@ -61,7 +61,7 @@ const DSInput = forwardRef<HTMLInputElement, DSInputProps>(
           />
           
           {rightIcon && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/70">
               {rightIcon}
             </div>
           )}

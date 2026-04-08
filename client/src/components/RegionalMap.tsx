@@ -34,7 +34,7 @@ const hubs = [
 
 const RegionalMap = () => {
   return (
-    <section className="relative py-32 bg-ink overflow-hidden">
+    <section className="relative py-32 bg-background overflow-hidden">
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-leaf rounded-full blur-[150px]" />
@@ -49,23 +49,23 @@ const RegionalMap = () => {
             transition={{ duration: 0.6 }}
             className="flex items-center justify-center gap-3 mb-6"
           >
-            <span className="h-[1px] w-8 bg-leaf-4" />
-            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-leaf-4">Brasil Sustenta</span>
-            <span className="h-[1px] w-8 bg-leaf-4" />
+            <span className="h-[1px] w-8 bg-primary/30" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-primary">Brasil Sustenta</span>
+            <span className="h-[1px] w-8 bg-primary/30" />
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-black text-white font-display tracking-tight leading-[0.9]"
+            className="text-5xl md:text-7xl font-bold text-foreground font-display tracking-tighter leading-[0.9]"
           >
-            Rede de Inovação <span className="italic font-light text-paper-4">Eco-Tech</span>.
+            Rede de Inovação <span className="italic font-light text-primary">Eco-Tech</span>.
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-2xl mx-auto text-paper-4/60 text-lg md:text-xl font-medium mt-8 leading-relaxed"
+            className="max-w-2xl mx-auto text-muted-foreground text-lg md:text-xl font-medium mt-8 leading-relaxed"
           >
             Conectando hubs de tecnologia sustentável para um futuro verde e inteligente no Brasil.
           </motion.p>
@@ -123,7 +123,7 @@ const RegionalMap = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1.5 + idx * 0.2 }}
-              className="absolute hidden md:flex flex-col gap-3 p-4 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-2xl w-56 shadow-2xl"
+              className="absolute hidden md:flex flex-col gap-3 p-4 bg-card/40 backdrop-blur-2xl border border-border rounded-2xl w-56 shadow-2xl"
               style={{ 
                 left: hub.x > 500 ? `${(hub.x / 10)}%` : 'auto', 
                 right: hub.x <= 500 ? `${100 - (hub.x / 10)}%` : 'auto',
@@ -132,16 +132,16 @@ const RegionalMap = () => {
               }}
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-white/10">
-                  <hub.icon className="w-5 h-5 text-leaf" strokeWidth={2} />
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <hub.icon className="w-5 h-5 text-primary" strokeWidth={2} />
                 </div>
                 <div>
-                  <div className="text-[10px] font-black uppercase text-leaf tracking-widest">{hub.tag}</div>
-                  <div className="text-sm font-bold text-white">{hub.name}</div>
+                  <div className="text-[10px] font-bold uppercase text-primary tracking-widest">{hub.tag}</div>
+                  <div className="text-sm font-bold text-foreground">{hub.name}</div>
                 </div>
               </div>
-              <div className="h-[1px] w-full bg-white/10" />
-              <div className="text-[11px] text-paper-4/60 font-medium">{hub.specialty}</div>
+              <div className="h-[1px] w-full bg-border" />
+              <div className="text-[11px] text-muted-foreground/80 font-medium">{hub.specialty}</div>
             </motion.div>
           ))}
         </div>

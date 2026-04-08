@@ -92,12 +92,16 @@ export const profileRouter = router({
         birthDate: z.string().optional(),
         course: z.string().optional(),
         semester: z.number().min(1).max(12).optional(),
+        graduationYear: z.number().min(2024).max(2040).optional(),
+        ra: z.string().optional(),
+        universityId: z.number().optional(),
         skills: z.array(z.string()).optional(),
         bio: z.string().optional(),
-        linkedin: z.string().url().optional(),
-        github: z.string().url().optional(),
-        portfolio: z.string().url().optional(),
-        photo: z.string().optional(),
+        linkedin: z.string().url().optional().or(z.string().startsWith('http').optional()),
+        github: z.string().url().optional().or(z.string().startsWith('http').optional()),
+        portfolio: z.string().url().optional().or(z.string().startsWith('http').optional()),
+        avatar: z.string().optional(),
+        isAvailable: z.boolean().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {

@@ -9,6 +9,8 @@ import LoginEmpresa from "./pages/LoginEmpresa";
 import LoginJovem from "./pages/LoginJovem";
 import LoginUniversidade from "./pages/LoginUniversidade";
 import PerfilEmpresa from "./pages/PerfilEmpresa";
+import PerfilJovem from "./pages/PerfilJovem";
+import PerfilUniversidade from "./pages/PerfilUniversidade";
 import DashboardEmpresa from "./pages/DashboardEmpresa";
 import DashboardJovem from "./pages/DashboardJovem";
 import DashboardUniversidade from "./pages/DashboardUniversidade";
@@ -43,6 +45,8 @@ function Router() {
       <Route path="/login/jovem" component={LoginJovem} />
       <Route path="/login/universidade" component={LoginUniversidade} />
       <Route path="/perfil/empresa" component={PerfilEmpresa} />
+      <Route path="/perfil/jovem" component={PerfilJovem} />
+      <Route path="/perfil/universidade" component={PerfilUniversidade} />
       <Route path="/dashboard/empresa" component={DashboardEmpresa} />
       <Route path="/dashboard/jovem" component={DashboardJovem} />
       <Route path="/dashboard/universidade" component={DashboardUniversidade} />
@@ -82,10 +86,7 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="dark"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="dark" switchable={false}>
         <TooltipProvider>
           <Toaster />
           <Router />

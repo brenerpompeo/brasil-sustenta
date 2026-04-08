@@ -43,8 +43,8 @@ const Header = () => {
           {/* Logo Premium */}
           <Link href="/">
             <div className="flex items-center space-x-3 cursor-pointer group relative z-10">
-              <div className="font-display text-xl sm:text-2xl font-black text-ink tracking-tight leading-none group-hover:opacity-80 transition-opacity">
-                Brasil<br /><span className="text-leaf-1">Sustenta</span>
+              <div className="font-display text-xl sm:text-2xl font-bold text-foreground tracking-tighter leading-none group-hover:opacity-80 transition-opacity">
+                Brasil<br /><span className="text-primary">Sustenta</span>
               </div>
             </div>
           </Link>
@@ -55,8 +55,8 @@ const Header = () => {
               <a
                 key={item.label}
                 href={item.href}
-                className={`text-[13px] font-bold tracking-wide transition-all duration-300 rounded-full px-4 py-2 ${
-                  scrolled ? 'text-ink-3 hover:text-ink hover:bg-black/5' : 'text-ink-3 hover:text-ink hover:bg-black/5'
+                className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-4 py-2 ${
+                  scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'
                 }`}
               >
                 {item.label}
@@ -67,28 +67,28 @@ const Header = () => {
           {/* Desktop Login Access */}
           <div className="hidden lg:flex items-center gap-2 relative z-10">
             <div className="relative group">
-              <button className="flex items-center gap-1.5 text-[13px] font-bold text-ink hover:text-leaf-1 transition-colors px-3 py-2 rounded-full hover:bg-ink/5">
+              <button className="flex items-center gap-1.5 text-[13px] font-bold text-foreground hover:text-primary transition-colors px-3 py-2 rounded-full hover:bg-white/5">
                 Entrar <ChevronDown className="w-3 h-3 opacity-50" />
               </button>
               
               {/* Dropdown Menu Glassmorphism */}
-              <div className="absolute right-0 top-full mt-2 w-56 bg-white/80 backdrop-blur-2xl border border-white/50 rounded-2xl shadow-[0_20px_40px_rgb(0,0,0,0.12)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-right group-hover:translate-y-0 translate-y-2">
+              <div className="absolute right-0 top-full mt-2 w-56 bg-card/90 backdrop-blur-2xl border border-border rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-right group-hover:translate-y-0 translate-y-2">
                 <div className="p-2">
-                  <div className="text-[11px] font-bold tracking-widest uppercase text-ink-4 px-3 py-2">Acessar Portal</div>
-                  <a href="/login/empresa" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-ink group/item border border-transparent hover:border-black/5 hover:bg-white/80 rounded-xl transition-all">
-                    <Briefcase className="w-4 h-4 text-leaf-1 transition-transform group-hover/item:scale-110" /> Empresa
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/60 px-3 py-2">Acessar Portal</div>
+                  <a href="/login/empresa" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
+                    <Briefcase className="w-4 h-4 text-primary transition-transform group-hover/item:scale-110" /> Empresa
                   </a>
-                  <a href="/login/jovem" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-ink group/item border border-transparent hover:border-black/5 hover:bg-white/80 rounded-xl transition-all">
+                  <a href="/login/jovem" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
                     <Sparkles className="w-4 h-4 text-sky-1 transition-transform group-hover/item:scale-110" /> Jovem Talento
                   </a>
-                  <a href="/login/universidade" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-ink group/item border border-transparent hover:border-black/5 hover:bg-white/80 rounded-xl transition-all">
-                    <GraduationCap className="w-4 h-4 text-earth-1 transition-transform group-hover/item:scale-110" /> Universidade
+                  <a href="/login/universidade" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
+                    <GraduationCap className="w-4 h-4 text-primary/80 transition-transform group-hover/item:scale-110" /> Universidade
                   </a>
                 </div>
               </div>
             </div>
             
-            <a href="/login/empresa" className="flex items-center gap-2 bg-ink text-paper text-[13px] font-semibold px-5 py-2 rounded-full hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-md">
+            <a href="/login/empresa" className="flex items-center gap-2 bg-primary text-black text-[13px] font-bold px-5 py-2 rounded-full hover:opacity-90 hover:scale-[1.03] active:scale-95 transition-all shadow-lg">
               <User className="w-4 h-4" /> Cadastre-se
             </a>
           </div>

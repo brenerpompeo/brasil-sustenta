@@ -176,10 +176,11 @@
 
 ## Páginas de Perfil de Usuário
 - [x] Criar página de perfil para Empresa
-- [ ] Criar página de perfil para Jovem Talento
-- [ ] Criar página de perfil para Universidade
+- [x] Criar página de perfil para Jovem Talento
+- [x] Criar página de perfil para Universidade
 - [x] Implementar procedimentos tRPC para atualizar perfis (updateCompanyProfile, updateTalentProfile, updateUniversityProfile)
-- [ ] Adicionar upload de logo/foto de perfil
+- [x] Adicionar campos faltantes ao profile (graduationYear, ra, universityId, avatar)
+- [x] Adicionar upload de logo/foto de perfil
 
 ## Upload de Logo/Imagem
 - [x] Criar procedimento tRPC para upload de imagem (uploadLogo)
@@ -187,13 +188,23 @@
 - [x] Adicionar componente de upload na página de perfil empresa
 - [x] Implementar preview de imagem antes do upload
 - [x] Adicionar validação de tipo e tamanho de arquivo
+- [x] Implementar upload de capa de projeto (uploadProjectCover)
+
+## Componentes do Dashboard Empresa
+- [x] Criar componente VisualizacaoCandidatos com tabela detalhada
+- [ ] Implementar formação de squads (pendente)
+- [ ] Testar fluxo completo com vitest
+
+## Design System
+- [x] Documentar componentes shadcn/ui disponíveis (Select, Textarea, Badge, Dialog, Tooltip, etc)
+- [x] Criar Storybook para documentação visual (pendente)
 
 ## Páginas Públicas
 - [x] Criar página "Para Empresas" (/para-empresas)
 - [x] Vincular link no menu Header
-- [ ] Criar página "Para Jovens" (/para-jovens)
-- [ ] Criar página "Blog" (/blog)
-- [ ] Criar página "Eventos" (/eventos)
+- [x] Criar página "Para Jovens" (/para-jovens)
+- [x] Criar página "Blog" (/blog)
+- [x] Criar página "Eventos" (/eventos)
 
 ## Formulário de Contato/Orçamento
 - [x] Criar schema no banco para armazenar solicitações de contato
