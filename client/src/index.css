@@ -31,9 +31,9 @@
   --color-ember: var(--ember);
   --color-ember-2: var(--ember-2);
   --color-ember-3: var(--ember-3);
-  --color-violet: var(--violet);
-  --color-violet-2: var(--violet-2);
-  --color-violet-3: var(--violet-3);
+  --color-violet: var(--forest);
+  --color-violet-2: var(--forest-2);
+  --color-violet-3: var(--forest-3);
 
   /* Shadcn Mappings */
   --color-background: var(--background);
@@ -95,11 +95,81 @@
 }
 
 :root {
-  /* Color Palette - Design System v2 */
+  /* Dark theme (default) */
+  --background: #0D0D0D;
+  --foreground: #FAFAFA;
+  --card: #161616;
+  --card-foreground: #FAFAFA;
+  --popover: #161616;
+  --popover-foreground: #FAFAFA;
+  --primary: #1ED760;
+  --primary-foreground: #000000;
+  --secondary: rgba(255,255,255,0.08);
+  --secondary-foreground: #FAFAFA;
+  --muted: rgba(255,255,255,0.08);
+  --muted-foreground: rgba(255,255,255,0.8);
+  --accent: #1ED760;
+  --accent-foreground: #000000;
+  --destructive: #F56642;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(255,255,255,0.12);
+  --input: rgba(255,255,255,0.12);
+  --ring: #1ED760;
+  --radius: 0.65rem;
+
+  /* Custom semantic colors for dark theme */
+  --ink: #FAFAFA;
+  --ink-2: #E1E1E1;
+  --ink-3: #B0B0B0;
+  --ink-4: #808080;
+  --paper: #161616;
+  --paper-2: #1F1F1F;
+  --paper-3: #2A2A2A;
+  --leaf: #1ED760;
+  --leaf-2: #34E075;
+  --leaf-3: #5CE891;
+  --leaf-4: #A8F0B8;
+  --leaf-5: #D4F7DE;
+  --sky: #3B82F6;
+  --sky-2: #60A5FA;
+  --sky-3: #DBEAFE;
+  --sun: #F59E0B;
+  --sun-2: #FBBF24;
+  --sun-3: #FEF3C7;
+  --ember: #F56642;
+  --ember-2: #FB7B65;
+  --ember-3: #FEDDD5;
+  --forest: #0D9488;
+  --forest-2: #14B8A6;
+  --forest-3: #F0FDFA;
+}
+
+.light {
+  --background: #F7F5EF;
+  --foreground: #0A1A0F;
+  --card: #FFFFFF;
+  --card-foreground: #0A1A0F;
+  --popover: #FFFFFF;
+  --popover-foreground: #0A1A0F;
+  --primary: #1C6B3A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EEF0E8;
+  --secondary-foreground: #0A1A0F;
+  --muted: #EEF0E8;
+  --muted-foreground: #3D5A45;
+  --accent: #BFF5D4;
+  --accent-foreground: #1C6B3A;
+  --destructive: #C43A1A;
+  --destructive-foreground: #FFFFFF;
+  --border: #E4E8DC;
+  --input: #E4E8DC;
+  --ring: #1C6B3A;
+
+  /* Custom semantic colors for light theme */
   --ink: #0A1A0F;
-  --ink-2: #2C4A35;
-  --ink-3: #5A7A62;
-  --ink-4: #8FAD96;
+  --ink-2: #142B1A;
+  --ink-3: #2D4032;
+  --ink-4: #4A5F4F;
   --paper: #F7F5EF;
   --paper-2: #EEF0E8;
   --paper-3: #E4E8DC;
@@ -108,9 +178,6 @@
   --leaf-3: #59C47E;
   --leaf-4: #A8E6BC;
   --leaf-5: #D6F5E3;
-  --earth: #7A4F2A;
-  --earth-2: #C4884A;
-  --earth-3: #F5D9B0;
   --sky: #1A4A7A;
   --sky-2: #2E72BC;
   --sky-3: #C8DEF5;
@@ -120,44 +187,9 @@
   --ember: #C43A1A;
   --ember-2: #F56642;
   --ember-3: #FDDDD5;
-  --violet: #4A2A7A;
-  --violet-2: #7C5AB8;
-  --violet-3: #E0D4F5;
-
-  /* Standard Shadcn Mappings to New Theme */
-  --primary: var(--leaf);
-  --primary-foreground: #ffffff;
-  --background: var(--paper); /* HTML body background */
-  --foreground: var(--ink); /* HTML body color */
-  --card: #ffffff;
-  --card-foreground: var(--ink);
-  --popover: #ffffff;
-  --popover-foreground: var(--ink);
-  --secondary: var(--paper-2);
-  --secondary-foreground: var(--ink);
-  --muted: var(--paper-2);
-  --muted-foreground: var(--ink-3);
-  --accent: var(--leaf-5);
-  --accent-foreground: var(--leaf);
-  --destructive: var(--ember);
-  --destructive-foreground: #ffffff;
-  --border: var(--paper-3);
-  --input: var(--paper-3);
-  --ring: var(--leaf-5);
-  --radius: 0.65rem;
-}
-
-.dark {
-  /* No overrides needed if we follow the explicit HTML UI, however we define this for fallback */
-  --background: #121212;
-  --foreground: #FAFAFA;
-  --card: #181A1B;
-  --card-foreground: #FAFAFA;
-  --border: rgba(255,255,255,0.1);
-  --muted: rgba(255,255,255,0.05);
-  --muted-foreground: rgba(255,255,255,0.5);
-  --popover: #181A1B;
-  --popover-foreground: #FAFAFA;
+  --forest: #0F766E;
+  --forest-2: #0D9488;
+  --forest-3: #F0FDFA;
 }
 
 @layer base {
@@ -167,10 +199,16 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
-    font-size: 14px;
-    line-height: 1.55;
+    font-size: 16px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
+  h1 { @apply text-4xl font-bold tracking-tight; }
+  h2 { @apply text-3xl font-semibold tracking-tight; }
+  h3 { @apply text-2xl font-semibold; }
+  h4 { @apply text-xl font-medium; }
+  p { @apply text-base text-muted-foreground; }
+  small { @apply text-sm; }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -185,44 +223,38 @@
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
-  }
-
-  .flex {
-    min-height: 0;
-    min-width: 0;
   }
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      max-width: 768px;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1024px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container {
+      max-width: 1280px;
     }
   }
 }
@@ -361,4 +393,11 @@
   .animate-marquee {
     animation: marquee 30s linear infinite;
   }
+
+  /* Spacing Scale - based on 4px grid */
+  .space-section { @apply py-16 md:py-20 lg:py-24; }
+  .space-container { @apply px-4 md:px-6 lg:px-8; }
+  .space-card { @apply p-4 md:p-6 lg:p-8; }
+  .space-element { @apply gap-4 md:gap-6; }
+  .space-stack { @apply space-y-4 md:space-y-6 lg:space-y-8; }
 }

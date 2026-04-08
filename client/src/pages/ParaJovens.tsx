@@ -155,7 +155,7 @@ export default function ParaJovens() {
       <Header />
 
       {/* Hero Section - Sky Theme */}
-      <section className="relative pt-40 pb-32 flex items-center justify-center overflow-hidden bg-white">
+      <section className="relative pt-40 pb-32 flex items-center justify-center overflow-hidden bg-paper">
         {/* Animated Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-sky/5 blur-[120px] animate-pulse"></div>
@@ -175,7 +175,7 @@ export default function ParaJovens() {
               Gerando <span className="underline decoration-sky-4/30 underline-offset-8">Impacto Real</span>.
             </h1>
             
-            <p className="text-xl md:text-2xl text-ink-3 font-medium mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
+            <p className="text-xl md:text-2xl text-ink-2 font-medium mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
               Trabalhe em projetos ESG de grandes empresas, receba remuneração digna e construa um currículo que o mercado disputa.
             </p>
 
@@ -186,7 +186,7 @@ export default function ParaJovens() {
                 </Button>
               </Link>
               <Link href="/dashboard/jovem?preview=true">
-                <Button size="lg" variant="outline" className="h-16 px-10 rounded-2xl border-2 border-paper-3 text-ink-2 bg-white/50 backdrop-blur-sm font-black uppercase tracking-widest text-xs hover:bg-white hover:border-sky/30">
+                <Button size="lg" variant="outline" className="h-16 px-10 rounded-2xl border-2 border-paper-3 text-ink-2 bg-paper/50 backdrop-blur-sm font-black uppercase tracking-widest text-xs hover:bg-paper hover:border-sky/30">
                   Explorar Projetos
                 </Button>
               </Link>
@@ -201,9 +201,9 @@ export default function ParaJovens() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="max-w-2xl">
                <h2 className="text-4xl md:text-6xl font-black text-ink font-display leading-[0.9] tracking-tighter mb-6">
-                Mais que um <span className="italic font-light text-sky">Estágio</span>. <br />Uma experiência de <span className="text-ink-4">Elite</span>.
+                Mais que um <span className="italic font-light text-sky">Estágio</span>. <br />Uma experiência de <span className="text-leaf">Elite</span>.
               </h2>
-              <p className="text-lg text-ink-3 font-medium">Conectamos as mentes mais inquietas das universidades aos desafios reais das organizações contemporâneas.</p>
+              <p className="text-lg text-ink-2 font-medium">Conectamos as mentes mais inquietas das universidades aos desafios reais das organizações contemporâneas.</p>
             </div>
             <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-sky bg-white border border-paper-3 px-4 py-2 rounded-xl h-fit">
               <Zap className="w-4 h-4 fill-current" />
@@ -213,13 +213,13 @@ export default function ParaJovens() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Bento Card 1 */}
-            <div className="md:col-span-2 bg-white border border-paper-3 rounded-[2.5rem] p-10 relative overflow-hidden group hover:border-sky/30 transition-all">
+            <div className="md:col-span-2 bg-paper border border-paper-3 rounded-[2.5rem] p-10 relative overflow-hidden group hover:border-sky/30 transition-all">
               <div className="relative z-10 h-full flex flex-col">
                 <div className="w-16 h-16 bg-sky/5 rounded-2xl flex items-center justify-center mb-8 border border-sky/10">
                   <Briefcase className="w-8 h-8 text-sky" />
                 </div>
                 <h3 className="text-3xl font-black text-ink font-display mb-4">Experiência Profissional Direta</h3>
-                <p className="text-ink-3 font-medium text-lg max-w-md">Esqueça as simulações. No Brasil Sustenta você entra no core de projetos reais de sustentabilidade e inovação social de empresas líderes.</p>
+                <p className="text-ink-2 font-medium text-lg max-w-md">Esqueça as simulações. No Brasil Sustenta você entra no core de projetos reais de sustentabilidade e inovação social de empresas líderes.</p>
                 <div className="mt-auto pt-8 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-sky">
                   Ver portfólios de exemplo <ArrowRight className="w-4 h-4" />
                 </div>
@@ -241,30 +241,30 @@ export default function ParaJovens() {
             </div>
 
             {/* Bento Card 3 */}
-            <div className="bg-white border border-paper-3 rounded-[2.5rem] p-10 group hover:border-sky/30 transition-all">
+            <div className="bg-paper border border-paper-3 rounded-[2.5rem] p-10 group hover:border-sky/30 transition-all">
                <div className="w-14 h-14 bg-paper-3 rounded-2xl flex items-center justify-center mb-8 border border-paper-4/30">
                   <Users className="w-7 h-7 text-ink-2" />
                 </div>
                 <h3 className="text-2xl font-black font-display mb-4">Networking de Alto Nível</h3>
-                <p className="text-ink-3 font-medium">Acesso direto a CXOs e gestores de ESG que estão moldando o futuro das grandes corporações.</p>
+                <p className="text-ink-2 font-medium">Acesso direto a CXOs e gestores de ESG que estão moldando o futuro das grandes corporações.</p>
             </div>
 
             {/* Bento Card 4 */}
-            <div className="bg-white border border-paper-3 rounded-[2.5rem] p-10 group hover:border-sky/30 transition-all">
+            <div className="bg-paper border border-paper-3 rounded-[2.5rem] p-10 group hover:border-sky/30 transition-all">
                <div className="w-14 h-14 bg-paper-3 rounded-2xl flex items-center justify-center mb-8 border border-paper-4/30">
                   <Award className="w-7 h-7 text-ink-2" />
                 </div>
                 <h3 className="text-2xl font-black font-display mb-4">Certificação com Peso</h3>
-                <p className="text-ink-3 font-medium">Certificados digitais endossados pelas empresas e pela plataforma, validando sua entrega de impacto.</p>
+                <p className="text-ink-2 font-medium">Certificados digitais endossados pelas empresas e pela plataforma, validando sua entrega de impacto.</p>
             </div>
 
             {/* Bento Card 5 */}
             <div className="bg-paper text-ink rounded-[2.5rem] p-10 border border-paper-3 relative overflow-hidden group hover:border-sky/30 transition-all">
-               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 border border-paper-4/30">
+               <div className="w-14 h-14 bg-paper-2 rounded-2xl flex items-center justify-center mb-8 border border-paper-4/30">
                   <Rocket className="w-7 h-7 text-sky" />
                 </div>
                 <h3 className="text-2xl font-black font-display mb-4 leading-tight">Carreira Acelerada</h3>
-                <p className="text-ink-3 font-medium mb-6">30% dos talentos que passam por nossos squads são contratados permanentemente pelas empresas.</p>
+                <p className="text-ink-2 font-medium mb-6">30% dos talentos que passam por nossos squads são contratados permanentemente pelas empresas.</p>
                 <div className="flex gap-1 animate-pulse">
                   {[1,2,3,4,5].map(i => <div key={i} className="w-8 h-1.5 bg-sky/20 rounded-full"></div>)}
                 </div>
@@ -274,7 +274,7 @@ export default function ParaJovens() {
       </section>
 
       {/* FAQ System - Redesigned */}
-      <section className="py-24 bg-white relative">
+      <section className="py-24 bg-paper relative">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <div className="text-[11px] font-black uppercase tracking-[0.3em] text-sky-2 mb-4">Knowledge Hub</div>
@@ -300,7 +300,7 @@ export default function ParaJovens() {
             {faqData[activeCategory].map((faq, index) => (
               <div
                 key={index}
-                className={`bg-paper-2 rounded-2xl border transition-all duration-300 ${expandedFaq === index ? 'border-sky-3/30 bg-white shadow-xl shadow-sky/5' : 'border-paper-3'}`}
+                className={`bg-paper-2 rounded-2xl border transition-all duration-300 ${expandedFaq === index ? 'border-sky-3/30 bg-paper shadow-xl shadow-sky/5' : 'border-paper-3'}`}
               >
                 <button
                   onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
@@ -312,7 +312,7 @@ export default function ParaJovens() {
                   </div>
                 </button>
                 {expandedFaq === index && (
-                  <div className="px-8 pb-8 text-ink-3 font-medium leading-relaxed animate-fade-in-up">
+                  <div className="px-8 pb-8 text-ink-2 font-medium leading-relaxed animate-fade-in-up">
                     {faq.answer}
                   </div>
                 )}
@@ -330,7 +330,7 @@ export default function ParaJovens() {
             <div className="space-y-8">
               <div>
                 <h2 className="text-4xl md:text-5xl font-black text-ink font-display tracking-tight mb-6">Não viu sua <span className="text-sky underline decoration-sky-3/20">Instituição</span>?</h2>
-                <p className="text-lg text-ink-3 font-medium">Convide sua universidade para fazer parte do hub e abra portas para centenas de colegas.</p>
+                <p className="text-lg text-ink-2 font-medium">Convide sua universidade para fazer parte do hub e abra portas para centenas de colegas.</p>
               </div>
 
               {invitationSubmitted ? (
@@ -343,7 +343,7 @@ export default function ParaJovens() {
                   <Button variant="outline" onClick={() => setInvitationSubmitted(false)} className="rounded-xl border-paper-3 font-black uppercase tracking-widest text-[11px]">Novo Convite</Button>
                 </div>
               ) : (
-                <form onSubmit={handleInvitationSubmit} className="bg-white border border-paper-3 rounded-[2.5rem] p-10 space-y-6 shadow-sm">
+                <form onSubmit={handleInvitationSubmit} className="bg-paper border border-paper-3 rounded-[2.5rem] p-10 space-y-6 shadow-sm">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="i-student-name" className="text-[11px] font-black uppercase tracking-widest text-ink-4">Seu Nome</Label>
@@ -436,11 +436,11 @@ export default function ParaJovens() {
       </section>
 
       {/* Closing CTA */}
-      <section className="py-32 bg-white relative overflow-hidden">
+      <section className="py-32 bg-paper relative overflow-hidden">
         <div className="container text-center relative z-10">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-5xl md:text-7xl font-black text-ink font-display tracking-tight leading-[0.9] mb-10">
-              O futuro <span className="italic font-light text-sky">não espera</span>.<br />Seja o <span className="text-ink-4">Protagonista</span>.
+              O futuro <span className="italic font-light text-sky">não espera</span>.<br />Seja o <span className="text-ink-2">Protagonista</span>.
             </h2>
             <div className="bg-paper-2 border border-paper-3 p-2 rounded-2xl flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
               <Link href="/login/jovem" className="flex-1">
