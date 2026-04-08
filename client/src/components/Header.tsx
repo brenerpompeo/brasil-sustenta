@@ -33,7 +33,7 @@ const Header = () => {
         {/* Island Container */}
         <div className={`transition-all duration-500 ease-out overflow-hidden flex items-center justify-between w-full mx-auto relative
           ${scrolled 
-            ? 'max-w-[1000px] h-14 bg-white/60 backdrop-blur-2xl border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-[2rem]' 
+            ? 'max-w-[1000px] h-14 bg-paper/60 backdrop-blur-2xl border border-paper-3/60 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-[2rem]' 
             : 'max-w-[1200px] h-16 bg-transparent border border-transparent rounded-none'
           } px-6 lg:px-8`}
         >
@@ -67,7 +67,7 @@ const Header = () => {
           {/* Desktop Login Access */}
           <div className="hidden lg:flex items-center gap-2 relative z-10">
             <div className="relative group">
-              <button className="flex items-center gap-1.5 text-[13px] font-bold text-ink hover:text-leaf-1 transition-colors px-3 py-2 rounded-full hover:bg-black/5">
+              <button className="flex items-center gap-1.5 text-[13px] font-bold text-ink hover:text-leaf-1 transition-colors px-3 py-2 rounded-full hover:bg-ink/5">
                 Entrar <ChevronDown className="w-3 h-3 opacity-50" />
               </button>
               
@@ -88,7 +88,7 @@ const Header = () => {
               </div>
             </div>
             
-            <a href="/login/empresa" className="flex items-center gap-2 bg-ink text-white text-[13px] font-semibold px-5 py-2 rounded-full hover:bg-ink-1 hover:scale-105 active:scale-95 transition-all shadow-md">
+            <a href="/login/empresa" className="flex items-center gap-2 bg-ink text-paper text-[13px] font-semibold px-5 py-2 rounded-full hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-md">
               <User className="w-4 h-4" /> Cadastre-se
             </a>
           </div>
@@ -96,7 +96,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden p-2 text-ink hover:text-leaf-1 transition-colors rounded-full hover:bg-black/5 relative z-10"
+            className="lg:hidden p-2 text-ink hover:text-leaf-1 transition-colors rounded-full hover:bg-ink/5 relative z-10"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -105,7 +105,7 @@ const Header = () => {
       </header>
 
       {/* Mobile Menu - Overlay Glass */}
-      <div className={`fixed inset-0 z-40 bg-white/70 backdrop-blur-3xl transition-all duration-500 ease-out lg:hidden ${
+      <div className={`fixed inset-0 z-40 bg-paper/70 backdrop-blur-3xl transition-all duration-500 ease-out lg:hidden ${
         isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
       }`}>
         <div className="flex flex-col h-full pt-28 px-6 pb-8 overflow-y-auto">
@@ -125,14 +125,14 @@ const Header = () => {
           
           <div className="mt-8 space-y-4 px-2">
             <p className="text-[11px] font-bold tracking-widest uppercase text-ink-3">Acessos</p>
-            <a href="/login/empresa" className="flex items-center justify-center gap-2 bg-ink text-white font-semibold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform">
+            <a href="/login/empresa" className="flex items-center justify-center gap-2 bg-ink text-paper font-semibold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform">
               <Briefcase className="w-5 h-5" /> Acesso Empresa
             </a>
             <div className="grid grid-cols-2 gap-3">
-              <a href="/login/jovem" className="flex items-center justify-center gap-2 bg-white/80 backdrop-blur text-ink font-semibold py-4 rounded-2xl border border-white shadow-sm active:scale-95 transition-transform">
+              <a href="/login/jovem" className="flex items-center justify-center gap-2 bg-paper-2/80 backdrop-blur text-ink font-semibold py-4 rounded-2xl border border-paper-3 shadow-sm active:scale-95 transition-transform">
                 <Sparkles className="w-4 h-4 text-sky-1" /> Talento
               </a>
-              <a href="/login/universidade" className="flex items-center justify-center gap-2 bg-white/80 backdrop-blur text-ink font-semibold py-4 rounded-2xl border border-white shadow-sm active:scale-95 transition-transform">
+              <a href="/login/universidade" className="flex items-center justify-center gap-2 bg-paper-2/80 backdrop-blur text-ink font-semibold py-4 rounded-2xl border border-paper-3 shadow-sm active:scale-95 transition-transform">
                 <GraduationCap className="w-4 h-4 text-earth-1" /> Instituição
               </a>
             </div>
