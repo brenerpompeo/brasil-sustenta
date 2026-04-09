@@ -17,6 +17,8 @@ import {
   Zap
 } from 'lucide-react';
 
+import { SEO } from '@/components/SEO';
+
 const ParaEmpresas = () => {
   const benefits = [
     {
@@ -137,33 +139,37 @@ const ParaEmpresas = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background selection:bg-primary/30">
+      <SEO 
+        title="Para Empresas | ESG na Prática com Talentos em Ascensão"
+        description="Reduza os custos e acelere o impacto do seu ESG corporativo integrando jovens talentos apaixonados por sustentabilidade às suas squads e projetos."
+      />
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-radial from-primary/20 via-transparent to-transparent opacity-30"></div>
+      <section className="relative pt-32 pb-20 overflow-hidden border-b border-border">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,var(--tw-gradient-from)_0%,transparent_70%)] from-primary/10 via-transparent to-transparent opacity-50"></div>
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6">
+            <div className="inline-flex items-center px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-8 animate-fade-in-up">
               <Sparkles className="w-4 h-4 text-primary mr-2" />
-              <span className="text-sm font-medium text-primary">Para Empresas</span>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary">Para Empresas</span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Conecte sua Empresa a{' '}
-              <span className="text-primary">Talentos ESG</span>
+            <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-8 leading-[1.05] tracking-tighter animate-fade-in-up">
+              Conecte sua Empresa a<br />
+              <span className="italic font-light text-primary">Talentos ESG</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-[1.125rem] text-muted-foreground mb-12 max-w-2xl mx-auto font-medium leading-relaxed animate-fade-in-up delay-100">
               Transforme desafios de sustentabilidade em oportunidades de inovação com squads de jovens talentos universitários especializados em ESG.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-5 justify-center animate-fade-in-up delay-200">
               <Link href="/login/empresa">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-black font-semibold">
+                <Button size="lg" className="w-full sm:w-auto h-14 px-10 bg-primary hover:bg-primary/90 text-black font-bold rounded-xl transition-all hover:scale-[1.02] shadow-xl shadow-primary/10">
                   Começar Agora
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-10 border-border text-foreground font-bold rounded-xl hover:bg-white/5 transition-all">
                 Ver Como Funciona
               </Button>
             </div>
@@ -172,13 +178,13 @@ const ParaEmpresas = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-card/50">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              Por que escolher o Brasil Sustenta?
+      <section className="py-24 lg:py-32 bg-secondary/5 border-b border-border">
+        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
+          <div className="text-center mb-20 animate-fade-in-up">
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
+              Por que escolher o <span className="italic font-light text-primary">Brasil Sustenta?</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
               A plataforma que conecta empresas a jovens talentos para projetos de impacto ESG com resultados mensuráveis.
             </p>
           </div>
@@ -187,13 +193,14 @@ const ParaEmpresas = () => {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10"
+                className="bg-card border border-border rounded-2xl p-10 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 group animate-fade-in-up"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                  <benefit.icon className="w-7 h-7 text-primary" />
+                <div className="w-14 h-14 bg-secondary border border-border rounded-[12px] flex items-center justify-center mb-8 group-hover:bg-primary/10 transition-colors">
+                  <benefit.icon className="w-7 h-7 text-muted-foreground group-hover:text-primary transition-colors" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{benefit.title}</h3>
-                <p className="text-muted-foreground">{benefit.description}</p>
+                <h3 className="font-display text-xl font-bold text-foreground mb-4 tracking-tighter">{benefit.title}</h3>
+                <p className="text-[14px] text-muted-foreground font-medium leading-relaxed">{benefit.description}</p>
               </div>
             ))}
           </div>
@@ -201,28 +208,28 @@ const ParaEmpresas = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              Como Funciona o Processo
+      <section className="py-24 lg:py-32 bg-background border-b border-border">
+        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
+          <div className="text-center mb-20 animate-fade-in-up">
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
+              Como Funciona o <span className="italic font-light text-primary">Processo</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Um processo simples e eficiente que conecta empresas a talentos em 4 etapas.
+            <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
+              Um processo simples e eficiente que conecta empresas a talentos em 4 etapas estratégicas.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {howItWorks.map((item, index) => (
-              <div key={index} className="relative">
-                <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-300">
-                  <div className="text-6xl font-bold text-primary/20 mb-4">{item.step}</div>
-                  <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.description}</p>
+              <div key={index} className="relative group animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                <div className="bg-card border border-border rounded-2xl p-10 hover:border-primary/20 transition-all duration-300 h-full">
+                  <div className="font-display text-6xl font-bold text-primary/10 mb-6 group-hover:text-primary/20 transition-colors">{item.step}</div>
+                  <h3 className="font-display text-xl font-bold text-foreground mb-4 tracking-tighter">{item.title}</h3>
+                  <p className="text-[14px] text-muted-foreground font-medium leading-relaxed">{item.description}</p>
                 </div>
                 {index < howItWorks.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                    <ArrowRight className="w-8 h-8 text-primary/30" />
+                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                    <ArrowRight className="w-6 h-6 text-border group-hover:text-primary/30 transition-colors" />
                   </div>
                 )}
               </div>
@@ -232,52 +239,53 @@ const ParaEmpresas = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 bg-card/50">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              Nossos Modelos de Squad
+      <section className="py-24 lg:py-32 bg-secondary/5 border-b border-border">
+        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
+          <div className="text-center mb-20 animate-fade-in-up">
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
+              Nossos Modelos de <span className="italic font-light text-primary">Squad</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
               Escolha o modelo ideal para o seu projeto ESG. Todos incluem talentos pré-selecionados e acompanhamento profissional.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-[1100px] mx-auto">
             {plans.map((plan, index) => (
               <div
                 key={index}
-                className={`bg-card border rounded-2xl p-8 ${
+                className={`bg-card border rounded-2xl p-10 transition-all duration-500 animate-fade-in-up flex flex-col ${
                   plan.highlighted
-                    ? 'border-primary shadow-lg shadow-primary/20 scale-105'
-                    : 'border-border'
+                    ? 'border-primary shadow-2xl shadow-primary/10 scale-105 z-10'
+                    : 'border-border hover:border-primary/20'
                 }`}
+                style={{ animationDelay: `${index * 150}ms` }}
               >
                 {plan.highlighted && (
-                  <div className="inline-block px-3 py-1 bg-primary text-black text-sm font-semibold rounded-full mb-4">
+                  <div className="inline-block self-start px-3 py-1 bg-primary text-black text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-6 italic">
                     Mais Popular
                   </div>
                 )}
-                <h3 className="text-2xl font-bold text-foreground mb-2">{plan.name}</h3>
-                <p className="text-muted-foreground mb-6">{plan.description}</p>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-primary">{plan.price}</span>
-                  <span className="text-muted-foreground">{plan.period}</span>
+                <h3 className="font-display text-2xl font-bold text-foreground mb-2 tracking-tighter">{plan.name}</h3>
+                <p className="text-[14px] text-muted-foreground mb-8 font-medium leading-relaxed">{plan.description}</p>
+                <div className="mb-8">
+                  <span className="font-display text-4xl font-bold text-primary tracking-tighter">{plan.price}</span>
+                  <span className="text-muted-foreground/60 text-sm font-semibold ml-1">{plan.period}</span>
                 </div>
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-4 mb-10 flex-1">
                   {plan.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start">
-                      <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-muted-foreground">{feature}</span>
+                      <CheckCircle2 className="w-4 h-4 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                      <span className="text-[13px] text-muted-foreground font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>
                 <Link href="/login/empresa">
                   <Button
-                    className={`w-full ${
+                    className={`w-full h-12 rounded-xl font-bold text-[13px] transition-all hover:scale-[1.02] ${
                       plan.highlighted
-                        ? 'bg-primary hover:bg-primary/90 text-black'
-                        : 'bg-card border border-border hover:bg-primary/10'
+                        ? 'bg-primary hover:bg-primary/90 text-black shadow-lg shadow-primary/20'
+                        : 'bg-secondary border border-border text-foreground hover:bg-white/5'
                     }`}
                   >
                     Começar Projeto
@@ -290,14 +298,14 @@ const ParaEmpresas = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              O que dizem nossos Parceiros
+      <section className="py-24 lg:py-32 bg-background border-b border-border">
+        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
+          <div className="text-center mb-20 animate-fade-in-up">
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
+              O que dizem nossos <span className="italic font-light text-primary">Parceiros</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Empresas líderes do Brasil já transformaram seus desafios ESG em resultados concretos.
+            <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
+              Empresas líderes do Brasil já transformaram seus desafios ESG em resultados concretos conosco.
             </p>
           </div>
 
@@ -305,16 +313,23 @@ const ParaEmpresas = () => {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-300"
+                className="bg-card border border-border rounded-2xl p-10 hover:border-primary/20 transition-all duration-300 animate-fade-in-up"
+                style={{ animationDelay: `${index * 150}ms` }}
               >
-                <div className="flex items-center mb-6">
-                  <div className="text-4xl mr-4">{testimonial.logo}</div>
-                  <div>
-                    <div className="font-bold text-foreground">{testimonial.company}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.author} • {testimonial.role}</div>
+                <div className="flex items-center mb-8">
+                  <div className="w-16 h-16 bg-secondary border border-border rounded-xl flex items-center justify-center text-primary transform -rotate-3 transition-transform group-hover:rotate-0">
+                    {testimonial.logo}
+                  </div>
+                  <div className="ml-5">
+                    <div className="font-display text-lg font-bold text-foreground tracking-tighter">{testimonial.company}</div>
+                    <div className="text-[12px] font-bold text-muted-foreground/60 uppercase tracking-widest mt-1">
+                      {testimonial.author} • {testimonial.role}
+                    </div>
                   </div>
                 </div>
-                <p className="text-muted-foreground italic">"{testimonial.text}"</p>
+                <p className="text-[15px] text-muted-foreground italic leading-relaxed font-medium">
+                  "{testimonial.text}"
+                </p>
               </div>
             ))}
           </div>
@@ -322,32 +337,36 @@ const ParaEmpresas = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
+      <section className="py-24 lg:py-32 bg-secondary/5 border-b border-border relative overflow-hidden">
+        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
+          <div className="max-w-4xl mx-auto animate-fade-in-up">
             <ContactForm />
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Pronto para Gerar Impacto?
+      <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"></div>
+        </div>
+        
+        <div className="container px-6 lg:px-8 max-w-[900px] mx-auto relative z-10">
+          <div className="text-center animate-fade-in-up">
+            <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-8 tracking-tighter leading-[1.05]">
+              Pronto para Gerar<br /><span className="italic font-light text-primary">Impacto Real</span>?
             </h2>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-[1.125rem] text-muted-foreground font-medium mb-12 max-w-xl mx-auto leading-relaxed">
               Junte-se a mais de 200 empresas que já transformaram seus desafios ESG em oportunidades de inovação.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-5 justify-center">
               <Link href="/login/empresa">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-black font-semibold">
+                <Button size="lg" className="h-14 px-10 bg-primary hover:bg-primary/90 text-black font-bold rounded-xl shadow-xl shadow-primary/10 transition-all hover:scale-[1.02]">
                   Criar Conta Gratuita
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="outline" className="h-14 px-10 border-border text-foreground font-bold rounded-xl hover:bg-white/5 transition-all">
                 Falar com Consultor
               </Button>
             </div>

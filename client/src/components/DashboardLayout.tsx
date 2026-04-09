@@ -74,7 +74,7 @@ export default function DashboardLayout({
   const defaultAvatarInitials = userName ? userName.substring(0, 2).toUpperCase() : "US";
 
   return (
-    <div className={`flex min-h-screen bg-paper text-ink font-body ${theme.pageSelectionTheme || ''}`}>
+    <div className={`flex min-h-screen bg-background text-foreground font-body ${theme.pageSelectionTheme || ''}`}>
       {/* ── LEFT RAIL: UNIFIED SIDEBAR ── */}
       <nav className={`w-[240px] min-w-[240px] ${theme.navBg} ${theme.navBorder} sticky top-0 h-screen flex flex-col overflow-hidden`}>
         

@@ -120,44 +120,44 @@ export default function FormPerfilTalento({ initialData, onSuccess }: FormPerfil
   return (
     <form onSubmit={handleSubmit} className="space-y-8 animate-fade-in-up">
       {/* ── CARD PRINCIPAL: BIO & IDENTIDADE ── */}
-      <Card className="p-8 border-paper-3 bg-white/70 backdrop-blur-xl shadow-xl rounded-[2.5rem] overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-sky/5 rounded-bl-[100px] -z-0"></div>
+      <Card className="p-8 border-border bg-card  shadow-xl rounded-[2.5rem] overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] -z-0"></div>
         
         <div className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 bg-sky/10 rounded-2xl flex items-center justify-center">
-            <User className="w-6 h-6 text-sky-1" />
+          <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center">
+            <User className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h2 className="font-display text-xl font-black text-ink">Identidade Profissional</h2>
-            <p className="text-[11px] font-bold uppercase tracking-widest text-ink-4">Como as empresas te veem</p>
+            <h2 className="font-display text-xl font-black text-foreground">Identidade Profissional</h2>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Como as empresas te veem</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
           <div className="space-y-2">
-            <label className="text-[11px] font-black uppercase tracking-widest text-ink-3 ml-1">Nome Completo</label>
+            <label className="text-[11px] font-black uppercase tracking-widest text-muted-foreground ml-1">Nome Completo</label>
             <Input 
               value={formData.fullName}
               onChange={e => setFormData({...formData, fullName: e.target.value})}
-              className="bg-white/50 border-paper-3 focus:border-sky-1 rounded-xl h-12 text-sm font-semibold" 
+              className="bg-background border-border focus:border-primary rounded-xl h-12 text-sm font-semibold" 
               placeholder="Ex: Lucas Silva Santos"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-[11px] font-black uppercase tracking-widest text-ink-3 ml-1">Telefone / WhatsApp</label>
+            <label className="text-[11px] font-black uppercase tracking-widest text-muted-foreground ml-1">Telefone / WhatsApp</label>
             <Input 
               value={formData.phone}
               onChange={e => setFormData({...formData, phone: e.target.value})}
-              className="bg-white/50 border-paper-3 focus:border-sky-1 rounded-xl h-12 text-sm font-semibold" 
+              className="bg-background border-border focus:border-primary rounded-xl h-12 text-sm font-semibold" 
               placeholder="(00) 00000-0000"
             />
           </div>
           <div className="md:col-span-2 space-y-2">
-            <label className="text-[11px] font-black uppercase tracking-widest text-ink-3 ml-1">Bio Profissional (Pitch)</label>
+            <label className="text-[11px] font-black uppercase tracking-widest text-muted-foreground ml-1">Bio Profissional (Pitch)</label>
             <Textarea 
               value={formData.bio}
               onChange={e => setFormData({...formData, bio: e.target.value})}
-              className="bg-white/50 border-paper-3 focus:border-sky-1 rounded-2xl min-h-[120px] text-sm font-medium leading-relaxed" 
+              className="bg-background border-border focus:border-primary rounded-2xl min-h-[120px] text-sm font-medium leading-relaxed" 
               placeholder="Conte brevemente sua trajetória e seu interesse em projetos de impacto..."
             />
           </div>
@@ -165,46 +165,46 @@ export default function FormPerfilTalento({ initialData, onSuccess }: FormPerfil
       </Card>
 
       {/* ── CARD ACADÊMICO ── */}
-      <Card className="p-8 border-paper-3 bg-white/70 backdrop-blur-xl shadow-xl rounded-[2.5rem]">
+      <Card className="p-8 border-border bg-card  shadow-xl rounded-[2.5rem]">
         <div className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 bg-violet/10 rounded-2xl flex items-center justify-center">
-            <GraduationCap className="w-6 h-6 text-violet-2" />
+          <div className="w-12 h-12 bg-secondary/20 rounded-2xl flex items-center justify-center">
+            <GraduationCap className="w-6 h-6 text-secondary" />
           </div>
           <div>
-            <h2 className="font-display text-xl font-black text-ink">Formação & Extensão</h2>
-            <p className="text-[11px] font-bold uppercase tracking-widest text-ink-4">Sua base de conhecimento</p>
+            <h2 className="font-display text-xl font-black text-foreground">Formação & Extensão</h2>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Sua base de conhecimento</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 space-y-2">
-            <label className="text-[11px] font-black uppercase tracking-widest text-ink-3 ml-1">Curso Superior</label>
+            <label className="text-[11px] font-black uppercase tracking-widest text-muted-foreground ml-1">Curso Superior</label>
             <Input 
               value={formData.course}
               onChange={e => setFormData({...formData, course: e.target.value})}
-              className="bg-white/50 border-paper-3 focus:border-violet-2 rounded-xl h-12 text-sm font-semibold" 
+              className="bg-background border-border focus:border-primary rounded-xl h-12 text-sm font-semibold" 
               placeholder="Ex: Engenharia de Produção"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-[11px] font-black uppercase tracking-widest text-ink-3 ml-1">Semestre Atual</label>
+            <label className="text-[11px] font-black uppercase tracking-widest text-muted-foreground ml-1">Semestre Atual</label>
             <Input 
               type="number"
               value={formData.semester}
               onChange={e => setFormData({...formData, semester: parseInt(e.target.value) || 1})}
-              className="bg-white/50 border-paper-3 focus:border-violet-2 rounded-xl h-12 text-sm font-semibold" 
+              className="bg-background border-border focus:border-primary rounded-xl h-12 text-sm font-semibold" 
             />
           </div>
         </div>
       </Card>
 
       {/* ── CARD SKILLS & ODS ── */}
-      <Card className="p-8 border-paper-3 bg-ink text-white rounded-[2.5rem] shadow-2xl relative overflow-hidden">
-        <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-sky-1/10 blur-[80px] pointer-events-none"></div>
+      <Card className="p-8 border-border bg-ink text-white rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+        <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/10 blur-[80px] pointer-events-none"></div>
         
         <div className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center">
-            <Sparkles className="w-6 h-6 text-sky-1" />
+          <div className="w-12 h-12 bg-card/10 rounded-2xl flex items-center justify-center">
+            <Sparkles className="w-6 h-6 text-primary" />
           </div>
           <div>
             <h2 className="font-display text-xl font-black text-white">Expertise ODS</h2>
@@ -223,8 +223,8 @@ export default function FormPerfilTalento({ initialData, onSuccess }: FormPerfil
                   onClick={() => toggleSkill(skill)}
                   className={`px-4 py-2 rounded-xl text-[13px] font-bold transition-all border ${
                     formData.skills.includes(skill)
-                      ? "bg-sky-1 border-sky-1 text-white shadow-lg shadow-sky-1/20"
-                      : "bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:text-white"
+                      ? "bg-primary border-sky-1 text-white shadow-lg shadow-sky-1/20"
+                      : "bg-card/5 border-white/10 text-white/50 hover:bg-card/10 hover:text-white"
                   }`}
                 >
                   {skill}
@@ -237,7 +237,7 @@ export default function FormPerfilTalento({ initialData, onSuccess }: FormPerfil
             <label className="text-[11px] font-black uppercase tracking-widest text-white/30 mb-4 block">Causas & ODS de Afinidade</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {odsOptions.slice(0, 6).map(ods => (
-                <div key={ods.id} className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-2xl transition-all hover:bg-white/10 group cursor-pointer">
+                <div key={ods.id} className="flex items-center gap-3 p-3 bg-card/5 border border-white/10 rounded-2xl transition-all hover:bg-card/10 group cursor-pointer">
                   <div className={`w-8 h-8 ${ods.color} rounded-lg flex-shrink-0 shadow-lg flex items-center justify-center`}>
                     <ods.icon className="w-4 h-4 text-white" />
                   </div>
@@ -251,37 +251,37 @@ export default function FormPerfilTalento({ initialData, onSuccess }: FormPerfil
       </Card>
 
       {/* ── CARD LINKS ── */}
-      <Card className="p-8 border-paper-3 bg-white/70 backdrop-blur-xl shadow-xl rounded-[2.5rem]">
+      <Card className="p-8 border-border bg-card  shadow-xl rounded-[2.5rem]">
         <div className="flex items-center gap-4 mb-8">
           <div className="w-12 h-12 bg-ink/5 rounded-2xl flex items-center justify-center">
-            <Layout className="w-6 h-6 text-ink-3" />
+            <Layout className="w-6 h-6 text-muted-foreground" />
           </div>
           <div>
-            <h2 className="font-display text-xl font-black text-ink">Conexões Externas</h2>
-            <p className="text-[11px] font-bold uppercase tracking-widest text-ink-4">Seu portfólio digital</p>
+            <h2 className="font-display text-xl font-black text-foreground">Conexões Externas</h2>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Seu portfólio digital</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-[11px] font-black uppercase tracking-widest text-ink-3 ml-1 flex items-center gap-1.5">
+            <label className="text-[11px] font-black uppercase tracking-widest text-muted-foreground ml-1 flex items-center gap-1.5">
               <Linkedin className="w-3 h-3" /> LinkedIn
             </label>
             <Input 
               value={formData.linkedin}
               onChange={e => setFormData({...formData, linkedin: e.target.value})}
-              className="bg-white/50 border-paper-3 focus:border-ink rounded-xl h-12 text-sm font-semibold" 
+              className="bg-background border-border focus:border-primary rounded-xl h-12 text-sm font-semibold" 
               placeholder="https://linkedin.com/in/seu-perfil"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-[11px] font-black uppercase tracking-widest text-ink-3 ml-1 flex items-center gap-1.5">
+            <label className="text-[11px] font-black uppercase tracking-widest text-muted-foreground ml-1 flex items-center gap-1.5">
               <Github className="w-3 h-3" /> GitHub
             </label>
             <Input 
               value={formData.github}
               onChange={e => setFormData({...formData, github: e.target.value})}
-              className="bg-white/50 border-paper-3 focus:border-ink rounded-xl h-12 text-sm font-semibold" 
+              className="bg-background border-border focus:border-primary rounded-xl h-12 text-sm font-semibold" 
               placeholder="https://github.com/seu-usuario"
             />
           </div>
@@ -293,7 +293,7 @@ export default function FormPerfilTalento({ initialData, onSuccess }: FormPerfil
         <Button 
           type="submit" 
           disabled={updateMutation.isPending}
-          className="bg-sky-1 hover:bg-sky text-white font-bold text-[15px] px-10 py-6 rounded-2xl shadow-xl shadow-sky-1/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          className="bg-primary hover:bg-primary text-white font-bold text-[15px] px-10 py-6 rounded-2xl shadow-xl shadow-sky-1/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
         >
           {updateMutation.isPending ? (
             <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />

@@ -83,11 +83,14 @@ function Router() {
 //   to keep consistent foreground/background color across components
 // - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
+import { SEO } from "./components/SEO";
+
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark" switchable={false}>
         <TooltipProvider>
+          <SEO />
           <Toaster />
           <Router />
         </TooltipProvider>

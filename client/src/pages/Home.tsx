@@ -15,9 +15,15 @@ import NewsletterSection from '@/components/NewsletterSection';
 import Footer from '@/components/Footer';
 import ODSSection from '@/components/ODSSection';
 
+import { SEO } from '@/components/SEO';
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-black">
+      <SEO 
+        title="Brasil Sustenta - O Hub Definitivo de Integração Tech ESG"
+        description="Conecte seu conhecimento acadêmico com demandas reais de sustentabilidade nas maiores empresas do Brasil. Crie impacto real nos 17 ODS do Pacto Global."
+      />
       <Header />
       <HeroSection />
       <HowItWorksSection />
