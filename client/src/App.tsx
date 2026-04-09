@@ -17,6 +17,7 @@ import DashboardUniversidade from "./pages/DashboardUniversidade";
 import ParaEmpresas from "./pages/ParaEmpresas";
 import ParaJovens from './pages/ParaJovens';
 import ParaUniversidades from './pages/ParaUniversidades';
+import Comunidade from './pages/Comunidade';
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminUsuarios from "./pages/admin/Usuarios";
 import AdminEmpresas from "./pages/admin/Empresas";
@@ -53,6 +54,7 @@ function Router() {
       <Route path="/para-empresas" component={ParaEmpresas} />
       <Route path="/para-jovens" component={ParaJovens} />
       <Route path="/para-universidades" component={ParaUniversidades} />
+      <Route path="/comunidade" component={Comunidade} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/usuarios" component={AdminUsuarios} />
       <Route path="/admin/empresas" component={AdminEmpresas} />

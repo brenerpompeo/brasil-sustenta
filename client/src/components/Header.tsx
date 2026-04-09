@@ -16,15 +16,6 @@ const Header = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const navItems = [
-    { label: 'Visão Geral', href: '/' },
-    { label: 'Empresas', href: '/para-empresas' },
-    { label: 'Para Jovens', href: '/para-jovens' },
-    { label: 'Universidades', href: '/para-universidades' },
-    { label: 'Oportunidades', href: '/oportunidades' },
-    { label: 'Blog', href: '/blog' },
-  ];
-
   return (
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out flex justify-center w-full px-4 ${
@@ -42,7 +33,7 @@ const Header = () => {
 
           {/* Logo Premium */}
           <Link href="/">
-            <div className="flex items-center space-x-3 cursor-pointer group relative z-10">
+            <div className="flex items-center space-x-3 cursor-pointer group relative z-10 w-fit">
               <div className="font-display text-xl sm:text-2xl font-bold text-foreground tracking-tighter leading-none group-hover:opacity-80 transition-opacity">
                 Brasil<br /><span className="text-primary">Sustenta</span>
               </div>
@@ -51,46 +42,65 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-2 relative z-10">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-4 py-2 ${
-                  scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
+            <a href="/" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Home</a>
+            <a href="/sobre-nos" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Sobre Nós</a>
+            
+            {/* Stakeholders Dropdown */}
+            <div className="relative group">
+              <button className={`flex items-center gap-1 text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>
+                Stakeholders <ChevronDown className="w-3 h-3 opacity-50" />
+              </button>
+              <div className="absolute left-0 top-full mt-2 w-52 bg-card/90 backdrop-blur-2xl border border-border rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-left group-hover:translate-y-0 translate-y-2">
+                <div className="p-2 flex flex-col">
+                  <a href="/para-jovens" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Para Jovens</a>
+                  <a href="/para-universidades" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Para Universidades</a>
+                  <a href="/para-empresas" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Para Empresas</a>
+                </div>
+              </div>
+            </div>
+
+            {/* Comunidade Dropdown */}
+            <div className="relative group">
+              <button className={`flex items-center gap-1 text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>
+                Comunidade <ChevronDown className="w-3 h-3 opacity-50" />
+              </button>
+              <div className="absolute left-0 top-full mt-2 w-56 bg-card/90 backdrop-blur-2xl border border-border rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-left group-hover:translate-y-0 translate-y-2">
+                <div className="p-2 flex flex-col">
+                  <a href="/comunidade" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Visão Geral</a>
+                  <a href="/comunidade#embaixadores" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Embaixadores Locais</a>
+                  <a href="/comunidade#hubs" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">HUBs Universitários</a>
+                  <a href="/comunidade#voluntarios" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Voluntariado</a>
+                </div>
+              </div>
+            </div>
+
+            <a href="/oportunidades" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Oportunidades</a>
+            <a href="/eventos" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Eventos</a>
+            <a href="/blog" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Blog</a>
           </nav>
 
           {/* Desktop Login Access */}
-          <div className="hidden lg:flex items-center gap-2 relative z-10">
+          <div className="hidden lg:flex items-center relative z-10">
             <div className="relative group">
-              <button className="flex items-center gap-1.5 text-[13px] font-bold text-foreground hover:text-primary transition-colors px-3 py-2 rounded-full hover:bg-white/5">
-                Entrar <ChevronDown className="w-3 h-3 opacity-50" />
+              <button className="flex items-center gap-2 bg-primary text-black text-[13px] font-bold px-5 py-2.5 rounded-full hover:opacity-90 transition-all shadow-lg">
+                <User className="w-4 h-4" /> Entrar / Cadastre-se <ChevronDown className="w-3 h-3 opacity-50" />
               </button>
               
-              {/* Dropdown Menu Glassmorphism */}
               <div className="absolute right-0 top-full mt-2 w-56 bg-card/90 backdrop-blur-2xl border border-border rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-right group-hover:translate-y-0 translate-y-2">
                 <div className="p-2">
-                  <div className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/60 px-3 py-2">Acessar Portal</div>
-                  <a href="/login/empresa" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
-                    <Briefcase className="w-4 h-4 text-primary transition-transform group-hover/item:scale-110" /> Empresa
-                  </a>
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/60 px-3 py-2">Acessos da Plataforma</div>
                   <a href="/login/jovem" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
-                    <Sparkles className="w-4 h-4 text-sky-1 transition-transform group-hover/item:scale-110" /> Jovem Talento
+                    <Sparkles className="w-4 h-4 text-sky-400 transition-transform group-hover/item:scale-110" /> Para Jovens
                   </a>
                   <a href="/login/universidade" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
-                    <GraduationCap className="w-4 h-4 text-primary/80 transition-transform group-hover/item:scale-110" /> Universidade
+                    <GraduationCap className="w-4 h-4 text-primary transition-transform group-hover/item:scale-110" /> Para Universidades
+                  </a>
+                  <a href="/login/empresa" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
+                    <Briefcase className="w-4 h-4 text-primary transition-transform group-hover/item:scale-110" /> Para Empresas
                   </a>
                 </div>
               </div>
             </div>
-            
-            <a href="/login/empresa" className="flex items-center gap-2 bg-primary text-black text-[13px] font-bold px-5 py-2 rounded-full hover:opacity-90 hover:scale-[1.03] active:scale-95 transition-all shadow-lg">
-              <User className="w-4 h-4" /> Cadastre-se
-            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -99,41 +109,51 @@ const Header = () => {
             className="lg:hidden p-2 text-ink hover:text-leaf-1 transition-colors rounded-full hover:bg-ink/5 relative z-10"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMenuOpen ? <X size={20} className="text-foreground" /> : <Menu size={20} className="text-foreground" />}
           </button>
         </div>
       </header>
 
       {/* Mobile Menu - Overlay Glass */}
-      <div className={`fixed inset-0 z-40 bg-paper/70 backdrop-blur-3xl transition-all duration-500 ease-out lg:hidden ${
+      <div className={`fixed inset-0 z-40 bg-background/95 backdrop-blur-xl transition-all duration-500 ease-out lg:hidden ${
         isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
       }`}>
         <div className="flex flex-col h-full pt-28 px-6 pb-8 overflow-y-auto">
           <nav className="flex flex-col space-y-1 flex-grow">
-            {navItems.map((item, i) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-ink hover:text-leaf-1 transition-colors text-2xl font-bold py-4 px-4 flex items-center justify-between group rounded-2xl hover:bg-white/50 active:scale-[0.98]"
-                onClick={() => setIsMenuOpen(false)}
-                style={{ transitionDelay: `${i * 50}ms` }}
-              >
-                {item.label}
-              </a>
-            ))}
+            <a href="/" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Home</a>
+            <a href="/sobre-nos" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Sobre Nós</a>
+            
+            <div className="py-2">
+               <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground px-4 mb-2">Stakeholders</p>
+               <a href="/para-jovens" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Para Jovens</a>
+               <a href="/para-universidades" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Para Universidades</a>
+               <a href="/para-empresas" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Para Empresas</a>
+            </div>
+
+            <div className="py-2 border-t border-white/5">
+               <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground px-4 mb-2">Comunidade</p>
+               <a href="/comunidade" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Visão Geral</a>
+               <a href="/comunidade#embaixadores" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Embaixadores Locais</a>
+               <a href="/comunidade#hubs" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>HUBs Universitários</a>
+               <a href="/comunidade#voluntarios" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Voluntariado</a>
+            </div>
+
+            <a href="/oportunidades" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Oportunidades</a>
+            <a href="/eventos" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Eventos</a>
+            <a href="/blog" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Blog</a>
           </nav>
           
-          <div className="mt-8 space-y-4 px-2">
-            <p className="text-[11px] font-bold tracking-widest uppercase text-ink-3">Acessos</p>
-            <a href="/login/empresa" className="flex items-center justify-center gap-2 bg-ink text-paper font-semibold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform">
-              <Briefcase className="w-5 h-5" /> Acesso Empresa
-            </a>
-            <div className="grid grid-cols-2 gap-3">
-              <a href="/login/jovem" className="flex items-center justify-center gap-2 bg-paper-2/80 backdrop-blur text-ink font-semibold py-4 rounded-2xl border border-paper-3 shadow-sm active:scale-95 transition-transform">
-                <Sparkles className="w-4 h-4 text-sky-1" /> Talento
+          <div className="mt-8 space-y-4 px-2 pb-6 border-t border-border pt-6">
+            <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground">Entrar / Cadastre-se</p>
+            <div className="grid gap-3">
+              <a href="/login/jovem" className="flex items-center justify-center gap-2 bg-secondary text-foreground font-semibold py-4 rounded-2xl border border-border shadow-sm active:scale-95 transition-transform">
+                <Sparkles className="w-4 h-4 text-sky-400" /> Para Jovens
               </a>
-              <a href="/login/universidade" className="flex items-center justify-center gap-2 bg-paper-2/80 backdrop-blur text-ink font-semibold py-4 rounded-2xl border border-paper-3 shadow-sm active:scale-95 transition-transform">
-                <GraduationCap className="w-4 h-4 text-earth-1" /> Instituição
+              <a href="/login/universidade" className="flex items-center justify-center gap-2 bg-secondary text-foreground font-semibold py-4 rounded-2xl border border-border shadow-sm active:scale-95 transition-transform">
+                <GraduationCap className="w-4 h-4 text-primary" /> Para Universidades
+              </a>
+              <a href="/login/empresa" className="flex items-center justify-center gap-2 bg-primary text-black font-semibold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform">
+                <Briefcase className="w-5 h-5" /> Para Empresas
               </a>
             </div>
           </div>

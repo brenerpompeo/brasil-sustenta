@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { Link } from 'wouter';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import NewsletterSection from '@/components/NewsletterSection';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Calendar, User, ArrowRight, Share2, Star, Tag, Clock } from 'lucide-react';
@@ -136,6 +137,8 @@ const Blog = () => {
                 </div>
              </div>
            )}
+        </div>
+      </section>
 
       {/* Articles Grid */}
       <section className="py-24 bg-background border-b border-border">
@@ -173,8 +176,6 @@ const Blog = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
            {/* Empty State */}
            {filteredPosts.length === 0 && (
@@ -189,30 +190,7 @@ const Blog = () => {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-24 lg:py-32 bg-secondary/5 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="container relative z-10 px-6 lg:px-8 max-w-[800px] mx-auto text-center">
-            <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground tracking-tighter mb-8 leading-[1.05]">
-              Assine nossa <span className="italic font-light text-primary">Newsletter</span>.
-            </h2>
-            <p className="text-[1.125rem] text-muted-foreground font-medium mb-12 max-w-xl mx-auto leading-relaxed">
-              Receba semanalmente os melhores insights sobre sustentabilidade, ESG e carreiras de impacto no Brasil.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto bg-card p-2 rounded-[24px] border border-border animate-fade-in-up">
-               <input 
-                 type="email" 
-                 placeholder="Seu melhor e-mail..." 
-                 className="flex-1 h-14 bg-transparent border-none px-6 text-[14px] font-bold text-foreground placeholder:text-muted-foreground/20 focus:outline-none"
-               />
-               <Button className="h-14 px-10 rounded-2xl bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-widest text-[10px] shadow-xl shadow-primary/10 transition-all hover:scale-[1.02]">
-                  Inscrever-se
-               </Button>
-            </div>
-            <p className="mt-6 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/30">
-               Zero spam. Apenas conteúdo de valor.
-            </p>
-        </div>
-      </section>
+      <NewsletterSection />
 
       <Footer />
     </div>

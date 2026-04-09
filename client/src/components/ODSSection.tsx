@@ -1,23 +1,29 @@
-import { BookOpen, Users, Globe2, Target, Briefcase, Sparkles, Building2, Trees, Droplets, HeartPulse, Scale, Factory, Lightbulb } from 'lucide-react';
+import { useState } from 'react';
+import { Target, Leaf, Heart, MonitorPlay, Users, Droplets, Zap, Briefcase, Factory, Scale, Building2, Recycle, CloudRain, Fish, TreePine, Shield, Network, Handshake, Sparkles } from 'lucide-react';
 
-const allOds = [
-  { id: 3, title: 'Saúde e Bem-Estar', color: 'bg-[#4C9F38]', icon: <HeartPulse className="w-5 h-5 text-white" /> },
-  { id: 4, title: 'Educação de Qualidade', color: 'bg-[#C5192D]', icon: <BookOpen className="w-5 h-5 text-white" /> },
-  { id: 6, title: 'Água Potável', color: 'bg-[#26BDE2]', icon: <Droplets className="w-5 h-5 text-white" /> },
-  { id: 7, title: 'Energia Limpa', color: 'bg-[#FCC30B]', icon: <Lightbulb className="w-5 h-5 text-white" /> },
-  { id: 8, title: 'Trabalho Decente', color: 'bg-[#A21942]', icon: <Briefcase className="w-5 h-5 text-white" /> },
-  { id: 9, title: 'Inovação', color: 'bg-[#FD6925]', icon: <Factory className="w-5 h-5 text-white" /> },
-  { id: 10, title: 'Menos Desigualdades', color: 'bg-[#DD1367]', icon: <Users className="w-5 h-5 text-white" /> },
-  { id: 11, title: 'Cidades Sustentáveis', color: 'bg-[#FD9D24]', icon: <Building2 className="w-5 h-5 text-white" /> },
-  { id: 13, title: 'Ação Climática', color: 'bg-[#3F7E44]', icon: <Globe2 className="w-5 h-5 text-white" /> },
-  { id: 15, title: 'Vida Terrestre', color: 'bg-[#56C02B]', icon: <Trees className="w-5 h-5 text-white" /> },
-  { id: 16, title: 'Paz e Justiça', color: 'bg-[#00689D]', icon: <Scale className="w-5 h-5 text-white" /> },
-  { id: 17, title: 'Parcerias', color: 'bg-[#19486A]', icon: <Target className="w-5 h-5 text-white" /> },
+export const ODS_DATA = [
+  { id: 1, color: '#E5243B', title: 'Erradicação da Pobreza', Icon: Target },
+  { id: 2, color: '#DDA63A', title: 'Fome Zero', Icon: Leaf },
+  { id: 3, color: '#4C9F38', title: 'Saúde e Bem-Estar', Icon: Heart },
+  { id: 4, color: '#C5192D', title: 'Educação de Qualidade', Icon: MonitorPlay },
+  { id: 5, color: '#FF3A21', title: 'Igualdade de Gênero', Icon: Users },
+  { id: 6, color: '#26BDE2', title: 'Água Potável', Icon: Droplets },
+  { id: 7, color: '#FCC30B', title: 'Energia Limpa', Icon: Zap },
+  { id: 8, color: '#A21942', title: 'Trabalho Decente', Icon: Briefcase },
+  { id: 9, color: '#FD6925', title: 'Indústria e Inovação', Icon: Factory },
+  { id: 10, color: '#DD1367', title: 'Redução das Desigualdades', Icon: Scale },
+  { id: 11, color: '#FD9D24', title: 'Cidades Sustentáveis', Icon: Building2 },
+  { id: 12, color: '#BF8B2E', title: 'Consumo Responsável', Icon: Recycle },
+  { id: 13, color: '#3F7E44', title: 'Ação Climática', Icon: CloudRain },
+  { id: 14, color: '#0A97D9', title: 'Vida na Água', Icon: Fish },
+  { id: 15, color: '#56C02B', title: 'Vida Terrestre', Icon: TreePine },
+  { id: 16, color: '#00689D', title: 'Paz e Justiça', Icon: Shield },
+  { id: 17, color: '#19486A', title: 'Parcerias Inovadoras', Icon: Network },
+  { id: 18, color: '#1D1D1B', title: 'Igualdade Racial', Icon: Handshake } // ODS 18 Brasil
 ];
 
 const ODSSection = () => {
-  // Duplicating the array to create a seamless infinite marquee effect
-  const marqueeItems = [...allOds, ...allOds];
+  const [hoveredCode, setHoveredCode] = useState<number | null>(null);
 
   return (
     <section className="py-24 bg-background relative overflow-hidden border-y border-border">
@@ -26,7 +32,7 @@ const ODSSection = () => {
       <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-96 h-96 bg-[#3F7E44]/5 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto relative z-10 mb-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
           <div className="max-w-2xl animate-fade-in-up">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-border rounded-full text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6">
               <Sparkles className="w-3 h-3 text-primary" />
@@ -44,47 +50,44 @@ const ODSSection = () => {
             </p>
           </div>
         </div>
-      </div>
 
-      {/* Infinite Marquee Linha Flutuante */}
-      <div className="relative w-full overflow-hidden flex items-center py-4 bg-white/5 backdrop-blur shadow-sm border-y border-white/5">
-        {/* Gradients on edges to fade the items */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
-        
-        <div className="flex w-[200%] animate-marquee">
-          <div className="flex w-1/2 justify-around px-4 gap-6">
-            {allOds.map((ods, idx) => (
-              <div 
-                key={`${ods.id}-1-${idx}`} 
-                className="flex-shrink-0 flex items-center gap-4 bg-card border border-border rounded-2xl p-4 min-w-[260px] shadow-lg hover:border-primary/30 transition-all cursor-default group"
-              >
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner group-hover:scale-110 transition-transform ${ods.color}`}>
-                  {ods.icon}
-                </div>
-                <div>
-                  <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest mb-0.5 block">ODS {ods.id}</span>
-                  <h3 className="text-[14px] font-bold text-foreground leading-tight">{ods.title}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="flex w-1/2 justify-around px-4 gap-6">
-            {allOds.map((ods, idx) => (
-              <div 
-                key={`${ods.id}-2-${idx}`} 
-                className="flex-shrink-0 flex items-center gap-4 bg-white border border-paper-3 rounded-2xl p-4 min-w-[260px] shadow-sm hover:shadow-md transition-shadow cursor-default group"
-              >
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner group-hover:scale-105 transition-transform ${ods.color}`}>
-                  {ods.icon}
-                </div>
-                <div>
-                  <span className="text-[11px] font-bold text-ink-4 uppercase tracking-widest mb-0.5 block">ODS {ods.id}</span>
-                  <h3 className="text-[14px] font-bold text-ink leading-tight">{ods.title}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* 18 ODS Grid Display */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-4 w-full">
+          {ODS_DATA.map((ods) => (
+            <div
+              key={ods.id}
+              onMouseEnter={() => setHoveredCode(ods.id)}
+              onMouseLeave={() => setHoveredCode(null)}
+              className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:z-10 bg-card border border-border"
+              style={{ 
+                backgroundColor: hoveredCode === ods.id ? ods.color : undefined,
+                borderColor: hoveredCode === ods.id ? ods.color : undefined
+              }}
+            >
+               <div className="absolute inset-0 p-4 sm:p-5 flex flex-col items-start justify-between z-10 transition-colors duration-300">
+                  <span className={`font-display text-2xl sm:text-3xl font-black ${hoveredCode === ods.id ? 'text-white' : 'text-muted-foreground/50'} transition-colors`}>
+                    {ods.id}
+                  </span>
+                  
+                  <div className="w-full">
+                     <div className={`mb-3 transition-colors ${hoveredCode === ods.id ? 'text-white' : 'text-primary'}`}>
+                        {<ods.Icon className="w-6 h-6 sm:w-8 sm:h-8" strokeWidth={hoveredCode === ods.id ? 2.5 : 1.5} />}
+                     </div>
+                     <h3 className={`text-[10px] sm:text-xs font-bold leading-tight uppercase tracking-wide
+                        ${hoveredCode === ods.id ? 'text-white' : 'text-foreground/80'} transition-colors line-clamp-2
+                     `}>
+                       {ods.title}
+                     </h3>
+                  </div>
+               </div>
+               {/* Subliminal number logic for depth */}
+               <span className="absolute -bottom-4 -right-4 font-display text-[8rem] font-black opacity-[0.03] pointer-events-none text-white selection:bg-transparent transition-opacity group-hover:opacity-10">
+                  {ods.id}
+               </span>
+               {/* Glossy overlay layer */}
+               <div className={`absolute inset-0 bg-gradient-to-tr from-white/0 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none`}></div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
