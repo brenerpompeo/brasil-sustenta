@@ -3,33 +3,33 @@ import { Target, GraduationCap, Zap } from 'lucide-react';
 const benefits = [
   {
     icon: Target,
-    title: 'Impacto ESG Mensurável',
+    title: 'Auditoria Criativa ODS',
     description:
-      'Projetos com métricas claras de sustentabilidade, alinhados aos ODS da ONU, gerando valor tangível e reportável para a sua organização.',
-    color: 'text-leaf-1',
-    bg: 'bg-leaf/10',
-    border: 'group-hover:border-leaf-1',
-    shadow: 'group-hover:shadow-[0_8px_30px_rgb(28,107,58,0.1)]'
+      'Nossos squads não apenas entregam, eles auditam. Transformamos métricas frias de ESG em narrativas visuais potentes e impacto ODS real.',
+    color: 'text-primary',
+    bg: 'bg-primary/5',
+    border: 'group-hover:border-primary/50',
+    shadow: 'group-hover:shadow-[0_8px_30px_rgb(16,185,129,0.15)]'
   },
   {
     icon: GraduationCap,
-    title: 'Talentos Universitários Vetados',
+    title: 'Elite Creative Squads',
     description:
-      'Acesso exclusivo à elite emergente acadêmica. Estudantes previamente filtrados por competência técnica e alinhamento de propósito.',
-    color: 'text-sky-1',
-    bg: 'bg-sky/10',
-    border: 'group-hover:border-sky-1',
-    shadow: 'group-hover:shadow-[0_8px_30px_rgb(56,189,248,0.1)]'
+      'Acesso exclusivo aos top 5% talentos das universidades, focados em design, comunicação e tech para a economia regenerativa.',
+    color: 'text-sky-400',
+    bg: 'bg-sky-400/5',
+    border: 'group-hover:border-sky-400/50',
+    shadow: 'group-hover:shadow-[0_8px_30px_rgb(56,189,248,0.15)]'
   },
   {
     icon: Zap,
-    title: 'Squad as a Service',
+    title: 'ROI de Regeneração',
     description:
-      'Equipes ágeis montadas sob demanda. Eliminamos burocracias de contratação fornecendo escopos fechados, flexíveis e objetivos.',
-    color: 'text-violet-1',
-    bg: 'bg-violet/10',
-    border: 'group-hover:border-violet-1',
-    shadow: 'group-hover:shadow-[0_8px_30px_rgb(139,92,246,0.1)]'
+      'Aceleramos o valor compartilhado. Reduzimos a burocracia corporativa e entregamos inovação social com retorno tangível para sua marca.',
+    color: 'text-amber-400',
+    bg: 'bg-amber-400/5',
+    border: 'group-hover:border-amber-400/50',
+    shadow: 'group-hover:shadow-[0_8px_30px_rgb(251,191,36,0.15)]'
   },
 ];
 
@@ -39,12 +39,12 @@ const WhyChooseSection = () => {
       <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Diferencial</div>
-          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            Por que escolher o <span className="italic font-light text-primary">Brasil Sustenta</span>?
+          <div className="text-[10px] font-bold tracking-[0.4em] uppercase text-primary mb-6">Por que o Hub?</div>
+          <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground leading-tight tracking-tighter mb-8">
+            A Criatividade como Motor de <span className="italic font-light text-primary text-glow-emerald text-center">Impacto</span>.
           </h2>
-          <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Um ecossistema de ponta que converte ideias corporativas em impacto sustentável executado.
+          <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
+            Unimos o rigor corporativo ESG à disruptividade da Economia Criativa em um ecossistema projetado para gerar Valor Compartilhado.
           </p>
         </div>
 

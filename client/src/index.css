@@ -5,7 +5,7 @@
 
 @theme inline {
   --font-display: "Fraunces", serif;
-  --font-body: "Instrument Sans", sans-serif;
+  --font-body: "Inter", sans-serif;
   
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
@@ -33,7 +33,11 @@
   --color-ember-3: var(--ember-3);
   --color-forest: var(--forest);
   --color-forest-2: var(--forest-2);
-  --color-forest-3: var(--forest-2);
+  --color-forest-3: var(--forest-3);
+
+  /* Creative Tokens */
+  --color-glass: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
 
   /* Shadcn Mappings */
   --color-background: var(--background);
@@ -64,53 +68,43 @@
 }
 
 :root {
-  /* Dark theme (default) */
-  --background: #090909; /* Mais profundo para destacar cards */
+  /* Dark theme (Premium Creative) */
+  --background: #050505; 
   --foreground: #FAFAFA;
-  --card: #141414;
+  --card: #0D0D0D;
   --card-foreground: #FAFAFA;
-  --popover: #141414;
+  --popover: #0D0D0D;
   --popover-foreground: #FAFAFA;
-  --primary: #1ED760;
+  --primary: #00FF85; /* Neon Emerald */
   --primary-foreground: #000000;
-  --secondary: rgba(255,255,255,0.1);
+  --secondary: rgba(255,255,255,0.05);
   --secondary-foreground: #FAFAFA;
-  --muted: rgba(255,255,255,0.06);
-  --muted-foreground: #A1A1AA; /* Cinza claro sólido para garantir legibilidade */
-  --accent: #1ED760;
+  --muted: rgba(255,255,255,0.04);
+  --muted-foreground: #94A3B8;
+  --accent: #00FF85;
   --accent-foreground: #000000;
-  --destructive: #F56642;
+  --destructive: #FF4D4D;
   --destructive-foreground: #FFFFFF;
-  --border: rgba(255,255,255,0.18); /* Elevado para separação visual clara */
-  --input: rgba(255,255,255,0.18);
-  --ring: #1ED760;
-  --radius: 0.65rem;
+  --border: rgba(255,255,255,0.1);
+  --input: rgba(255,255,255,0.05);
+  --ring: #00FF85;
+  --radius: 0rem; /* Brutalist/Sharp corners */
 
-  /* Custom semantic colors for dark theme */
+  /* Custom semantic colors */
   --ink: #FAFAFA;
-  --ink-2: #E1E1E1;
-  --ink-3: #B0B0B0;
-  --ink-4: #808080;
-  --paper: #161616;
-  --paper-2: #1F1F1F;
-  --paper-3: #2A2A2A;
-  --leaf: #1ED760;
-  --leaf-2: #34E075;
-  --leaf-3: #5CE891;
-  --leaf-4: #A8F0B8;
-  --leaf-5: #D4F7DE;
-  --sky: #3B82F6;
-  --sky-2: #60A5FA;
-  --sky-3: #DBEAFE;
-  --sun: #F59E0B;
-  --sun-2: #FBBF24;
-  --sun-3: #FEF3C7;
-  --ember: #F56642;
-  --ember-2: #FB7B65;
-  --ember-3: #FEDDD5;
-  --forest: #0D9488;
-  --forest-2: #14B8A6;
-  --forest-3: #F0FDFA;
+  --ink-2: #CBD5E1;
+  --ink-3: #94A3B8;
+  --ink-4: #64748B;
+  --paper: #050505;
+  --paper-2: #0D0D0D;
+  --paper-3: #1A1A1A;
+  --leaf: #00FF85;
+  --leaf-2: #00E676;
+  --leaf-3: #00C853;
+  --sky: #38BDF8;
+  --forest: #064E3B;
+  --forest-2: #065F46;
+  --forest-3: #047857;
 }
 
 .light {
@@ -172,12 +166,12 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-  h1 { @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6; }
-  h2 { @apply text-3xl md:text-4xl font-bold tracking-tight mb-4; }
-  h3 { @apply text-2xl md:text-3xl font-semibold tracking-tight; }
-  h4 { @apply text-xl font-semibold; }
-  p { @apply text-base text-muted-foreground leading-relaxed; }
-  small { @apply text-sm; }
+  h1 { @apply text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 font-display; }
+  h2 { @apply text-4xl md:text-5xl font-bold tracking-tighter mb-6 font-display; }
+  h3 { @apply text-3xl md:text-4xl font-semibold tracking-tighter font-display; }
+  h4 { @apply text-2xl font-semibold font-display; }
+  p { @apply text-lg text-muted-foreground leading-relaxed font-body; }
+  small { @apply text-sm font-body; }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -329,8 +323,34 @@
 
   .gradient-cta:hover {
     background: linear-gradient(135deg, #22ff70 0%, #1ED760 100%);
-    box-shadow: 0 8px 24px rgba(30, 215, 96, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 255, 133, 0.4);
     transform: translateY(-2px);
+  }
+
+  /* Glassmorphism Premium */
+  .glass {
+    background: rgba(13, 13, 13, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-emerald {
+    background: rgba(0, 255, 133, 0.03);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 255, 133, 0.1);
+  }
+
+  /* Text Effects */
+  .text-glow-emerald {
+    text-shadow: 0 0 20px rgba(0, 255, 133, 0.3);
+  }
+
+  .text-gradient-silver {
+    background: linear-gradient(180deg, #FAFAFA 0%, #94A3B8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .gradient-banner {

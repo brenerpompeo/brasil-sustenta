@@ -36,6 +36,7 @@ import Eventos from "./pages/Eventos";
 import Artigos from "./pages/Artigos";
 import Relatorios from "./pages/Relatorios";
 import Biblioteca from "./pages/Biblioteca";
+import Manifesto from "./pages/Manifesto";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -73,6 +74,7 @@ function Router() {
       <Route path="/artigos" component={Artigos} />
       <Route path="/relatorios" component={Relatorios} />
       <Route path="/biblioteca" component={Biblioteca} />
+      <Route path="/manifesto" component={Manifesto} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

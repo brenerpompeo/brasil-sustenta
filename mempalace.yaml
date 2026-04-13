@@ -1,0 +1,40 @@
+wing: brasil_sustenta
+rooms:
+- name: patches
+  description: Files from patches/
+  keywords:
+  - patches
+  - patches
+- name: backend
+  description: Files from server/
+  keywords:
+  - backend
+  - server
+- name: shared
+  description: Files from shared/
+  keywords:
+  - shared
+  - shared
+- name: brasil_sustenta
+  description: Files from brasil-sustenta/
+  keywords:
+  - brasil_sustenta
+  - brasil-sustenta
+- name: frontend
+  description: Files from client/
+  keywords:
+  - frontend
+  - client
+- name: drizzle
+  description: Files from drizzle/
+  keywords:
+  - drizzle
+  - drizzle
+- name: scripts
+  description: Files from scripts/
+  keywords:
+  - scripts
+  - scripts
+- name: general
+  description: Files that don't fit other rooms
+  keywords: []

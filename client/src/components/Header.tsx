@@ -22,11 +22,11 @@ const Header = () => {
         scrolled ? 'py-4' : 'py-6'
       }`}>
         {/* Island Container */}
-        <div className={`transition-all duration-500 ease-out overflow-hidden flex items-center justify-between w-full mx-auto relative
+        <div className={`transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden flex items-center justify-between w-full mx-auto relative
           ${scrolled 
-            ? 'max-w-[1000px] h-14 bg-paper/60 backdrop-blur-2xl border border-paper-3/60 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-[2rem]' 
-            : 'max-w-[1200px] h-16 bg-transparent border border-transparent rounded-none'
-          } px-6 lg:px-8`}
+            ? 'max-w-[1000px] h-14 glass shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-full' 
+            : 'max-w-[1240px] h-20 bg-transparent border-none'
+          } px-8`}
         >
           {/* Subtle inner glow for the pill effect */}
           {scrolled && <div className="absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/50 pointer-events-none" />}
@@ -34,49 +34,33 @@ const Header = () => {
           {/* Logo Premium */}
           <Link href="/">
             <div className="flex items-center space-x-3 cursor-pointer group relative z-10 w-fit">
-              <div className="font-display text-xl sm:text-2xl font-bold text-foreground tracking-tighter leading-none group-hover:opacity-80 transition-opacity">
-                Brasil<br /><span className="text-primary">Sustenta</span>
+              <div className="font-display text-xl sm:text-2xl font-bold text-foreground tracking-tighter leading-[0.9] group-hover:opacity-80 transition-opacity">
+                Brasil<br /><span className="text-primary text-glow-emerald">Sustenta</span>
               </div>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-2 relative z-10">
-            <a href="/" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Home</a>
-            <a href="/sobre-nos" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Sobre Nós</a>
+          <nav className="hidden lg:flex items-center space-x-1 relative z-10">
+            <a href="/" className={`text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>Home</a>
+            <a href="/manifesto" className={`text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>Manifesto</a>
             
             {/* Stakeholders Dropdown */}
             <div className="relative group">
-              <button className={`flex items-center gap-1 text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>
-                Stakeholders <ChevronDown className="w-3 h-3 opacity-50" />
+              <button className={`flex items-center gap-1 text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>
+                Hubs <ChevronDown className="w-3 h-3 opacity-50" />
               </button>
-              <div className="absolute left-0 top-full mt-2 w-52 bg-card/90 backdrop-blur-2xl border border-border rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-left group-hover:translate-y-0 translate-y-2">
+              <div className="absolute left-0 top-full mt-4 w-60 glass border border-primary/10 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-left -translate-y-2 group-hover:translate-y-0">
                 <div className="p-2 flex flex-col">
-                  <a href="/para-jovens" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Para Jovens</a>
-                  <a href="/para-universidades" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Para Universidades</a>
-                  <a href="/para-empresas" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Para Empresas</a>
+                  <a href="/para-jovens" className="flex items-center gap-3 px-4 py-3 text-xs font-bold tracking-widest uppercase text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all">Para Jovem</a>
+                  <a href="/para-universidades" className="flex items-center gap-3 px-4 py-3 text-xs font-bold tracking-widest uppercase text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all">Para Universidade</a>
+                  <a href="/para-empresas" className="flex items-center gap-3 px-4 py-3 text-xs font-bold tracking-widest uppercase text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all">Para Empresa</a>
                 </div>
               </div>
             </div>
-
-            {/* Comunidade Dropdown */}
-            <div className="relative group">
-              <button className={`flex items-center gap-1 text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>
-                Comunidade <ChevronDown className="w-3 h-3 opacity-50" />
-              </button>
-              <div className="absolute left-0 top-full mt-2 w-56 bg-card/90 backdrop-blur-2xl border border-border rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-left group-hover:translate-y-0 translate-y-2">
-                <div className="p-2 flex flex-col">
-                  <a href="/comunidade" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Visão Geral</a>
-                  <a href="/comunidade#embaixadores" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Embaixadores Locais</a>
-                  <a href="/comunidade#hubs" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">HUBs Universitários</a>
-                  <a href="/comunidade#voluntarios" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">Voluntariado</a>
-                </div>
-              </div>
-            </div>
-
-            <a href="/oportunidades" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Oportunidades</a>
-            <a href="/eventos" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Eventos</a>
-            <a href="/blog" className={`text-[13px] font-bold tracking-tight transition-all duration-300 rounded-full px-3 py-2 ${scrolled ? 'text-muted-foreground hover:text-foreground hover:bg-white/5' : 'text-muted-foreground/80 hover:text-foreground hover:bg-white/5'}`}>Blog</a>
+            
+            <a href="/oportunidades" className={`text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>Matching</a>
+            <a href="/comunidade" className={`text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>Blog</a>
           </nav>
 
           {/* Desktop Login Access */}

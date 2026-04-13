@@ -82,8 +82,8 @@ export default function ParaUniversidades() {
   return (
     <div className="min-h-screen bg-background selection:bg-primary/30 overflow-x-hidden">
       <SEO 
-        title="Para Universidades | Conecte a Academia ao Pacto Global e Mercado"
-        description="Firme uma parceria estratégica e posicione sua universidade com as práticas ODS. Empregabilidade direta para seus talentos em ESG."
+        title="Para Universidades | Hubs de Inovação para a Economia Regenerativa"
+        description="Transforme sua IES em um polo de talentos para a nova economia. Projetos de extensão baseados em squads criativos e impacto real nos ODS."
       />
       <Header />
 
@@ -99,12 +99,13 @@ export default function ParaUniversidades() {
                 <span>Alianças Estratégicas e Extensão</span>
              </div>
              
-             <h1 className="text-5xl md:text-7xl font-display font-bold text-foreground leading-[1.05] tracking-tighter mb-8 animate-fade-in-up">
-                Eleve o <span className="text-primary italic font-serif font-light">Impacto</span> da sua <span className="underline decoration-primary/30 underline-offset-8">Instituição</span>.
+             <h1 className="text-5xl md:text-7xl font-display font-bold text-foreground leading-[0.95] tracking-tighter mb-8 animate-fade-in-up">
+                Hubs de <span className="text-primary italic font-serif font-light text-glow-emerald">Inovação</span><br />
+                para uma Economia <span className="underline decoration-primary/30 underline-offset-8">Regenerativa</span>.
              </h1>
              
              <p className="text-[1.125rem] text-muted-foreground font-medium mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
-                Conecte seus estudantes ao mercado ESG global através de squads multidisciplinares e projetos de impacto real, sem burocracia ou custos para a IES.
+                O **Brasil Sustenta** conecta a academia ao core business das marcas globais. Transforme o conhecimento em <span className="text-foreground">Impacto ODS</span> auditável e squads criativos de alto desempenho.
              </p>
 
              <div className="flex flex-col sm:flex-row gap-5 justify-center animate-fade-in-up delay-200">
@@ -132,7 +133,7 @@ export default function ParaUniversidades() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="max-w-2xl">
                <h2 className="font-display text-4xl lg:text-5xl font-bold tracking-tighter text-foreground mb-6">
-                 Proposta de <span className="italic font-serif font-light text-primary text-center">Valor</span> <br />para a <span className="underline decoration-primary/30 underline-offset-4">Academia</span>.
+                 Arquitetura de <span className="italic font-serif font-light text-primary text-center text-glow-emerald">Talento</span>. <br />Impacto Sistêmico.
                </h2>
             </div>
             <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary bg-card border border-border px-4 py-2 rounded-xl h-fit">

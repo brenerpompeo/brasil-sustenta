@@ -151,8 +151,8 @@ export default function ParaJovens() {
   return (
     <div className="min-h-screen bg-background selection:bg-primary/30 overflow-x-hidden">
       <SEO 
-        title="Para Jovens | Revolucione Seu Início de Carreira. Aplique para Squads Exclusivos"
-        description="Assuma riscos que importam. Ingresse nos Squads ESG do Brasil Sustenta, conecte-se com marcas globais e gere renda enquanto impulsiona sua jornada."
+        title="Para Talentos Criativos | Protagonismo, Carreira e Impacto Regenerativo"
+        description="Assuma riscos que importam. Ingresse nos Squads Criativos do Brasil Sustenta, conecte-se com marcas globais e transforme cultura em impacto real através dos ODS."
       />
       <Header />
 
@@ -168,19 +168,19 @@ export default function ParaJovens() {
               <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary">Futuro & Carreira com Propósito</span>
             </div>
             
-            <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-8 leading-[1.05] tracking-tighter animate-fade-in-up">
-              Seu <span className="italic font-light font-serif text-primary">Talento</span>,<br />
-              Gerando <span className="underline decoration-primary/30 underline-offset-8">Impacto Real</span>.
+            <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-8 leading-[0.95] tracking-tighter animate-fade-in-up">
+              O seu <span className="italic font-light font-serif text-primary text-glow-emerald">Talento</span>,<br />
+              como Motor de <span className="underline decoration-primary/30 underline-offset-8">Regeneração</span>.
             </h1>
             
             <p className="text-[1.125rem] text-muted-foreground font-medium mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
-              Trabalhe em projetos ESG de grandes empresas, receba remuneração digna e construa um currículo que o mercado disputa.
+              Não seja apenas um executor. No Brasil Sustenta, você entra para Squads Criativos de Elite para resolver os maiores desafios de sustentabilidade das marcas globais.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 justify-center animate-fade-in-up delay-200">
               <Link href="/login/jovem">
                 <Button size="lg" className="w-full sm:w-auto h-14 px-10 bg-primary hover:bg-primary/90 text-black font-bold rounded-xl transition-all hover:scale-[1.02] shadow-xl shadow-primary/10 tracking-widest uppercase text-xs">
-                  Quero ser um Talento
+                  Ser um Talento Criativo
                 </Button>
               </Link>
               <Link href="/oportunidades">
@@ -198,10 +198,10 @@ export default function ParaJovens() {
         <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 animate-fade-in-up">
             <div className="max-w-2xl">
-               <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
-                Mais que um <span className="italic font-serif font-light text-primary">Estágio</span>. <br />Uma experiência de Elite.
+                <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
+                Mais que <span className="italic font-serif font-light text-primary">Candidaturas</span>. <br />Urgência de Protagonismo.
               </h2>
-              <p className="text-[1.125rem] text-muted-foreground font-medium">Conectamos as mentes mais inquietas das universidades aos desafios reais das organizações contemporâneas.</p>
+              <p className="text-[1.125rem] text-muted-foreground font-medium">Buscamos mentes inquietas que entendem que a criatividade é a ferramenta mais potente para mudar o mundo.</p>
             </div>
             <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary bg-card border border-border px-4 py-2 rounded-xl h-fit">
               <Zap className="w-4 h-4 fill-current" />

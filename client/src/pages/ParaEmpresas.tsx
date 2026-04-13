@@ -22,34 +22,34 @@ import { SEO } from '@/components/SEO';
 const ParaEmpresas = () => {
   const benefits = [
     {
-      icon: Users,
-      title: 'Talentos Qualificados',
-      description: 'Acesso a jovens universitários pré-selecionados com habilidades em ESG, sustentabilidade e inovação.'
+      icon: Sparkles,
+      title: 'Mentes Criativas de Elite',
+      description: 'Acesso a jovens talentos de design, tech e inovação que entendem a linguagem do impacto planetário.'
     },
     {
       icon: Target,
-      title: 'Projetos Sob Medida',
-      description: 'Squads personalizados de acordo com as necessidades específicas do seu projeto de impacto.'
+      title: 'Auditoria Criativa ODS',
+      description: 'Squads personalizados que aplicam os 18 ODS da ONU com visão disruptiva e estética premium.'
     },
     {
       icon: TrendingUp,
-      title: 'Impacto Mensurável',
-      description: 'Acompanhe métricas de impacto social e ambiental geradas pelos projetos desenvolvidos.'
-    },
-    {
-      icon: Shield,
-      title: 'Gestão Simplificada',
-      description: 'Plataforma completa para gerenciar projetos, equipes e avaliações em um só lugar.'
-    },
-    {
-      icon: Award,
-      title: 'Reputação ESG',
-      description: 'Fortaleça a imagem da sua empresa com práticas sustentáveis e responsabilidade social.'
+      title: 'Valor Compartilhado Real',
+      description: 'Transforme compliance ESG em ativos de reputação e novas frentes de geração de valor para todos.'
     },
     {
       icon: BarChart3,
-      title: 'ROI Comprovado',
-      description: 'Investimento acessível com retorno garantido em inovação e desenvolvimento sustentável.'
+      title: 'Impacto Visualizado',
+      description: 'Relatórios que vão além de planilhas. Dados transformados em narrativas visuais de alto impacto.'
+    },
+    {
+      icon: Shield,
+      title: 'Compliance de Reputação',
+      description: 'Proteja e fortaleça a imagem da sua marca através de projetos de regeneração genuína.'
+    },
+    {
+      icon: Zap,
+      title: 'ROI de Inovação',
+      description: 'Investimento eficiente que gera inovação social e atrai a nova geração de consumidores conscientes.'
     },
   ];
 
@@ -78,45 +78,44 @@ const ParaEmpresas = () => {
 
   const plans = [
     {
-      name: 'Squad Box Starter',
+      name: 'Creative ESG Starter',
       price: 'R$ 15.000',
-      period: '/projeto',
-      description: 'Ideal para projetos pontuais',
+      period: '/sprint',
+      description: 'A porta de entrada para a economia criativa regenerativa',
       features: [
-        'Squad de 3-5 talentos',
-        'Duração de 3 meses',
-        'Acompanhamento mensal',
-        'Relatório de impacto final',
+        'Squad de 3-5 talentos criativos',
+        'Auditoria ODS inicial',
+        'Sprint de 3 meses',
+        'Relatório de Impacto Visual',
         'Suporte por e-mail'
       ]
     },
     {
-      name: 'Squad Digital Impact',
+      name: 'Impact Narrative',
       price: 'R$ 28.000',
-      period: '/projeto',
-      description: 'Para projetos de transformação digital',
+      period: '/sprint',
+      description: 'Transformação de marca e impacto sistêmico',
       features: [
-        'Squad de 5-7 talentos especializados',
-        'Duração de 4 meses',
+        'Squad de 5-7 talentos de elite',
+        'Narrativa Transmídia de Impacto',
         'Acompanhamento quinzenal',
-        'Relatórios de impacto mensais',
+        'Relatórios de Reputação Mensais',
         'Suporte prioritário',
         'Acesso a ferramentas premium'
       ],
       highlighted: true
     },
     {
-      name: 'Squad ODS Accelerator',
-      price: 'R$ 38.000',
-      period: '/projeto',
-      description: 'Projetos complexos alinhados aos ODS',
+      name: 'Cultural ODS Hub',
+      price: 'R$ 48.000',
+      period: '/hub',
+      description: 'O nível máximo de valor compartilhado corporativo',
       features: [
-        'Squad de 7-10 talentos multidisciplinares',
-        'Duração de 6 meses',
-        'Acompanhamento semanal',
-        'Dashboard de métricas em tempo real',
-        'Consultoria ESG incluída',
-        'Certificação de impacto'
+        'Estratégia Full-Stack de Impacto',
+        'Mapeamento de Stakeholder 360º',
+        'Dashboard de Valor Compartilhado',
+        'Consultoria Criativa Sênior',
+        'Certificação Oficial de Impacto Cultural'
       ]
     },
   ];
@@ -141,8 +140,8 @@ const ParaEmpresas = () => {
   return (
     <div className="min-h-screen bg-background selection:bg-primary/30">
       <SEO 
-        title="Para Empresas | ESG na Prática com Talentos em Ascensão"
-        description="Reduza os custos e acelere o impacto do seu ESG corporativo integrando jovens talentos apaixonados por sustentabilidade às suas squads e projetos."
+        title="Para Empresas de Impacto | Escaneie, Escale e Operacionalize seu ESG"
+        description="A primeira plataforma que operacionaliza a economia criativa para escalar o impacto ESG corporativo através de squads de elite e auditoria ODS."
       />
       <Header />
 
@@ -155,12 +154,12 @@ const ParaEmpresas = () => {
               <Sparkles className="w-4 h-4 text-primary mr-2" />
               <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary">Para Empresas</span>
             </div>
-            <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-8 leading-[1.05] tracking-tighter animate-fade-in-up">
-              Conecte sua Empresa a<br />
-              <span className="italic font-light text-primary">Talentos ESG</span>
+            <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-8 leading-[0.95] tracking-tighter animate-fade-in-up">
+              Escalando o ESG <br />
+              através da <span className="italic font-light text-primary text-glow-emerald">Cultura</span>.
             </h1>
             <p className="text-[1.125rem] text-muted-foreground mb-12 max-w-2xl mx-auto font-medium leading-relaxed animate-fade-in-up delay-100">
-              Transforme desafios de sustentabilidade em oportunidades de inovação com squads de jovens talentos universitários especializados em ESG.
+              O **Brasil Sustenta** operacionaliza a criatividade como um ativo de auditoria e regeneração. Transforme compliance em <span className="text-foreground">Valor Compartilhado</span> real através de nosso hub de squads de elite.
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center animate-fade-in-up delay-200">
               <Link href="/login/empresa">
@@ -182,10 +181,10 @@ const ParaEmpresas = () => {
         <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
           <div className="text-center mb-20 animate-fade-in-up">
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
-              Por que escolher o <span className="italic font-light text-primary">Brasil Sustenta?</span>
+              Operacionalize a <span className="italic font-light text-primary">Transformação</span>.
             </h2>
             <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-              A plataforma que conecta empresas a jovens talentos para projetos de impacto ESG com resultados mensuráveis.
+              Diferente de consultorias tradicionais, nós entregamos squads que executam, medem e auditam o impacto sob a lente dos 18 ODS.
             </p>
           </div>
 

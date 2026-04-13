@@ -3,46 +3,46 @@ import { FileText, Users, Rocket, CheckCircle } from 'lucide-react';
 const steps = [
   {
     number: '01',
-    title: 'Empresa Publica',
-    description: 'A empresa publica o desafio ESG na plataforma de forma direcionada.',
+    title: 'Mapeamento de Desafio',
+    description: 'A empresa define o desafio estratégico sob a lente dos ODS e do Valor Compartilhado.',
     icon: FileText,
     items: [
-      'Definição de escopo',
-      'Critérios ODS',
-      'Orçamento previsto',
+      'Scope Audit ODS',
+      'Definição de impacto',
+      'Budget estratégico',
     ],
   },
   {
     number: '02',
-    title: 'Talentos Aplicam',
-    description: 'Universitários vetados avaliam o escopo e postulam ao projeto.',
+    title: 'Curadoria de Squad',
+    description: 'Nossa IA e curadores selecionam talentos de elite para formar o time criativo perfeito.',
     icon: Users,
     items: [
-      'Match por competência',
-      'Formação de interesse',
-      'Análise de perfil',
+      'Match de Skills 18-ODS',
+      'Formação Transmídia',
+      'Análise de Protagonismo',
     ],
   },
   {
     number: '03',
-    title: 'Squad Formado',
-    description: 'A plataforma consolida o Squad ideal com as skills exigidas.',
+    title: 'Execução Ágil',
+    description: 'O squad inicia sprints criativas focadas em soluções reais e regenerativas.',
     icon: Rocket,
     items: [
-      'Alinhamento técnico',
-      'Reunião de Kickoff',
-      'Papéis definidos',
+      'Prototipagem Rápida',
+      'Design Disruptivo',
+      'Mentoria Especializada',
     ],
   },
   {
     number: '04',
-    title: 'Entrega de Impacto',
-    description: 'Trabalho contínuo até a entrega da solução sustentável.',
+    title: 'Auditoria de Valor',
+    description: 'Relatório final com métricas de impacto e auditoria criativa dos resultados.',
     icon: CheckCircle,
     items: [
-      'Sprints estruturadas',
-      'Reporte semanal',
-      'Apresentação final',
+      'Impact Score-card',
+      'Narrativa de Reputação',
+      'Certificação de Impacto',
     ],
   },
 ];
@@ -58,12 +58,12 @@ const HowItWorksSection = () => {
       <div className="container relative z-10 px-6 lg:px-8 max-w-[1200px] mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Jornada de Inovação</div>
-          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            Como <span className="italic font-light text-primary">Funciona</span>
+          <div className="text-[10px] font-bold tracking-[0.4em] uppercase text-primary mb-6">Metodologia de Impacto</div>
+          <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground leading-tight tracking-tighter mb-8">
+            Uma Jornada de <span className="italic font-light text-primary text-glow-emerald">Valor Compartilhado</span>.
           </h2>
-          <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Dinâmica corporativa simplificada em 4 estágios de alto valor.
+          <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
+            Dinâmica corporativa simplificada em 4 estágios de alta performance criativa e regenerativa.
           </p>
         </div>
 

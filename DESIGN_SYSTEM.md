@@ -1,22 +1,24 @@
 # Brasil Sustenta - Design System
 
-## Filosofia: Impacto Sofisticado
+## Filosofia: Impacto Criativo & Premium
 
-O Design System da Brasil Sustenta segue a filosofia **"Impacto Sofisticado"**: uma identidade visual premium, minimalista e dark que transmite seriedade, inovação e sustentabilidade.
+O Design System da Brasil Sustenta evoluiu para a filosofia **"Impacto Criativo"**: uma identidade visual de alta costura digital, fundindo a sobriedade do ESG com a energia disruptiva da Economia Criativa.
 
 ---
 
 ## Paleta de Cores
 
+## Paleta de Cores (The "Midnight Emerald" Palette)
+
 ### Cores Principais
-- **Background**: `#121212` (oklch(0.10 0 0)) - Base escura premium
-- **Primary**: `#1ED760` (oklch(0.78 0.24 145)) - Verde vibrante para CTAs e destaques
-- **Foreground**: `#FAFAFA` (oklch(0.98 0 0)) - Texto principal
+- **Background**: `#050505` - Negro absoluto para profundidade máxima.
+- **Primary**: `#00FF85` - Verde Esmeralda Neon (Gera vibração e tech-feel).
+- **Foreground**: `#FAFAFA` - Branco Off-white para leitura confortável.
 
 ### Cores Secundárias
-- **Card**: `oklch(0.18 0 0)` - Fundo de cards e containers
-- **Border**: `oklch(0.28 0 0)` - Bordas sutis
-- **Muted**: `oklch(0.65 0 0)` - Texto secundário
+- **Card**: `#0D0D0D` - Cinza escuro quase preto.
+- **Border**: `rgba(255,255,255,0.1)` - Linhas finas e elegantes.
+- **Muted**: `#94A3B8` - Texto secundário equilibrado.
 
 ### Gradientes
 ```css
@@ -38,18 +40,18 @@ O Design System da Brasil Sustenta segue a filosofia **"Impacto Sofisticado"**: 
 
 ---
 
-## Tipografia
+## Tipografia (Editorial High-Contrast)
 
-### Fonte Principal
-**Poppins** - Google Fonts
-- Weights: 300 (Light), 400 (Regular), 500 (Medium), 600 (SemiBold), 700 (Bold)
+### Fontes
+- **Display**: **Fraunces** (Serif) - Usada para títulos para trazer o tom editorial e humano.
+- **Body**: **Inter** (Sans) - Máxima legibilidade para dados e textos longos.
 
-### Hierarquia
-- **H1**: 3rem (48px) / Bold / Leading tight
-- **H2**: 2.5rem (40px) / SemiBold / Leading tight
-- **H3**: 2rem (32px) / SemiBold / Leading snug
-- **Body**: 1rem (16px) / Regular / Leading relaxed
-- **Small**: 0.875rem (14px) / Regular / Leading normal
+### Hierarquia (Escala Dramática)
+- **H1**: 8rem (Desktop) / Bold / Tracking Tighter - Impacto máximo.
+- **H2**: 5rem / Bold / Tracking Tighter.
+- **H3**: 3.5rem / SemiBold.
+- **Body**: 1.125rem (18px) / Regular / Leading Relaxed.
+- **Small**: 0.875rem (14px).
 
 ---
 
