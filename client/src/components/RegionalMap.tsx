@@ -1,187 +1,356 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Globe, Zap, Leaf } from 'lucide-react';
-import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
+import { MapPin, Zap, Leaf, Globe, ChevronRight } from 'lucide-react';
+import { Link } from 'wouter';
 
-const geoUrl = "/brazil-states.topo.json";
+// ── Dados dos HUBs ────────────────────────────────────────────────────────────
 
-const hubs = [
-  { 
-    id: 'sp', 
-    name: 'São Paulo', 
-    coordinates: [-46.6333, -23.5505], 
-    color: '#009444', 
-    tag: 'HUB SP', 
+export const hubs = [
+  {
+    id: 'sp',
+    name: 'São Paulo',
+    tag: 'HUB_SP',
     specialty: 'Conectividade Urbana',
-    icon: Globe
+    description: 'Polo principal. Hub de tecnologia, fintechs e grandes corporações B2B com demanda ESG ativa.',
+    icon: Globe,
+    lat: -23.5505,
+    lng: -46.6333,
+    status: 'ativo',
+    color: '#00FF85',
+    stats: { talentos: 320, empresas: 14, projetos: 28 },
   },
-  { 
-    id: 'cp', 
-    name: 'Campinas', 
-    coordinates: [-47.0608, -22.9099], 
-    color: '#CCFF00', 
-    tag: 'HUB Campinas', 
+  {
+    id: 'campinas',
+    name: 'Campinas',
+    tag: 'HUB_CAMPINAS',
     specialty: 'Inovação & P&D',
-    icon: Zap
+    description: 'Cluster universitário denso: UNICAMP, PUC-Campinas. Foco em deep tech, agro ESG e inovação aberta.',
+    icon: Zap,
+    lat: -22.9099,
+    lng: -47.0608,
+    status: 'ativo',
+    color: '#CCFF00',
+    stats: { talentos: 180, empresas: 8, projetos: 15 },
   },
-  { 
-    id: 'rj', 
-    name: 'Rio de Janeiro', 
-    coordinates: [-43.1729, -22.9068], 
-    color: '#0A0A0A', 
-    tag: 'HUB RJ', 
-    specialty: 'Economia Azul',
-    icon: Leaf
-  }
+  {
+    id: 'rj',
+    name: 'Rio de Janeiro',
+    tag: 'HUB_RJ',
+    specialty: 'Economia Azul & Energia',
+    description: 'Polo de energia, petróleo sustentável e economia azul. Acesso à rede de empresas da área portuária e offshore.',
+    icon: Leaf,
+    lat: -22.9068,
+    lng: -43.1729,
+    status: 'ativo',
+    color: '#38BDF8',
+    stats: { talentos: 140, empresas: 7, projetos: 11 },
+  },
+  {
+    id: 'bh',
+    name: 'Belo Horizonte',
+    tag: 'HUB_BH',
+    specialty: 'Mineração Sustentável',
+    description: 'Expansão planejada para H2 2026. Foco em mineração responsável, saneamento e políticas públicas.',
+    icon: MapPin,
+    lat: -19.9167,
+    lng: -43.9345,
+    status: 'expansao',
+    color: '#FF6B35',
+    stats: { talentos: 0, empresas: 0, projetos: 0 },
+  },
+  {
+    id: 'recife',
+    name: 'Recife',
+    tag: 'HUB_RECIFE',
+    specialty: 'Impacto Social & Periférico',
+    description: 'Expansão planejada para 2027. Região Nordeste — talentos periféricos, DEI e economia criativa regional.',
+    icon: MapPin,
+    lat: -8.0476,
+    lng: -34.8770,
+    status: 'expansao',
+    color: '#FF6B35',
+    stats: { talentos: 0, empresas: 0, projetos: 0 },
+  },
 ];
 
-const RegionalMap = () => {
-  return (
-    <section className="relative py-32 bg-background overflow-hidden border-y border-border">
-      {/* Background styling elements */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-        <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-primary rounded-full blur-[150px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent rounded-full blur-[150px]" />
-      </div>
+// ── Mapa Leaflet ──────────────────────────────────────────────────────────────
 
-      <div className="max-w-7xl mx-auto px-8 relative z-10">
-        <div className="text-center mb-24">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center justify-center gap-3 mb-6"
-          >
-            <span className="h-[1px] w-8 bg-foreground/20" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-foreground">Brasil Sustenta</span>
-            <span className="h-[1px] w-8 bg-foreground/20" />
-          </motion.div>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-bold text-foreground font-display tracking-tighter leading-[0.9]"
-          >
-            Operacao em polos <span className="italic font-light text-primary">regionais</span>.
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-2xl mx-auto text-foreground/70 text-lg md:text-xl font-medium mt-8 leading-relaxed"
-          >
-            A plataforma pode crescer por clusters universitarios e corporativos, com curadoria local e operacao conectada em rede.
-          </motion.p>
-        </div>
+function LeafletMap({ selectedId, onSelect }: { selectedId: string | null; onSelect: (id: string) => void }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<any>(null);
+  const markersRef = useRef<Map<string, any>>(new Map());
 
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
-          {/* Map Side */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="w-full lg:w-1/2 aspect-square relative drop-shadow-[0_0_50px_rgba(0,148,68,0.15)] bg-secondary/30 border border-border p-8"
-          >
-            <div className="absolute top-4 left-4 border border-foreground bg-background px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-foreground z-10 w-max">
-              MAPA // OPERACAO BRASIL
+  useEffect(() => {
+    if (!containerRef.current || mapRef.current) return;
+
+    // Importação dinâmica para evitar SSR issues
+    import('leaflet').then((L) => {
+      // Corrigir ícones padrão do Leaflet
+      delete (L.Icon.Default.prototype as any)._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      });
+
+      const map = L.map(containerRef.current!, {
+        center: [-15.5, -48.5],
+        zoom: 4,
+        zoomControl: false,
+        attributionControl: false,
+        scrollWheelZoom: false,
+      });
+
+      mapRef.current = map;
+
+      // Tile layer dark — CartoDB Dark Matter
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        subdomains: 'abcd',
+      }).addTo(map);
+
+      // Zoom control reposicionado
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+      // Marcadores customizados
+      hubs.forEach((hub) => {
+        const isActive = hub.status === 'ativo';
+        const size = isActive ? 14 : 10;
+        const ringSize = isActive ? 32 : 22;
+
+        const icon = L.divIcon({
+          className: '',
+          html: `
+            <div style="position:relative;width:${ringSize}px;height:${ringSize}px;display:flex;align-items:center;justify-content:center;">
+              ${isActive ? `
+                <div style="
+                  position:absolute;
+                  width:${ringSize}px;height:${ringSize}px;
+                  border-radius:50%;
+                  background:${hub.color}22;
+                  border:1px solid ${hub.color}44;
+                  animation: hubPulse 2.5s ease-in-out infinite;
+                "></div>
+              ` : ''}
+              <div style="
+                width:${size}px;height:${size}px;
+                border-radius:50%;
+                background:${hub.color};
+                border:2px solid ${hub.status === 'ativo' ? '#050505' : '#1a1a1a'};
+                box-shadow:0 0 ${isActive ? 12 : 4}px ${hub.color}${isActive ? '88' : '44'};
+                position:relative;z-index:2;
+              "></div>
             </div>
-            
-            <ComposableMap
-              projection="geoMercator"
-              projectionConfig={{
-                scale: 750,
-                center: [-53, -15] // Custom center for Brazil view
-              }}
-              className="w-full h-full outline-none"
-            >
-              <Geographies geography={geoUrl}>
-                {({ geographies }: { geographies: any[] }) =>
-                  geographies.map((geo: any) => (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill="rgba(255,255,255,1)"
-                      stroke="#0A0A0A"
-                      strokeWidth={1.5}
-                      style={{
-                        default: { outline: "none", fill: "var(--background)", stroke: "var(--border)" },
-                        hover: { fill: "rgba(0,148,68,0.1)", stroke: "#009444", strokeWidth: 2, outline: "none" },
-                        pressed: { fill: "rgba(0,148,68,0.2)", outline: "none" },
-                      }}
-                    />
-                  ))
-                }
-              </Geographies>
-              
-              {/* Plot points on real coordinates */}
-              {hubs.map(({ id, name, coordinates, color }) => (
-                <Marker key={id} coordinates={coordinates as [number, number]}>
-                  {/* Ripple effect */}
-                  <circle r={18} fill={color} className="opacity-20 animate-ping origin-center" />
-                  <circle r={12} fill={color} className="opacity-40 animate-pulse origin-center" />
-                  {/* Core Marker */}
-                  <circle r={6} fill={color} stroke="#FFFFFF" strokeWidth={2} />
-                  {/* Label */}
-                  <text
-                    textAnchor="middle"
-                    y={-14}
-                    style={{ fontFamily: "inherit", fill: "var(--foreground)", fontSize: "10px", fontWeight: "bold" }}
-                  >
-                    {name}
-                  </text>
-                </Marker>
-              ))}
-            </ComposableMap>
-          </motion.div>
+          `,
+          iconSize: [ringSize, ringSize],
+          iconAnchor: [ringSize / 2, ringSize / 2],
+        });
 
-          {/* Cards Hub List Side */}
-          <div className="w-full lg:w-1/2 flex flex-col gap-6">
-            <h3 className="font-body text-xs font-bold tracking-[0.2em] uppercase text-foreground/50 mb-4 border-b border-border pb-4">
-              Polos Ativos
-            </h3>
-            
-            {hubs.map((hub, idx) => (
-              <motion.div
-                key={hub.id}
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 * idx, duration: 0.5 }}
-                whileHover={{ scale: 1.02 }}
-                className="flex items-center justify-between p-6 bg-background border border-border hover:border-primary transition-all group"
+        const marker = L.marker([hub.lat, hub.lng], { icon })
+          .addTo(map)
+          .on('click', () => onSelect(hub.id));
+
+        markersRef.current.set(hub.id, marker);
+      });
+
+      // Injetar CSS da animação no head
+      if (!document.getElementById('hub-pulse-style')) {
+        const style = document.createElement('style');
+        style.id = 'hub-pulse-style';
+        style.textContent = `
+          @keyframes hubPulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.5); opacity: 0.2; }
+          }
+          .leaflet-container { background: #050505 !important; }
+        `;
+        document.head.appendChild(style);
+      }
+    });
+
+    return () => {
+      mapRef.current?.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  // Fly to hub selecionado
+  useEffect(() => {
+    if (!mapRef.current || !selectedId) return;
+    const hub = hubs.find((h) => h.id === selectedId);
+    if (hub) {
+      mapRef.current.flyTo([hub.lat, hub.lng], 7, { duration: 1.2, easeLinearity: 0.3 });
+    }
+  }, [selectedId]);
+
+  return (
+    <>
+      {/* Importar CSS do Leaflet */}
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      />
+      <div ref={containerRef} className="h-full w-full" />
+    </>
+  );
+}
+
+// ── Componente principal ──────────────────────────────────────────────────────
+
+const RegionalMap = ({ compact = false }: { compact?: boolean }) => {
+  const [selectedId, setSelectedId] = React.useState<string | null>('sp');
+  const selected = hubs.find((h) => h.id === selectedId);
+
+  const activeHubs = hubs.filter((h) => h.status === 'ativo');
+  const expansionHubs = hubs.filter((h) => h.status === 'expansao');
+
+  return (
+    <section className="relative overflow-hidden border-y border-white/[0.05] bg-[--paper]">
+
+      {/* ── Header da seção ── */}
+      <div className="border-b border-white/[0.05] px-6 py-10 sm:px-8 lg:px-14">
+        <div className="mx-auto max-w-[1280px]">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/30">
+                MAPA // OPERAÇÃO_BRASIL
+              </p>
+              <h2 className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
+                  style={{ fontSize: 'clamp(2.2rem, 4vw, 3.8rem)' }}>
+                Operação em polos
+                <span className="font-light italic text-[--leaf]"> regionais</span>.
+              </h2>
+            </div>
+            {!compact && (
+              <Link
+                href="/quem-somos/hubs"
+                className="group mt-4 inline-flex items-center gap-1.5 font-mono text-[10.5px] font-bold uppercase tracking-[0.2em] text-[--ink]/35 transition-colors hover:text-[--leaf]/70 sm:mt-0"
               >
-                <div className="flex items-center gap-6">
-                  <div className="p-4 bg-secondary group-hover:bg-primary/10 transition-colors border border-border">
-                    <hub.icon className="w-6 h-6 text-foreground group-hover:text-primary transition-colors" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-bold uppercase text-primary tracking-widest mb-1">{hub.tag}</div>
-                    <div className="text-xl font-display font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{hub.name}</div>
-                    <div className="text-sm text-foreground/60 font-medium">{hub.specialty}</div>
-                  </div>
-                </div>
-                
-                <div className="hidden sm:block">
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-primary border border-primary px-3 py-1">Ativo</span>
-                </div>
-              </motion.div>
-            ))}
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="mt-8 p-6 bg-foreground text-background"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-accent">EXPANSÃO H2 2026</span>
-                <MapPin className="w-4 h-4 text-accent" />
-              </div>
-              <p className="font-body text-sm text-background/80 font-medium">O modelo foi desenhado para abrir novos polos conforme universidades e empresas sejam homologadas na rede.</p>
-            </motion.div>
+                Ver todos os HUBs
+                <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            )}
           </div>
-          
+          <p className="mt-4 max-w-2xl text-[13px] font-medium leading-relaxed text-[--ink]/40">
+            A plataforma cresce por clusters universitários e corporativos, com curadoria local e operação conectada em rede nacional.
+          </p>
         </div>
       </div>
+
+      {/* ── Grid: mapa + lista ── */}
+      <div className="mx-auto grid max-w-[1280px] xl:grid-cols-[1fr_420px]">
+
+        {/* Mapa */}
+        <div className="relative border-b border-white/[0.05] xl:border-b-0 xl:border-r xl:border-white/[0.05]">
+          {/* Label overlay */}
+          <div className="pointer-events-none absolute left-4 top-4 z-10 border border-white/[0.08] bg-[--paper]/80 px-3 py-1.5 backdrop-blur-sm">
+            <span className="font-mono text-[9.5px] font-bold uppercase tracking-[0.22em] text-[--ink]/45">
+              MAPA INTERATIVO · CLIQUE NOS POLOS
+            </span>
+          </div>
+          <div className="h-[420px] xl:h-[560px]">
+            <LeafletMap selectedId={selectedId} onSelect={setSelectedId} />
+          </div>
+        </div>
+
+        {/* Lista lateral */}
+        <div className="flex flex-col">
+
+          {/* Hubs ativos */}
+          <div className="border-b border-white/[0.05] p-5">
+            <p className="mb-3 font-mono text-[9.5px] font-bold uppercase tracking-[0.26em] text-[--ink]/28">Polos Ativos — {activeHubs.length}</p>
+            <div className="flex flex-col gap-1.5">
+              {activeHubs.map((hub) => {
+                const Icon = hub.icon;
+                const isSelected = selectedId === hub.id;
+                return (
+                  <motion.button
+                    key={hub.id}
+                    onClick={() => setSelectedId(hub.id)}
+                    whileTap={{ scale: 0.99 }}
+                    className={`flex cursor-pointer items-start gap-3.5 border p-4 text-left transition-all duration-200 ${
+                      isSelected
+                        ? 'border-[--leaf]/25 bg-[--leaf]/[0.055]'
+                        : 'border-transparent hover:border-white/[0.07] hover:bg-white/[0.02]'
+                    }`}
+                  >
+                    <div
+                      className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center"
+                      style={{
+                        background: `${hub.color}14`,
+                        border: `1px solid ${hub.color}30`,
+                        color: hub.color,
+                      }}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-mono text-[9.5px] font-bold uppercase tracking-[0.2em]"
+                              style={{ color: isSelected ? hub.color : 'rgba(250,250,250,0.3)' }}>
+                          {hub.tag}
+                        </span>
+                        <span className="font-mono text-[9px] uppercase tracking-widest text-[--leaf]/50">ATIVO</span>
+                      </div>
+                      <p className="mt-0.5 font-display text-[15px] font-bold text-[--ink]/80">{hub.name}</p>
+                      <p className="mt-0.5 text-[11.5px] text-[--ink]/38">{hub.specialty}</p>
+                    </div>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Hub selecionado — detalhe */}
+          {selected && selected.status === 'ativo' && (
+            <motion.div
+              key={selected.id}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="border-b border-white/[0.05] p-5"
+            >
+              <p className="mb-3 font-mono text-[9.5px] font-bold uppercase tracking-[0.26em] text-[--ink]/28">Dados do Polo</p>
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { label: 'Talentos', value: selected.stats.talentos },
+                  { label: 'Empresas', value: selected.stats.empresas },
+                  { label: 'Projetos', value: selected.stats.projetos },
+                ].map(({ label, value }) => (
+                  <div key={label} className="border border-white/[0.06] bg-white/[0.02] p-3 text-center">
+                    <div className="font-display text-xl font-black text-[--leaf]">{value}</div>
+                    <div className="mt-0.5 font-mono text-[9px] uppercase tracking-widest text-[--ink]/30">{label}</div>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-3 text-[12px] leading-relaxed text-[--ink]/38">{selected.description}</p>
+            </motion.div>
+          )}
+
+          {/* Expansão futura */}
+          <div className="p-5">
+            <p className="mb-3 font-mono text-[9.5px] font-bold uppercase tracking-[0.26em] text-[--ink]/28">
+              Expansão Planejada — {expansionHubs.length}
+            </p>
+            <div className="flex flex-col gap-1.5">
+              {expansionHubs.map((hub) => (
+                <div
+                  key={hub.id}
+                  className="flex items-center justify-between border border-white/[0.04] bg-white/[0.015] px-4 py-3"
+                >
+                  <div>
+                    <span className="font-mono text-[9.5px] font-bold uppercase tracking-[0.2em] text-[--ember]/50">{hub.tag}</span>
+                    <p className="mt-0.5 text-[13px] font-semibold text-[--ink]/45">{hub.name}</p>
+                  </div>
+                  <span className="font-mono text-[9px] font-bold uppercase tracking-widest text-[--ember]/40">Em breve</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </section>
   );
 };

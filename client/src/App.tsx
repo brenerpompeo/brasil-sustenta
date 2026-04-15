@@ -40,6 +40,7 @@ const Artigos = lazy(() => import("./pages/Artigos"));
 const Relatorios = lazy(() => import("./pages/Relatorios"));
 const Biblioteca = lazy(() => import("./pages/Biblioteca"));
 const Manifesto = lazy(() => import("./pages/Manifesto"));
+const Hubs = lazy(() => import("./pages/Hubs"));
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -79,6 +80,7 @@ function Router() {
       <Route path="/relatorios" component={Relatorios} />
       <Route path="/biblioteca" component={Biblioteca} />
       <Route path="/manifesto" component={Manifesto} />
+      <Route path="/quem-somos/hubs" component={Hubs} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
