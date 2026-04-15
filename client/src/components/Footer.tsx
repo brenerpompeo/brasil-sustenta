@@ -18,7 +18,7 @@ const footerLinks = {
     { label: 'Blog', href: '/blog' },
     { label: 'Artigos', href: '/artigos' },
     { label: 'Biblioteca', href: '/biblioteca' },
-    { label: 'Relatorios', href: '/relatorios' },
+    { label: 'Relatórios', href: '/relatorios' },
   ],
   suporte: [
     { label: 'Login', href: '/login' },
@@ -32,31 +32,41 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-background border-t border-border">
-      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto py-20">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
-          {/* Brand Column */}
+    <footer className="border-t border-white/[0.05] bg-[--paper]">
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-8 py-20">
+        {/* Main grid */}
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-6 mb-16">
+          {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/">
-              <div className="cursor-pointer mb-6 inline-block">
-                <div className="font-display text-2xl font-bold text-foreground tracking-tighter leading-none">
-                  Brasil<br /><span className="text-primary">Sustenta</span>
+              <div className="mb-6 inline-block cursor-pointer">
+                <div className="font-display text-[1.5rem] font-bold leading-none tracking-tight text-[--ink]">
+                  Brasil
+                  <br />
+                  <span style={{ color: 'var(--leaf)' }}>Sustenta</span>
                 </div>
               </div>
             </Link>
-            <p className="text-[14px] text-muted-foreground font-medium leading-relaxed max-w-[280px]">
-              Plataforma AI-first que transforma desafios ESG em squads universitarios com curadoria, entrega operacional e trilha de evidencia.
+            <p className="font-sans text-[13px] font-medium leading-relaxed text-[--ink]/40 max-w-[260px]">
+              Plataforma AI-first que transforma desafios ESG em Squad Boxes universitários com curadoria, Entrega Auditável e trilha de evidência.
+            </p>
+            <p className="mt-6 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/20">
+              SQUAD_AS_A_SERVICE // AI_FIRST
             </p>
           </div>
 
-          {/* Links Columns */}
+          {/* Links: Empresas */}
           <div>
-            <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground/50 mb-5">Empresas</h3>
+            <h3 className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+              Empresas
+            </h3>
             <ul className="space-y-3">
               {footerLinks.paraEmpresas.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
+                  <Link
+                    href={link.href}
+                    className="font-sans text-[13px] font-medium text-[--ink]/40 hover:text-[--leaf] transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -64,12 +74,18 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Links: Talentos */}
           <div>
-            <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground/50 mb-5">Talentos</h3>
+            <h3 className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+              Talentos
+            </h3>
             <ul className="space-y-3">
               {footerLinks.paraTalentos.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
+                  <Link
+                    href={link.href}
+                    className="font-sans text-[13px] font-medium text-[--ink]/40 hover:text-[--leaf] transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -77,12 +93,18 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Links: Recursos */}
           <div>
-            <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground/50 mb-5">Recursos</h3>
+            <h3 className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+              Recursos
+            </h3>
             <ul className="space-y-3">
               {footerLinks.recursos.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
+                  <Link
+                    href={link.href}
+                    className="font-sans text-[13px] font-medium text-[--ink]/40 hover:text-[--leaf] transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -90,12 +112,18 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Links: Suporte */}
           <div>
-            <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground/50 mb-5">Suporte</h3>
+            <h3 className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+              Suporte
+            </h3>
             <ul className="space-y-3">
               {footerLinks.suporte.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
+                  <Link
+                    href={link.href}
+                    className="font-sans text-[13px] font-medium text-[--ink]/40 hover:text-[--leaf] transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -105,53 +133,68 @@ const Footer = () => {
         </div>
 
         {/* CTA Boxes */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
-          <a href="/para-empresas" className="bg-card border border-border rounded-2xl p-7 hover:border-primary/30 transition-all group flex items-start space-x-5 shadow-sm">
-            <div className="w-12 h-12 bg-leaf/10 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Briefcase className="w-5 h-5 text-leaf-3" />
+        <div className="mb-16 grid grid-cols-1 gap-0 md:grid-cols-2">
+          <a
+            href="/para-empresas"
+            className="group flex items-start gap-5 border border-white/[0.05] p-7 hover:bg-white/[0.018] transition-colors duration-300"
+          >
+            <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-white/[0.07] text-[--leaf]">
+              <Briefcase className="h-5 w-5" strokeWidth={1.5} />
             </div>
             <div className="flex-1">
-              <h4 className="font-bold text-[15px] text-foreground mb-1.5 flex items-center gap-2">
-                Portal Empresas <ArrowUpRight className="w-4 h-4 text-muted-foreground/30 group-hover:text-primary transition-colors" />
+              <h4 className="mb-1.5 flex items-center gap-2 font-display text-[15px] font-bold text-[--ink]">
+                Portal Empresas
+                <ArrowUpRight className="h-4 w-4 text-[--ink]/20 group-hover:text-[--leaf] transition-colors" />
               </h4>
-              <p className="text-[13px] text-muted-foreground leading-relaxed font-medium">
-                Publique um desafio, receba um squad com fit score e acompanhe a execucao com mais clareza.
+              <p className="font-sans text-[13px] font-medium leading-relaxed text-[--ink]/40">
+                Publique um desafio, receba um Squad Box com fit score e acompanhe a execução com mais clareza.
               </p>
             </div>
           </a>
 
-          <a href="/para-jovens" className="bg-card border border-border rounded-2xl p-7 hover:border-primary/30 transition-all group flex items-start space-x-5 shadow-sm">
-            <div className="w-12 h-12 bg-sky/10 rounded-xl flex items-center justify-center flex-shrink-0">
-              <GraduationCap className="w-5 h-5 text-sky-1" />
+          <a
+            href="/para-jovens"
+            className="group flex items-start gap-5 border border-white/[0.05] border-l-0 p-7 hover:bg-white/[0.018] transition-colors duration-300"
+          >
+            <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-white/[0.07] text-[--sky]">
+              <GraduationCap className="h-5 w-5" strokeWidth={1.5} />
             </div>
             <div className="flex-1">
-              <h4 className="font-bold text-[15px] text-foreground mb-1.5 flex items-center gap-2">
-                Portal Jovem Talento <ArrowUpRight className="w-4 h-4 text-muted-foreground/30 group-hover:text-primary transition-colors" />
+              <h4 className="mb-1.5 flex items-center gap-2 font-display text-[15px] font-bold text-[--ink]">
+                Portal Jovem Talento
+                <ArrowUpRight className="h-4 w-4 text-[--ink]/20 group-hover:text-[--sky] transition-colors" />
               </h4>
-              <p className="text-[13px] text-muted-foreground leading-relaxed font-medium">
-                Entre em projetos reais, construa portfolio observavel e desenvolva sua empregabilidade.
+              <p className="font-sans text-[13px] font-medium leading-relaxed text-[--ink]/40">
+                Entre em projetos reais, construa portfólio verificável e desenvolva sua empregabilidade.
               </p>
             </div>
           </a>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-border">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-[12px] font-bold text-muted-foreground/40 tracking-[0.2em]">
-              © {currentYear} BRASIL SUSTENTA. TODOS OS DIREITOS RESERVADOS.
-            </p>
-            <div className="flex items-center space-x-6">
-              <Link href="/manifesto" className="text-[12px] font-bold text-muted-foreground/40 hover:text-primary transition-colors tracking-widest uppercase">
-                Manifesto
-              </Link>
-              <Link href="/comunidade" className="text-[12px] font-bold text-muted-foreground/40 hover:text-primary transition-colors tracking-widest uppercase">
-                Comunidade
-              </Link>
-              <Link href="/relatorios" className="text-[12px] font-bold text-muted-foreground/40 hover:text-primary transition-colors tracking-widest uppercase">
-                Relatorios
-              </Link>
-            </div>
+        {/* Bottom bar */}
+        <div className="flex flex-col items-start justify-between gap-4 border-t border-white/[0.05] pt-8 md:flex-row md:items-center">
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/18">
+            © {currentYear} BRASIL SUSTENTA. TODOS OS DIREITOS RESERVADOS.
+          </p>
+          <div className="flex items-center gap-8">
+            <Link
+              href="/manifesto"
+              className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28 hover:text-[--leaf] transition-colors"
+            >
+              Manifesto
+            </Link>
+            <Link
+              href="/comunidade"
+              className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28 hover:text-[--leaf] transition-colors"
+            >
+              Comunidade
+            </Link>
+            <Link
+              href="/relatorios"
+              className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28 hover:text-[--leaf] transition-colors"
+            >
+              Relatórios
+            </Link>
           </div>
         </div>
       </div>

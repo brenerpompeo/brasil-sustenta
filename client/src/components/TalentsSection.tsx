@@ -1,97 +1,142 @@
-import { BarChart3, Lightbulb, Link2, Megaphone } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { BarChart3, Lightbulb, Megaphone, ArrowRight } from 'lucide-react';
 import { Link } from 'wouter';
 
 const talents = [
   {
+    label: 'PERFIL // DADOS_E_INDICADORES',
     title: 'Pesquisa, dados e indicadores',
-    context: 'Perfis de administracao, economia, engenharia, relacoes internacionais e areas correlatas.',
-    skills: ['Benchmark', 'Pesquisa aplicada', 'Indicadores', 'Analise ESG'],
-    bio: 'Transformam desafios abertos em hipoteses, leituras de mercado, estrutura de indicadores e recomendações praticas.',
+    context: 'Administração, economia, engenharia, relações internacionais e áreas correlatas.',
+    skills: ['Benchmark', 'Pesquisa aplicada', 'Indicadores', 'Análise ESG'],
+    bio: 'Transformam desafios abertos em hipóteses, leituras de mercado, estrutura de indicadores e recomendações práticas.',
     icon: BarChart3,
   },
   {
-    title: 'Produto, UX e operacao',
-    context: 'Perfis de design, computacao, produto, service design e tecnologia.',
-    skills: ['UX', 'Prototipagem', 'Fluxos', 'Solucao digital'],
-    bio: 'Estruturam jornadas, prototipos, interfaces e operacoes capazes de levar a tese de impacto para a experiencia real.',
+    label: 'PERFIL // PRODUTO_E_UX',
+    title: 'Produto, UX e operação',
+    context: 'Design, computação, produto, service design e tecnologia.',
+    skills: ['UX', 'Prototipagem', 'Fluxos', 'Solução digital'],
+    bio: 'Estruturam jornadas, protótipos, interfaces e operações capazes de levar a tese de impacto para a experiência real.',
     icon: Lightbulb,
   },
   {
-    title: 'Narrativa, comunicacao e engajamento',
-    context: 'Perfis de comunicacao, publicidade, jornalismo, marketing e areas criativas.',
-    skills: ['Storytelling', 'Conteudo', 'Marca', 'Engajamento'],
-    bio: 'Traduzem metas e entregas em mensagem clara para stakeholders, comunidades, liderancas internas e empregabilidade do projeto.',
+    label: 'PERFIL // NARRATIVA_E_ENGAJAMENTO',
+    title: 'Narrativa, comunicação e engajamento',
+    context: 'Comunicação, publicidade, jornalismo, marketing e áreas criativas.',
+    skills: ['Storytelling', 'Conteúdo', 'Marca', 'Engajamento'],
+    bio: 'Traduzem metas e entregas em mensagem clara para stakeholders, comunidades, lideranças internas e empregabilidade do projeto.',
     icon: Megaphone,
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
+};
+
 const TalentsSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-background relative overflow-hidden border-t border-border">
-      <div className="absolute top-0 right-0 w-full h-[600px] bg-primary/5 rounded-bl-full blur-[120px] pointer-events-none"></div>
-
-      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto relative z-10">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 animate-fade-in-up">
-          <div className="max-w-2xl">
-            <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Elite Acadêmica</div>
-            <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6 tracking-tighter">
-              Os perfis que <span className="italic font-light text-primary">entram em squad</span>
-            </h2>
-            <p className="text-[1.125rem] text-muted-foreground font-medium">
-              Em vez de exibir personas ficticias, a plataforma deixa claro o tipo de repertorio que realmente compoe uma entrega forte.
+    <section className="border-t border-white/[0.05] bg-[--paper] py-24 lg:py-32">
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
+        {/* Header row */}
+        <div className="mb-20 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, ease: 'easeOut' }}
+            className="max-w-2xl"
+          >
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+              TALENTOS // QUÁDRUPLA_HÉLICE
             </p>
-          </div>
-          <Link href="/para-empresas" className="inline-flex items-center justify-center bg-primary text-black text-[14px] font-bold px-8 py-3.5 rounded-xl hover:bg-primary/90 hover:shadow-primary/10 hover:-translate-y-0.5 transition-all w-full md:w-auto">
-            Explorar formatos de squad
-          </Link>
+            <h2
+              className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
+              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+            >
+              Os perfis que entram
+              <span className="font-light italic text-[--leaf]"> em squad</span>.
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.15 }}
+          >
+            <Link
+              href="/para-empresas"
+              className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 border border-[--leaf] bg-[--leaf] px-7 font-mono text-[11px] font-black uppercase tracking-[0.2em] text-[--paper] shadow-[0_0_24px_rgba(0,255,133,0.22)]"
+            >
+              Explorar formatos de squad
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
         </div>
 
         {/* Talents Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {talents.map((talent, index) => (
-            <div
-              key={index}
-              className="bg-card border border-border rounded-[1.5rem] p-8 hover:border-primary/30 transition-all duration-300 group flex flex-col h-full animate-fade-in-up shadow-sm hover:shadow-primary/5"
-              style={{ animationDelay: `${index * 150}ms` }}
-            >
-              {/* Header Box */}
-              <div className="flex items-start gap-4 mb-6">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-secondary/50 text-primary">
-                  <talent.icon className="h-7 w-7" />
-                </div>
-                <div>
-                  <h3 className="font-display text-xl font-bold text-foreground leading-tight mb-1 tracking-tighter">{talent.title}</h3>
-                  <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-primary">
-                    <Link2 className="w-3 h-3" /> Pronto para projetos interdisciplinares
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 gap-0 md:grid-cols-3"
+        >
+          {talents.map((talent, index) => {
+            const Icon = talent.icon;
+            return (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="group flex flex-col border border-white/[0.05] p-8 hover:bg-white/[0.018] transition-colors duration-300"
+                style={{ borderLeft: index > 0 ? 'none' : undefined }}
+              >
+                {/* Label + Icon */}
+                <div className="mb-6 flex items-start justify-between">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+                    {talent.label}
+                  </p>
+                  <div className="flex h-10 w-10 items-center justify-center border border-white/[0.07] text-[--leaf]">
+                    <Icon className="h-5 w-5" />
                   </div>
                 </div>
-              </div>
 
-              {/* Data Rows */}
-              <div className="mb-6 space-y-3">
-                <div className="flex items-center gap-3 text-[13px] text-muted-foreground font-medium">
-                  <BarChart3 className="w-4 h-4 text-muted-foreground/40" />
+                {/* Title */}
+                <h3 className="mb-3 font-display text-[1.25rem] font-bold leading-tight tracking-tight text-[--ink]">
+                  {talent.title}
+                </h3>
+
+                {/* Context */}
+                <p className="mb-6 font-sans text-[13px] leading-relaxed text-[--ink]/40">
                   {talent.context}
+                </p>
+
+                {/* Skills */}
+                <div className="mb-6 flex flex-wrap gap-2">
+                  {talent.skills.map((skill, i) => (
+                    <span
+                      key={i}
+                      className="border border-white/[0.07] px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[--ink]/40"
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
-              </div>
 
-              {/* Skills */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {talent.skills.map((skill, i) => (
-                  <span key={i} className="px-3 py-1 bg-secondary text-muted-foreground border border-border text-[10px] font-bold tracking-[0.1em] uppercase rounded-lg">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-
-              {/* Bio */}
-              <p className="text-[14px] text-muted-foreground/80 leading-relaxed mt-auto pt-6 border-t border-border">
-                {talent.bio}
-              </p>
-            </div>
-          ))}
-        </div>
+                {/* Bio */}
+                <p className="mt-auto border-t border-white/[0.05] pt-6 font-sans text-[13px] leading-relaxed text-[--ink]/50">
+                  {talent.bio}
+                </p>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );

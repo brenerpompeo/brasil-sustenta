@@ -1,87 +1,133 @@
+import { motion } from 'framer-motion';
 import { BrainCircuit, Clock, FileStack, Layers3, Target, Users } from 'lucide-react';
 
 const mainStats = [
-  { icon: FileStack, value: '1', label: 'brief central por desafio', color: 'text-leaf-1', border: 'border-t-leaf-1' },
-  { icon: Users, value: '3', label: 'entradas dedicadas na rede', color: 'text-sky-1', border: 'border-t-sky-1' },
-  { icon: Clock, value: '7-10', label: 'dias para formar um squad', color: 'text-earth-1', border: 'border-t-earth-1' },
-  { icon: Target, value: '18', label: 'ODS e causas mapeaveis', color: 'text-violet-1', border: 'border-t-violet-1' },
+  { icon: FileStack, value: '1', label: 'brief central por desafio', accent: 'var(--leaf)' },
+  { icon: Users, value: '3', label: 'entradas dedicadas na rede', accent: 'var(--sky)' },
+  { icon: Clock, value: '7–10', label: 'dias para formar um squad', accent: 'var(--sun)' },
+  { icon: Target, value: '18', label: 'ODS e causas mapeáveis', accent: 'var(--ember)' },
 ];
 
 const additionalStats = [
-  { icon: BrainCircuit, value: 'IA explicavel', label: 'Justificativa de fit para shortlist e squad' },
+  { icon: BrainCircuit, value: 'IA Explicável', label: 'Justificativa de fit para shortlist e squad' },
   { icon: Layers3, value: 'Sprints', label: 'Entregas parciais com checkpoints e feedback' },
-  { icon: FileStack, value: 'Relatorio final', label: 'Trilha de evidencia para RH, ESG e inovacao' },
+  { icon: FileStack, value: 'Relatório Final', label: 'Trilha de evidência para RH, ESG e inovação' },
 ];
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
 const StatsSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute bottom-0 left-0 w-full h-[500px] bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
-
-      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground/40 mb-4">Arquitetura operacional</div>
-          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            Sinais de produto para <span className="italic font-light text-primary">escalar com clareza</span>
-          </h2>
-          <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Menos promessa abstrata, mais estrutura visivel de como a plataforma opera para diferentes buyers.
+    <section className="border-t border-white/[0.05] bg-[--paper] py-24 lg:py-32">
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
+          className="mb-20 max-w-2xl"
+        >
+          <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+            ARQUITETURA // SINAIS_DE_PRODUTO
           </p>
-        </div>
+          <h2
+            className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
+            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+          >
+            Estrutura visível de como
+            <span className="font-light italic text-[--leaf]"> a plataforma opera</span>.
+          </h2>
+        </motion.div>
 
         {/* Main Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+        >
           {mainStats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <div
+              <motion.div
                 key={index}
-                className={`bg-card border border-border ${stat.border} border-t-[3px] rounded-2xl p-8 text-center hover:bg-secondary/20 transition-all duration-300 group animate-fade-in-up shadow-sm`}
-                style={{ animationDelay: `${index * 100}ms` }}
+                variants={itemVariants}
+                className="group border border-white/[0.05] p-10 hover:bg-white/[0.018] transition-colors duration-300"
+                style={{ borderLeft: index > 0 ? 'none' : undefined }}
               >
-                <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mx-auto mb-5 border border-white/5">
-                  <Icon className={`w-6 h-6 ${stat.color}`} />
+                <div
+                  className="mb-6 flex h-10 w-10 items-center justify-center border border-white/[0.07]"
+                  style={{ color: stat.accent }}
+                >
+                  <Icon className="h-5 w-5" />
                 </div>
-                <p className="font-display text-[2.8rem] font-bold text-foreground leading-none mb-2 tracking-tighter">
+                <p
+                  className="font-display font-bold leading-none tracking-tight"
+                  style={{ fontSize: 'clamp(2.5rem, 4vw, 3.5rem)', color: stat.accent }}
+                >
                   {stat.value}
                 </p>
-                <p className="text-[11px] font-bold text-muted-foreground/40 uppercase tracking-[0.2em]">
+                <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[--ink]/28">
                   {stat.label}
                 </p>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Additional Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-[900px] mx-auto animate-fade-in-up delay-500">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-3"
+        >
           {additionalStats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <div
+              <motion.div
                 key={index}
-                className="bg-white/5 border border-white/5 rounded-xl px-6 py-5 flex items-center space-x-4 hover:bg-white/10 transition-colors"
+                variants={itemVariants}
+                className="flex items-center gap-5 border border-white/[0.05] px-8 py-6 hover:bg-white/[0.018] transition-colors duration-300"
+                style={{ borderLeft: index > 0 ? 'none' : undefined }}
               >
-                <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-5 h-5 text-white/50" />
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center border border-white/[0.07] text-[--ink]/30">
+                  <Icon className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="font-display text-lg font-bold text-foreground tracking-tighter">{stat.value}</p>
-                  <p className="text-[11px] font-semibold text-muted-foreground/60 leading-tight">{stat.label}</p>
+                  <p className="font-display text-[1rem] font-bold tracking-tight text-[--ink]">
+                    {stat.value}
+                  </p>
+                  <p className="mt-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[--ink]/30">
+                    {stat.label}
+                  </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* Bottom Note */}
-        <div className="text-center mt-16">
-          <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground/30">
-            Indicadores de arquitetura e jornada do produto
-          </p>
-        </div>
+        {/* Bottom note */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-10 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/18"
+        >
+          INDICADORES_DE_ARQUITETURA_E_JORNADA_DO_PRODUTO
+        </motion.p>
       </div>
     </section>
   );

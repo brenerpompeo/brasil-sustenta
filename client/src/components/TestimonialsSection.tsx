@@ -1,77 +1,121 @@
+import { motion } from 'framer-motion';
 import { Building2, GraduationCap, School2 } from 'lucide-react';
 
-const testimonials = [
+const voices = [
   {
-    name: 'Empresa',
-    role: 'Buyer corporativo',
-    company: 'RH / ESG / Inovacao',
+    code: '01',
+    label: 'VOZ // EMPRESA',
+    name: 'Buyer Corporativo',
+    role: 'RH / ESG / Inovação',
     text: 'Preciso de um fluxo simples para transformar desafio em squad, enxergar o fit dos talentos e acompanhar entregas sem virar um projeto pesado de consultoria.',
     icon: Building2,
+    accent: 'var(--leaf)',
   },
   {
-    name: 'Universidade',
-    role: 'Buyer institucional',
-    company: 'Extensao / Coordenacao',
-    text: 'Preciso conectar meus alunos ao mercado com menos atrito, gerar relatorios e evidencias, e fazer a extensao caber na operacao academica.',
+    code: '02',
+    label: 'VOZ // UNIVERSIDADE',
+    name: 'Buyer Institucional',
+    role: 'Extensão / Coordenação',
+    text: 'Preciso conectar meus alunos ao mercado com menos atrito, gerar relatórios e evidências, e fazer a extensão caber na operação acadêmica.',
     icon: School2,
+    accent: 'var(--sky)',
   },
   {
-    name: 'Talento',
-    role: 'Usuario final',
-    company: 'Graduacao / Recem-formado',
-    text: 'Quero sair da teoria, entrar em projeto real, construir portfolio verificavel e entender porque fui selecionado para aquele desafio.',
+    code: '03',
+    label: 'VOZ // TALENTO',
+    name: 'Usuário Final',
+    role: 'Graduação / Recém-formado',
+    text: 'Quero sair da teoria, entrar em projeto real, construir portfólio verificável e entender porque fui selecionado para aquele desafio.',
     icon: GraduationCap,
+    accent: 'var(--sun)',
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
+};
+
 const TestimonialsSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-background relative overflow-hidden border-y border-border">
-      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Prova de valor</div>
-          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            O que cada lado da rede <span className="italic font-light text-primary">precisa enxergar</span>
-          </h2>
-          <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Em vez de inflar prova social, a home passa a explicitar o que empresa, universidade e talento querem validar para confiar no produto.
+    <section className="border-t border-white/[0.05] bg-[--paper] py-24 lg:py-32">
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
+          className="mb-20 max-w-2xl"
+        >
+          <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+            PROVA_DE_VALOR // TRÊS_LADOS_DA_REDE
           </p>
-        </div>
+          <h2
+            className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
+            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+          >
+            O que cada lado da rede
+            <span className="font-light italic text-[--leaf]"> precisa enxergar</span>.
+          </h2>
+          <p className="mt-6 font-sans text-[15px] font-medium leading-relaxed text-[--ink]/40">
+            Em vez de inflar prova social, a plataforma explicita o que empresa, universidade e talento querem validar para confiar no produto.
+          </p>
+        </motion.div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="bg-card border border-border rounded-[1.5rem] p-10 hover:border-primary/30 transition-all duration-300 relative group animate-fade-in-up flex flex-col shadow-sm hover:shadow-primary/5"
-              style={{ animationDelay: `${index * 150}ms` }}
-            >
-              {/* Quote Icon */}
-              <div className="mb-8">
-                <testimonial.icon className="w-10 h-10 text-primary/20 group-hover:text-primary transition-colors" />
-              </div>
+        {/* Voices Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 gap-0 md:grid-cols-3"
+        >
+          {voices.map((voice, index) => {
+            const Icon = voice.icon;
+            return (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="group flex flex-col border border-white/[0.05] p-10 hover:bg-white/[0.018] transition-colors duration-300"
+                style={{ borderLeft: index > 0 ? 'none' : undefined }}
+              >
+                {/* Label */}
+                <p className="mb-8 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+                  {voice.label}
+                </p>
 
-              {/* Testimonial Text */}
-              <p className="text-[16px] font-medium text-foreground/90 leading-relaxed mb-10 flex-1 italic">
-                "{testimonial.text}"
-              </p>
-
-              {/* Author Info */}
-              <div className="flex items-center space-x-4 pt-6 border-t border-border">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-border bg-secondary">
-                  <testimonial.icon className="h-5 w-5 text-primary" />
+                {/* Icon */}
+                <div
+                  className="mb-8 flex h-12 w-12 items-center justify-center border border-white/[0.07]"
+                  style={{ color: voice.accent }}
+                >
+                  <Icon className="h-6 w-6" strokeWidth={1.5} />
                 </div>
-                <div>
-                  <p className="font-bold text-[15px] text-foreground">{testimonial.name}</p>
-                  <p className="text-[12px] font-semibold text-muted-foreground">
-                    {testimonial.role} · <span className="text-primary">{testimonial.company}</span>
+
+                {/* Quote */}
+                <p className="mb-10 flex-1 font-sans text-[15px] font-medium italic leading-relaxed text-[--ink]/70">
+                  "{voice.text}"
+                </p>
+
+                {/* Author */}
+                <div className="border-t border-white/[0.05] pt-6">
+                  <p className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-[--ink]">
+                    {voice.name}
+                  </p>
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[--ink]/28">
+                    {voice.role}
                   </p>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );

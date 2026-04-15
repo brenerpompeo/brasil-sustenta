@@ -1,91 +1,123 @@
+import { motion } from 'framer-motion';
 import { BrainCircuit, ShieldCheck, Workflow } from 'lucide-react';
 
 const benefits = [
   {
     icon: BrainCircuit,
-    title: 'IA que explica o match',
+    label: 'MATCHING // IA_EXPLICAVEL',
+    title: 'Motor de Matching IA que justifica o fit',
     description:
-      'O Brasil Sustenta nao so ranqueia. Ele mostra porque aquele talento e aquele squad fazem sentido para aquele desafio.',
-    color: 'text-primary',
-    bg: 'bg-primary/5',
-    border: 'group-hover:border-primary/50',
-    shadow: 'group-hover:shadow-[0_8px_30px_rgb(16,185,129,0.15)]'
+      'O Brasil Sustenta não só ranqueia. Ele mostra porque aquele talento e aquele squad fazem sentido para aquele desafio. Sem caixa-preta.',
+    accent: 'var(--leaf)',
   },
   {
     icon: Workflow,
-    title: 'Entrega em formato squad',
+    label: 'ENTREGA // SQUAD_BOX',
+    title: 'Entrega Auditável em formato Squad Box',
     description:
-      'A compra deixa de ser vaga ou consultoria aberta. A empresa recebe um time montado, um ritmo de execucao e uma trilha de entregas.',
-    color: 'text-sky-400',
-    bg: 'bg-sky-400/5',
-    border: 'group-hover:border-sky-400/50',
-    shadow: 'group-hover:shadow-[0_8px_30px_rgb(56,189,248,0.15)]'
+      'A compra deixa de ser vaga ou consultoria aberta. A empresa recebe um time montado, um ritmo de execução e uma trilha de entregas com checkpoints reais.',
+    accent: 'var(--sky)',
   },
   {
     icon: ShieldCheck,
+    label: 'PROVA // GRI_TCFD',
     title: 'Prova ESG sem greenwashing',
     description:
-      'Brief, sprints, evidencias e relatorio final tornam a narrativa de impacto mais concreta para stakeholders internos e externos.',
-    color: 'text-amber-400',
-    bg: 'bg-amber-400/5',
-    border: 'group-hover:border-amber-400/50',
-    shadow: 'group-hover:shadow-[0_8px_30px_rgb(251,191,36,0.15)]'
+      'Brief, sprints, evidências e relatório final tornam a narrativa de impacto concreta para stakeholders internos e externos. GRI/TCFD ready.',
+    accent: 'var(--sun)',
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
+};
+
 const WhyChooseSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-background border-y border-border relative overflow-hidden">
-      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[10px] font-bold tracking-[0.4em] uppercase text-primary mb-6">Por que essa categoria importa</div>
-          <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground leading-tight tracking-tighter mb-8">
-            Nao e job board. Nao e consultoria pura. E uma camada de <span className="italic font-light text-primary text-glow-emerald text-center">execucao</span>.
-          </h2>
-          <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-            O benchmark mostrou um espaco claro: empresa, universidade e talento conectados por um produto AI-first, com squads e entrega auditavel.
+    <section className="border-t border-white/[0.05] bg-[--paper] py-24 lg:py-32">
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
+          className="mb-20 max-w-2xl"
+        >
+          <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+            CATEGORIA // POR_QUE_IMPORTA
           </p>
-        </div>
+          <h2
+            className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
+            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+          >
+            Não é job board.
+            <br />
+            Não é consultoria.
+            <br />
+            É uma camada de
+            <span className="font-light italic text-[--leaf]"> execução</span>.
+          </h2>
+        </motion.div>
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mb-20 grid grid-cols-1 gap-0 md:grid-cols-3"
+        >
           {benefits.map((benefit, index) => {
             const Icon = benefit.icon;
             return (
-              <div
+              <motion.div
                 key={index}
-                className={`bg-card border border-border rounded-[1.5rem] p-10 transition-all duration-300 group ${benefit.border} ${benefit.shadow} animate-fade-in-up shadow-sm hover:shadow-primary/5 shadow-primary/5`}
-                style={{ animationDelay: `${index * 150}ms` }}
+                variants={itemVariants}
+                className="group border border-white/[0.05] p-10 hover:bg-white/[0.018] transition-colors duration-300"
+                style={{ borderLeft: index > 0 ? 'none' : undefined }}
               >
-                {/* Icon */}
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 bg-secondary border border-border group-hover:bg-primary/5 transition-colors`}>
-                  <Icon className={`w-8 h-8 ${benefit.color}`} />
+                <p className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+                  {benefit.label}
+                </p>
+                <div
+                  className="mb-6 flex h-12 w-12 items-center justify-center border border-white/[0.07]"
+                  style={{ color: benefit.accent }}
+                >
+                  <Icon className="h-6 w-6" />
                 </div>
-
-                {/* Title */}
-                <h3 className="font-display text-[1.5rem] font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-[1.2]">
+                <h3 className="mb-4 font-display text-[1.35rem] font-bold leading-tight tracking-tight text-[--ink]">
                   {benefit.title}
                 </h3>
-
-                {/* Description */}
-                <p className="text-[15px] font-medium text-muted-foreground leading-relaxed">
+                <p className="font-sans text-[14px] font-medium leading-relaxed text-[--ink]/50">
                   {benefit.description}
                 </p>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* Stats Badge Premium */}
-        <div className="text-center animate-fade-in-up delay-500">
-          <div className="inline-flex items-center space-x-3 bg-card border border-border shadow-2xl px-8 py-4 rounded-full hover:border-primary/50 transition-colors cursor-default">
-            <div className="w-2.5 h-2.5 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
-            <span className="text-[12px] font-bold tracking-[0.1em] text-foreground uppercase">
-              Compra possivel por <span className="text-primary italic">RH, ESG ou inovacao</span> sem mudar a tese do produto
-            </span>
-          </div>
-        </div>
+        {/* Bottom manifest strip */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="border border-white/[0.05] px-8 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+        >
+          <div className="h-2 w-2 flex-shrink-0 bg-[--leaf] shadow-[0_0_8px_rgba(0,255,133,0.6)]" />
+          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[--ink]/50">
+            Comprável por{' '}
+            <span className="text-[--leaf]">RH, ESG ou Inovação</span> — sem
+            mudar a tese do produto
+          </p>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,52 +1,94 @@
+import { motion } from 'framer-motion';
 import { Target, Heart, CheckCircle, MessageSquare, Briefcase, Palette, Lightbulb, Globe } from 'lucide-react';
 
 const squads = [
-  { icon: Target, title: 'ESG Core', desc: 'Estratégias centrais de sustentabilidade' },
-  { icon: Heart, title: 'Sociedade', desc: 'Diversidade, política pública e inclusão' },
-  { icon: CheckCircle, title: 'Compliance ODS', desc: 'Auditorias voltadas para métricas da ONU' },
-  { icon: MessageSquare, title: 'Comunicação', desc: 'Branding e relatórios para Stakeholders' },
-  { icon: Briefcase, title: 'Operações Verdes', desc: 'Supply Chain sustentável e logística' },
-  { icon: Palette, title: 'UI/UX Impact', desc: 'Design e interface para causas ambientais' },
-  { icon: Lightbulb, title: 'Inovação Aberta', desc: 'Design Thinking para novos produtos' },
-  { icon: Globe, title: 'Engenharia', desc: 'Infraestrutura tecnológica escalável' },
+  { icon: Target, code: '01', title: 'ESG Core', desc: 'Estratégias centrais de sustentabilidade e mapeamento de materialidade' },
+  { icon: Heart, code: '02', title: 'Sociedade', desc: 'Diversidade, política pública, inclusão e ODS 10' },
+  { icon: CheckCircle, code: '03', title: 'Compliance ODS', desc: 'Auditorias voltadas para métricas GRI/TCFD e Agenda 2030' },
+  { icon: MessageSquare, code: '04', title: 'Comunicação', desc: 'Narrativa de impacto, branding e relatórios para Stakeholders' },
+  { icon: Briefcase, code: '05', title: 'Operações Verdes', desc: 'Supply Chain sustentável e logística de baixo carbono' },
+  { icon: Palette, code: '06', title: 'UI/UX Impact', desc: 'Design e interface para causas ambientais e sociais' },
+  { icon: Lightbulb, code: '07', title: 'Inovação Aberta', desc: 'Design Thinking para novos produtos e serviços ESG' },
+  { icon: Globe, code: '08', title: 'Engenharia', desc: 'Infraestrutura tecnológica escalável para impacto' },
 ];
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
 const SquadsSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
-      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Múltiplas Frentes</div>
-          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            Soluções modeladas em <span className="italic font-light text-primary">Squads</span>
-          </h2>
-          <p className="text-[1.125rem] text-muted-foreground font-medium">
-            O squad nao nasce por area academica isolada. Ele nasce pelo tipo de desafio que a empresa precisa destravar.
+    <section className="border-t border-white/[0.05] bg-[--paper] py-24 lg:py-32">
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
+          className="mb-20 max-w-2xl"
+        >
+          <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+            SQUAD_BOX // FRENTES_DE_DESAFIO
           </p>
-        </div>
+          <h2
+            className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
+            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+          >
+            Soluções modeladas em
+            <span className="font-light italic text-[--leaf]"> Squads</span>.
+          </h2>
+          <p className="mt-6 font-sans text-[15px] font-medium leading-relaxed text-[--ink]/40">
+            O squad não nasce por área acadêmica isolada. Ele nasce pelo tipo de desafio que a empresa precisa destravar.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Squads Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+        >
           {squads.map((squad, index) => {
             const Icon = squad.icon;
+            const isTopRow = index < 4;
+            const isLastCol = (index + 1) % 4 === 0;
             return (
-              <div
+              <motion.div
                 key={index}
-                className="bg-card border border-border rounded-2xl p-8 hover:border-primary/30 transition-all duration-300 group cursor-pointer animate-fade-in-up shadow-sm hover:shadow-primary/5"
-                style={{ animationDelay: `${index * 100}ms` }}
+                variants={itemVariants}
+                className="group border-b border-r border-white/[0.05] p-8 hover:bg-white/[0.018] transition-colors duration-300 cursor-default"
+                style={{
+                  borderRight: isLastCol ? 'none' : undefined,
+                  borderBottom: index >= 4 ? 'none' : undefined,
+                }}
               >
-                <div className="w-12 h-12 bg-secondary border border-border rounded-[10px] flex items-center justify-center mb-6 group-hover:bg-primary/10 transition-colors">
-                  <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                <div className="mb-6 flex items-start justify-between">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/20">
+                    {squad.code}
+                  </span>
+                  <div className="flex h-9 w-9 items-center justify-center border border-white/[0.07] text-[--ink]/30 group-hover:text-[--leaf] transition-colors">
+                    <Icon className="h-4 w-4" />
+                  </div>
                 </div>
-                <h3 className="font-display text-xl font-bold text-foreground mb-2 leading-tight tracking-tighter">
+                <h3 className="mb-2 font-display text-[1.1rem] font-bold leading-tight tracking-tight text-[--ink]">
                   {squad.title}
                 </h3>
-                <p className="text-[13px] text-muted-foreground font-medium leading-relaxed">
+                <p className="font-sans text-[12px] leading-relaxed text-[--ink]/40">
                   {squad.desc}
                 </p>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

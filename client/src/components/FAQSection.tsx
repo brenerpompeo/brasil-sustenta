@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Minus } from 'lucide-react';
 
 interface FAQItem {
   question: string;
@@ -11,7 +12,7 @@ const faqs: FAQItem[] = [
   {
     category: 'empresas',
     question: 'Como funciona o processo de contratação de um squad?',
-    answer: 'A empresa abre um brief com desafio, contexto, ODS, prazo e prioridade. A plataforma organiza uma shortlist com fit score, a curadoria fecha a composicao do squad e o projeto entra em sprint com acompanhamento e entregas parciais.',
+    answer: 'A empresa abre um brief com desafio, contexto, ODS, prazo e prioridade. A plataforma organiza uma shortlist com fit score, a curadoria fecha a composição do squad e o projeto entra em sprint com acompanhamento e entregas parciais.',
   },
   {
     category: 'empresas',
@@ -21,12 +22,12 @@ const faqs: FAQItem[] = [
   {
     category: 'empresas',
     question: 'Como são selecionados os talentos para meu projeto?',
-    answer: 'O match combina leitura de skills, portfolio, disponibilidade, afinidade com ODS e contexto do desafio. Depois disso, a curadoria humana ajusta a composicao final do squad para garantir aderencia e diversidade de perfis.',
+    answer: 'O Motor de Matching IA combina leitura de skills, portfólio, disponibilidade, afinidade com ODS e contexto do desafio. Depois disso, a curadoria humana ajusta a composição final do squad para garantir aderência e diversidade de perfis.',
   },
   {
     category: 'empresas',
     question: 'Posso acompanhar o desenvolvimento do projeto?',
-    answer: 'Sim. O fluxo inclui kickoff, checkpoints, entregas parciais e relatorio final. A ideia e dar visibilidade sem transformar a experiencia em uma consultoria pesada para o time comprador.',
+    answer: 'Sim. O fluxo inclui kickoff, checkpoints, entregas parciais e relatório final. A ideia é dar visibilidade sem transformar a experiência em uma consultoria pesada para o time comprador.',
   },
   {
     category: 'estudantes',
@@ -36,117 +37,159 @@ const faqs: FAQItem[] = [
   {
     category: 'estudantes',
     question: 'Como funciona a remuneração dos projetos?',
-    answer: 'A forma de remuneracao depende do modelo do desafio e da politica definida pela empresa contratante. Quando houver bolsa, fee ou pagamento por entregas, isso deve aparecer de forma transparente antes da candidatura.',
+    answer: 'A forma de remuneração depende do modelo do desafio e da política definida pela empresa contratante. Quando houver bolsa, fee ou pagamento por entregas, isso deve aparecer de forma transparente antes da candidatura.',
   },
   {
     category: 'estudantes',
     question: 'Preciso ter experiência prévia em projetos ESG?',
-    answer: 'Nao. Experiencia previa ajuda, mas o principal e demonstrar repertorio, capacidade de execucao, motivacao e aderencia ao tipo de desafio. Portfolio academico, projetos autorais e vivencias interdisciplinares contam bastante.',
+    answer: 'Não. Experiência prévia ajuda, mas o principal é demonstrar repertório, capacidade de execução, motivação e aderência ao tipo de desafio. Portfólio acadêmico, projetos autorais e vivências interdisciplinares contam bastante.',
   },
   {
     category: 'geral',
     question: 'O que é o modelo Squad as a Service?',
-    answer: 'E um modelo em que o comprador contrata um problema bem definido e recebe um squad montado com base em contexto, skills e disponibilidade. Isso reduz o atrito entre recrutamento, extensao universitaria e execucao de projeto.',
+    answer: 'É um modelo em que o comprador contrata um problema bem definido e recebe um Squad Box montado com base em contexto, skills e disponibilidade. Isso reduz o atrito entre recrutamento, extensão universitária e execução de projeto.',
   },
   {
     category: 'geral',
     question: 'Quais tipos de projetos ESG vocês atendem?',
-    answer: 'A plataforma e mais forte em desafios que combinam ESG, pesquisa aplicada, dados, produto, comunicacao, operacao, experiencia digital e ativacao institucional. O foco e transformar um desafio real em entregavel observavel.',
+    answer: 'A plataforma é mais forte em desafios que combinam ESG, pesquisa aplicada, dados, produto, comunicação, operação, experiência digital e ativação institucional. O foco é transformar um desafio real em entregável observável.',
   },
+];
+
+const tabs = [
+  { id: 'empresas' as const, label: 'EMPRESAS' },
+  { id: 'estudantes' as const, label: 'ESTUDANTES' },
+  { id: 'geral' as const, label: 'GERAL' },
 ];
 
 const FAQSection = () => {
   const [activeTab, setActiveTab] = useState<'empresas' | 'estudantes' | 'geral'>('empresas');
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const filteredFaqs = faqs.filter(faq => faq.category === activeTab);
+  const filteredFaqs = faqs.filter((faq) => faq.category === activeTab);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const tabs = [
-    { id: 'empresas' as const, label: 'Empresas', color: 'bg-leaf-1' },
-    { id: 'estudantes' as const, label: 'Estudantes', color: 'bg-sky-1' },
-    { id: 'geral' as const, label: 'Geral', color: 'bg-ink' },
-  ];
-
   return (
-    <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
-      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Suporte</div>
-          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            Perguntas <span className="italic font-light text-primary">Frequentes</span>
-          </h2>
-          <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Esclarecimentos sobre o ecossistema Brasil Sustenta.
+    <section className="border-t border-white/[0.05] bg-[--paper] py-24 lg:py-32">
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
+          className="mb-16 max-w-2xl"
+        >
+          <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+            FAQ // SUPORTE_E_CLAREZA
           </p>
-        </div>
+          <h2
+            className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
+            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+          >
+            Perguntas
+            <span className="font-light italic text-[--leaf]"> frequentes</span>.
+          </h2>
+        </motion.div>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-16">
-          {tabs.map(tab => (
+        {/* Tabs */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="mb-12 flex gap-0 border-b border-white/[0.05]"
+        >
+          {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => { setActiveTab(tab.id); setOpenIndex(0); }}
-              className={`px-6 py-3 rounded-xl text-[12px] font-bold tracking-widest uppercase transition-all shadow-sm ${
-                activeTab === tab.id
-                  ? 'bg-primary text-black'
-                  : 'bg-card border border-border text-muted-foreground hover:bg-white/5 hover:border-primary/50'
-              }`}
+              onClick={() => {
+                setActiveTab(tab.id);
+                setOpenIndex(0);
+              }}
+              className="relative px-8 py-4 font-mono text-[11px] font-bold uppercase tracking-[0.22em] transition-colors cursor-pointer"
+              style={{
+                color: activeTab === tab.id ? 'var(--leaf)' : 'rgba(255,255,255,0.25)',
+              }}
             >
               {tab.label}
+              {activeTab === tab.id && (
+                <motion.div
+                  layoutId="faq-tab-indicator"
+                  className="absolute bottom-0 left-0 right-0 h-[2px] bg-[--leaf]"
+                />
+              )}
             </button>
           ))}
-        </div>
+        </motion.div>
 
-        {/* FAQ Accordion */}
-        <div className="max-w-3xl mx-auto space-y-4">
+        {/* Accordion */}
+        <div className="max-w-3xl">
           {filteredFaqs.map((faq, index) => (
-            <div
+            <motion.div
               key={`${activeTab}-${index}`}
-              className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 group"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: index * 0.06 }}
+              className="border-b border-white/[0.05] last:border-b-0"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-8 py-6 flex items-center justify-between text-left"
+                className="flex w-full cursor-pointer items-start justify-between gap-6 py-7 text-left"
               >
-                <span className="text-[17px] font-semibold text-foreground pr-6 group-hover:text-primary transition-colors">
+                <span className="font-sans text-[15px] font-semibold leading-snug text-[--ink]/80 hover:text-[--ink] transition-colors">
                   {faq.question}
                 </span>
-                <ChevronDown
-                  className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-500 ${
-                    openIndex === index ? 'rotate-180 text-primary' : ''
-                  }`}
-                />
-              </button>
-              
-              <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}
-              >
-                <div className="px-8 pb-6 pt-0">
-                  <p className="text-[15px] text-muted-foreground leading-relaxed font-medium">
-                    {faq.answer}
-                  </p>
+                <div className="mt-0.5 flex-shrink-0 text-[--ink]/30">
+                  {openIndex === index ? (
+                    <Minus className="h-4 w-4" />
+                  ) : (
+                    <Plus className="h-4 w-4" />
+                  )}
                 </div>
-              </div>
-            </div>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {openIndex === index && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <p className="pb-7 font-sans text-[14px] font-medium leading-relaxed text-[--ink]/50">
+                      {faq.answer}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
         </div>
 
-        {/* Contact CTA */}
-        <div className="text-center mt-16">
-          <p className="text-[14px] text-muted-foreground font-medium mb-3">
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-14"
+        >
+          <p className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
             Não encontrou o que procurava?
           </p>
-          <a href="/login" className="text-[14px] text-primary hover:text-primary/80 font-bold tracking-tight transition-colors">
+          <a
+            href="/login"
+            className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[--leaf] hover:text-[--leaf]/70 transition-colors"
+          >
             Escolher entrada na plataforma →
           </a>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,145 +1,203 @@
+import { motion } from 'framer-motion';
 import { ArrowRight, Check, School, Sparkles, Target } from 'lucide-react';
 import { Link } from 'wouter';
-import { Badge } from '@/components/ui/badge';
-import { buttonVariants } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
 
 const impactModels = [
   {
-    label: 'Pilot Project',
+    code: '01',
+    label: 'ENTRADA // PILOT_PROJECT',
     title: 'Valide um desafio com escopo enxuto e time sob medida.',
     description:
-      'Entrada ideal para liderancas de ESG, RH ou inovacao que precisam provar valor sem comecar com uma operacao grande.',
+      'Entrada ideal para lideranças de ESG, RH ou inovação que precisam provar valor sem começar com uma operação grande.',
     includes: [
       '1 brief priorizado',
-      'shortlist com justificativa de fit',
-      'squad piloto com kickoff e sprint curta',
-      'relatorio executivo final',
+      'Shortlist com justificativa de fit',
+      'Squad piloto com kickoff e sprint curta',
+      'Relatório executivo final',
     ],
     href: '/login/empresa',
     cta: 'Solicitar piloto',
-    highlight: 'Perfeito para primeira compra',
+    highlight: 'PERFEITO PARA PRIMEIRA COMPRA',
     icon: Target,
-    theme: 'primary',
+    featured: false,
   },
   {
-    label: 'Managed Squad',
-    title: 'Transforme uma frente recorrente em operacao acompanhada.',
+    code: '02',
+    label: 'ENTRADA // MANAGED_SQUAD',
+    title: 'Transforme uma frente recorrente em operação acompanhada.',
     description:
-      'Para empresas que ja querem fluxo continuo de squads, checkpoints, dados e maior integracao com times internos.',
+      'Para empresas que já querem fluxo contínuo de squads, checkpoints, dados e maior integração com times internos.',
     includes: [
-      'multiplos desafios ou sprints',
-      'curadoria recorrente',
-      'trilha de evidencias e monitoramento',
-      'camada para RH, ESG e inovacao no mesmo fluxo',
+      'Múltiplos desafios ou sprints',
+      'Curadoria recorrente',
+      'Trilha de evidências e monitoramento',
+      'Camada para RH, ESG e inovação no mesmo fluxo',
     ],
     href: '/para-empresas',
     cta: 'Ver modelo gerenciado',
-    highlight: 'Categoria mais escalavel da plataforma',
+    highlight: 'CATEGORIA MAIS ESCALÁVEL DA PLATAFORMA',
     icon: Sparkles,
-    theme: 'secondary',
+    featured: true,
   },
   {
-    label: 'University Partner',
-    title: 'Ative extensao, empregabilidade e projetos reais na sua IES.',
+    code: '03',
+    label: 'ENTRADA // UNIVERSITY_PARTNER',
+    title: 'Ative extensão, empregabilidade e projetos reais na sua IES.',
     description:
-      'Oferta institucional para universidades que querem levar desafios reais ao curriculo com mais dados e menos atrito operacional.',
+      'Oferta institucional para universidades que querem levar desafios reais ao currículo com mais dados e menos atrito operacional.',
     includes: [
-      'onboarding institucional',
-      'mapeamento de cursos e talentos',
-      'relatorios de participacao e horas',
-      'canal dedicado com empresas parceiras',
+      'Onboarding institucional',
+      'Mapeamento de cursos e talentos',
+      'Relatórios de participação e horas',
+      'Canal dedicado com empresas parceiras',
     ],
     href: '/para-universidades',
     cta: 'Abrir parceria institucional',
-    highlight: 'Entrada dedicada para extensao e coordenacao',
+    highlight: 'ENTRADA DEDICADA PARA EXTENSÃO E COORDENAÇÃO',
     icon: School,
-    theme: 'outline',
+    featured: false,
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
+};
+
 const ImpactModelSection = () => {
   return (
-    <section id="ofertas" className="relative overflow-hidden border-y border-border bg-background py-24 lg:py-32">
-      <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
-        <div className="mx-auto mb-20 max-w-3xl text-center animate-fade-in-up">
-          <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Ofertas compraveis</div>
-          <h2 className="mb-6 font-display text-[2.5rem] font-bold leading-[1.1] text-foreground lg:text-[3.5rem]">
-            A mesma tese, em <span className="italic font-light text-primary">tres portas de entrada</span>
-          </h2>
-          <p className="text-[1.125rem] font-medium text-muted-foreground">
-            O benchmark mostrou que a clareza da oferta importa tanto quanto a clareza da categoria. Aqui, cada modelo tem buyer, escopo e promessa claros.
+    <section
+      id="ofertas"
+      className="border-t border-white/[0.05] bg-[--paper] py-24 lg:py-32"
+    >
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
+          className="mb-20 max-w-2xl"
+        >
+          <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+            OFERTAS // TRÊS_PORTAS_DE_ENTRADA
           </p>
-        </div>
+          <h2
+            className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
+            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+          >
+            A mesma tese, em três
+            <span className="font-light italic text-[--leaf]"> portas de entrada</span>.
+          </h2>
+          <p className="mt-6 font-sans text-[15px] font-medium leading-relaxed text-[--ink]/40">
+            A clareza da oferta importa tanto quanto a clareza da categoria. Cada modelo tem buyer, escopo e promessa definidos.
+          </p>
+        </motion.div>
 
-        <div className="grid gap-8 lg:grid-cols-3">
+        {/* Cards */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid gap-0 lg:grid-cols-3"
+        >
           {impactModels.map((model, index) => {
             const Icon = model.icon;
-
             return (
-              <Card
-                key={model.label}
-                className={cn(
-                  'rounded-[1.5rem] border-border bg-card shadow-sm transition-all duration-300 hover:border-primary/30 hover:shadow-primary/5',
-                  index === 1 && 'border-primary/30 bg-primary/5'
-                )}
+              <motion.div
+                key={model.code}
+                variants={itemVariants}
+                className="flex flex-col border border-white/[0.05] p-10 hover:bg-white/[0.018] transition-colors duration-300"
+                style={{
+                  borderLeft: index > 0 ? 'none' : undefined,
+                  ...(model.featured
+                    ? { borderColor: 'rgba(0,255,133,0.12)', background: 'rgba(0,255,133,0.025)' }
+                    : {}),
+                }}
               >
-                <CardHeader className="space-y-5 px-8 pt-8">
-                  <div className="flex items-center justify-between gap-4">
-                    <Badge
-                      variant={model.theme === 'secondary' ? 'default' : 'outline'}
-                      className={cn(
-                        'rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em]',
-                        model.theme === 'secondary' && 'bg-primary text-primary-foreground'
-                      )}
-                    >
-                      {model.label}
-                    </Badge>
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-secondary/40">
-                      <Icon className="h-5 w-5 text-primary" />
-                    </div>
-                  </div>
-                  <CardTitle className="font-display text-[1.7rem] leading-[1.15] tracking-tighter text-foreground">
-                    {model.title}
-                  </CardTitle>
-                  <p className="text-[15px] font-medium leading-7 text-muted-foreground">
-                    {model.description}
+                {/* Code + Icon */}
+                <div className="mb-6 flex items-start justify-between">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
+                    {model.label}
                   </p>
-                </CardHeader>
-
-                <CardContent className="flex flex-1 flex-col px-8 pb-8">
-                  <div className="mb-6 rounded-2xl border border-primary/15 bg-primary/5 px-4 py-3 text-[12px] font-bold uppercase tracking-[0.14em] text-primary">
-                    {model.highlight}
-                  </div>
-
-                  <ul className="mb-8 space-y-4">
-                    {model.includes.map((item) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <div className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full border border-primary/20 bg-primary/10">
-                          <Check className="h-3 w-3 text-primary" />
-                        </div>
-                        <span className="text-[14px] font-medium leading-6 text-foreground/80">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    href={model.href}
-                    className={cn(
-                      buttonVariants({ variant: index === 1 ? 'default' : 'outline', size: 'lg' }),
-                      'mt-auto h-12 rounded-full text-sm font-bold uppercase tracking-[0.14em]',
-                      index === 1 && 'text-primary-foreground'
-                    )}
+                  <div
+                    className="flex h-10 w-10 items-center justify-center border border-white/[0.07]"
+                    style={{ color: model.featured ? 'var(--leaf)' : 'var(--ink)' }}
                   >
-                    {model.cta}
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </CardContent>
-              </Card>
+                    <Icon className="h-5 w-5 opacity-60" />
+                  </div>
+                </div>
+
+                {/* Highlight */}
+                <div
+                  className="mb-6 border px-4 py-2 font-mono text-[9px] font-bold uppercase tracking-[0.22em]"
+                  style={
+                    model.featured
+                      ? { borderColor: 'rgba(0,255,133,0.25)', color: 'var(--leaf)' }
+                      : { borderColor: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.25)' }
+                  }
+                >
+                  {model.highlight}
+                </div>
+
+                {/* Title */}
+                <h3 className="mb-4 font-display text-[1.35rem] font-bold leading-tight tracking-tight text-[--ink]">
+                  {model.title}
+                </h3>
+
+                <p className="mb-8 font-sans text-[14px] leading-relaxed text-[--ink]/50">
+                  {model.description}
+                </p>
+
+                {/* Includes */}
+                <ul className="mb-10 space-y-3">
+                  {model.includes.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <div
+                        className="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center border"
+                        style={
+                          model.featured
+                            ? { borderColor: 'rgba(0,255,133,0.4)', color: 'var(--leaf)' }
+                            : { borderColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.3)' }
+                        }
+                      >
+                        <Check className="h-2.5 w-2.5" />
+                      </div>
+                      <span className="font-sans text-[13px] font-medium leading-relaxed text-[--ink]/60">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                <Link
+                  href={model.href}
+                  className="mt-auto inline-flex h-11 cursor-pointer items-center justify-center gap-2 border font-mono text-[11px] font-black uppercase tracking-[0.2em] transition-colors"
+                  style={
+                    model.featured
+                      ? {
+                          borderColor: 'var(--leaf)',
+                          background: 'var(--leaf)',
+                          color: 'var(--paper)',
+                          boxShadow: '0 0 24px rgba(0,255,133,0.22)',
+                        }
+                      : { borderColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)' }
+                  }
+                >
+                  {model.cta}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
