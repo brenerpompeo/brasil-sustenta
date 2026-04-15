@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { APP_LOGO } from '@/const';
 
 interface SEOProps {
   title?: string;
@@ -11,8 +12,8 @@ interface SEOProps {
 }
 
 export function SEO({ 
-  title = 'Brasil Sustenta - Hub de Inovação ESG e Conexão de Talentos',
-  description = 'Conectamos estudantes de tecnologia a projetos reais de sustentabilidade em grandes empresas. Desenvolva habilidades, construa currículo e impulsione o impacto ESG no Brasil.',
+  title = 'Brasil Sustenta - Squads universitarios para desafios ESG com matching por IA',
+  description = 'Plataforma AI-first que conecta empresas, universidades e talentos para executar desafios ESG com squads, curadoria e entregas mensuraveis.',
   image = 'https://raw.githubusercontent.com/brenerpompeorodrigues/brasil-sustenta/main/assets/cover-default-dark-premium.jpg', // Placeholder de segurança
   url = 'https://brasilsustenta.com.br',
   type = 'website',
@@ -29,7 +30,7 @@ export function SEO({
     "name": "Brasil Sustenta",
     "url": "https://brasilsustenta.com.br",
     "logo": image,
-    "description": "Rede de conexão entre talentos acadêmicos e projetos de inovação ODS e ESG do Pacto Global.",
+    "description": "Plataforma AI-first que monta squads universitarios para desafios ESG reais de empresas.",
     "sameAs": [
       "https://linkedin.com/company/brasilsustenta"
     ]
@@ -44,6 +45,8 @@ export function SEO({
       <meta name="description" content={description} />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
       <link rel="canonical" href={url} />
+      <link rel="icon" href={APP_LOGO} />
+      <link rel="apple-touch-icon" href={APP_LOGO} />
 
       {/* Opengraph / Social Sharing */}
       <meta property="og:title" content={composedTitle} />

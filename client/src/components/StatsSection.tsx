@@ -1,16 +1,16 @@
-import { Briefcase, Users, Building, TrendingUp, Clock, Star, RefreshCw } from 'lucide-react';
+import { BrainCircuit, Clock, FileStack, Layers3, Target, Users } from 'lucide-react';
 
 const mainStats = [
-  { icon: Briefcase, value: '2.5k+', label: 'Projetos ESG', color: 'text-leaf-1', border: 'border-t-leaf-1' },
-  { icon: Users, value: '8.5k+', label: 'Jovens Talentos', color: 'text-sky-1', border: 'border-t-sky-1' },
-  { icon: Building, value: '500+', label: 'Empresas', color: 'text-earth-1', border: 'border-t-earth-1' },
-  { icon: TrendingUp, value: '95%', label: 'Satisfação', color: 'text-violet-1', border: 'border-t-violet-1' },
+  { icon: FileStack, value: '1', label: 'brief central por desafio', color: 'text-leaf-1', border: 'border-t-leaf-1' },
+  { icon: Users, value: '3', label: 'entradas dedicadas na rede', color: 'text-sky-1', border: 'border-t-sky-1' },
+  { icon: Clock, value: '7-10', label: 'dias para formar um squad', color: 'text-earth-1', border: 'border-t-earth-1' },
+  { icon: Target, value: '18', label: 'ODS e causas mapeaveis', color: 'text-violet-1', border: 'border-t-violet-1' },
 ];
 
 const additionalStats = [
-  { icon: Clock, value: '7–10 dias', label: 'Da publicação ao squad formado' },
-  { icon: Star, value: '4.9/5.0', label: 'Avaliação média dos projetos' },
-  { icon: RefreshCw, value: '87%', label: 'Taxa de retenção corporativa' },
+  { icon: BrainCircuit, value: 'IA explicavel', label: 'Justificativa de fit para shortlist e squad' },
+  { icon: Layers3, value: 'Sprints', label: 'Entregas parciais com checkpoints e feedback' },
+  { icon: FileStack, value: 'Relatorio final', label: 'Trilha de evidencia para RH, ESG e inovacao' },
 ];
 
 const StatsSection = () => {
@@ -22,12 +22,12 @@ const StatsSection = () => {
       <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground/40 mb-4">Resultados Comprovados</div>
+          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground/40 mb-4">Arquitetura operacional</div>
           <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            Impacto em <span className="italic font-light text-primary">Números</span>
+            Sinais de produto para <span className="italic font-light text-primary">escalar com clareza</span>
           </h2>
           <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Métricas que comprovam a eficácia da ponte entre academia e corporação.
+            Menos promessa abstrata, mais estrutura visivel de como a plataforma opera para diferentes buyers.
           </p>
         </div>
 
@@ -79,7 +79,7 @@ const StatsSection = () => {
         {/* Bottom Note */}
         <div className="text-center mt-16">
           <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground/30">
-            Dados atualizados em 2025
+            Indicadores de arquitetura e jornada do produto
           </p>
         </div>
       </div>

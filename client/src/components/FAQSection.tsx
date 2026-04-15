@@ -11,22 +11,22 @@ const faqs: FAQItem[] = [
   {
     category: 'empresas',
     question: 'Como funciona o processo de contratação de um squad?',
-    answer: 'O processo é simples: você publica seu projeto ESG na plataforma, estudantes universitários vetados demonstram interesse, nossa equipe forma um squad multidisciplinar adequado ao seu desafio, e o squad executa o projeto com acompanhamento contínuo. Todo o processo leva de 7 a 10 dias desde a publicação até a formação do squad.',
+    answer: 'A empresa abre um brief com desafio, contexto, ODS, prazo e prioridade. A plataforma organiza uma shortlist com fit score, a curadoria fecha a composicao do squad e o projeto entra em sprint com acompanhamento e entregas parciais.',
   },
   {
     category: 'empresas',
     question: 'Qual é o investimento necessário para contratar um squad?',
-    answer: 'Nossos pacotes começam a partir de R$ 12.500 para um Squad ESG Starter (15 dias com 3 profissionais). Oferecemos também o Squad Digital Impact (30 dias - R$ 18.500) e Squad ODS Accelerator (60 dias - R$ 28.500). Para projetos mais complexos, temos soluções premium personalizadas.',
+    answer: 'A oferta depende do formato escolhido: Pilot Project, Managed Squad ou modelo institucional em parceria com universidade. O valor varia conforme escopo, profundidade, prazo e necessidade de acompanhamento operacional.',
   },
   {
     category: 'empresas',
     question: 'Como são selecionados os talentos para meu projeto?',
-    answer: 'Todos os talentos da plataforma são estudantes ou recém-formados de universidades parceiras (USP, UFRJ, UNICAMP, PUC, FGV, UFMG). Passam por processo de vetagem que avalia competências técnicas, experiência em projetos ESG e alinhamento com valores de sustentabilidade.',
+    answer: 'O match combina leitura de skills, portfolio, disponibilidade, afinidade com ODS e contexto do desafio. Depois disso, a curadoria humana ajusta a composicao final do squad para garantir aderencia e diversidade de perfis.',
   },
   {
     category: 'empresas',
     question: 'Posso acompanhar o desenvolvimento do projeto?',
-    answer: 'Sim! Oferecemos acompanhamento semanal com relatórios de progresso, reuniões de alinhamento e entregas parciais. Você terá visibilidade total sobre o andamento do projeto e poderá dar feedbacks em cada etapa.',
+    answer: 'Sim. O fluxo inclui kickoff, checkpoints, entregas parciais e relatorio final. A ideia e dar visibilidade sem transformar a experiencia em uma consultoria pesada para o time comprador.',
   },
   {
     category: 'estudantes',
@@ -36,22 +36,22 @@ const faqs: FAQItem[] = [
   {
     category: 'estudantes',
     question: 'Como funciona a remuneração dos projetos?',
-    answer: 'Os talentos recebem remuneração proporcional ao escopo e duração do projeto. Os valores são competitivos com o mercado e pagos de acordo com as entregas estabelecidas. Além da remuneração, você ganha experiência prática e certificação.',
+    answer: 'A forma de remuneracao depende do modelo do desafio e da politica definida pela empresa contratante. Quando houver bolsa, fee ou pagamento por entregas, isso deve aparecer de forma transparente antes da candidatura.',
   },
   {
     category: 'estudantes',
     question: 'Preciso ter experiência prévia em projetos ESG?',
-    answer: 'Não é obrigatório ter experiência prévia, mas é importante demonstrar interesse genuíno em sustentabilidade e impacto social. Valorizamos estudantes com projetos acadêmicos, voluntariado ou iniciativas relacionadas a ESG.',
+    answer: 'Nao. Experiencia previa ajuda, mas o principal e demonstrar repertorio, capacidade de execucao, motivacao e aderencia ao tipo de desafio. Portfolio academico, projetos autorais e vivencias interdisciplinares contam bastante.',
   },
   {
     category: 'geral',
     question: 'O que é o modelo Squad as a Service?',
-    answer: 'Squad as a Service é um modelo flexível de contratação onde formamos equipes multidisciplinares sob demanda para projetos específicos. Elimina a burocracia de contratação tradicional e oferece flexibilidade total.',
+    answer: 'E um modelo em que o comprador contrata um problema bem definido e recebe um squad montado com base em contexto, skills e disponibilidade. Isso reduz o atrito entre recrutamento, extensao universitaria e execucao de projeto.',
   },
   {
     category: 'geral',
     question: 'Quais tipos de projetos ESG vocês atendem?',
-    answer: 'Atendemos diversos tipos de projetos: estratégias de sustentabilidade empresarial, relatórios ESG, políticas de direitos humanos, projetos ODS, comunicação corporativa sustentável, marketing com propósito e desenvolvimento web para impacto social.',
+    answer: 'A plataforma e mais forte em desafios que combinam ESG, pesquisa aplicada, dados, produto, comunicacao, operacao, experiencia digital e ativacao institucional. O foco e transformar um desafio real em entregavel observavel.',
   },
 ];
 
@@ -143,9 +143,9 @@ const FAQSection = () => {
           <p className="text-[14px] text-muted-foreground font-medium mb-3">
             Não encontrou o que procurava?
           </p>
-          <button className="text-[14px] text-primary hover:text-primary/80 font-bold tracking-tight transition-colors">
-            Contato Direto →
-          </button>
+          <a href="/login" className="text-[14px] text-primary hover:text-primary/80 font-bold tracking-tight transition-colors">
+            Escolher entrada na plataforma →
+          </a>
         </div>
       </div>
     </section>

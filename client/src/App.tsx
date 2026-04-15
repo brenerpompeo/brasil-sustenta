@@ -1,48 +1,52 @@
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
+import AnalyticsScript from "./components/AnalyticsScript";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import LoginEmpresa from "./pages/LoginEmpresa";
-import LoginJovem from "./pages/LoginJovem";
-import LoginUniversidade from "./pages/LoginUniversidade";
-import PerfilEmpresa from "./pages/PerfilEmpresa";
-import PerfilJovem from "./pages/PerfilJovem";
-import PerfilUniversidade from "./pages/PerfilUniversidade";
-import DashboardEmpresa from "./pages/DashboardEmpresa";
-import DashboardJovem from "./pages/DashboardJovem";
-import DashboardUniversidade from "./pages/DashboardUniversidade";
-import ParaEmpresas from "./pages/ParaEmpresas";
-import ParaJovens from './pages/ParaJovens';
-import ParaUniversidades from './pages/ParaUniversidades';
-import Comunidade from './pages/Comunidade';
-import AdminDashboard from "./pages/admin/Dashboard";
-import AdminUsuarios from "./pages/admin/Usuarios";
-import AdminEmpresas from "./pages/admin/Empresas";
-import AdminTalentos from "./pages/admin/Talentos";
-import AdminUniversidades from "./pages/admin/Universidades";
-import AdminProjetos from "./pages/admin/Projetos";
-import AdminSquads from "./pages/admin/Squads";
-import AdminBlog from "./pages/admin/Blog";
-import AdminEventos from "./pages/admin/Eventos";
-import AdminArtigos from "./pages/admin/Artigos.tsx";
-import AdminRelatorios from "./pages/admin/Relatorios.tsx";
-import AdminMateriais from "./pages/admin/Materiais.tsx";
-import Oportunidades from "./pages/Oportunidades";
-import Blog from "./pages/Blog";
-import Eventos from "./pages/Eventos";
-import Artigos from "./pages/Artigos";
-import Relatorios from "./pages/Relatorios";
-import Biblioteca from "./pages/Biblioteca";
-import Manifesto from "./pages/Manifesto";
+const LoginHub = lazy(() => import("./pages/LoginHub"));
+const LoginEmpresa = lazy(() => import("./pages/LoginEmpresa"));
+const LoginJovem = lazy(() => import("./pages/LoginJovem"));
+const LoginUniversidade = lazy(() => import("./pages/LoginUniversidade"));
+const PerfilEmpresa = lazy(() => import("./pages/PerfilEmpresa"));
+const PerfilJovem = lazy(() => import("./pages/PerfilJovem"));
+const PerfilUniversidade = lazy(() => import("./pages/PerfilUniversidade"));
+const DashboardEmpresa = lazy(() => import("./pages/DashboardEmpresa"));
+const DashboardJovem = lazy(() => import("./pages/DashboardJovem"));
+const DashboardUniversidade = lazy(() => import("./pages/DashboardUniversidade"));
+const ParaEmpresas = lazy(() => import("./pages/ParaEmpresas"));
+const ParaJovens = lazy(() => import("./pages/ParaJovens"));
+const ParaUniversidades = lazy(() => import("./pages/ParaUniversidades"));
+const Comunidade = lazy(() => import("./pages/Comunidade"));
+const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
+const AdminUsuarios = lazy(() => import("./pages/admin/Usuarios"));
+const AdminEmpresas = lazy(() => import("./pages/admin/Empresas"));
+const AdminTalentos = lazy(() => import("./pages/admin/Talentos"));
+const AdminUniversidades = lazy(() => import("./pages/admin/Universidades"));
+const AdminProjetos = lazy(() => import("./pages/admin/Projetos"));
+const AdminSquads = lazy(() => import("./pages/admin/Squads"));
+const AdminBlog = lazy(() => import("./pages/admin/Blog"));
+const AdminEventos = lazy(() => import("./pages/admin/Eventos"));
+const AdminArtigos = lazy(() => import("./pages/admin/Artigos"));
+const AdminRelatorios = lazy(() => import("./pages/admin/Relatorios"));
+const AdminMateriais = lazy(() => import("./pages/admin/Materiais"));
+const Oportunidades = lazy(() => import("./pages/Oportunidades"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Eventos = lazy(() => import("./pages/Eventos"));
+const Artigos = lazy(() => import("./pages/Artigos"));
+const Relatorios = lazy(() => import("./pages/Relatorios"));
+const Biblioteca = lazy(() => import("./pages/Biblioteca"));
+const Manifesto = lazy(() => import("./pages/Manifesto"));
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/login" component={LoginHub} />
       <Route path="/login/empresa" component={LoginEmpresa} />
       <Route path="/login/jovem" component={LoginJovem} />
       <Route path="/login/universidade" component={LoginUniversidade} />
@@ -89,14 +93,38 @@ function Router() {
 
 import { SEO } from "./components/SEO";
 
+function RouteLoading() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-6 text-center text-foreground">
+      <div>
+        <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
+        <p className="font-body text-sm uppercase tracking-[0.24em] text-muted-foreground">
+          Carregando experi&ecirc;ncia...
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark" switchable={false}>
         <TooltipProvider>
           <SEO />
+          <AnalyticsScript />
           <Toaster />
-          <Router />
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-primary-foreground"
+          >
+            Pular para o conte&uacute;do
+          </a>
+          <div id="main-content">
+            <Suspense fallback={<RouteLoading />}>
+              <Router />
+            </Suspense>
+          </div>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

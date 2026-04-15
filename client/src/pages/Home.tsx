@@ -21,8 +21,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-black">
       <SEO 
-        title="Brasil Sustenta - O Hub Definitivo de Integração Tech ESG"
-        description="Conecte seu conhecimento acadêmico com demandas reais de sustentabilidade nas maiores empresas do Brasil. Crie impacto real nos 17 ODS do Pacto Global."
+        title="Brasil Sustenta - Squads universitarios para desafios ESG com matching por IA"
+        description="Conecte empresas, universidades e talentos em uma plataforma AI-first para transformar desafios ESG em squads, entregas auditaveis e impacto mensuravel."
       />
       <Header />
       <HeroSection />

@@ -21,7 +21,7 @@ const SquadsSection = () => {
             Soluções modeladas em <span className="italic font-light text-primary">Squads</span>
           </h2>
           <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Escalonamos as expertises acadêmicas na nuvem exata da dores corporativas.
+            O squad nao nasce por area academica isolada. Ele nasce pelo tipo de desafio que a empresa precisa destravar.
           </p>
         </div>
 

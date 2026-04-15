@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardLayout, { DashboardTheme, SidebarItem } from "@/components/DashboardLayout";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
@@ -27,6 +27,13 @@ export default function DashboardEmpresa() {
   const [activeTab, setActiveTab] = useState("overview");
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+  const isUnauthorized = !loading && (!user || user.userType !== "empresa");
+
+  useEffect(() => {
+    if (!isPreview && isUnauthorized) {
+      setLocation("/login/empresa");
+    }
+  }, [isPreview, isUnauthorized, setLocation]);
 
   // Redirecionar se não autenticado
   if (loading) {
@@ -40,8 +47,7 @@ export default function DashboardEmpresa() {
     );
   }
 
-  if (!user || user.userType !== "empresa") {
-    setLocation("/login/empresa");
+  if (!isPreview && isUnauthorized) {
     return null;
   }
 
@@ -102,36 +108,46 @@ export default function DashboardEmpresa() {
   };
 
   const theme: DashboardTheme = {
-    navBg: "bg-card", navBorder: "border-border",
-    brandHighlightText: "text-primary", brandSubtitleText: "text-muted-foreground",
-    activeText: "text-primary", activeBg: "bg-primary/10", activeBorder: "border-primary",
-    personaOuterBorder: "border-transparent", personaGradientFrom: "from-primary/20", personaGradientTo: "to-primary/5",
-    personaTitleText: "text-muted-foreground", personaSubtitleText: "text-foreground",
-    avatarRing: "ring-border", avatarBg: "bg-primary/20", avatarText: "text-primary"
+    navBg: "bg-[#0A0A0A]",
+    navBorder: "border-white/10",
+    brandHighlightText: "text-[#00FF85]",
+    brandSubtitleText: "text-white/40",
+    activeText: "text-[#00FF85]",
+    activeBg: "bg-[#00FF85]/10",
+    activeBorder: "border-[#00FF85]",
+    personaOuterBorder: "border-white/5",
+    personaGradientFrom: "from-white/5",
+    personaGradientTo: "to-transparent",
+    personaTitleText: "text-white/30",
+    personaSubtitleText: "text-white",
+    avatarRing: "ring-white/10",
+    avatarBg: "bg-[#00FF85]/20",
+    avatarText: "text-[#00FF85]",
+    pageSelectionTheme: "selection:bg-[#00FF85] selection:text-[#0A0A0A]"
   };
 
   const menuItems1: SidebarItem[] = [
-    { id: "overview", label: "Visão Geral", icon: Home, onClick: () => { setActiveTab("overview"); setShowCreateForm(false); } },
-    { id: "projetos", label: "Meus Projetos", icon: Briefcase, onClick: () => { setActiveTab("projetos"); setShowCreateForm(false); } },
-    { id: "candidatos", label: "Candidatos", icon: Users, onClick: () => { setActiveTab("candidatos"); setShowCreateForm(false); } },
-    { id: "squads", label: "Meus Squads", icon: Zap, onClick: () => { setActiveTab("squads"); setShowCreateForm(false); } },
-    { id: "ai-match", label: "✨ Talentos IA", icon: Sparkles, onClick: () => { setActiveTab("ai-match"); setShowCreateForm(false); } },
+    { id: "overview", label: "Resumo", icon: Home, onClick: () => { setActiveTab("overview"); setShowCreateForm(false); } },
+    { id: "projetos", label: "Meus Briefs", icon: Briefcase, onClick: () => { setActiveTab("projetos"); setShowCreateForm(false); } },
+    { id: "candidatos", label: "Shortlists", icon: Users, onClick: () => { setActiveTab("candidatos"); setShowCreateForm(false); } },
+    { id: "squads", label: "Squads", icon: Zap, onClick: () => { setActiveTab("squads"); setShowCreateForm(false); } },
+    { id: "ai-match", label: "Fit IA", icon: Sparkles, onClick: () => { setActiveTab("ai-match"); setShowCreateForm(false); } },
   ];
 
   const menuItems2: SidebarItem[] = [
-    { id: "perfil", label: "Perfil", icon: User },
+    { id: "perfil", label: "Perfil Empresa", icon: User },
     { id: "config", label: "Configurações", icon: Settings }
   ];
 
   return (
     <DashboardLayout
       theme={theme}
-      workspaceTitle={<>Brasil<br /><span className="text-primary-3">Sustenta</span></>}
-      workspaceSubtitle="Workspace Corporativo"
-      menuSection1Title="Menu Principal" menuItems1={menuItems1}
-      menuSection2Title="Conta" menuItems2={menuItems2}
-      personaTitle="Persona Ativa" personaSubtitle="Empresa ESG"
-      userName={companyName} userDescription="Empresa" activeTab={activeTab}
+      workspaceTitle={<>BRASIL<br /><span className="text-[#00FF85]">SUSTENTA</span></>}
+      workspaceSubtitle="EMPLOYER FLOW // v4.0"
+      menuSection1Title="Brief > Squad > Entrega" menuItems1={menuItems1}
+      menuSection2Title="Conta e Gestão" menuItems2={menuItems2}
+      personaTitle="Empresa Parceira" personaSubtitle="Comprando execucao, nao apenas acesso"
+      userName={companyName} userDescription="Buyer RH / ESG / Inovacao" activeTab={activeTab}
     >
         {showCreateForm ? (
           <div className="bg-card border border-border rounded-2xl p-6">
@@ -142,38 +158,52 @@ export default function DashboardEmpresa() {
           <>
             {/* Título da Página Global (condicional conforme a aba) */}
             {activeTab === "overview" && (
-              <div className="mb-8 animate-fade-in-up">
-                <div className="text-[11px] font-bold tracking-widest uppercase text-primary mb-2">Visão Corporativa</div>
-                <h1 className="font-display text-4xl leading-none font-black tracking-tighter text-foreground mb-2">Dashboard da Empresa</h1>
-                <p className="text-[15px] text-muted-foreground max-w-[560px]">Visão completa de todos os seus projetos sociais e ambientais ativos, assim como análise de talentos.</p>
+              <div className="mb-12 animate-fade-in-up">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+                  <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Employer Flow</div>
+                </div>
+                <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground mb-6 italic">Do brief ao squad.</h1>
+                <p className="text-[18px] text-muted-foreground max-w-[650px] leading-relaxed font-body font-medium">Acompanhe seus desafios ativos, avance shortlists com contexto e transforme projetos ESG em squads com entrega observavel.</p>
               </div>
             )}
             {activeTab === "projetos" && (
-              <div className="mb-8 animate-fade-in-up">
-                <div className="text-[11px] font-bold tracking-widest uppercase text-primary mb-2">Gestão de Projetos</div>
-                <h1 className="font-display text-4xl leading-none font-black tracking-tighter text-foreground">Meus Projetos</h1>
+              <div className="mb-12 animate-fade-in-up">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+                  <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Brief Management</div>
+                </div>
+                <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground italic">Meus Briefs.</h1>
               </div>
             )}
             {activeTab === "candidatos" && (
-              <div className="mb-8 animate-fade-in-up">
-                <div className="text-[11px] font-bold tracking-widest uppercase text-primary mb-2">Sourcing Escalonável</div>
-                <h1 className="font-display text-4xl leading-none font-black tracking-tighter text-foreground">Verificação de Candidatos</h1>
+              <div className="mb-12 animate-fade-in-up">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+                  <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Contextual Shortlist</div>
+                </div>
+                <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground italic">Shortlists por Brief.</h1>
               </div>
             )}
             {activeTab === "squads" && (
-              <div className="mb-8 animate-fade-in-up">
-                <div className="text-[11px] font-bold tracking-widest uppercase text-primary mb-2">Engajamento e Impacto</div>
-                <h1 className="font-display text-4xl leading-none font-black tracking-tighter text-foreground">Meus Squads</h1>
+              <div className="mb-12 animate-fade-in-up">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+                  <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Squad Execution</div>
+                </div>
+                <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground italic">Squads em Execução.</h1>
               </div>
             )}
             {activeTab === "ai-match" && (
-              <div className="mb-8 animate-fade-in-up">
-                <div className="text-[11px] font-bold tracking-widest uppercase text-primary mb-2">Inteligência Artificial</div>
-                <h1 className="font-display text-4xl leading-none font-black tracking-tighter text-foreground flex items-center gap-3">
-                  Talentos Recomendados
-                  <span className="text-sm font-semibold bg-primary text-white px-3 py-1 rounded-full">GenAI Powered</span>
+              <div className="mb-12 animate-fade-in-up">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+                  <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Explainable Matching</div>
+                </div>
+                <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground flex items-center gap-3 italic">
+                  Fit IA por Desafio.
                 </h1>
-                <p className="text-[15px] text-muted-foreground max-w-[560px] mt-2">O Segundo Cérebro analisou todos os perfis disponíveis e ranqueou os mais compatíveis com o seu projeto.</p>
+                <p className="text-[18px] text-muted-foreground max-w-[650px] leading-relaxed font-body font-medium mt-6">Veja por que cada talento combina com o contexto, com o ODS e com o tipo de entrega esperado para o seu brief.</p>
               </div>
             )}
 
@@ -183,51 +213,67 @@ export default function DashboardEmpresa() {
               <div className="animate-fade-in-up delay-100">
                 
                 {/* Stats Row */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                  {/* Stat - Green */}
-                  <div className="bg-card border border-border rounded-xl p-5 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-primary"></div>
-                    <div className="font-display text-3xl font-black text-foreground leading-none">{stats.total}</div>
-                    <div className="text-[11px] font-semibold text-muted-foreground mt-1.5 uppercase tracking-wider">Total Projetos</div>
-                    <div className="text-[11px] font-semibold mt-2 text-primary">↑ Ativos</div>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                   <div className="bg-card border border-border p-8 relative overflow-hidden group hover:bg-[#00FF85]/5 transition-all">
+                    <div className="absolute top-0 right-0 w-1.5 h-full bg-[#00FF85] opacity-20"></div>
+                    <div className="font-display text-5xl font-black tracking-tighter text-foreground leading-none italic">{stats.total}</div>
+                    <div className="text-[10px] font-black text-muted-foreground mt-4 uppercase tracking-[0.2em]">Total de Briefs</div>
+                    <div className="mt-6 flex items-center gap-2 text-[11px] font-bold text-primary group-hover:translate-x-1 transition-transform">
+                      <Check className="w-3.5 h-3.5"/> NA OPERAÇÃO
+                    </div>
                   </div>
 
-                  <div className="bg-card border border-border rounded-xl p-5 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-sky"></div>
-                    <div className="font-display text-3xl font-black text-foreground leading-none">{stats.open}</div>
-                    <div className="text-[11px] font-semibold text-muted-foreground mt-1.5 uppercase tracking-wider">Abertos (Vagas)</div>
-                    <div className="text-[11px] font-semibold mt-2 text-sky">↑ Em captação</div>
+                  <div className="bg-card border border-border p-8 relative overflow-hidden group hover:bg-sky/5 transition-all">
+                    <div className="absolute top-0 right-0 w-1.5 h-full bg-sky opacity-20"></div>
+                    <div className="font-display text-5xl font-black tracking-tighter text-foreground leading-none italic">{stats.open}</div>
+                    <div className="text-[10px] font-black text-muted-foreground mt-4 uppercase tracking-[0.2em]">Shortlists Abertas</div>
+                    <div className="mt-6 flex items-center gap-2 text-[11px] font-bold text-sky group-hover:translate-x-1 transition-transform">
+                      <Plus className="w-3.5 h-3.5"/> EM TRIAGEM
+                    </div>
                   </div>
 
-                  <div className="bg-card border border-border rounded-xl p-5 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-violet"></div>
-                    <div className="font-display text-3xl font-black text-foreground leading-none">{stats.inProgress}</div>
-                    <div className="text-[11px] font-semibold text-muted-foreground mt-1.5 uppercase tracking-wider">Em Andamento</div>
-                    <div className="text-[11px] font-semibold mt-2 text-violet">↑ Squads Ativos</div>
+                  <div className="bg-card border border-border p-8 relative overflow-hidden group hover:bg-violet/5 transition-all">
+                    <div className="absolute top-0 right-0 w-1.5 h-full bg-violet opacity-20"></div>
+                    <div className="font-display text-5xl font-black tracking-tighter text-foreground leading-none italic">{stats.inProgress}</div>
+                    <div className="text-[10px] font-black text-muted-foreground mt-4 uppercase tracking-[0.2em]">Squads em Andamento</div>
+                    <div className="mt-6 flex items-center gap-2 text-[11px] font-bold text-violet group-hover:translate-x-1 transition-transform">
+                      <Zap className="w-3.5 h-3.5"/> COM ENTREGA
+                    </div>
                   </div>
 
-                  <div className="bg-card border border-border rounded-xl p-5 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-sun"></div>
-                    <div className="font-display text-3xl font-black text-foreground leading-none">{stats.draft}</div>
-                    <div className="text-[11px] font-semibold text-muted-foreground mt-1.5 uppercase tracking-wider">Rascunhos</div>
-                    <div className="text-[11px] font-semibold mt-2 text-muted-foreground">— Requerem revisão</div>
+                  <div className="bg-card border border-border p-8 relative overflow-hidden group hover:bg-accent/5 transition-all">
+                    <div className="absolute top-0 right-0 w-1.5 h-full bg-accent opacity-20"></div>
+                    <div className="font-display text-5xl font-black tracking-tighter text-foreground leading-none italic">{stats.draft}</div>
+                    <div className="text-[10px] font-black text-muted-foreground mt-4 uppercase tracking-[0.2em]">Briefs em Rascunho</div>
+                    <div className="mt-6 flex items-center gap-2 text-[11px] font-bold text-accent group-hover:translate-x-1 transition-transform">
+                      <Eye className="w-3.5 h-3.5"/> A REVISAR
+                    </div>
                   </div>
                 </div>
 
                 {/* Hero Banner CTA */}
-                <div className="rounded-2xl p-7 md:px-10 md:py-8 bg-gradient-to-br from-ink-2 to-leaf relative overflow-hidden shadow-2xl shadow-primary/10 mb-8">
-                  <div className="absolute -right-5 -top-5 w-40 h-40 rounded-full bg-card/5 pointer-events-none"></div>
-                  <div className="absolute right-20 -bottom-8 w-24 h-24 rounded-full bg-card/5 pointer-events-none"></div>
+                <div className="p-10 md:p-16 bg-[#0A0A0A] border border-white/10 relative overflow-hidden mb-12 group">
+                  <div className="absolute right-0 top-0 w-1/2 h-full bg-primary/5 blur-[100px] -z-0"></div>
+                  <div className="absolute left-1/4 bottom-0 w-64 h-64 bg-primary/10 blur-[80px] -z-0"></div>
                   
-                  <h2 className="font-display text-2xl md:text-3xl font-black text-white leading-tight tracking-tight mb-2 relative z-10">Crie projetos que<br />transformam o Brasil</h2>
-                  <p className="text-[13px] text-white/75 mb-6 max-w-md relative z-10">Conecte sua empresa a jovens talentos universitários engajados em gerar impacto real, certificado pelas metas dos Objetivos de Desenvolvimento Sustentável.</p>
-                  
-                  <button 
-                    onClick={() => setShowCreateForm(true)}
-                    className="inline-flex relative z-10 items-center justify-center gap-2 bg-card text-primary border-none font-semibold text-sm px-6 py-2.5 rounded-lg hover:bg-secondary transition-all"
-                  >
-                    <Plus className="w-4 h-4" /> Criar Novo Projeto →
-                  </button>
+                  <div className="relative z-10 max-w-2xl">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-primary text-[10px] font-black tracking-widest uppercase mb-8">
+                       Categoria operacional ESG
+                    </div>
+                    <h2 className="font-display text-4xl md:text-6xl font-black text-white leading-[1] tracking-tighter mb-8 italic">
+                      Abra um brief que <br /><span className="text-primary">vire squad e entrega.</span>
+                    </h2>
+                    <p className="text-[18px] text-white/50 mb-10 font-medium leading-relaxed">
+                      O fluxo ideal comeca no desafio certo. A partir dele, a plataforma organiza shortlist, fit score, squad e evidencias finais para RH, ESG e inovacao.
+                    </p>
+                    
+                    <button 
+                      onClick={() => setShowCreateForm(true)}
+                      className="inline-flex items-center justify-center gap-3 bg-primary text-white font-black text-[14px] uppercase tracking-widest px-10 py-5 hover:bg-primary/80 hover:scale-[1.05] transition-all"
+                    >
+                      <Plus className="w-5 h-5" /> Abrir Novo Brief
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -248,28 +294,28 @@ export default function DashboardEmpresa() {
                 {!selectedProjectId ? (
                   <div className="bg-card border border-border rounded-2xl p-10 text-center">
                     <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="font-display text-lg font-bold text-foreground mb-1">Candidatos</h3>
-                    <p className="text-sm text-muted-foreground mb-5">Por favor, acesse "Meus Projetos" e selecione um projeto ativo para visualizar seus candidatos pendentes e avaliar seu squad.</p>
+                    <h3 className="font-display text-lg font-bold text-foreground mb-1">Shortlists</h3>
+                    <p className="text-sm text-muted-foreground mb-5">Acesse "Meus Briefs" e selecione um desafio ativo para analisar a shortlist contextual daquele fluxo.</p>
                     <button 
                       onClick={() => setActiveTab("projetos")} 
                       className="text-sm font-semibold px-6 py-2 border-2 border-primary text-primary rounded-lg hover:bg-primary-5"
                     >
-                      Pesquisar Projetos
+                      Ver Briefs
                     </button>
                   </div>
                 ) : (
                   <div className="bg-card border border-border rounded-2xl overflow-hidden">
                     <div className="p-5 border-b border-border bg-secondary flex items-center justify-between">
                       <div>
-                        <h3 className="font-display text-lg font-bold text-foreground leading-tight">Avaliar Candidatos</h3>
-                        <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-semibold">Proj. #{selectedProjectId}</p>
+                        <h3 className="font-display text-lg font-bold text-foreground leading-tight">Avaliar Shortlist</h3>
+                        <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-semibold">Brief #{selectedProjectId}</p>
                       </div>
                       <button onClick={() => setSelectedProjectId(null)} className="text-xs font-semibold bg-card border border-border px-3 py-1.5 rounded-md hover:bg-background">✕ Limpar Seleção</button>
                     </div>
 
                     <div className="p-0">
                       {(!applicationsData?.applications || applicationsData.applications.length === 0) ? (
-                        <div className="p-8 text-center text-muted-foreground text-sm">Nenhum candidato para este projeto no momento. As candidaturas abertas aparecerão aqui em tempo real.</div>
+                        <div className="p-8 text-center text-muted-foreground text-sm">Nenhum talento na shortlist deste brief por enquanto. Quando houver candidaturas elegiveis, elas aparecerao aqui com contexto de fit.</div>
                       ) : (
                         <table className="w-full text-[12.5px] border-collapse">
                           <thead>
@@ -361,20 +407,20 @@ export default function DashboardEmpresa() {
                   <div className="bg-card border border-border rounded-2xl p-10 text-center">
                     <Zap className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                     <h3 className="font-display text-lg font-bold text-foreground mb-1">Squads</h3>
-                    <p className="text-sm text-muted-foreground mb-5">Você precisa selecionar um projeto ativo para visualizar os squads de desenvolvimento ESG vinculados a ele.</p>
+                    <p className="text-sm text-muted-foreground mb-5">Selecione um brief ativo para acompanhar a composicao do squad, os papeis e o status de execucao.</p>
                     <button 
                       onClick={() => setActiveTab("projetos")} 
                       className="text-sm font-semibold px-6 py-2 border border-border shadow-none bg-background text-foreground rounded-lg hover:bg-secondary"
                     >
-                      Selecionar Projeto
+                      Selecionar Brief
                     </button>
                   </div>
                 ) : (
                   <div className="bg-card border border-border rounded-2xl p-6">
                     <div className="flex items-center justify-between mb-6 border-b border-border pb-4">
                       <div>
-                        <h3 className="font-display text-xl font-bold text-foreground">Visão do Squad Ativo</h3>
-                        <p className="text-[11px] uppercase tracking-wider text-muted-foreground mt-0.5 font-bold">Projeto #{selectedProjectId}</p>
+                        <h3 className="font-display text-xl font-bold text-foreground">Visão de Execução do Squad</h3>
+                        <p className="text-[11px] uppercase tracking-wider text-muted-foreground mt-0.5 font-bold">Brief #{selectedProjectId}</p>
                       </div>
                       <button onClick={() => setSelectedProjectId(null)} className="text-xs font-semibold bg-card border border-border px-3 py-1.5 rounded-md hover:bg-background">✕ Mudar Projeto</button>
                     </div>
@@ -382,7 +428,7 @@ export default function DashboardEmpresa() {
                     {(!squadsData?.squads || squadsData.squads.length === 0) ? (
                       <div className="text-center py-10 border-2 border-dashed border-border bg-background rounded-xl">
                         <p className="font-semibold text-muted-foreground mb-1">Nenhum squad mapeado.</p>
-                        <p className="text-xs text-muted-foreground">Aguarde o engajamento dos talentos ou agilize o processo aprovando candidaturas pendentes.</p>
+                        <p className="text-xs text-muted-foreground">A shortlist ainda nao foi convertida em composicao ativa. Revise os talentos ou acelere a aprovacao do brief.</p>
                         <button onClick={() => setActiveTab("candidatos")} className="mt-4 px-4 py-2 bg-card border border-border rounded-md text-xs font-semibold hover:border-primary">Revisar Candidaturas</button>
                       </div>
                     ) : (
@@ -426,32 +472,32 @@ export default function DashboardEmpresa() {
                 {!selectedProjectId ? (
                   <div className="rounded-2xl p-10 text-center border-2 border-dashed border-primary/30 bg-gradient-to-br from-leaf/5 to-transparent">
                     <Sparkles className="w-14 h-14 text-primary mx-auto mb-4 opacity-50" />
-                    <h3 className="font-display text-xl font-bold text-foreground mb-2">Selecione um Projeto</h3>
+                    <h3 className="font-display text-xl font-bold text-foreground mb-2">Selecione um Brief</h3>
                     <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
-                      O Segundo Cérebro precisa de um projeto como referência para calcular o Fit Score e recomendar os melhores talentos.
+                      O motor de matching precisa de um desafio como referencia para explicar o fit e sugerir a melhor composicao de shortlist.
                     </p>
                     <button
                       onClick={() => setActiveTab("projetos")}
                       className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-2 transition-all"
                     >
-                      <Briefcase className="w-4 h-4" /> Escolher Projeto
+                      <Briefcase className="w-4 h-4" /> Escolher Brief
                     </button>
                   </div>
                 ) : aiMatchLoading ? (
                   <div className="flex flex-col items-center justify-center py-20 gap-4">
                     <div className="w-12 h-12 rounded-full border-4 border-primary/20 border-t-leaf animate-spin" />
-                    <p className="text-sm text-muted-foreground font-medium">O Segundo Cérebro está calculando os matches...</p>
+                    <p className="text-sm text-muted-foreground font-medium">A IA esta calculando os fits e organizando a shortlist...</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     {/* Header contextual */}
                     <div className="flex items-center justify-between p-4 bg-ink text-white rounded-xl">
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-widest text-primary mb-0.5">Projeto Analisado</p>
+                        <p className="text-xs font-bold uppercase tracking-widest text-primary mb-0.5">Brief Analisado</p>
                         <p className="font-display text-lg font-bold">{aiMatchData?.projectContext?.title}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-xs text-white/50 mb-0.5">Talentos Analisados</p>
+                        <p className="text-xs text-white/50 mb-0.5">Fits Calculados</p>
                         <p className="font-display text-2xl font-black text-primary">{aiMatchData?.matches?.length || 0}</p>
                       </div>
                     </div>
@@ -459,7 +505,7 @@ export default function DashboardEmpresa() {
                     {/* Cards de Match */}
                     {aiMatchData?.matches?.length === 0 ? (
                       <div className="p-10 text-center rounded-xl border border-border">
-                        <p className="text-muted-foreground text-sm">Nenhum talento disponível encontrado. Divulgue o projeto para atrair mais candidatos.</p>
+                        <p className="text-muted-foreground text-sm">Nenhum talento elegivel encontrado. Ajuste o brief, amplie a captacao ou ative um HUB parceiro.</p>
                       </div>
                     ) : (
                       aiMatchData?.matches?.map((match, idx) => (
@@ -474,7 +520,7 @@ export default function DashboardEmpresa() {
                       ))
                     )}
 
-                    <p className="text-[11px] text-center text-muted-foreground pt-2">Pontuações geradas pelo algoritmo híbrido de Match — Hard Skills + Contexto ESG/ODS</p>
+                    <p className="text-[11px] text-center text-muted-foreground pt-2">Pontuacoes geradas pelo algoritmo de fit — skills, contexto ESG/ODS e aderencia ao desafio</p>
                   </div>
                 )}
               </div>

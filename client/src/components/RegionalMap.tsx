@@ -1,13 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Globe, Zap, Leaf } from 'lucide-react';
+import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
+
+const geoUrl = "/brazil-states.topo.json";
 
 const hubs = [
   { 
     id: 'sp', 
     name: 'São Paulo', 
-    x: 620, y: 780, 
-    color: '#EAB308', 
+    coordinates: [-46.6333, -23.5505], 
+    color: '#009444', 
     tag: 'HUB SP', 
     specialty: 'Conectividade Urbana',
     icon: Globe
@@ -15,8 +18,8 @@ const hubs = [
   { 
     id: 'cp', 
     name: 'Campinas', 
-    x: 580, y: 740, 
-    color: '#84cc16', 
+    coordinates: [-47.0608, -22.9099], 
+    color: '#CCFF00', 
     tag: 'HUB Campinas', 
     specialty: 'Inovação & P&D',
     icon: Zap
@@ -24,8 +27,8 @@ const hubs = [
   { 
     id: 'rj', 
     name: 'Rio de Janeiro', 
-    x: 680, y: 760, 
-    color: '#06b6d4', 
+    coordinates: [-43.1729, -22.9068], 
+    color: '#0A0A0A', 
     tag: 'HUB RJ', 
     specialty: 'Economia Azul',
     icon: Leaf
@@ -34,24 +37,24 @@ const hubs = [
 
 const RegionalMap = () => {
   return (
-    <section className="relative py-32 bg-background overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-leaf rounded-full blur-[150px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-sky-500 rounded-full blur-[150px]" />
+    <section className="relative py-32 bg-background overflow-hidden border-y border-border">
+      {/* Background styling elements */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+        <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-primary rounded-full blur-[150px]" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent rounded-full blur-[150px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-8 relative z-10">
-        <div className="text-center mb-20">
+        <div className="text-center mb-24">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="flex items-center justify-center gap-3 mb-6"
           >
-            <span className="h-[1px] w-8 bg-primary/30" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-primary">Brasil Sustenta</span>
-            <span className="h-[1px] w-8 bg-primary/30" />
+            <span className="h-[1px] w-8 bg-foreground/20" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-foreground">Brasil Sustenta</span>
+            <span className="h-[1px] w-8 bg-foreground/20" />
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -59,91 +62,124 @@ const RegionalMap = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-5xl md:text-7xl font-bold text-foreground font-display tracking-tighter leading-[0.9]"
           >
-            Rede de Inovação <span className="italic font-light text-primary">Eco-Tech</span>.
+            Operacao em polos <span className="italic font-light text-primary">regionais</span>.
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-2xl mx-auto text-muted-foreground text-lg md:text-xl font-medium mt-8 leading-relaxed"
+            className="max-w-2xl mx-auto text-foreground/70 text-lg md:text-xl font-medium mt-8 leading-relaxed"
           >
-            Conectando hubs de tecnologia sustentável para um futuro verde e inteligente no Brasil.
+            A plataforma pode crescer por clusters universitarios e corporativos, com curadoria local e operacao conectada em rede.
           </motion.p>
         </div>
 
-        <div className="relative aspect-[4/3] md:aspect-[16/9] w-full max-w-5xl mx-auto">
-          {/* Brazil SVG Path (Simplified) */}
-          <svg viewBox="0 0 1000 1000" className="w-full h-full drop-shadow-[0_0_50px_rgba(34,197,94,0.1)]">
-            <motion.path
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-              d="M480,50 L560,50 L640,80 L720,120 L780,180 L820,260 L840,360 L820,460 L780,560 L820,620 L800,700 L740,780 L680,840 L600,900 L500,940 L400,920 L300,880 L240,820 L180,740 L120,640 L80,540 L60,440 L80,340 L120,240 L180,160 L260,100 L360,60 L480,50 Z"
-              fill="rgba(255,255,255,0.02)"
-              stroke="rgba(255,255,255,0.1)"
-              strokeWidth="2"
-              className="backdrop-blur-sm"
-            />
-
-            {/* Connecting Lines */}
-            <motion.path
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 0.2 }}
-              transition={{ duration: 3, delay: 1 }}
-              d="M580,740 L620,780 M620,780 L680,760 M580,740 L680,760"
-              fill="none"
-              stroke="#84cc16"
-              strokeWidth="1"
-              strokeDasharray="5 5"
-            />
-
-            {/* Hub Glows */}
-            {hubs.map((hub) => (
-              <g key={hub.id}>
-                <motion.circle
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  cx={hub.x}
-                  cy={hub.y}
-                  r="20"
-                  fill={hub.color}
-                  className="opacity-20 blur-xl"
-                  animate={{ scale: [1, 1.5, 1] }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                />
-                <circle cx={hub.x} cy={hub.y} r="4" fill={hub.color} className="shadow-lg shadow-white" />
-              </g>
-            ))}
-          </svg>
-
-          {/* Cards (Desktop) */}
-          {hubs.map((hub, idx) => (
-            <motion.div
-              key={hub.id}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.5 + idx * 0.2 }}
-              className="absolute hidden md:flex flex-col gap-3 p-4 bg-card/40 backdrop-blur-2xl border border-border rounded-2xl w-56 shadow-2xl"
-              style={{ 
-                left: hub.x > 500 ? `${(hub.x / 10)}%` : 'auto', 
-                right: hub.x <= 500 ? `${100 - (hub.x / 10)}%` : 'auto',
-                top: `${(hub.y / 10)}%`,
-                transform: 'translate(-50%, -50%)'
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
+          {/* Map Side */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="w-full lg:w-1/2 aspect-square relative drop-shadow-[0_0_50px_rgba(0,148,68,0.15)] bg-secondary/30 border border-border p-8"
+          >
+            <div className="absolute top-4 left-4 border border-foreground bg-background px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-foreground z-10 w-max">
+              MAPA // OPERACAO BRASIL
+            </div>
+            
+            <ComposableMap
+              projection="geoMercator"
+              projectionConfig={{
+                scale: 750,
+                center: [-53, -15] // Custom center for Brazil view
               }}
+              className="w-full h-full outline-none"
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <hub.icon className="w-5 h-5 text-primary" strokeWidth={2} />
+              <Geographies geography={geoUrl}>
+                {({ geographies }: { geographies: any[] }) =>
+                  geographies.map((geo: any) => (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill="rgba(255,255,255,1)"
+                      stroke="#0A0A0A"
+                      strokeWidth={1.5}
+                      style={{
+                        default: { outline: "none", fill: "var(--background)", stroke: "var(--border)" },
+                        hover: { fill: "rgba(0,148,68,0.1)", stroke: "#009444", strokeWidth: 2, outline: "none" },
+                        pressed: { fill: "rgba(0,148,68,0.2)", outline: "none" },
+                      }}
+                    />
+                  ))
+                }
+              </Geographies>
+              
+              {/* Plot points on real coordinates */}
+              {hubs.map(({ id, name, coordinates, color }) => (
+                <Marker key={id} coordinates={coordinates as [number, number]}>
+                  {/* Ripple effect */}
+                  <circle r={18} fill={color} className="opacity-20 animate-ping origin-center" />
+                  <circle r={12} fill={color} className="opacity-40 animate-pulse origin-center" />
+                  {/* Core Marker */}
+                  <circle r={6} fill={color} stroke="#FFFFFF" strokeWidth={2} />
+                  {/* Label */}
+                  <text
+                    textAnchor="middle"
+                    y={-14}
+                    style={{ fontFamily: "inherit", fill: "var(--foreground)", fontSize: "10px", fontWeight: "bold" }}
+                  >
+                    {name}
+                  </text>
+                </Marker>
+              ))}
+            </ComposableMap>
+          </motion.div>
+
+          {/* Cards Hub List Side */}
+          <div className="w-full lg:w-1/2 flex flex-col gap-6">
+            <h3 className="font-body text-xs font-bold tracking-[0.2em] uppercase text-foreground/50 mb-4 border-b border-border pb-4">
+              Polos Ativos
+            </h3>
+            
+            {hubs.map((hub, idx) => (
+              <motion.div
+                key={hub.id}
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 * idx, duration: 0.5 }}
+                whileHover={{ scale: 1.02 }}
+                className="flex items-center justify-between p-6 bg-background border border-border hover:border-primary transition-all group"
+              >
+                <div className="flex items-center gap-6">
+                  <div className="p-4 bg-secondary group-hover:bg-primary/10 transition-colors border border-border">
+                    <hub.icon className="w-6 h-6 text-foreground group-hover:text-primary transition-colors" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-bold uppercase text-primary tracking-widest mb-1">{hub.tag}</div>
+                    <div className="text-xl font-display font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{hub.name}</div>
+                    <div className="text-sm text-foreground/60 font-medium">{hub.specialty}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-[10px] font-bold uppercase text-primary tracking-widest">{hub.tag}</div>
-                  <div className="text-sm font-bold text-foreground">{hub.name}</div>
+                
+                <div className="hidden sm:block">
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-primary border border-primary px-3 py-1">Ativo</span>
                 </div>
+              </motion.div>
+            ))}
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-8 p-6 bg-foreground text-background"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[10px] uppercase font-bold tracking-widest text-accent">EXPANSÃO H2 2026</span>
+                <MapPin className="w-4 h-4 text-accent" />
               </div>
-              <div className="h-[1px] w-full bg-border" />
-              <div className="text-[11px] text-muted-foreground/80 font-medium">{hub.specialty}</div>
+              <p className="font-body text-sm text-background/80 font-medium">O modelo foi desenhado para abrir novos polos conforme universidades e empresas sejam homologadas na rede.</p>
             </motion.div>
-          ))}
+          </div>
+          
         </div>
       </div>
     </section>

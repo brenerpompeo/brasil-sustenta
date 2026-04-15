@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardLayout, { DashboardTheme, SidebarItem } from "@/components/DashboardLayout";
 import FormPerfilTalento from "@/components/FormPerfilTalento";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Home, Compass, FileText, Zap, User, Settings, Plus, Briefcase } from "lucide-react";
+import { Home, Compass, FileText, Zap, User, Settings, Plus, Briefcase, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 export default function DashboardJovem() {
@@ -23,6 +23,13 @@ export default function DashboardJovem() {
   }
 
   const [activeTab, setActiveTab] = useState("overview");
+  const isUnauthorized = !loading && (!user || user.userType !== "jovem");
+
+  useEffect(() => {
+    if (!isPreview && isUnauthorized) {
+      setLocation("/login/jovem");
+    }
+  }, [isPreview, isUnauthorized, setLocation]);
 
   if (loading) {
     return (
@@ -35,8 +42,7 @@ export default function DashboardJovem() {
     );
   }
 
-  if (!user || user.userType !== "jovem") {
-    setLocation("/login/jovem");
+  if (!isPreview && isUnauthorized) {
     return null;
   }
 
@@ -61,25 +67,34 @@ export default function DashboardJovem() {
   };
 
   const theme: DashboardTheme = {
-    navBg: "bg-card", navBorder: "border-border",
-    brandHighlightText: "text-primary", brandSubtitleText: "text-muted-foreground",
-    activeText: "text-primary", activeBg: "bg-primary/10", activeBorder: "border-primary",
-    personaOuterBorder: "border-transparent", personaGradientFrom: "from-primary/20", personaGradientTo: "to-primary/5",
-    personaTitleText: "text-muted-foreground", personaSubtitleText: "text-foreground",
-    avatarRing: "ring-border", avatarBg: "bg-primary/20", avatarText: "text-primary",
-    pageSelectionTheme: "selection:bg-primary selection:text-primary-foreground"
+    navBg: "bg-[#0A0A0A]",
+    navBorder: "border-white/10",
+    brandHighlightText: "text-[#00FF85]",
+    brandSubtitleText: "text-white/40",
+    activeText: "text-[#00FF85]",
+    activeBg: "bg-[#00FF85]/10",
+    activeBorder: "border-[#00FF85]",
+    personaOuterBorder: "border-white/5",
+    personaGradientFrom: "from-white/5",
+    personaGradientTo: "to-transparent",
+    personaTitleText: "text-white/30",
+    personaSubtitleText: "text-white",
+    avatarRing: "ring-white/10",
+    avatarBg: "bg-[#00FF85]/20",
+    avatarText: "text-[#00FF85]",
+    pageSelectionTheme: "selection:bg-[#00FF85] selection:text-[#0A0A0A]"
   };
 
   const menuItems1: SidebarItem[] = [
-    { id: "overview", label: "Visão Geral", icon: Home, onClick: () => setActiveTab("overview") },
-    { id: "oportunidades", label: "Oportunidades", icon: Compass, onClick: () => setActiveTab("oportunidades") },
+    { id: "overview", label: "Resumo", icon: Home, onClick: () => setActiveTab("overview") },
+    { id: "oportunidades", label: "Matches", icon: Compass, onClick: () => setActiveTab("oportunidades") },
     { id: "candidaturas", label: "Candidaturas", icon: FileText, onClick: () => setActiveTab("candidaturas") },
     { id: "squads", label: "Squads", icon: Zap, onClick: () => setActiveTab("squads") }
   ];
 
   const menuItems2: SidebarItem[] = [
     { id: "perfil", label: "Perfil Profissional", icon: User, onClick: () => setActiveTab("perfil") },
-    { id: "config", label: "Conta", icon: Settings, onClick: () => setActiveTab("config") }
+    { id: "config", label: "Configurações", icon: Settings, onClick: () => setActiveTab("config") }
   ];
 
   const mockProjects = [
@@ -95,43 +110,54 @@ export default function DashboardJovem() {
   return (
     <DashboardLayout
       theme={theme}
-      workspaceTitle={<>Brasil<br /><span className="text-primary text-2xl drop-shadow-[0_0_8px_rgba(56,189,248,0.3)]">Sustenta</span></>}
-      workspaceSubtitle="Portal do Talento"
-      menuSection1Title="Menu Principal" menuItems1={menuItems1}
-      menuSection2Title="Meu Desenvolvimento" menuItems2={menuItems2}
-      personaTitle="Céu Universitário" personaSubtitle="Pronto para Impactar"
+      workspaceTitle={<>BRASIL<br /><span className="text-[#00FF85]">SUSTENTA</span></>}
+      workspaceSubtitle="TALENT FLOW // v4.0"
+      menuSection1Title="Match > Squad > Portfolio" menuItems1={menuItems1}
+      menuSection2Title="Conta e Perfil" menuItems2={menuItems2}
+      personaTitle="Talento em Movimento" personaSubtitle="Portfolio observavel em projeto real"
       userName={userName} userDescription={course} activeTab={activeTab}
     >
         {/* Header Condicional */}
         {activeTab === "overview" && (
-          <div className="mb-10 animate-fade-in-up">
-            <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary mb-2">Engajamento Diário</div>
-            <h1 className="font-display text-[2.5rem] leading-[1.1] font-black tracking-tighter text-foreground mb-3 relative inline-block">
-              Seu Dashboard
-              <div className="absolute -bottom-1 left-0 w-1/3 h-1 bg-primary opacity-50 rounded-full"></div>
+          <div className="mb-12 animate-fade-in-up">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+              <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Talent Flow</div>
+            </div>
+            <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground mb-6 italic">
+              Do match ao portfolio.
             </h1>
-            <p className="text-[16px] text-muted-foreground max-w-[600px] leading-relaxed">
-              Acompanhe suas métricas de desenvolvimento profissional e oportunidade de gerar impacto real no mundo corporativo combinando ESG com suas habilidades acadêmicas.
+            <p className="text-[18px] text-muted-foreground max-w-[650px] leading-relaxed font-body font-medium">
+              Entenda quais desafios fazem sentido para voce, acompanhe suas candidaturas e construa repertorio em squads com entrega real.
             </p>
           </div>
         )}
         {activeTab === "oportunidades" && (
-          <div className="mb-10 animate-fade-in-up">
-            <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary mb-2">Sourcing</div>
-            <h1 className="font-display text-[2.5rem] leading-[1.1] font-black tracking-tighter text-foreground">Oportunidades em Aberto</h1>
-            <p className="text-[16px] text-muted-foreground mt-3">Projetos alinhados com seu perfil</p>
+          <div className="mb-12 animate-fade-in-up">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+              <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Contextual Matching</div>
+            </div>
+            <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground mb-4 italic">Matches para voce.</h1>
+            <p className="text-[18px] text-muted-foreground font-medium">Projetos priorizados pela IA com base no seu perfil, repertorio e contexto de entrega.</p>
           </div>
         )}
         {activeTab === "candidaturas" && (
-          <div className="mb-10 animate-fade-in-up">
-            <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary mb-2">Tracking</div>
-            <h1 className="font-display text-[2.5rem] leading-[1.1] font-black tracking-tighter text-foreground">Minhas Candidaturas</h1>
+          <div className="mb-12 animate-fade-in-up">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+              <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Application Tracking</div>
+            </div>
+            <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground italic">Candidaturas com contexto.</h1>
           </div>
         )}
         {activeTab === "squads" && (
-          <div className="mb-10 animate-fade-in-up">
-            <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary mb-2">Engajamento</div>
-            <h1 className="font-display text-[2.5rem] leading-[1.1] font-black tracking-tighter text-foreground">Meus Squads Ativos</h1>
+          <div className="mb-12 animate-fade-in-up">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+              <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Execution Layer</div>
+            </div>
+            <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground italic">Squads e repertorio.</h1>
           </div>
         )}
 
@@ -139,58 +165,63 @@ export default function DashboardJovem() {
         {activeTab === "overview" && (
           <div className="animate-fade-in-up delay-100">
             {/* Stats Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-              <div className="bg-card border border-border rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-primary"></div>
-                <div className="font-display text-[2.5rem] font-black tracking-tighter text-foreground leading-none">{stats.totalApplications}</div>
-                <div className="text-[11px] font-bold text-muted-foreground mt-2 uppercase tracking-widest">Candidaturas</div>
-                <div className="text-[12px] font-medium mt-3 text-primary flex items-center gap-1.5"><Zap className="w-3.5 h-3.5"/> Em revisão pelas empresas</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-card border border-border p-8 relative overflow-hidden group hover:bg-[#00FF85]/5 transition-all">
+                <div className="absolute top-0 right-0 w-2 h-full bg-[#00FF85] opacity-20"></div>
+                <div className="font-display text-5xl font-black tracking-tighter text-foreground leading-none italic">{stats.totalApplications}</div>
+                <div className="text-[10px] font-black text-muted-foreground mt-4 uppercase tracking-[0.2em]">Candidaturas Ativas</div>
+                <div className="mt-6 flex items-center gap-2 text-[11px] font-bold text-primary group-hover:translate-x-1 transition-transform">
+                  <Zap className="w-3.5 h-3.5"/> COM CONTEXTO
+                </div>
               </div>
 
-              <div className="bg-card border border-border rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-violet"></div>
-                <div className="font-display text-[2.5rem] font-black tracking-tighter text-foreground leading-none">{stats.activeSquads}</div>
-                <div className="text-[11px] font-bold text-muted-foreground mt-2 uppercase tracking-widest">Squads Ativos</div>
-                <div className="text-[12px] font-medium mt-3 text-violet flex items-center gap-1.5"><User className="w-3.5 h-3.5"/> Projetos em andamento</div>
+              <div className="bg-card border border-border p-8 relative overflow-hidden group hover:bg-sky/5 transition-all">
+                <div className="absolute top-0 right-0 w-2 h-full bg-sky opacity-20"></div>
+                <div className="font-display text-5xl font-black tracking-tighter text-foreground leading-none italic">{stats.activeSquads}</div>
+                <div className="text-[10px] font-black text-muted-foreground mt-4 uppercase tracking-[0.2em]">Squads Ativos</div>
+                <div className="mt-6 flex items-center gap-2 text-[11px] font-bold text-sky group-hover:translate-x-1 transition-transform">
+                   <User className="w-3.5 h-3.5"/> ENTREGA REAL
+                </div>
               </div>
 
-              <div className="bg-card border border-border rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#F59E0B]"></div>
-                <div className="font-display text-[2.5rem] font-black tracking-tighter text-foreground leading-none">{stats.impactHours} <span className="text-2xl opacity-60">h</span></div>
-                <div className="text-[11px] font-bold text-muted-foreground mt-2 uppercase tracking-widest">Horas de Impacto</div>
-                <div className="text-[12px] font-medium mt-3 text-[#F59E0B] flex items-center gap-1.5"><Compass className="w-3.5 h-3.5"/> Extensão creditada</div>
+              <div className="bg-card border border-border p-8 relative overflow-hidden group hover:bg-accent/5 transition-all">
+                <div className="absolute top-0 right-0 w-2 h-full bg-accent opacity-20"></div>
+                <div className="font-display text-5xl font-black tracking-tighter text-foreground leading-none italic">{stats.impactHours} <span className="text-2xl opacity-40">H</span></div>
+                <div className="text-[10px] font-black text-muted-foreground mt-4 uppercase tracking-[0.2em]">Horas e Portfolio</div>
+                <div className="mt-6 flex items-center gap-2 text-[11px] font-bold text-accent group-hover:translate-x-1 transition-transform">
+                  <Compass className="w-3.5 h-3.5"/> EVIDENCIA GERADA
+                </div>
               </div>
             </div>
 
             {/* Hero Banner CTA - Vibrante e Premium */}
-            <div className="rounded-[2rem] p-8 md:px-12 md:py-12 bg-card relative overflow-hidden shadow-2xl mb-10 border border-border">
-              <div className="absolute right-0 top-0 w-full h-full bg-gradient-to-r from-transparent to-sky-1/20 pointer-events-none"></div>
-              <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-primary/20 blur-[80px] pointer-events-none"></div>
-              <div className="absolute bottom-0 right-32 w-64 h-64 rounded-full bg-violet/20 blur-[60px] pointer-events-none"></div>
+            <div className="p-10 md:p-16 bg-[#0A0A0A] border border-white/10 relative overflow-hidden mb-12 group">
+              <div className="absolute right-0 top-0 w-1/2 h-full bg-[#00FF85]/5 blur-[100px] -z-0"></div>
+              <div className="absolute left-1/4 bottom-0 w-64 h-64 bg-primary/10 blur-[80px] -z-0"></div>
               
-              <div className="relative z-10 max-w-xl">
-                <span className="inline-block px-3 py-1 bg-card/10 rounded-full text-primary text-xs font-bold tracking-widest uppercase mb-6 border border-white/10 backdrop-blur-md">
-                  Seu Futuro Agora
-                </span>
-                <h2 className="font-display text-3xl md:text-5xl font-black text-white leading-[1.1] tracking-tight mb-5">
-                  Conecte sua paixão<br />com <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-4 to-violet-3">propósitos reais</span>
+              <div className="relative z-10 max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#00FF85]/10 border border-[#00FF85]/20 rounded-full text-[#00FF85] text-[10px] font-black tracking-widest uppercase mb-8">
+                  <Sparkles className="w-3 h-3" /> IA com explicacao de fit
+                </div>
+                <h2 className="font-display text-4xl md:text-6xl font-black text-white leading-[1] tracking-tighter mb-8 italic">
+                  Entre em desafios que <span className="text-[#00FF85]">fazem sentido para voce.</span>
                 </h2>
-                <p className="text-[16px] text-white/70 mb-8 font-medium leading-relaxed">
-                  Aplique seus conhecimentos universitários em projetos ESG de empresas renomadas. Construa um portfólio de impacto enquanto muda o mundo.
+                <p className="text-[18px] text-white/50 mb-10 font-medium leading-relaxed">
+                  O objetivo aqui nao e aplicar no escuro. A plataforma organiza matches com contexto para voce construir portfolio, repertorio e empregabilidade em projeto real.
                 </p>
                 
                 <button 
                   onClick={() => setActiveTab("oportunidades")}
-                  className="inline-flex items-center justify-center gap-2 bg-card text-foreground font-bold text-[15px] px-8 py-3.5 rounded-xl shadow-lg shadow-white/10 hover:bg-background hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  className="inline-flex items-center justify-center gap-3 bg-[#00FF85] text-[#0A0A0A] font-black text-[14px] uppercase tracking-widest px-10 py-5 hover:bg-[#CCFF00] hover:scale-[1.05] transition-all"
                 >
-                  <Compass className="w-5 h-5" /> Encontrar Projetos ESG
+                  <Compass className="w-5 h-5" /> Ver Matches
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* OPORTUNIDADES COM PREMIUM CARDS */}
+        {/* MATCHES COM PREMIUM CARDS */}
         {activeTab === "oportunidades" && (
           <div className="animate-fade-in-up">
             {projectsLoading && !isPreview ? (
@@ -238,7 +269,7 @@ export default function DashboardJovem() {
                          onClick={() => applyMutation.mutate({ projectId: project.id as never })}
                          className="w-full flex items-center justify-center gap-2 bg-[#0A1128] text-white py-3.5 rounded-xl text-sm font-bold shadow-md hover:bg-primary transition-all group-hover:shadow-primary/25"
                       >
-                         Trabalhar neste Projeto <Plus className="w-5 h-5"/>
+                         Entrar neste Match <Plus className="w-5 h-5"/>
                       </button>
                     </div>
                   </div>
@@ -247,8 +278,8 @@ export default function DashboardJovem() {
             ) : (
               <div className="bg-card p-12 rounded-[2rem] border border-border text-center shadow-sm">
                 <Compass className="w-16 h-16 text-primary/20 mx-auto mb-4" />
-                <h3 className="font-display text-2xl font-bold text-foreground mb-2">Sem oportunidades no radar</h3>
-                <p className="text-muted-foreground font-semibold">Não há novos projetos ESG abertos para o seu perfil no momento.</p>
+                <h3 className="font-display text-2xl font-bold text-foreground mb-2">Sem matches no radar</h3>
+                <p className="text-muted-foreground font-semibold">Nao ha novos desafios com aderencia forte ao seu perfil neste momento.</p>
               </div>
             )}
           </div>
@@ -286,7 +317,7 @@ export default function DashboardJovem() {
                          <div className="inline-flex justify-center items-center w-12 h-12 rounded-full bg-background mb-4 text-muted-foreground">
                            <FileText className="w-6 h-6" />
                          </div>
-                         <p className="text-muted-foreground font-semibold">Nenhuma candidatura enviada.<br/>Explore a aba Oportunidades.</p>
+                         <p className="text-muted-foreground font-semibold">Nenhuma candidatura enviada.<br/>Explore a aba Matches.</p>
                       </td>
                     </tr>
                   )}
@@ -312,13 +343,13 @@ export default function DashboardJovem() {
         {activeTab === "perfil" && (
           <div className="max-w-4xl">
             <div className="mb-10 animate-fade-in-up">
-              <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary mb-2">Curriculum Digital</div>
+              <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary mb-2">Portfolio em construcao</div>
               <h1 className="font-display text-[2.5rem] leading-[1.1] font-black tracking-tighter text-foreground mb-3 relative inline-block">
                 Meu Perfil Profissional
                 <div className="absolute -bottom-1 left-0 w-1/3 h-1 bg-primary opacity-50 rounded-full"></div>
               </h1>
               <p className="text-[16px] text-muted-foreground">
-                Mantenha suas informações atualizadas para melhorar seu Fit Score no Dashboard das empresas.
+                Atualize repertorio, skills e ODS de afinidade para melhorar seu match score e a leitura do seu portfolio.
               </p>
             </div>
             

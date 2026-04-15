@@ -1,471 +1,275 @@
-import { useState } from 'react';
+import { ArrowRight, BrainCircuit, FileBadge2, GraduationCap, Layers3, Lightbulb } from 'lucide-react';
 import { Link } from 'wouter';
-import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { trpc } from '@/lib/trpc';
-import { toast } from 'sonner';
-import { 
-  Rocket, 
-  TrendingUp, 
-  Award,
-  Briefcase,
-  ChevronDown,
-  Loader2,
-  CheckCircle2,
-  Star,
-  Zap,
-  ArrowRight,
-  Users
-} from 'lucide-react';
-
+import Header from '@/components/Header';
 import { SEO } from '@/components/SEO';
+import { Badge } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
-export default function ParaJovens() {
-  // FAQ State
-  const [activeCategory, setActiveCategory] = useState<'geral' | 'processo' | 'beneficios'>('geral');
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+const signals = [
+  {
+    icon: BrainCircuit,
+    title: 'Oportunidades filtradas por IA',
+    description: 'Seu perfil cruza skills, portfolio, disponibilidade e aderencia com ODS e tipo de desafio.',
+  },
+  {
+    icon: Layers3,
+    title: 'Experiencia em squad',
+    description: 'Voce entra em times multidisciplinares, aprende a operar em sprint e entrega com contexto real.',
+  },
+  {
+    icon: FileBadge2,
+    title: 'Portfolio observavel',
+    description: 'Cada desafio gera repertorio, entregavel e historico de participacao mais util do que candidatura generica.',
+  },
+];
 
-  // Question Form State
-  const [questionSubmitted, setQuestionSubmitted] = useState(false);
-  const [questionForm, setQuestionForm] = useState({
-    name: '',
-    email: '',
-    university: '',
-    course: '',
-    question: '',
-  });
+const journey = [
+  {
+    title: 'Monte um perfil forte',
+    description: 'Repertorio academico, projetos autorais, disponibilidade e causas de afinidade fazem diferenca.',
+  },
+  {
+    title: 'Receba match com contexto',
+    description: 'A plataforma nao mostra so a vaga. Ela indica por que aquele desafio combina com voce.',
+  },
+  {
+    title: 'Entre em projeto real',
+    description: 'Voce participa de uma experiencia conectada a empresa, universidade e entregas concretas.',
+  },
+];
 
-  // University Invitation Form State
-  const [invitationSubmitted, setInvitationSubmitted] = useState(false);
-  const [invitationForm, setInvitationForm] = useState({
-    studentName: '',
-    studentEmail: '',
-    universityName: '',
-    state: '',
-    city: '',
-    course: '',
-    contactName: '',
-    contactEmail: '',
-    message: '',
-  });
+const matchSignals = [
+  {
+    title: 'O que a plataforma observa',
+    description: 'Skills, portfolio, disponibilidade, afinidade com ODS e tipo de desafio compoem o seu match score.',
+  },
+  {
+    title: 'O que a candidatura ganha',
+    description: 'Mais contexto sobre empresa, buyer, desafio e expectativa de entrega antes de voce decidir aplicar.',
+  },
+  {
+    title: 'O que vira portfolio',
+    description: 'Participacao em squad, checkpoints, entregavel final e historico de contribuicao tornam seu perfil mais observavel.',
+  },
+];
 
-  const questionMutation = trpc.student.submitQuestion.useMutation({
-    onSuccess: () => {
-      setQuestionSubmitted(true);
-      toast.success('Dúvida enviada com sucesso!');
-    },
-    onError: (error) => {
-      toast.error(error.message || 'Erro ao enviar dúvida');
-    },
-  });
+const challengeExamples = [
+  {
+    title: 'Pesquisa e mapeamento',
+    description: 'Leituras de mercado, benchmark, levantamento de dores e estruturacao de hipoteses ligadas a ESG e impacto.',
+  },
+  {
+    title: 'Produto e experiencia',
+    description: 'Fluxos, prototipos, service design, design de interface e validacao de propostas para desafios concretos.',
+  },
+  {
+    title: 'Conteudo e reputacao',
+    description: 'Narrativas, ativacoes, employer branding, comunicacao e materiais para stakeholders e comunidades.',
+  },
+];
 
-  const invitationMutation = trpc.student.inviteUniversity.useMutation({
-    onSuccess: () => {
-      setInvitationSubmitted(true);
-      toast.success('Convite enviado com sucesso!');
-    },
-    onError: (error) => {
-      toast.error(error.message || 'Erro ao enviar convite');
-    },
-  });
-
-  const handleQuestionSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!questionForm.name || !questionForm.email || !questionForm.question) {
-      toast.error('Preencha todos os campos obrigatórios');
-      return;
-    }
-    questionMutation.mutate(questionForm);
-  };
-
-  const handleInvitationSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!invitationForm.studentName || !invitationForm.studentEmail || !invitationForm.universityName) {
-      toast.error('Preencha todos os campos obrigatórios');
-      return;
-    }
-    invitationMutation.mutate(invitationForm);
-  };
-
-  const faqData = {
-    geral: [
-      {
-        question: 'O que é o Brasil Sustenta?',
-        answer: 'O Brasil Sustenta é uma plataforma que conecta jovens talentos universitários a empresas para projetos de sustentabilidade, ESG e inovação social. Oferecemos oportunidades reais de trabalho remunerado enquanto você ainda está na universidade.',
-      },
-      {
-        question: 'Preciso pagar para participar?',
-        answer: 'Não! A participação é 100% gratuita para estudantes. Você se cadastra, monta seu perfil, candidata-se a projetos e, se selecionado, recebe remuneração pelo trabalho realizado.',
-      },
-      {
-        question: 'Quais cursos podem participar?',
-        answer: 'Aceitamos estudantes de todos os cursos! Projetos ESG precisam de talentos diversos: Administração, Comunicação, Design, Engenharias, Ciências Sociais, Direito, TI, Marketing e muito mais.',
-      },
-      {
-        question: 'Minha universidade precisa ser parceira?',
-        answer: 'Não é obrigatório, mas universidades parceiras têm benefícios extras como eventos exclusivos e vagas prioritárias. Se sua universidade não é parceira, você pode convidá-la através do formulário.',
-      },
-    ],
-    processo: [
-      {
-        question: 'Como funciona o processo de seleção?',
-        answer: 'Você se cadastra, completa seu perfil com habilidades e portfólio, navega pelos projetos disponíveis, candidata-se aos que te interessam e, se aprovado pela empresa, entra para o squad do projeto.',
-      },
-      {
-        question: 'Quanto tempo dura um projeto?',
-        answer: 'Varia de 1 a 6 meses dependendo do escopo. A maioria dos projetos dura entre 2-3 meses, com dedicação de 10-20 horas semanais, compatível com seus estudos.',
-      },
-      {
-        question: 'Posso participar de mais de um projeto?',
-        answer: 'Sim, desde que consiga gerenciar o tempo. Recomendamos começar com um projeto para garantir qualidade na entrega e depois expandir conforme sua disponibilidade.',
-      },
-      {
-        question: 'O trabalho é remoto ou presencial?',
-        answer: 'A maioria dos projetos é 100% remota, permitindo que você trabalhe de qualquer lugar. Alguns projetos podem ter encontros presenciais opcionais ou híbridos.',
-      },
-    ],
-    beneficios: [
-      {
-        question: 'Qual é a remuneração?',
-        answer: 'A remuneração varia por projeto e função, geralmente entre R$ 800 a R$ 2.500 por mês. Você vê o valor antes de se candidatar e negocia diretamente com a empresa.',
-      },
-      {
-        question: 'Recebo certificado ao final do projeto?',
-        answer: 'Sim! Ao concluir um projeto, você recebe certificado digital da Brasil Sustenta e da empresa parceira, além de avaliação de desempenho que fica no seu perfil.',
-      },
-      {
-        question: 'Posso ser efetivado pela empresa?',
-        answer: 'Muitos estudantes são contratados pelas empresas após o projeto! Mais de 30% dos talentos que se destacam recebem proposta de estágio ou emprego.',
-      },
-      {
-        question: 'Quais habilidades vou desenvolver?',
-        answer: 'Além de habilidades técnicas da sua área, você desenvolve soft skills essenciais: trabalho em equipe, gestão de projetos, comunicação corporativa, resolução de problemas reais e networking profissional.',
-      },
-    ],
-  };
-
+const ParaJovens = () => {
   return (
-    <div className="min-h-screen bg-background selection:bg-primary/30 overflow-x-hidden">
-      <SEO 
-        title="Para Talentos Criativos | Protagonismo, Carreira e Impacto Regenerativo"
-        description="Assuma riscos que importam. Ingresse nos Squads Criativos do Brasil Sustenta, conecte-se com marcas globais e transforme cultura em impacto real através dos ODS."
+    <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Para Jovens | Brasil Sustenta"
+        description="Entre em squads universitarios para desafios ESG reais, construa portfolio e desenvolva sua empregabilidade com matching por IA."
       />
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden border-b border-border">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,var(--tw-gradient-from)_0%,transparent_70%)] from-primary/10 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+      <main className="pt-[72px]">
+        <section className="border-b border-border">
+          <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-16 lg:py-20">
+            <div className="flex flex-col justify-center">
+              <Badge variant="outline" className="mb-8 w-fit rounded-full border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em] text-primary">
+                Para jovens // portfolio, impacto e empregabilidade
+              </Badge>
 
-        <div className="container relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-8 animate-fade-in-up">
-              <Star className="w-3.5 h-3.5 text-primary mr-2" />
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary">Futuro & Carreira com Propósito</span>
-            </div>
-            
-            <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-8 leading-[0.95] tracking-tighter animate-fade-in-up">
-              O seu <span className="italic font-light font-serif text-primary text-glow-emerald">Talento</span>,<br />
-              como Motor de <span className="underline decoration-primary/30 underline-offset-8">Regeneração</span>.
-            </h1>
-            
-            <p className="text-[1.125rem] text-muted-foreground font-medium mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
-              Não seja apenas um executor. No Brasil Sustenta, você entra para Squads Criativos de Elite para resolver os maiores desafios de sustentabilidade das marcas globais.
-            </p>
+              <h1 className="max-w-4xl font-display text-[3rem] font-bold leading-[0.92] tracking-tight sm:text-[4.4rem] lg:text-[5.6rem]">
+                Entre em
+                <span className="block italic font-light text-primary">projetos reais</span>
+                nao em processos genericos.
+              </h1>
 
-            <div className="flex flex-col sm:flex-row gap-5 justify-center animate-fade-in-up delay-200">
-              <Link href="/login/jovem">
-                <Button size="lg" className="w-full sm:w-auto h-14 px-10 bg-primary hover:bg-primary/90 text-black font-bold rounded-xl transition-all hover:scale-[1.02] shadow-xl shadow-primary/10 tracking-widest uppercase text-xs">
-                  Ser um Talento Criativo
-                </Button>
-              </Link>
-              <Link href="/oportunidades">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-10 border-border text-foreground font-bold rounded-xl hover:bg-white/5 transition-all uppercase tracking-widest text-xs">
-                  Explorar Projetos
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+              <p className="mt-8 max-w-2xl border-l-[3px] border-primary pl-5 text-base font-medium leading-8 text-foreground/78 sm:text-[1.05rem]">
+                O Brasil Sustenta conecta universitarios e recem-formados a desafios ESG de empresas.
+                A ideia nao e so conseguir acesso, mas construir repertorio, portfolio e leitura de negocio enquanto voce aprende em trabalho real.
+              </p>
 
-      {/* Value Proposition Bento Grid */}
-      <section className="py-24 bg-secondary/5 border-b border-border">
-        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 animate-fade-in-up">
-            <div className="max-w-2xl">
-                <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
-                Mais que <span className="italic font-serif font-light text-primary">Candidaturas</span>. <br />Urgência de Protagonismo.
-              </h2>
-              <p className="text-[1.125rem] text-muted-foreground font-medium">Buscamos mentes inquietas que entendem que a criatividade é a ferramenta mais potente para mudar o mundo.</p>
-            </div>
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary bg-card border border-border px-4 py-2 rounded-xl h-fit">
-              <Zap className="w-4 h-4 fill-current" />
-              Upgrade na sua Carreira
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Bento Card 1 */}
-            <div className="md:col-span-2 bg-card border border-border rounded-[2.5rem] p-10 relative overflow-hidden group hover:border-primary/30 transition-all">
-              <div className="relative z-10 h-full flex flex-col">
-                <div className="w-16 h-16 bg-secondary border border-border rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary/10 transition-colors">
-                  <Briefcase className="w-8 h-8 text-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <h3 className="text-3xl font-bold text-foreground font-display tracking-tighter mb-4">Experiência Profissional Direta</h3>
-                <p className="text-muted-foreground font-medium text-lg max-w-md">Esqueça as simulações. No Brasil Sustenta você entra no core de projetos reais de sustentabilidade e inovação social de empresas líderes.</p>
-                <div className="mt-auto pt-8 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary">
-                  Ver portfólios de exemplo <ArrowRight className="w-4 h-4" />
-                </div>
-              </div>
-              <div className="absolute top-1/2 -right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl group-hover:scale-150 transition-all duration-700"></div>
-            </div>
-
-            {/* Bento Card 2 */}
-            <div className="bg-primary text-black rounded-[2.5rem] p-10 flex flex-col shadow-2xl shadow-primary/20">
-               <div className="w-14 h-14 bg-black/10 rounded-2xl flex items-center justify-center mb-8 border border-black/20">
-                  <TrendingUp className="w-7 h-7 text-black" />
-                </div>
-                <h3 className="text-2xl font-bold font-display tracking-tighter mb-4 leading-tight">Remuneração Acima da Média</h3>
-                <p className="text-black/80 font-medium mb-6">Receba entre R$ 800 e R$ 2.500 por projeto. Valorizamos seu tempo e conhecimento técnico.</p>
-                <div className="mt-auto bg-black/10 rounded-2xl p-4 border border-black/20">
-                  <span className="text-[10px] font-bold uppercase tracking-widest block mb-1">Média Mensal</span>
-                  <p className="text-3xl font-display font-black tracking-tighter">R$ 1.850,00</p>
-                </div>
-            </div>
-
-            {/* Bento Card 3 */}
-            <div className="bg-card border border-border rounded-[2.5rem] p-10 group hover:border-primary/30 transition-all">
-               <div className="w-14 h-14 bg-secondary border border-border rounded-2xl flex items-center justify-center mb-8">
-                  <Users className="w-7 h-7 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground font-display tracking-tighter mb-4">Networking de Alto Nível</h3>
-                <p className="text-muted-foreground font-medium">Acesso direto a CXOs e gestores de ESG que estão moldando o futuro das grandes corporações.</p>
-            </div>
-
-            {/* Bento Card 4 */}
-            <div className="bg-card border border-border rounded-[2.5rem] p-10 group hover:border-primary/30 transition-all">
-               <div className="w-14 h-14 bg-secondary border border-border rounded-2xl flex items-center justify-center mb-8">
-                  <Award className="w-7 h-7 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground font-display tracking-tighter mb-4">Certificação com Peso</h3>
-                <p className="text-muted-foreground font-medium">Certificados digitais endossados pelas empresas e pela plataforma, validando impacto real.</p>
-            </div>
-
-            {/* Bento Card 5 */}
-            <div className="bg-card text-foreground rounded-[2.5rem] p-10 border border-border relative overflow-hidden group hover:border-primary/30 transition-all">
-               <div className="w-14 h-14 bg-secondary border border-border rounded-2xl flex items-center justify-center mb-8">
-                  <Rocket className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold font-display tracking-tighter mb-4 leading-tight">Carreira Acelerada</h3>
-                <p className="text-muted-foreground font-medium mb-6">30% dos talentos que passam por nossos squads são contratados por empresas.</p>
-                <div className="flex gap-1 animate-pulse">
-                  {[1,2,3,4,5].map(i => <div key={i} className="w-8 h-1.5 bg-primary/20 rounded-full"></div>)}
-                </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ System */}
-      <section className="py-24 bg-background relative border-b border-border">
-        <div className="container max-w-[1200px] mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16 animate-fade-in-up">
-            <div className="inline-flex items-center px-4 py-2 bg-secondary border border-border rounded-full mb-4">
-               <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground">Knowledge Hub</span>
-            </div>
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground tracking-tighter mb-6">Tire suas <span className="italic font-serif font-light text-primary">Dúvidas</span>.</h2>
-            <div className="flex flex-wrap gap-2 justify-center">
-              {['geral', 'processo', 'beneficios'].map((c) => (
-                <button
-                  key={c}
-                  onClick={() => { setActiveCategory(c as any); setExpandedFaq(null); }}
-                  className={`px-6 h-12 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all border ${
-                    activeCategory === c 
-                    ? 'bg-foreground text-background border-foreground shadow-xl' 
-                    : 'bg-card text-muted-foreground border-border hover:bg-white/5'
-                  }`}
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Link
+                  href="/login/jovem"
+                  className={cn(
+                    buttonVariants({ size: 'lg' }),
+                    'h-12 rounded-full px-6 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground'
+                  )}
                 >
-                  {c}
-                </button>
+                  Criar perfil
+                </Link>
+                <Link
+                  href="/oportunidades"
+                  className={cn(
+                    buttonVariants({ variant: 'outline', size: 'lg' }),
+                    'h-12 rounded-full border-border px-6 text-sm font-bold uppercase tracking-[0.14em]'
+                  )}
+                >
+                  Ver oportunidades
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid gap-4">
+              {signals.map((signal) => {
+                const Icon = signal.icon;
+
+                return (
+                  <Card key={signal.title} className="border-border bg-card shadow-sm">
+                    <CardHeader className="pb-4">
+                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-secondary/30">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <CardTitle className="font-display text-[1.6rem] tracking-tight">{signal.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm font-medium leading-7 text-muted-foreground">{signal.description}</p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="mb-12 max-w-3xl">
+              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Como entrar forte</div>
+              <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
+                A melhor candidatura aqui parece mais com repertorio do que com formulario.
+              </h2>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {journey.map((item, index) => (
+                <Card key={item.title} className={cn('rounded-[1.5rem] border-border bg-card shadow-sm', index === 1 && 'border-primary/30 bg-primary/5')}>
+                  <CardHeader>
+                    <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">0{index + 1}</div>
+                    <CardTitle className="font-display text-[1.6rem] tracking-tight">{item.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-[15px] font-medium leading-7 text-muted-foreground">{item.description}</p>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
+        </section>
 
-          <div className="max-w-3xl mx-auto space-y-4">
-            {faqData[activeCategory].map((faq, index) => (
-              <div
-                key={index}
-                className={`bg-card rounded-2xl border transition-all duration-300 ${expandedFaq === index ? 'border-primary/50 shadow-xl shadow-primary/5' : 'border-border'}`}
-              >
-                <button
-                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                  className="w-full px-8 py-6 flex items-center justify-between text-left group"
-                >
-                  <span className={`text-lg font-bold font-display tracking-tight transition-colors ${expandedFaq === index ? 'text-primary' : 'text-foreground'}`}>{faq.question}</span>
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${expandedFaq === index ? 'bg-primary text-black rotate-180' : 'bg-secondary text-muted-foreground'}`}>
-                    <ChevronDown className="w-5 h-5" />
-                  </div>
-                </button>
-                {expandedFaq === index && (
-                  <div className="px-8 pb-8 text-muted-foreground font-medium leading-relaxed animate-fade-in-up">
-                    {faq.answer}
-                  </div>
-                )}
-              </div>
-            ))}
+        <section className="border-b border-border py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="mb-12 max-w-3xl">
+              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Como o match fica mais forte</div>
+              <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
+                A plataforma precisa explicar por que voce combina com o desafio.
+              </h2>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {matchSignals.map((signal, index) => (
+                <Card key={signal.title} className={cn('rounded-[1.5rem] border-border bg-card shadow-sm', index === 1 && 'border-primary/30 bg-primary/5')}>
+                  <CardHeader>
+                    <CardTitle className="font-display text-[1.55rem] tracking-tight">{signal.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-[15px] font-medium leading-7 text-muted-foreground">{signal.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Split Form Section */}
-      <section className="py-24 bg-secondary/5 border-b border-border overflow-hidden relative">
-        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Left: Invitation Form */}
-            <div className="space-y-8 animate-fade-in-up">
+        <section className="py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <Card className="rounded-[1.75rem] border-border bg-foreground text-background shadow-sm">
+              <CardContent className="grid gap-8 p-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                <div>
+                  <div className="mb-4 flex items-center gap-2 text-primary">
+                    <GraduationCap className="h-4 w-4" />
+                    <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Leitura strategica para talentos</span>
+                  </div>
+                  <h2 className="font-display text-[2rem] font-bold leading-[1.05] tracking-tight text-white lg:text-[3rem]">
+                    Seu diferencial nao e falar de proposito.
+                    <span className="block italic font-light text-primary">E conseguir provar entrega.</span>
+                  </h2>
+                  <p className="mt-5 max-w-2xl text-sm font-medium leading-7 text-background/75">
+                    O melhor uso da plataforma para voce e construir portfolio observavel, ganhar contexto corporativo e entrar em experiencias que tornam seu perfil mais claro para o mercado.
+                  </p>
+                </div>
+
+                <div className="grid gap-4">
+                  <Card className="border-border/20 bg-background/5 shadow-none">
+                    <CardContent className="p-5">
+                      <div className="mb-2 flex items-center gap-2 text-primary">
+                        <Lightbulb className="h-4 w-4" />
+                        <span className="text-[11px] font-bold uppercase tracking-[0.18em]">Mais contexto</span>
+                      </div>
+                      <p className="text-sm font-medium leading-7 text-background/75">Voce entende o desafio, o buyer e o tipo de entrega antes de entrar.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Link
+                    href="/login/jovem"
+                    className={cn(
+                      buttonVariants({ size: 'lg' }),
+                      'h-12 rounded-full bg-primary px-6 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground hover:bg-primary/90'
+                    )}
+                  >
+                    Entrar como talento
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        <section className="border-t border-border py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="mb-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
               <div>
-                <h2 className="font-display text-4xl font-bold text-foreground tracking-tighter mb-6">Não viu sua <span className="text-primary font-serif font-light italic">Instituição</span>?</h2>
-                <p className="text-[1.125rem] text-muted-foreground font-medium">Convide sua universidade para fazer parte do hub e abra portas para centenas de colegas.</p>
+                <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Tipos de desafio</div>
+                <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
+                  Oportunidade boa tem forma. Nao e so um card bonito.
+                </h2>
               </div>
-
-              {invitationSubmitted ? (
-                <div className="bg-card border border-primary/20 rounded-[2.5rem] p-12 text-center shadow-xl shadow-primary/5 animate-fade-in">
-                  <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-primary/20">
-                    <CheckCircle2 className="w-10 h-10 text-primary" />
-                  </div>
-                  <h3 className="font-display text-2xl font-bold text-foreground tracking-tighter mb-2">Convite Protocolado!</h3>
-                  <p className="text-muted-foreground font-medium mb-6">Entraremos em contato com a <strong>{invitationForm.universityName}</strong> em seu nome.</p>
-                  <Button variant="outline" onClick={() => setInvitationSubmitted(false)} className="rounded-xl border-border text-foreground font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white/5">Novo Convite</Button>
-                </div>
-              ) : (
-                <form onSubmit={handleInvitationSubmit} className="bg-card border border-border rounded-[2.5rem] p-10 space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="i-student-name" className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Seu Nome</Label>
-                      <Input
-                        id="i-student-name"
-                        className="h-14 rounded-xl border-border bg-secondary/50 focus:bg-secondary focus:ring-4 focus:ring-primary/10 transition-all font-medium text-foreground"
-                        value={invitationForm.studentName}
-                        onChange={(e) => setInvitationForm({ ...invitationForm, studentName: e.target.value })}
-                        placeholder="Nome completo"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                       <Label htmlFor="i-student-email" className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Seu Email</Label>
-                       <Input
-                        id="i-student-email"
-                        type="email"
-                        className="h-14 rounded-xl border-border bg-secondary/50 focus:bg-secondary focus:ring-4 focus:ring-primary/10 transition-all font-medium text-foreground"
-                        value={invitationForm.studentEmail}
-                        onChange={(e) => setInvitationForm({ ...invitationForm, studentEmail: e.target.value })}
-                        placeholder="email@univ.edu"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="i-university-name" className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Nome da Universidade</Label>
-                    <Input
-                      id="i-university-name"
-                      className="h-14 rounded-xl border-border bg-secondary/50 focus:bg-secondary focus:ring-4 focus:ring-primary/10 transition-all font-medium text-foreground"
-                      value={invitationForm.universityName}
-                      onChange={(e) => setInvitationForm({ ...invitationForm, universityName: e.target.value })}
-                      placeholder="Ex: USP, Federal do Ceará..."
-                      required
-                    />
-                  </div>
-                  <Button type="submit" disabled={invitationMutation.isPending} className="w-full h-16 rounded-2xl bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-[0.2em] text-[10px] group">
-                    {invitationMutation.isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <span>Enviar Convite Formal <ArrowRight className="inline ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>}
-                  </Button>
-                </form>
-              )}
+              <p className="text-[15px] font-medium leading-7 text-muted-foreground">
+                A landing precisa mostrar melhor o tipo de desafio que aparece na rede. Esta e a referencia de densidade que devemos perseguir no produto e no marketing.
+              </p>
             </div>
 
-            {/* Right: Question Form */}
-            <div className="space-y-8 lg:mt-24 animate-fade-in-up delay-100">
-              <div className="bg-card border border-border rounded-[2.5rem] p-10 relative overflow-hidden shadow-2xl">
-                <div className="relative z-10">
-                  <h3 className="font-display text-3xl font-bold tracking-tighter text-foreground mb-6">Atendimento ao Talento</h3>
-                  <p className="text-muted-foreground font-medium mb-8 leading-relaxed">Nossa equipe de mentoria e suporte está pronta para ajudá-lo a encontrar a melhor oportunidade.</p>
-                  
-                  {questionSubmitted ? (
-                    <div className="bg-secondary/30 border border-border rounded-xl p-6">
-                       <p className="font-bold flex items-center gap-2 mb-2 text-foreground"><CheckCircle2 className="w-5 h-5 text-primary" /> Dúvida recebida!</p>
-                       <p className="text-sm text-muted-foreground">Responderemos em até 24h úteis.</p>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleQuestionSubmit} className="space-y-4">
-                      <div>
-                        <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-1 block">Seu Nome</Label>
-                        <Input
-                          value={questionForm.name}
-                          onChange={(e) => setQuestionForm({ ...questionForm, name: e.target.value })}
-                          className="h-14 rounded-xl border-border bg-secondary/50 text-foreground font-medium"
-                          placeholder="Ex: João Silva"
-                        />
-                      </div>
-                      <div>
-                        <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-1 block">Seu E-mail</Label>
-                        <Input
-                          value={questionForm.email}
-                          type="email"
-                          onChange={(e) => setQuestionForm({ ...questionForm, email: e.target.value })}
-                          className="h-14 rounded-xl border-border bg-secondary/50 text-foreground font-medium"
-                          placeholder="email@example.com"
-                        />
-                      </div>
-                      <div>
-                        <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-1 block">Sua Dúvida</Label>
-                        <Textarea
-                          value={questionForm.question}
-                          onChange={(e) => setQuestionForm({ ...questionForm, question: e.target.value })}
-                          className="rounded-xl border-border bg-secondary/50 text-foreground font-medium min-h-[120px]"
-                          placeholder="Fale conosco..."
-                        />
-                      </div>
-                      <Button type="submit" disabled={questionMutation.isPending} className="w-full h-14 rounded-xl bg-foreground text-background hover:bg-foreground/90 font-bold uppercase tracking-[0.2em] text-[10px] mt-2">
-                        {questionMutation.isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Protocolar Pergunta'}
-                      </Button>
-                    </form>
-                  )}
-                </div>
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-              </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {challengeExamples.map((example) => (
+                <Card key={example.title} className="rounded-[1.5rem] border-border bg-card shadow-sm">
+                  <CardHeader>
+                    <CardTitle className="font-display text-[1.55rem] tracking-tight">{example.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-[15px] font-medium leading-7 text-muted-foreground">{example.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Closing CTA */}
-      <section className="py-32 bg-background relative overflow-hidden">
-        <div className="container max-w-[1200px] mx-auto text-center relative z-10">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="font-display text-5xl md:text-7xl font-bold text-foreground tracking-tighter leading-[1.05] mb-10">
-              O futuro <span className="italic font-serif font-light text-primary">não espera</span>.<br />Seja o Protagonista.
-            </h2>
-            <div className="bg-card border border-border p-3 rounded-2xl flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <Link href="/login/jovem" className="flex-1">
-                <Button className="w-full h-14 rounded-xl bg-foreground text-background font-bold uppercase tracking-[0.2em] text-[10px]">
-                  Cadastrar Agora
-                </Button>
-              </Link>
-              <Link href="/" className="flex-1">
-                <Button variant="ghost" className="w-full h-14 rounded-xl text-muted-foreground font-bold uppercase tracking-[0.2em] text-[10px] border border-transparent hover:border-border hover:bg-white/5">
-                  Voltar para Home
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>
   );
-}
+};
+
+export default ParaJovens;

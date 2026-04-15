@@ -1,55 +1,58 @@
-import { FileText, Users, Rocket, CheckCircle } from 'lucide-react';
+import { CheckCircle, FileText, Rocket, Users } from 'lucide-react';
+import { Link } from 'wouter';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const steps = [
   {
     number: '01',
-    title: 'Mapeamento de Desafio',
-    description: 'A empresa define o desafio estratégico sob a lente dos ODS e do Valor Compartilhado.',
+    title: 'Brief do desafio',
+    description: 'A empresa estrutura objetivo, contexto, ODS, escopo, prazo e budget em um fluxo unico.',
     icon: FileText,
     items: [
-      'Scope Audit ODS',
-      'Definição de impacto',
-      'Budget estratégico',
+      'Objetivo de negocio',
+      'ODS e criterio de impacto',
+      'Escopo e prioridade',
     ],
   },
   {
     number: '02',
-    title: 'Curadoria de Squad',
-    description: 'Nossa IA e curadores selecionam talentos de elite para formar o time criativo perfeito.',
+    title: 'IA + curadoria',
+    description: 'A plataforma prioriza perfis por fit e a curadoria humana fecha a composicao do squad.',
     icon: Users,
     items: [
-      'Match de Skills 18-ODS',
-      'Formação Transmídia',
-      'Análise de Protagonismo',
+      'Fit score explicavel',
+      'Portfolio e disponibilidade',
+      'Composicao multidisciplinar',
     ],
   },
   {
     number: '03',
-    title: 'Execução Ágil',
-    description: 'O squad inicia sprints criativas focadas em soluções reais e regenerativas.',
+    title: 'Squad em execucao',
+    description: 'O desafio vira sprint com kickoff, alinhamentos, entregaveis parciais e acompanhamento.',
     icon: Rocket,
     items: [
-      'Prototipagem Rápida',
-      'Design Disruptivo',
-      'Mentoria Especializada',
+      'Kickoff e onboarding',
+      'Ritmo de sprint',
+      'Feedback de empresa e mentoria',
     ],
   },
   {
     number: '04',
-    title: 'Auditoria de Valor',
-    description: 'Relatório final com métricas de impacto e auditoria criativa dos resultados.',
+    title: 'Entrega auditavel',
+    description: 'Ao final, a empresa recebe evidencias, relatorio executivo e sinais de talento observados em trabalho real.',
     icon: CheckCircle,
     items: [
-      'Impact Score-card',
-      'Narrativa de Reputação',
-      'Certificação de Impacto',
+      'Log de entregas',
+      'Relatorio executivo',
+      'Sinais para hiring e reputacao',
     ],
   },
 ];
 
 const HowItWorksSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-background relative overflow-hidden border-t border-border">
+    <section id="como-funciona" className="relative overflow-hidden border-t border-border bg-background py-24 lg:py-32">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-[0.03]">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-leaf-1 rounded-full blur-[100px]"></div>
@@ -58,12 +61,12 @@ const HowItWorksSection = () => {
       <div className="container relative z-10 px-6 lg:px-8 max-w-[1200px] mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[10px] font-bold tracking-[0.4em] uppercase text-primary mb-6">Metodologia de Impacto</div>
+          <div className="mb-6 text-[10px] font-bold uppercase tracking-[0.4em] text-primary">Do brief a entrega</div>
           <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground leading-tight tracking-tighter mb-8">
-            Uma Jornada de <span className="italic font-light text-primary text-glow-emerald">Valor Compartilhado</span>.
+            Um fluxo de <span className="italic font-light text-primary text-glow-emerald">categoria nova</span>, mas facil de comprar.
           </h2>
           <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-            Dinâmica corporativa simplificada em 4 estágios de alta performance criativa e regenerativa.
+            A experiencia foi desenhada para tirar friccao de um processo que normalmente fica espalhado entre RH, ESG, inovacao e universidade.
           </p>
         </div>
 
@@ -119,15 +122,27 @@ const HowItWorksSection = () => {
         {/* Bottom CTA */}
         <div className="text-center mt-24">
           <p className="font-display text-2xl font-bold text-foreground mb-8">
-            Traga o seu desafio ODS para nós.
+            Comece pelo desafio, nao pelo curriculo.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary/90 text-black font-bold rounded-xl shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all">
-              Publicar Projeto ESG
-            </button>
-            <button className="w-full sm:w-auto px-8 py-4 border border-border bg-transparent hover:bg-white/5 text-foreground font-bold rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all">
-              Conhecer Talentos
-            </button>
+            <Link
+              href="/para-empresas"
+              className={cn(
+                buttonVariants({ size: 'lg' }),
+                'w-full rounded-full px-8 text-sm font-bold uppercase tracking-[0.16em] sm:w-auto'
+              )}
+            >
+              Publicar desafio ESG
+            </Link>
+            <Link
+              href="/para-jovens"
+              className={cn(
+                buttonVariants({ variant: 'outline', size: 'lg' }),
+                'w-full rounded-full border-border px-8 text-sm font-bold uppercase tracking-[0.16em] sm:w-auto'
+              )}
+            >
+              Entrar como talento
+            </Link>
           </div>
         </div>
       </div>

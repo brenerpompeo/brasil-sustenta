@@ -1,149 +1,151 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'wouter';
-import { Menu, X, ChevronDown, User, Briefcase, GraduationCap, Sparkles } from 'lucide-react';
+import { useState } from "react";
+import { Link, useLocation } from "wouter";
+import { ArrowUpRight, Menu } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+
+const portals = [
+  { name: "Manifesto", href: "/manifesto" },
+  { name: "Para Universitarios", href: "/para-jovens" },
+  { name: "Para Empresas", href: "/para-empresas" },
+  { name: "Para IES", href: "/para-universidades" },
+];
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [location] = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const navLinkClass = (href: string) =>
+    cn(
+      "inline-flex items-center rounded-full border px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] transition-colors",
+      location === href
+        ? "border-primary bg-primary text-primary-foreground"
+        : "border-border bg-background text-foreground/75 hover:border-primary/30 hover:bg-secondary hover:text-foreground"
+    );
 
   return (
-    <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out flex justify-center w-full px-4 ${
-        scrolled ? 'py-4' : 'py-6'
-      }`}>
-        {/* Island Container */}
-        <div className={`transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden flex items-center justify-between w-full mx-auto relative
-          ${scrolled 
-            ? 'max-w-[1000px] h-14 glass shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-full' 
-            : 'max-w-[1240px] h-20 bg-transparent border-none'
-          } px-8`}
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/90 font-body backdrop-blur-xl">
+      <div className="mx-auto flex h-[72px] w-full max-w-[1440px] items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+        <Link
+          href="/"
+          aria-label="Ir para a home do Brasil Sustenta"
+          className="group flex min-w-0 items-center gap-3 rounded-full border border-transparent px-2 py-1 transition-colors hover:border-border hover:bg-secondary/60"
         >
-          {/* Subtle inner glow for the pill effect */}
-          {scrolled && <div className="absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/50 pointer-events-none" />}
-
-          {/* Logo Premium */}
-          <Link href="/">
-            <div className="flex items-center space-x-3 cursor-pointer group relative z-10 w-fit">
-              <div className="font-display text-xl sm:text-2xl font-bold text-foreground tracking-tighter leading-[0.9] group-hover:opacity-80 transition-opacity">
-                Brasil<br /><span className="text-primary text-glow-emerald">Sustenta</span>
-              </div>
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-foreground text-[11px] font-black tracking-[0.28em] text-background">
+            BS
+          </div>
+          <div className="min-w-0">
+            <div className="truncate font-display text-xl font-black leading-none tracking-tight text-foreground">
+              Brasil <span className="text-primary italic font-light">Sustenta</span>
             </div>
+            <div className="truncate text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+              Plataforma de inovacao ESG
+            </div>
+          </div>
+        </Link>
+
+        <nav className="hidden items-center gap-2 lg:flex" aria-label="Navegacao principal">
+          {portals.map(portal => (
+            <Link key={portal.href} href={portal.href} className={navLinkClass(portal.href)}>
+              {portal.name}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            href="/login"
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "rounded-full px-5 text-[11px] font-black uppercase tracking-[0.2em]"
+            )}
+          >
+            Entrar
+            <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-2 lg:hidden">
+          <Link
+            href="/login"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              "rounded-full border-border px-4 text-[11px] font-black uppercase tracking-[0.18em]"
+            )}
+          >
+            Entrar
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1 relative z-10">
-            <a href="/" className={`text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>Home</a>
-            <a href="/manifesto" className={`text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>Manifesto</a>
-            
-            {/* Stakeholders Dropdown */}
-            <div className="relative group">
-              <button className={`flex items-center gap-1 text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>
-                Hubs <ChevronDown className="w-3 h-3 opacity-50" />
-              </button>
-              <div className="absolute left-0 top-full mt-4 w-60 glass border border-primary/10 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-left -translate-y-2 group-hover:translate-y-0">
-                <div className="p-2 flex flex-col">
-                  <a href="/para-jovens" className="flex items-center gap-3 px-4 py-3 text-xs font-bold tracking-widest uppercase text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all">Para Jovem</a>
-                  <a href="/para-universidades" className="flex items-center gap-3 px-4 py-3 text-xs font-bold tracking-widest uppercase text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all">Para Universidade</a>
-                  <a href="/para-empresas" className="flex items-center gap-3 px-4 py-3 text-xs font-bold tracking-widest uppercase text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all">Para Empresa</a>
-                </div>
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger
+              aria-label="Abrir menu principal"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "icon" }),
+                "rounded-full border-border"
+              )}
+            >
+              <Menu className="h-5 w-5" />
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[320px] border-l border-border bg-background p-0">
+              <SheetHeader className="border-b border-border px-6 py-5 text-left">
+                <SheetTitle className="font-display text-2xl font-black tracking-tight">
+                  Brasil Sustenta
+                </SheetTitle>
+                <SheetDescription className="text-sm leading-6 text-muted-foreground">
+                  Navegacao principal com foco em legibilidade e acesso rapido aos portais.
+                </SheetDescription>
+              </SheetHeader>
+
+              <div className="flex flex-col gap-3 px-6 py-6">
+                {portals.map(portal => (
+                  <Link
+                    key={portal.href}
+                    href={portal.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "rounded-2xl border px-4 py-4 text-sm font-black uppercase tracking-[0.18em] transition-colors",
+                      location === portal.href
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-card text-foreground hover:border-primary/30 hover:bg-secondary"
+                    )}
+                  >
+                    {portal.name}
+                  </Link>
+                ))}
+
+                <Link
+                  href="/comunidade"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-2xl border border-border bg-card px-4 py-4 text-sm font-black uppercase tracking-[0.18em] text-foreground hover:border-primary/30 hover:bg-secondary"
+                >
+                  Comunidade
+                </Link>
+
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    buttonVariants({ size: "lg" }),
+                    "mt-2 rounded-2xl text-[12px] font-black uppercase tracking-[0.2em]"
+                  )}
+                >
+                  Escolher portal
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
               </div>
-            </div>
-            
-            <a href="/oportunidades" className={`text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>Matching</a>
-            <a href="/comunidade" className={`text-[12px] font-bold tracking-widest uppercase transition-all duration-300 rounded-full px-4 py-2 ${scrolled ? 'text-muted-foreground hover:text-primary hover:bg-white/5' : 'text-foreground/70 hover:text-primary hover:bg-white/5'}`}>Blog</a>
-          </nav>
-
-          {/* Desktop Login Access */}
-          <div className="hidden lg:flex items-center relative z-10">
-            <div className="relative group">
-              <button className="flex items-center gap-2 bg-primary text-black text-[13px] font-bold px-5 py-2.5 rounded-full hover:opacity-90 transition-all shadow-lg">
-                <User className="w-4 h-4" /> Entrar / Cadastre-se <ChevronDown className="w-3 h-3 opacity-50" />
-              </button>
-              
-              <div className="absolute right-0 top-full mt-2 w-56 bg-card/90 backdrop-blur-2xl border border-border rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top-right group-hover:translate-y-0 translate-y-2">
-                <div className="p-2">
-                  <div className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/60 px-3 py-2">Acessos da Plataforma</div>
-                  <a href="/login/jovem" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
-                    <Sparkles className="w-4 h-4 text-sky-400 transition-transform group-hover/item:scale-110" /> Para Jovens
-                  </a>
-                  <a href="/login/universidade" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
-                    <GraduationCap className="w-4 h-4 text-primary transition-transform group-hover/item:scale-110" /> Para Universidades
-                  </a>
-                  <a href="/login/empresa" className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold text-foreground group/item border border-transparent hover:border-primary/20 hover:bg-white/5 rounded-xl transition-all">
-                    <Briefcase className="w-4 h-4 text-primary transition-transform group-hover/item:scale-110" /> Para Empresas
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={toggleMenu}
-            className="lg:hidden p-2 text-ink hover:text-leaf-1 transition-colors rounded-full hover:bg-ink/5 relative z-10"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={20} className="text-foreground" /> : <Menu size={20} className="text-foreground" />}
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile Menu - Overlay Glass */}
-      <div className={`fixed inset-0 z-40 bg-background/95 backdrop-blur-xl transition-all duration-500 ease-out lg:hidden ${
-        isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-      }`}>
-        <div className="flex flex-col h-full pt-28 px-6 pb-8 overflow-y-auto">
-          <nav className="flex flex-col space-y-1 flex-grow">
-            <a href="/" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Home</a>
-            <a href="/sobre-nos" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Sobre Nós</a>
-            
-            <div className="py-2">
-               <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground px-4 mb-2">Stakeholders</p>
-               <a href="/para-jovens" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Para Jovens</a>
-               <a href="/para-universidades" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Para Universidades</a>
-               <a href="/para-empresas" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Para Empresas</a>
-            </div>
-
-            <div className="py-2 border-t border-white/5">
-               <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground px-4 mb-2">Comunidade</p>
-               <a href="/comunidade" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Visão Geral</a>
-               <a href="/comunidade#embaixadores" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Embaixadores Locais</a>
-               <a href="/comunidade#hubs" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>HUBs Universitários</a>
-               <a href="/comunidade#voluntarios" className="text-muted-foreground hover:text-primary transition-colors text-lg font-bold py-2 px-6 flex rounded-xl hover:bg-white/5" onClick={toggleMenu}>Voluntariado</a>
-            </div>
-
-            <a href="/oportunidades" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Oportunidades</a>
-            <a href="/eventos" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Eventos</a>
-            <a href="/blog" className="text-foreground hover:text-primary transition-colors text-xl font-bold py-3 px-4 flex items-center justify-between rounded-xl hover:bg-white/5 active:scale-[0.98]" onClick={toggleMenu}>Blog</a>
-          </nav>
-          
-          <div className="mt-8 space-y-4 px-2 pb-6 border-t border-border pt-6">
-            <p className="text-[11px] font-bold tracking-widest uppercase text-muted-foreground">Entrar / Cadastre-se</p>
-            <div className="grid gap-3">
-              <a href="/login/jovem" className="flex items-center justify-center gap-2 bg-secondary text-foreground font-semibold py-4 rounded-2xl border border-border shadow-sm active:scale-95 transition-transform">
-                <Sparkles className="w-4 h-4 text-sky-400" /> Para Jovens
-              </a>
-              <a href="/login/universidade" className="flex items-center justify-center gap-2 bg-secondary text-foreground font-semibold py-4 rounded-2xl border border-border shadow-sm active:scale-95 transition-transform">
-                <GraduationCap className="w-4 h-4 text-primary" /> Para Universidades
-              </a>
-              <a href="/login/empresa" className="flex items-center justify-center gap-2 bg-primary text-black font-semibold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform">
-                <Briefcase className="w-5 h-5" /> Para Empresas
-              </a>
-            </div>
-          </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-    </>
+    </header>
   );
 };
 

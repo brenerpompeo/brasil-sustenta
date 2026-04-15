@@ -1,141 +1,144 @@
-import { Check, ArrowRight } from 'lucide-react';
+import { ArrowRight, Check, School, Sparkles, Target } from 'lucide-react';
 import { Link } from 'wouter';
+import { Badge } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 const impactModels = [
   {
-    type: 'impact',
-    label: 'Squad Box',
-    title: 'Squad Criativo ODS.',
+    label: 'Pilot Project',
+    title: 'Valide um desafio com escopo enxuto e time sob medida.',
     description:
-      'Squads com talentos criativos de elite que transformam desafios ESG em ativos de comunicação e inovação. Impacto real com design-thinking.',
-    highlight: 'A partir de R$ 2.500 por Sprint de Impacto',
-    packages: [
-      { name: 'Creative ESG Starter', duration: '15 dias', price: 'R$ 12.500' },
-      { name: 'Impact Narrative', duration: '30 dias', price: 'R$ 22.500' },
-      { name: 'Cultural ODS Hub', duration: '60 dias', price: 'R$ 38.500' },
+      'Entrada ideal para liderancas de ESG, RH ou inovacao que precisam provar valor sem comecar com uma operacao grande.',
+    includes: [
+      '1 brief priorizado',
+      'shortlist com justificativa de fit',
+      'squad piloto com kickoff e sprint curta',
+      'relatorio executivo final',
     ],
-    cta: 'Ver Pacotes Criativos',
-    accent: 'primary',
-    borderTop: 'bg-primary',
+    href: '/login/empresa',
+    cta: 'Solicitar piloto',
+    highlight: 'Perfeito para primeira compra',
+    icon: Target,
+    theme: 'primary',
   },
   {
-    type: 'premium',
-    label: 'Corporate',
-    title: 'Hub de Valor Compartilhado.',
+    label: 'Managed Squad',
+    title: 'Transforme uma frente recorrente em operacao acompanhada.',
     description:
-      'Estratégia avançada para ecossistemas sustentáveis de alta performance. Auditoria criativa e inteligência de reputação.',
-    services: [
-      'Auditoria de Impacto Criativo',
-      'Squad dedicado de especialistas sênior',
-      'Estratégias de Valor Compartilhado',
-      'Relatórios de Impacto Visual (RIV)',
-      'Suporte técnico e criativo prioritário',
+      'Para empresas que ja querem fluxo continuo de squads, checkpoints, dados e maior integracao com times internos.',
+    includes: [
+      'multiplos desafios ou sprints',
+      'curadoria recorrente',
+      'trilha de evidencias e monitoramento',
+      'camada para RH, ESG e inovacao no mesmo fluxo',
     ],
-    cta: 'Falar com Hub de Estratégia',
-    accent: 'secondary',
-    borderTop: 'bg-white/10',
+    href: '/para-empresas',
+    cta: 'Ver modelo gerenciado',
+    highlight: 'Categoria mais escalavel da plataforma',
+    icon: Sparkles,
+    theme: 'secondary',
+  },
+  {
+    label: 'University Partner',
+    title: 'Ative extensao, empregabilidade e projetos reais na sua IES.',
+    description:
+      'Oferta institucional para universidades que querem levar desafios reais ao curriculo com mais dados e menos atrito operacional.',
+    includes: [
+      'onboarding institucional',
+      'mapeamento de cursos e talentos',
+      'relatorios de participacao e horas',
+      'canal dedicado com empresas parceiras',
+    ],
+    href: '/para-universidades',
+    cta: 'Abrir parceria institucional',
+    highlight: 'Entrada dedicada para extensao e coordenacao',
+    icon: School,
+    theme: 'outline',
   },
 ];
 
 const ImpactModelSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-background border-y border-border relative overflow-hidden">
-      <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Investimento</div>
-          <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            Modelos de <span className="italic font-light text-primary">Impacto</span>
+    <section id="ofertas" className="relative overflow-hidden border-y border-border bg-background py-24 lg:py-32">
+      <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+        <div className="mx-auto mb-20 max-w-3xl text-center animate-fade-in-up">
+          <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Ofertas compraveis</div>
+          <h2 className="mb-6 font-display text-[2.5rem] font-bold leading-[1.1] text-foreground lg:text-[3.5rem]">
+            A mesma tese, em <span className="italic font-light text-primary">tres portas de entrada</span>
           </h2>
-          <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Diferentes níveis de engajamento para qualquer escala organizacional.
+          <p className="text-[1.125rem] font-medium text-muted-foreground">
+            O benchmark mostrou que a clareza da oferta importa tanto quanto a clareza da categoria. Aqui, cada modelo tem buyer, escopo e promessa claros.
           </p>
         </div>
 
-        {/* Models Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-[1100px] mx-auto">
-          {impactModels.map((model, index) => (
-            <div
-              key={index}
-              className="bg-card border border-border rounded-[1.5rem] overflow-hidden hover:border-primary/20 transition-all duration-300 flex flex-col animate-fade-in-up shadow-sm hover:shadow-primary/5"
-              style={{ animationDelay: `${index * 150}ms` }}
-            >
-              {/* Top accent bar */}
-              <div className={`h-1.5 ${model.borderTop}`}></div>
+        <div className="grid gap-8 lg:grid-cols-3">
+          {impactModels.map((model, index) => {
+            const Icon = model.icon;
 
-              <div className="p-10 flex flex-col flex-1">
-                  {/* Label */}
-                  <span className="inline-block self-start px-3 py-1 bg-secondary/20 border border-border rounded-lg text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6">
-                    {model.label}
-                  </span>
-  
-                  {/* Title */}
-                  <h3 className="font-display text-[1.75rem] font-bold text-foreground mb-4 leading-[1.2] tracking-tighter">
+            return (
+              <Card
+                key={model.label}
+                className={cn(
+                  'rounded-[1.5rem] border-border bg-card shadow-sm transition-all duration-300 hover:border-primary/30 hover:shadow-primary/5',
+                  index === 1 && 'border-primary/30 bg-primary/5'
+                )}
+              >
+                <CardHeader className="space-y-5 px-8 pt-8">
+                  <div className="flex items-center justify-between gap-4">
+                    <Badge
+                      variant={model.theme === 'secondary' ? 'default' : 'outline'}
+                      className={cn(
+                        'rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em]',
+                        model.theme === 'secondary' && 'bg-primary text-primary-foreground'
+                      )}
+                    >
+                      {model.label}
+                    </Badge>
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-secondary/40">
+                      <Icon className="h-5 w-5 text-primary" />
+                    </div>
+                  </div>
+                  <CardTitle className="font-display text-[1.7rem] leading-[1.15] tracking-tighter text-foreground">
                     {model.title}
-                  </h3>
-  
-                  {/* Description */}
-                  <p className="text-[15px] text-muted-foreground mb-8 font-medium leading-relaxed">
+                  </CardTitle>
+                  <p className="text-[15px] font-medium leading-7 text-muted-foreground">
                     {model.description}
                   </p>
+                </CardHeader>
 
-                {/* Highlight (for impact model) */}
-                {model.highlight && (
-                  <div className="bg-leaf/5 border border-leaf-2/20 rounded-xl p-4 mb-8">
-                    <p className="text-leaf-1 font-bold text-[14px]">
-                      {model.highlight}
-                    </p>
+                <CardContent className="flex flex-1 flex-col px-8 pb-8">
+                  <div className="mb-6 rounded-2xl border border-primary/15 bg-primary/5 px-4 py-3 text-[12px] font-bold uppercase tracking-[0.14em] text-primary">
+                    {model.highlight}
                   </div>
-                )}
 
-                {/* Packages (for impact model) */}
-                {model.packages && (
-                  <div className="space-y-3 mb-8">
-                    {model.packages.map((pkg, i) => (
-                        <div
-                          key={i}
-                          className="bg-secondary/10 border border-border rounded-xl p-5 flex items-center justify-between hover:bg-secondary/20 transition-colors"
-                        >
-                          <div>
-                            <p className="font-bold text-[15px] text-foreground">{pkg.name}</p>
-                            <p className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-[0.2em] mt-0.5">{pkg.duration}</p>
-                          </div>
-                          <p className="font-display text-xl font-bold text-primary tracking-tighter">{pkg.price}</p>
+                  <ul className="mb-8 space-y-4">
+                    {model.includes.map((item) => (
+                      <li key={item} className="flex items-start gap-3">
+                        <div className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full border border-primary/20 bg-primary/10">
+                          <Check className="h-3 w-3 text-primary" />
                         </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Services (for premium model) */}
-                {model.services && (
-                  <ul className="space-y-4 mb-8">
-                    {model.services.map((service, i) => (
-                      <li key={i} className="flex items-start space-x-3">
-                        <div className="w-5 h-5 bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Check className="w-3 h-3 text-primary" />
-                        </div>
-                        <span className="text-[14px] font-medium text-foreground/80">{service}</span>
+                        <span className="text-[14px] font-medium leading-6 text-foreground/80">{item}</span>
                       </li>
                     ))}
                   </ul>
-                )}
 
-                {/* CTA Button */}
-                  <div className="mt-auto">
-                    <Link
-                      href={model.type === 'impact' ? '/para-empresas' : '/para-empresas'}
-                      className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-[15px] transition-all hover:scale-[1.02] active:scale-[0.98] ${
-                        model.type === 'impact'
-                          ? 'bg-primary text-black hover:bg-primary/90 shadow-lg'
-                          : 'border border-border text-foreground hover:bg-white/5'
-                      }`}
-                    >
-                      {model.cta} <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-              </div>
-            </div>
-          ))}
+                  <Link
+                    href={model.href}
+                    className={cn(
+                      buttonVariants({ variant: index === 1 ? 'default' : 'outline', size: 'lg' }),
+                      'mt-auto h-12 rounded-full text-sm font-bold uppercase tracking-[0.14em]',
+                      index === 1 && 'text-primary-foreground'
+                    )}
+                  >
+                    {model.cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

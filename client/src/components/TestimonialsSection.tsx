@@ -1,26 +1,26 @@
-import { Quote } from 'lucide-react';
+import { Building2, GraduationCap, School2 } from 'lucide-react';
 
 const testimonials = [
   {
-    name: 'Carolina Albuquerque',
-    role: 'Diretora de Sustentabilidade',
-    company: 'Petrobras',
-    text: 'O projeto desenvolvido superou nossas expectativas. A equipe demonstrou profissionalismo e comprometimento excepcionais.',
-    image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carolina',
+    name: 'Empresa',
+    role: 'Buyer corporativo',
+    company: 'RH / ESG / Inovacao',
+    text: 'Preciso de um fluxo simples para transformar desafio em squad, enxergar o fit dos talentos e acompanhar entregas sem virar um projeto pesado de consultoria.',
+    icon: Building2,
   },
   {
-    name: 'Roberto Martins',
-    role: 'CEO',
-    company: 'Natura',
-    text: 'Trabalhar com o Brasil Sustenta nos permitiu acelerar nossa agenda ESG com soluções inovadoras e custo-efetivas.',
-    image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Roberto',
+    name: 'Universidade',
+    role: 'Buyer institucional',
+    company: 'Extensao / Coordenacao',
+    text: 'Preciso conectar meus alunos ao mercado com menos atrito, gerar relatorios e evidencias, e fazer a extensao caber na operacao academica.',
+    icon: School2,
   },
   {
-    name: 'Juliana Santos',
-    role: 'Gerente de Inovação',
-    company: 'Itaú',
-    text: 'A qualidade dos talentos e a agilidade na formação dos squads tornaram nossa experiência excepcional.',
-    image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Juliana',
+    name: 'Talento',
+    role: 'Usuario final',
+    company: 'Graduacao / Recem-formado',
+    text: 'Quero sair da teoria, entrar em projeto real, construir portfolio verificavel e entender porque fui selecionado para aquele desafio.',
+    icon: GraduationCap,
   },
 ];
 
@@ -30,12 +30,12 @@ const TestimonialsSection = () => {
       <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
-          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Depoimentos</div>
+          <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Prova de valor</div>
           <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            O que dizem os <span className="italic font-light text-primary">Parceiros</span>
+            O que cada lado da rede <span className="italic font-light text-primary">precisa enxergar</span>
           </h2>
           <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Líderes de multinacionais brasileiras já transformaram seus desafios com a nossa plataforma.
+            Em vez de inflar prova social, a home passa a explicitar o que empresa, universidade e talento querem validar para confiar no produto.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ const TestimonialsSection = () => {
             >
               {/* Quote Icon */}
               <div className="mb-8">
-                <Quote className="w-10 h-10 text-primary/20 group-hover:text-primary transition-colors" />
+                <testimonial.icon className="w-10 h-10 text-primary/20 group-hover:text-primary transition-colors" />
               </div>
 
               {/* Testimonial Text */}
@@ -59,12 +59,8 @@ const TestimonialsSection = () => {
 
               {/* Author Info */}
               <div className="flex items-center space-x-4 pt-6 border-t border-border">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-border flex-shrink-0 bg-secondary">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
-                  />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-border bg-secondary">
+                  <testimonial.icon className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <p className="font-bold text-[15px] text-foreground">{testimonial.name}</p>

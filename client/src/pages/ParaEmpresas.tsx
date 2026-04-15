@@ -1,377 +1,336 @@
+import { ArrowRight, BrainCircuit, BriefcaseBusiness, FileStack, ShieldCheck, Sparkles, Target, Workflow } from 'lucide-react';
 import { Link } from 'wouter';
-import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { ContactForm } from '@/components/ContactForm';
-import { 
-  Building2, 
-  Users, 
-  Target, 
-  TrendingUp, 
-  Shield, 
-  Award,
-  CheckCircle2,
-  ArrowRight,
-  Sparkles,
-  BarChart3,
-  Zap
-} from 'lucide-react';
-
+import Header from '@/components/Header';
 import { SEO } from '@/components/SEO';
+import { Badge } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+
+const companySignals = [
+  {
+    icon: BrainCircuit,
+    title: 'Shortlist com fit score',
+    description: 'A empresa enxerga por que cada talento e cada squad fazem sentido para aquele desafio.',
+  },
+  {
+    icon: Workflow,
+    title: 'Operacao em sprint',
+    description: 'O desafio sai do slide e entra em kickoff, checkpoints e entrega observavel.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Trilha de evidencia',
+    description: 'RH, ESG e inovacao conseguem acompanhar resultado sem transformar a compra em consultoria pesada.',
+  },
+];
+
+const buyingTracks = [
+  {
+    title: 'RH e early talent',
+    description: 'Use squads para observar repertorio e execucao em trabalho real, indo alem do curriculo e da dinamica padrao.',
+  },
+  {
+    title: 'ESG e sustentabilidade',
+    description: 'Transforme metas, indicadores e frentes de impacto em projetos que avancam com ritmo, logica e entregaveis.',
+  },
+  {
+    title: 'Inovacao e marca',
+    description: 'Teste formatos, prototipos, pesquisas, comunicacao e experiencias com mais velocidade e diversidade de repertorio.',
+  },
+];
+
+const offers = [
+  {
+    label: 'Pilot Project',
+    title: 'Comece por um desafio prioritario.',
+    description: 'Entrada indicada para validar aderencia, ritmo e ganho percebido antes de ampliar a operacao.',
+    bullets: [
+      '1 brief estrategico',
+      'shortlist com justificativa de fit',
+      'squad piloto e sprint enxuta',
+      'relatorio executivo final',
+    ],
+  },
+  {
+    label: 'Managed Squad',
+    title: 'Transforme a frente em operacao recorrente.',
+    description: 'Modelo para equipes que ja querem repetir o fluxo, escalar squads e conectar multiple stakeholders.',
+    bullets: [
+      'squads recorrentes',
+      'checkpoints e monitoramento',
+      'camada para RH, ESG e inovacao',
+      'mais previsibilidade operacional',
+    ],
+  },
+];
+
+const proofPoints = [
+  {
+    title: 'O que entra no brief',
+    items: ['objetivo de negocio', 'ODS e contexto de impacto', 'prazo e budget', 'tipo de entrega esperada'],
+  },
+  {
+    title: 'O que a IA devolve',
+    items: ['fit score explicavel', 'shortlist priorizada', 'riscos de lacuna no squad', 'recomendacao de composicao'],
+  },
+  {
+    title: 'O que sai da sprint',
+    items: ['entregavel do desafio', 'log de checkpoints', 'sinais para hiring', 'relatorio executivo final'],
+  },
+];
+
+const deliverables = [
+  {
+    title: 'Pesquisa e intelligence',
+    description: 'Benchmark, mapeamento de dores, entrevistas, leitura setorial e framing de oportunidade para ESG, marca ou inovacao.',
+  },
+  {
+    title: 'Produto e experiencia',
+    description: 'Protótipos, jornadas, fluxos, MVPs conceituais e recomendacoes de experiencia ligadas ao desafio real.',
+  },
+  {
+    title: 'Narrativa e ativacao',
+    description: 'Storytelling, ativacao em campus, materiais de reputacao, employer branding e leituras para stakeholders.',
+  },
+];
 
 const ParaEmpresas = () => {
-  const benefits = [
-    {
-      icon: Sparkles,
-      title: 'Mentes Criativas de Elite',
-      description: 'Acesso a jovens talentos de design, tech e inovação que entendem a linguagem do impacto planetário.'
-    },
-    {
-      icon: Target,
-      title: 'Auditoria Criativa ODS',
-      description: 'Squads personalizados que aplicam os 18 ODS da ONU com visão disruptiva e estética premium.'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Valor Compartilhado Real',
-      description: 'Transforme compliance ESG em ativos de reputação e novas frentes de geração de valor para todos.'
-    },
-    {
-      icon: BarChart3,
-      title: 'Impacto Visualizado',
-      description: 'Relatórios que vão além de planilhas. Dados transformados em narrativas visuais de alto impacto.'
-    },
-    {
-      icon: Shield,
-      title: 'Compliance de Reputação',
-      description: 'Proteja e fortaleça a imagem da sua marca através de projetos de regeneração genuína.'
-    },
-    {
-      icon: Zap,
-      title: 'ROI de Inovação',
-      description: 'Investimento eficiente que gera inovação social e atrai a nova geração de consumidores conscientes.'
-    },
-  ];
-
-  const howItWorks = [
-    {
-      step: '01',
-      title: 'Publique seu Projeto',
-      description: 'Descreva o desafio ESG que sua empresa precisa resolver e os requisitos do squad.'
-    },
-    {
-      step: '02',
-      title: 'Receba Candidaturas',
-      description: 'Jovens talentos demonstram interesse e nossa equipe faz uma pré-seleção qualificada.'
-    },
-    {
-      step: '03',
-      title: 'Monte seu Squad',
-      description: 'Escolha os talentos ideais e nossa plataforma forma o squad perfeito para seu projeto.'
-    },
-    {
-      step: '04',
-      title: 'Acompanhe e Avalie',
-      description: 'Gerencie o projeto, acompanhe entregas e avalie o desempenho do squad em tempo real.'
-    },
-  ];
-
-  const plans = [
-    {
-      name: 'Creative ESG Starter',
-      price: 'R$ 15.000',
-      period: '/sprint',
-      description: 'A porta de entrada para a economia criativa regenerativa',
-      features: [
-        'Squad de 3-5 talentos criativos',
-        'Auditoria ODS inicial',
-        'Sprint de 3 meses',
-        'Relatório de Impacto Visual',
-        'Suporte por e-mail'
-      ]
-    },
-    {
-      name: 'Impact Narrative',
-      price: 'R$ 28.000',
-      period: '/sprint',
-      description: 'Transformação de marca e impacto sistêmico',
-      features: [
-        'Squad de 5-7 talentos de elite',
-        'Narrativa Transmídia de Impacto',
-        'Acompanhamento quinzenal',
-        'Relatórios de Reputação Mensais',
-        'Suporte prioritário',
-        'Acesso a ferramentas premium'
-      ],
-      highlighted: true
-    },
-    {
-      name: 'Cultural ODS Hub',
-      price: 'R$ 48.000',
-      period: '/hub',
-      description: 'O nível máximo de valor compartilhado corporativo',
-      features: [
-        'Estratégia Full-Stack de Impacto',
-        'Mapeamento de Stakeholder 360º',
-        'Dashboard de Valor Compartilhado',
-        'Consultoria Criativa Sênior',
-        'Certificação Oficial de Impacto Cultural'
-      ]
-    },
-  ];
-
-  const testimonials = [
-    {
-      company: 'TechCorp Brasil',
-      logo: <Building2 className="text-primary" size={36} />,
-      text: 'O Brasil Sustenta nos conectou com talentos excepcionais que transformaram nossa estratégia ESG. Em 4 meses, desenvolvemos 3 projetos de impacto com ROI comprovado.',
-      author: 'Maria Silva',
-      role: 'Diretora de Sustentabilidade'
-    },
-    {
-      company: 'GreenEnergy SA',
-      logo: <Zap className="text-sun-2" size={36} />,
-      text: 'Contratamos um squad para desenvolver nossa plataforma de monitoramento de carbono. O resultado superou expectativas e ainda ganhamos o prêmio de inovação sustentável.',
-      author: 'João Santos',
-      role: 'CEO'
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-background selection:bg-primary/30">
-      <SEO 
-        title="Para Empresas de Impacto | Escaneie, Escale e Operacionalize seu ESG"
-        description="A primeira plataforma que operacionaliza a economia criativa para escalar o impacto ESG corporativo através de squads de elite e auditoria ODS."
+    <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Para Empresas | Brasil Sustenta"
+        description="Transforme desafios ESG em squads universitarios com matching por IA, curadoria e entrega auditavel."
       />
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden border-b border-border">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,var(--tw-gradient-from)_0%,transparent_70%)] from-primary/10 via-transparent to-transparent opacity-50"></div>
-        <div className="container relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-8 animate-fade-in-up">
-              <Sparkles className="w-4 h-4 text-primary mr-2" />
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary">Para Empresas</span>
-            </div>
-            <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-8 leading-[0.95] tracking-tighter animate-fade-in-up">
-              Escalando o ESG <br />
-              através da <span className="italic font-light text-primary text-glow-emerald">Cultura</span>.
-            </h1>
-            <p className="text-[1.125rem] text-muted-foreground mb-12 max-w-2xl mx-auto font-medium leading-relaxed animate-fade-in-up delay-100">
-              O **Brasil Sustenta** operacionaliza a criatividade como um ativo de auditoria e regeneração. Transforme compliance em <span className="text-foreground">Valor Compartilhado</span> real através de nosso hub de squads de elite.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-5 justify-center animate-fade-in-up delay-200">
-              <Link href="/login/empresa">
-                <Button size="lg" className="w-full sm:w-auto h-14 px-10 bg-primary hover:bg-primary/90 text-black font-bold rounded-xl transition-all hover:scale-[1.02] shadow-xl shadow-primary/10">
-                  Começar Agora
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-10 border-border text-foreground font-bold rounded-xl hover:bg-white/5 transition-all">
-                Ver Como Funciona
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <main className="pt-[72px]">
+        <section className="border-b border-border">
+          <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-16 lg:py-20">
+            <div className="flex flex-col justify-center">
+              <Badge variant="outline" className="mb-8 w-fit rounded-full border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em] text-primary">
+                Para empresas // RH, ESG e inovacao
+              </Badge>
 
-      {/* Benefits Section */}
-      <section className="py-24 lg:py-32 bg-secondary/5 border-b border-border">
-        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-          <div className="text-center mb-20 animate-fade-in-up">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
-              Operacionalize a <span className="italic font-light text-primary">Transformação</span>.
-            </h2>
-            <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-              Diferente de consultorias tradicionais, nós entregamos squads que executam, medem e auditam o impacto sob a lente dos 18 ODS.
-            </p>
-          </div>
+              <h1 className="max-w-4xl font-display text-[3rem] font-bold leading-[0.92] tracking-tight sm:text-[4.4rem] lg:text-[5.6rem]">
+                Transforme um desafio ESG em
+                <span className="block italic font-light text-primary">squad, sprint e entrega</span>
+              </h1>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((benefit, index) => (
-              <div
-                key={index}
-                className="bg-card border border-border rounded-2xl p-10 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 group animate-fade-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="w-14 h-14 bg-secondary border border-border rounded-[12px] flex items-center justify-center mb-8 group-hover:bg-primary/10 transition-colors">
-                  <benefit.icon className="w-7 h-7 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <h3 className="font-display text-xl font-bold text-foreground mb-4 tracking-tighter">{benefit.title}</h3>
-                <p className="text-[14px] text-muted-foreground font-medium leading-relaxed">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <p className="mt-8 max-w-2xl border-l-[3px] border-primary pl-5 text-base font-medium leading-8 text-foreground/78 sm:text-[1.05rem]">
+                O Brasil Sustenta foi desenhado para empresas que nao querem comprar apenas awareness, nem abrir mais uma vaga generica.
+                A plataforma recebe um desafio real, organiza o match por IA, monta o squad com curadoria e acompanha a execucao com mais clareza.
+              </p>
 
-      {/* How It Works Section */}
-      <section className="py-24 lg:py-32 bg-background border-b border-border">
-        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-          <div className="text-center mb-20 animate-fade-in-up">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
-              Como Funciona o <span className="italic font-light text-primary">Processo</span>
-            </h2>
-            <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-              Um processo simples e eficiente que conecta empresas a talentos em 4 etapas estratégicas.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {howItWorks.map((item, index) => (
-              <div key={index} className="relative group animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
-                <div className="bg-card border border-border rounded-2xl p-10 hover:border-primary/20 transition-all duration-300 h-full">
-                  <div className="font-display text-6xl font-bold text-primary/10 mb-6 group-hover:text-primary/20 transition-colors">{item.step}</div>
-                  <h3 className="font-display text-xl font-bold text-foreground mb-4 tracking-tighter">{item.title}</h3>
-                  <p className="text-[14px] text-muted-foreground font-medium leading-relaxed">{item.description}</p>
-                </div>
-                {index < howItWorks.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
-                    <ArrowRight className="w-6 h-6 text-border group-hover:text-primary/30 transition-colors" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section className="py-24 lg:py-32 bg-secondary/5 border-b border-border">
-        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-          <div className="text-center mb-20 animate-fade-in-up">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
-              Nossos Modelos de <span className="italic font-light text-primary">Squad</span>
-            </h2>
-            <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-              Escolha o modelo ideal para o seu projeto ESG. Todos incluem talentos pré-selecionados e acompanhamento profissional.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-[1100px] mx-auto">
-            {plans.map((plan, index) => (
-              <div
-                key={index}
-                className={`bg-card border rounded-2xl p-10 transition-all duration-500 animate-fade-in-up flex flex-col ${
-                  plan.highlighted
-                    ? 'border-primary shadow-2xl shadow-primary/10 scale-105 z-10'
-                    : 'border-border hover:border-primary/20'
-                }`}
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                {plan.highlighted && (
-                  <div className="inline-block self-start px-3 py-1 bg-primary text-black text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-6 italic">
-                    Mais Popular
-                  </div>
-                )}
-                <h3 className="font-display text-2xl font-bold text-foreground mb-2 tracking-tighter">{plan.name}</h3>
-                <p className="text-[14px] text-muted-foreground mb-8 font-medium leading-relaxed">{plan.description}</p>
-                <div className="mb-8">
-                  <span className="font-display text-4xl font-bold text-primary tracking-tighter">{plan.price}</span>
-                  <span className="text-muted-foreground/60 text-sm font-semibold ml-1">{plan.period}</span>
-                </div>
-                <ul className="space-y-4 mb-10 flex-1">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <CheckCircle2 className="w-4 h-4 text-primary mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-[13px] text-muted-foreground font-medium">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/login/empresa">
-                  <Button
-                    className={`w-full h-12 rounded-xl font-bold text-[13px] transition-all hover:scale-[1.02] ${
-                      plan.highlighted
-                        ? 'bg-primary hover:bg-primary/90 text-black shadow-lg shadow-primary/20'
-                        : 'bg-secondary border border-border text-foreground hover:bg-white/5'
-                    }`}
-                  >
-                    Começar Projeto
-                  </Button>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Link
+                  href="/login/empresa"
+                  className={cn(
+                    buttonVariants({ size: 'lg' }),
+                    'h-12 rounded-full px-6 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground'
+                  )}
+                >
+                  Publicar desafio
                 </Link>
+                <a
+                  href="#ofertas"
+                  className={cn(
+                    buttonVariants({ variant: 'outline', size: 'lg' }),
+                    'h-12 rounded-full border-border px-6 text-sm font-bold uppercase tracking-[0.14em]'
+                  )}
+                >
+                  Ver modelos de oferta
+                </a>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Testimonials Section */}
-      <section className="py-24 lg:py-32 bg-background border-b border-border">
-        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-          <div className="text-center mb-20 animate-fade-in-up">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tighter">
-              O que dizem nossos <span className="italic font-light text-primary">Parceiros</span>
-            </h2>
-            <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-              Empresas líderes do Brasil já transformaram seus desafios ESG em resultados concretos conosco.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-card border border-border rounded-2xl p-10 hover:border-primary/20 transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                <div className="flex items-center mb-8">
-                  <div className="w-16 h-16 bg-secondary border border-border rounded-xl flex items-center justify-center text-primary transform -rotate-3 transition-transform group-hover:rotate-0">
-                    {testimonial.logo}
-                  </div>
-                  <div className="ml-5">
-                    <div className="font-display text-lg font-bold text-foreground tracking-tighter">{testimonial.company}</div>
-                    <div className="text-[12px] font-bold text-muted-foreground/60 uppercase tracking-widest mt-1">
-                      {testimonial.author} • {testimonial.role}
-                    </div>
-                  </div>
-                </div>
-                <p className="text-[15px] text-muted-foreground italic leading-relaxed font-medium">
-                  "{testimonial.text}"
-                </p>
+              <div className="mt-8 flex flex-wrap gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                <span className="rounded-full border border-border px-3 py-1.5">Brief unico</span>
+                <span className="rounded-full border border-border px-3 py-1.5">Matching por IA</span>
+                <span className="rounded-full border border-border px-3 py-1.5">Curadoria humana</span>
+                <span className="rounded-full border border-border px-3 py-1.5">Relatorio final</span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
 
-      {/* Contact Form Section */}
-      <section className="py-24 lg:py-32 bg-secondary/5 border-b border-border relative overflow-hidden">
-        <div className="container px-6 lg:px-8 max-w-[1200px] mx-auto">
-          <div className="max-w-4xl mx-auto animate-fade-in-up">
-            <ContactForm />
-          </div>
-        </div>
-      </section>
+            <div className="grid gap-4">
+              {companySignals.map((signal, index) => {
+                const Icon = signal.icon;
 
-      {/* CTA Section */}
-      <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"></div>
-        </div>
-        
-        <div className="container px-6 lg:px-8 max-w-[900px] mx-auto relative z-10">
-          <div className="text-center animate-fade-in-up">
-            <h2 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-8 tracking-tighter leading-[1.05]">
-              Pronto para Gerar<br /><span className="italic font-light text-primary">Impacto Real</span>?
-            </h2>
-            <p className="text-[1.125rem] text-muted-foreground font-medium mb-12 max-w-xl mx-auto leading-relaxed">
-              Junte-se a mais de 200 empresas que já transformaram seus desafios ESG em oportunidades de inovação.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-5 justify-center">
-              <Link href="/login/empresa">
-                <Button size="lg" className="h-14 px-10 bg-primary hover:bg-primary/90 text-black font-bold rounded-xl shadow-xl shadow-primary/10 transition-all hover:scale-[1.02]">
-                  Criar Conta Gratuita
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
-              <Button size="lg" variant="outline" className="h-14 px-10 border-border text-foreground font-bold rounded-xl hover:bg-white/5 transition-all">
-                Falar com Consultor
-              </Button>
+                return (
+                  <Card key={signal.title} className={cn('border-border bg-card shadow-sm', index === 0 && 'border-primary/30 bg-primary/5')}>
+                    <CardHeader className="pb-4">
+                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-secondary/30">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <CardTitle className="font-display text-[1.6rem] tracking-tight">{signal.title}</CardTitle>
+                      <CardDescription className="text-sm font-medium leading-7 text-muted-foreground">{signal.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section className="border-b border-border py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="mb-12 max-w-3xl">
+              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Onde a compra entra</div>
+              <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
+                A mesma operacao pode nascer de budgets diferentes.
+              </h2>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {buyingTracks.map((track) => (
+                <Card key={track.title} className="rounded-[1.5rem] border-border bg-card shadow-sm">
+                  <CardHeader>
+                    <CardTitle className="font-display text-[1.5rem] tracking-tight">{track.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-[15px] font-medium leading-7 text-muted-foreground">{track.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="mb-12 max-w-3xl">
+              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Artefatos de produto</div>
+              <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
+                O comprador precisa enxergar como a operacao vira decisao.
+              </h2>
+              <p className="mt-4 text-[15px] font-medium leading-7 text-muted-foreground">
+                Esta camada ainda precisa aparecer mais no produto, mas ja e a espinha correta da oferta: brief claro, IA explicavel e entrega com evidencia.
+              </p>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-3">
+              {proofPoints.map((point, index) => (
+                <Card key={point.title} className={cn('rounded-[1.5rem] border-border bg-card shadow-sm', index === 1 && 'border-primary/30 bg-primary/5')}>
+                  <CardHeader>
+                    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-secondary/30">
+                      {index === 0 && <Target className="h-5 w-5 text-primary" />}
+                      {index === 1 && <BrainCircuit className="h-5 w-5 text-primary" />}
+                      {index === 2 && <FileStack className="h-5 w-5 text-primary" />}
+                    </div>
+                    <CardTitle className="font-display text-[1.55rem] tracking-tight">{point.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {point.items.map((item) => (
+                        <li key={item} className="flex items-start gap-3 text-[14px] font-medium leading-6 text-foreground/80">
+                          <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="ofertas" className="py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-3xl">
+                <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Modelos de oferta</div>
+                <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
+                  Menos menu confuso, mais produtos que um comprador entende.
+                </h2>
+              </div>
+              <Link href="/para-universidades" className="text-sm font-bold uppercase tracking-[0.14em] text-primary">
+                Ver tambem a frente institucional <ArrowRight className="ml-2 inline h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-2">
+              {offers.map((offer, index) => (
+                <Card
+                  key={offer.label}
+                  className={cn('rounded-[1.75rem] border-border bg-card shadow-sm', index === 0 && 'border-primary/30 bg-primary/5')}
+                >
+                  <CardHeader className="space-y-5">
+                    <Badge variant={index === 0 ? 'default' : 'outline'} className="w-fit rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em]">
+                      {offer.label}
+                    </Badge>
+                    <CardTitle className="font-display text-[1.8rem] leading-[1.15] tracking-tight">{offer.title}</CardTitle>
+                    <CardDescription className="text-sm font-medium leading-7 text-muted-foreground">{offer.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-4">
+                      {offer.bullets.map((bullet) => (
+                        <li key={bullet} className="flex items-start gap-3 text-[14px] font-medium leading-6 text-foreground/80">
+                          <Sparkles className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Card className="mt-8 rounded-[1.75rem] border-border bg-foreground text-background shadow-sm">
+              <CardContent className="flex flex-col gap-6 p-8 lg:flex-row lg:items-center lg:justify-between">
+                <div className="max-w-2xl">
+                  <div className="mb-3 flex items-center gap-2 text-primary">
+                    <BriefcaseBusiness className="h-4 w-4" />
+                    <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Compra mais clara</span>
+                  </div>
+                  <p className="text-sm font-medium leading-7 text-background/75">
+                    A categoria mais forte para a empresa nao e "job board ESG". E "plataforma AI-first que transforma um desafio em squad universitario com entrega operacional".
+                  </p>
+                </div>
+
+                <Link
+                  href="/login/empresa"
+                  className={cn(
+                    buttonVariants({ size: 'lg' }),
+                    'h-12 rounded-full bg-primary px-6 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground hover:bg-primary/90'
+                  )}
+                >
+                  Abrir conta da empresa
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        <section className="border-t border-border py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="mb-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+              <div>
+                <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Exemplos de entrega</div>
+                <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
+                  O squad nao e abstrato. Ele precisa sair em formato de entregavel.
+                </h2>
+              </div>
+              <p className="text-[15px] font-medium leading-7 text-muted-foreground">
+                O Brasil Sustenta fica mais forte quando a empresa enxerga o tipo de resultado que pode sair do processo, e nao apenas o discurso de talento ou impacto.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {deliverables.map((deliverable) => (
+                <Card key={deliverable.title} className="rounded-[1.5rem] border-border bg-card shadow-sm">
+                  <CardHeader>
+                    <CardTitle className="font-display text-[1.55rem] tracking-tight">{deliverable.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-[15px] font-medium leading-7 text-muted-foreground">{deliverable.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
     </div>

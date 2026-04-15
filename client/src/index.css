@@ -5,7 +5,8 @@
 
 @theme inline {
   --font-display: "Fraunces", serif;
-  --font-body: "Inter", sans-serif;
+  --font-body: "Instrument Sans", sans-serif;
+  --font-mono-tech: "IBM Plex Mono", monospace;
   
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
@@ -68,26 +69,26 @@
 }
 
 :root {
-  /* Dark theme (Premium Creative) */
-  --background: #050505; 
-  --foreground: #FAFAFA;
-  --card: #0D0D0D;
-  --card-foreground: #FAFAFA;
-  --popover: #0D0D0D;
-  --popover-foreground: #FAFAFA;
-  --primary: #00FF85; /* Neon Emerald */
-  --primary-foreground: #000000;
-  --secondary: rgba(255,255,255,0.05);
-  --secondary-foreground: #FAFAFA;
-  --muted: rgba(255,255,255,0.04);
-  --muted-foreground: #94A3B8;
-  --accent: #00FF85;
-  --accent-foreground: #000000;
+  /* UX/UI Pro Identity */
+  --background: #FFFFFF; 
+  --foreground: #0A0A0A;
+  --card: #FFFFFF;
+  --card-foreground: #0A0A0A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0A0A0A;
+  --primary: #009444; /* Corporate Green */
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5F5F5; /* Light Gray */
+  --secondary-foreground: #0A0A0A;
+  --muted: #E5E5E5; 
+  --muted-foreground: #666666;
+  --accent: #CCFF00; /* Neon Citrus */
+  --accent-foreground: #0A0A0A;
   --destructive: #FF4D4D;
   --destructive-foreground: #FFFFFF;
-  --border: rgba(255,255,255,0.1);
-  --input: rgba(255,255,255,0.05);
-  --ring: #00FF85;
+  --border: #0A0A0A; /* brutalist grid borders */
+  --input: #0A0A0A;
+  --ring: #009444;
   --radius: 0rem; /* Brutalist/Sharp corners */
 
   /* Custom semantic colors */
@@ -108,25 +109,26 @@
 }
 
 .light {
-  --background: #F7F5EF;
-  --foreground: #0A1A0F;
+  /* UX/UI Pro Identity */
+  --background: #FFFFFF; 
+  --foreground: #0A0A0A;
   --card: #FFFFFF;
-  --card-foreground: #0A1A0F;
+  --card-foreground: #0A0A0A;
   --popover: #FFFFFF;
-  --popover-foreground: #0A1A0F;
-  --primary: #1C6B3A;
+  --popover-foreground: #0A0A0A;
+  --primary: #009444; /* Corporate Green */
   --primary-foreground: #FFFFFF;
-  --secondary: #EEF0E8;
-  --secondary-foreground: #0A1A0F;
-  --muted: #EEF0E8;
-  --muted-foreground: #3D5A45;
-  --accent: #BFF5D4;
-  --accent-foreground: #1C6B3A;
-  --destructive: #C43A1A;
+  --secondary: #F5F5F5; /* Light Gray */
+  --secondary-foreground: #0A0A0A;
+  --muted: #E5E5E5; 
+  --muted-foreground: #666666;
+  --accent: #CCFF00; /* Neon Citrus */
+  --accent-foreground: #0A0A0A;
+  --destructive: #FF4D4D;
   --destructive-foreground: #FFFFFF;
-  --border: #E4E8DC;
-  --input: #E4E8DC;
-  --ring: #1C6B3A;
+  --border: #0A0A0A; /* brutalist grid borders */
+  --input: #0A0A0A;
+  --ring: #009444;
 
   /* Custom semantic colors for light theme */
   --ink: #0A1A0F;
@@ -165,6 +167,12 @@
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 3px;
   }
   h1 { @apply text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 font-display; }
   h2 { @apply text-4xl md:text-5xl font-bold tracking-tighter mb-6 font-display; }
@@ -225,6 +233,12 @@
   /* Smooth scroll behavior */
   html {
     scroll-behavior: smooth;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
   }
 
   /* Custom animations */
@@ -350,6 +364,7 @@
   .text-gradient-silver {
     background: linear-gradient(180deg, #FAFAFA 0%, #94A3B8 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 

@@ -1,10 +1,10 @@
 const universities = [
-  { name: 'USP', fullName: 'Universidade de São Paulo' },
-  { name: 'UFRJ', fullName: 'Universidade Federal do RJ' },
-  { name: 'UNICAMP', fullName: 'Universidade Est. de Campinas' },
-  { name: 'PUC', fullName: 'Pontifícia Universidade Católica' },
-  { name: 'FGV', fullName: 'Fundação Getulio Vargas' },
-  { name: 'UFMG', fullName: 'Universidade Federal de MG' },
+  { name: 'Extensao', fullName: 'Projetos reais conectados ao curriculo' },
+  { name: 'NDE', fullName: 'Evidencias e relatorios para coordenacao' },
+  { name: 'Inovacao', fullName: 'Parcerias com desafios de empresas' },
+  { name: 'Polos', fullName: 'Distribuicao regional de talento e oferta' },
+  { name: 'Labs', fullName: 'Ligacao entre pesquisa aplicada e mercado' },
+  { name: 'Carreiras', fullName: 'Empregabilidade e portfolio observavel' },
 ];
 
 const UniversityPartnersSection = () => {
@@ -15,10 +15,10 @@ const UniversityPartnersSection = () => {
         <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in-up">
           <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary mb-4">Rede Acadêmica</div>
           <h2 className="font-display text-[2.5rem] lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
-            Parceiros <span className="italic font-light text-primary">Universitários</span>
+            Camada universitaria pronta para <span className="italic font-light text-primary">escala</span>
           </h2>
           <p className="text-[1.125rem] text-muted-foreground font-medium">
-            Conectados com a vanguarda das instituições de ensino superior do Brasil.
+            O papel da universidade nao e figurativo. Ele entra como canal de supply, prova institucional e operacao de extensao.
           </p>
         </div>
 

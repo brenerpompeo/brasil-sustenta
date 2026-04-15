@@ -3,28 +3,28 @@ import { Briefcase, GraduationCap, ArrowUpRight } from 'lucide-react';
 
 const footerLinks = {
   paraEmpresas: [
-    { label: 'Como Funciona', href: '#como-funciona' },
-    { label: 'Projetos ESG', href: '#projetos' },
-    { label: 'Encontrar Talentos', href: '#talentos' },
-    { label: 'Cases de Sucesso', href: '#cases' },
+    { label: 'Para Empresas', href: '/para-empresas' },
+    { label: 'Como Funciona', href: '/para-empresas' },
+    { label: 'Login Empresa', href: '/login/empresa' },
+    { label: 'Manifesto', href: '/manifesto' },
   ],
   paraTalentos: [
-    { label: 'Oportunidades', href: '#oportunidades' },
-    { label: 'Como Participar', href: '#participar' },
-    { label: 'Comunidade', href: '#comunidade' },
-    { label: 'Certificações', href: '#certificacoes' },
+    { label: 'Para Jovens', href: '/para-jovens' },
+    { label: 'Oportunidades', href: '/oportunidades' },
+    { label: 'Comunidade', href: '/comunidade' },
+    { label: 'Login Talento', href: '/login/jovem' },
   ],
   recursos: [
-    { label: 'Blog ESG', href: '#blog' },
-    { label: 'Guias', href: '#guias' },
-    { label: 'Webinars', href: '#webinars' },
-    { label: 'Newsletter', href: '#newsletter' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Artigos', href: '/artigos' },
+    { label: 'Biblioteca', href: '/biblioteca' },
+    { label: 'Relatorios', href: '/relatorios' },
   ],
   suporte: [
-    { label: 'Central de Ajuda', href: '#ajuda' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contato', href: '#contato' },
-    { label: 'Suporte', href: '#suporte' },
+    { label: 'Login', href: '/login' },
+    { label: 'Para Universidades', href: '/para-universidades' },
+    { label: 'Eventos', href: '/eventos' },
+    { label: 'Manifesto', href: '/manifesto' },
   ],
 };
 
@@ -46,8 +46,7 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-[14px] text-muted-foreground font-medium leading-relaxed max-w-[280px]">
-              Conectamos empresas e jovens talentos para acelerar a
-              transformação ESG no Brasil através do modelo Squad as a Service.
+              Plataforma AI-first que transforma desafios ESG em squads universitarios com curadoria, entrega operacional e trilha de evidencia.
             </p>
           </div>
 
@@ -57,9 +56,9 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.paraEmpresas.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
+                  <Link href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -70,9 +69,9 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.paraTalentos.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
+                  <Link href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -83,9 +82,9 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.recursos.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
+                  <Link href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -96,9 +95,9 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.suporte.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
+                  <Link href={link.href} className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -116,7 +115,7 @@ const Footer = () => {
                 Portal Empresas <ArrowUpRight className="w-4 h-4 text-muted-foreground/30 group-hover:text-primary transition-colors" />
               </h4>
               <p className="text-[13px] text-muted-foreground leading-relaxed font-medium">
-                Transforme seus desafios ESG em oportunidades de impacto com talentos universitários de ponta.
+                Publique um desafio, receba um squad com fit score e acompanhe a execucao com mais clareza.
               </p>
             </div>
           </a>
@@ -130,7 +129,7 @@ const Footer = () => {
                 Portal Jovem Talento <ArrowUpRight className="w-4 h-4 text-muted-foreground/30 group-hover:text-primary transition-colors" />
               </h4>
               <p className="text-[13px] text-muted-foreground leading-relaxed font-medium">
-                Desenvolva sua carreira ESG com projetos reais de grandes empresas brasileiras.
+                Entre em projetos reais, construa portfolio observavel e desenvolva sua empregabilidade.
               </p>
             </div>
           </a>
@@ -143,15 +142,15 @@ const Footer = () => {
               © {currentYear} BRASIL SUSTENTA. TODOS OS DIREITOS RESERVADOS.
             </p>
             <div className="flex items-center space-x-6">
-              <a href="#privacidade" className="text-[12px] font-bold text-muted-foreground/40 hover:text-primary transition-colors tracking-widest uppercase">
-                Privacidade
-              </a>
-              <a href="#termos" className="text-[12px] font-bold text-muted-foreground/40 hover:text-primary transition-colors tracking-widest uppercase">
-                Termos
-              </a>
-              <a href="#cookies" className="text-[12px] font-bold text-muted-foreground/40 hover:text-primary transition-colors tracking-widest uppercase">
-                Cookies
-              </a>
+              <Link href="/manifesto" className="text-[12px] font-bold text-muted-foreground/40 hover:text-primary transition-colors tracking-widest uppercase">
+                Manifesto
+              </Link>
+              <Link href="/comunidade" className="text-[12px] font-bold text-muted-foreground/40 hover:text-primary transition-colors tracking-widest uppercase">
+                Comunidade
+              </Link>
+              <Link href="/relatorios" className="text-[12px] font-bold text-muted-foreground/40 hover:text-primary transition-colors tracking-widest uppercase">
+                Relatorios
+              </Link>
             </div>
           </div>
         </div>

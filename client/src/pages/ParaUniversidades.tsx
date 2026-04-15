@@ -1,370 +1,363 @@
 import { useState } from 'react';
-import { Link } from 'wouter';
+import { ArrowRight, BarChart3, Building2, GraduationCap, Loader2, ShieldCheck, Sparkles } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { trpc } from '@/lib/trpc';
 import { toast } from 'sonner';
-import { 
-  School, 
-  Award,
-  Briefcase,
-  Target,
-  ChevronDown,
-  Loader2,
-  CheckCircle2,
-  Handshake,
-  Globe,
-  ShieldCheck,
-  ArrowRight,
-  Sparkles
-} from 'lucide-react';
-
 import { SEO } from '@/components/SEO';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+
+const protocols = [
+  {
+    icon: GraduationCap,
+    title: 'Extensao com operacao real',
+    desc: 'Leve desafios de empresas para os alunos sem depender de uma costura manual entre coordenacao, professores e mercado.',
+  },
+  {
+    icon: BarChart3,
+    title: 'Relatorios e horas',
+    desc: 'Organize participacao, evidencias, horas e visibilidade institucional em um fluxo mais rastreavel.',
+  },
+  {
+    icon: Building2,
+    title: 'Canal com empresas',
+    desc: 'Conecte a IES a buyers de RH, ESG e inovacao sem precisar vender a mesma narrativa para todos.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Curadoria e compliance',
+    desc: 'A plataforma ajuda a manter clareza de escopo, aderencia ao desafio e trilha de entrega para a experiencia ser defendavel.',
+  },
+];
+
+const institutionalFlow = [
+  {
+    title: 'Homologar a parceria',
+    description: 'Definir contato, campus, cursos, objetivos de extensao e formato inicial de ativacao na rede.',
+  },
+  {
+    title: 'Ativar talentos e HUB local',
+    description: 'Mapear oferta de alunos, liderancas estudantis, coordenacao e possiveis embaixadores ou professors aliados.',
+  },
+  {
+    title: 'Conectar com desafios e evidencias',
+    description: 'Distribuir desafios, acompanhar alocacoes, consolidar horas e relatorios para a instituicao.',
+  },
+];
+
+const hubAssets = [
+  {
+    title: 'HUB universitario',
+    description: 'Microcelula local para captar talentos, articular campus e dar capilaridade a eventos e desafios.',
+  },
+  {
+    title: 'Eventos semestrais',
+    description: 'Challenge sessions, demo days e encontros de discovery para gerar reputacao, talentos e leads.',
+  },
+  {
+    title: 'Relatorio institucional',
+    description: 'Consolidacao de horas, participacao, desafios ativos e sinais de empregabilidade em uma mesma camada.',
+  },
+];
 
 export default function ParaUniversidades() {
-  // FAQ State
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
-  // Partnership Form State
   const [partnershipSubmitted, setPartnershipSubmitted] = useState(false);
   const [partnershipForm, setPartnershipForm] = useState({
     universityName: '',
-    cnpj: '',
     state: '',
     city: '',
-    website: '',
     contactName: '',
-    contactRole: '',
     contactEmail: '',
-    contactPhone: '',
-    studentsCount: '',
-    coursesOffered: '',
     message: '',
   });
 
   const partnershipMutation = trpc.student.requestPartnership.useMutation({
     onSuccess: () => {
       setPartnershipSubmitted(true);
-      toast.success('Solicitação enviada com sucesso!');
+      toast.success('Solicitacao enviada com sucesso.');
     },
     onError: (error) => {
-      toast.error(error.message || 'Erro ao enviar solicitação');
+      toast.error(error.message || 'Falha ao enviar a solicitacao.');
     },
   });
 
   const handlePartnershipSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!partnershipForm.universityName || !partnershipForm.contactName || !partnershipForm.contactEmail) {
-      toast.error('Preencha todos os campos obrigatórios');
+
+    if (
+      !partnershipForm.universityName ||
+      !partnershipForm.contactName ||
+      !partnershipForm.contactEmail ||
+      !partnershipForm.state ||
+      !partnershipForm.city
+    ) {
+      toast.error('Preencha os campos obrigatorios para seguir.');
       return;
     }
+
     partnershipMutation.mutate(partnershipForm);
   };
 
-  const faqData = [
-    {
-      question: 'Quais são os benefícios da parceria?',
-      answer: 'Universidades parceiras oferecem aos alunos acesso prioritário a oportunidades remuneradas, eventos exclusivos, workshops com empresas, networking qualificado e certificações reconhecidas no mercado.',
-    },
-    {
-      question: 'Como funciona o modelo de convênio?',
-      answer: 'O convênio é gratuito e não envolve custos para a universidade. Assinamos um termo de parceria e passamos a conectar seus estudantes a projetos reais de impacto.',
-    },
-    {
-      question: 'A universidade precisa fazer alguma gestão?',
-      answer: 'Não! A Brasil Sustenta cuida de toda a gestão de squads, seleção e acompanhamento técnico.',
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-background selection:bg-primary/30 overflow-x-hidden">
-      <SEO 
-        title="Para Universidades | Hubs de Inovação para a Economia Regenerativa"
-        description="Transforme sua IES em um polo de talentos para a nova economia. Projetos de extensão baseados em squads criativos e impacto real nos ODS."
+    <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Para Universidades | Brasil Sustenta"
+        description="Ative extensao universitaria com desafios ESG de empresas, dados de participacao e uma camada operacional mais clara."
       />
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative pt-40 pb-32 flex items-center justify-center overflow-hidden border-b border-border">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_0%,var(--tw-gradient-from)_0%,transparent_70%)] from-primary/10 via-transparent to-transparent opacity-50"></div>
+      <main className="pt-[72px]">
+        <section className="border-b border-border">
+          <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:px-16 lg:py-20">
+            <div className="flex flex-col justify-center">
+              <Badge variant="outline" className="mb-8 w-fit rounded-full border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em] text-primary">
+                Para universidades // extensao, empregabilidade e dados
+              </Badge>
 
-        <div className="container relative z-10 text-center">
-          <div className="max-w-4xl mx-auto">
-             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-8 animate-fade-in shadow-sm">
-                <School className="w-3.5 h-3.5 fill-current" />
-                <span>Alianças Estratégicas e Extensão</span>
-             </div>
-             
-             <h1 className="text-5xl md:text-7xl font-display font-bold text-foreground leading-[0.95] tracking-tighter mb-8 animate-fade-in-up">
-                Hubs de <span className="text-primary italic font-serif font-light text-glow-emerald">Inovação</span><br />
-                para uma Economia <span className="underline decoration-primary/30 underline-offset-8">Regenerativa</span>.
-             </h1>
-             
-             <p className="text-[1.125rem] text-muted-foreground font-medium mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
-                O **Brasil Sustenta** conecta a academia ao core business das marcas globais. Transforme o conhecimento em <span className="text-foreground">Impacto ODS</span> auditável e squads criativos de alto desempenho.
-             </p>
+              <h1 className="max-w-4xl font-display text-[3rem] font-bold leading-[0.92] tracking-tight sm:text-[4.2rem] lg:text-[5.4rem]">
+                Transforme extensao em
+                <span className="block italic font-light text-primary">projetos reais com empresas</span>
+              </h1>
 
-             <div className="flex flex-col sm:flex-row gap-5 justify-center animate-fade-in-up delay-200">
-                <Button 
-                   size="lg" 
-                   className="h-14 px-10 rounded-xl bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-widest text-[10px] shadow-xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95"
-                   onClick={() => document.getElementById('partnership-form')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                   Solicitar Parceria Formal
-                   <ArrowRight className="w-4 h-4 ml-2" />
+              <p className="mt-8 max-w-2xl border-l-[3px] border-primary pl-5 text-base font-medium leading-8 text-foreground/78 sm:text-[1.05rem]">
+                O Brasil Sustenta ajuda a universidade a conectar talentos e cursos a desafios ESG de mercado.
+                A tese aqui nao e apenas empregabilidade, nem apenas relacionamento institucional: e extensao com operacao, evidencia e contexto de negocio.
+              </p>
+
+              <div className="mt-10">
+                <Button asChild size="lg" className="h-12 rounded-full px-6 text-sm font-bold uppercase tracking-[0.14em]">
+                  <a href="#form">
+                    Solicitar parceria
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
                 </Button>
-                <Link href="/login/universidade">
-                   <Button size="lg" variant="outline" className="h-14 px-10 rounded-xl border border-border text-foreground bg-secondary/50 backdrop-blur-sm font-bold uppercase tracking-widest text-[10px] hover:bg-white/5 hover:border-primary/30 transition-all">
-                      Painel do Parceiro
-                   </Button>
-                </Link>
-             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Institutional Value Bento Grid */}
-      <section className="py-24 bg-secondary/5 border-b border-border">
-        <div className="container max-w-[1200px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-2xl">
-               <h2 className="font-display text-4xl lg:text-5xl font-bold tracking-tighter text-foreground mb-6">
-                 Arquitetura de <span className="italic font-serif font-light text-primary text-center text-glow-emerald">Talento</span>. <br />Impacto Sistêmico.
-               </h2>
+              </div>
             </div>
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary bg-card border border-border px-4 py-2 rounded-xl h-fit">
-              <Sparkles className="w-3.5 h-3.5 fill-current" />
-              Impacto Mensurável
+
+            <div className="grid gap-4">
+              {protocols.map((protocol) => {
+                const Icon = protocol.icon;
+
+                return (
+                  <Card key={protocol.title} className="border-border bg-card shadow-sm">
+                    <CardHeader className="pb-4">
+                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-secondary/30">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <CardTitle className="font-display text-[1.55rem] tracking-tight">{protocol.title}</CardTitle>
+                      <CardDescription className="text-sm font-medium leading-7 text-muted-foreground">{protocol.desc}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                );
+              })}
             </div>
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-            <div className="md:col-span-8 bg-card border border-border rounded-[2.5rem] p-10 relative overflow-hidden group hover:border-primary/30 transition-all shadow-sm">
-                <div className="relative z-10">
-                   <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center mb-8 border border-border group-hover:bg-primary/10 transition-colors">
-                      <Briefcase className="w-8 h-8 text-foreground group-hover:text-primary transition-colors" />
-                   </div>
-                   <h3 className="font-display text-3xl font-bold tracking-tighter text-foreground mb-4">Empregabilidade e Carreira</h3>
-                   <p className="text-muted-foreground font-medium text-lg max-w-lg leading-relaxed">
-                      Mais de 30% dos alunos que participam dos squads são efetivados. Transforme sua taxa de empregabilidade através de experiência prática em projetos de ponta.
-                   </p>
+        <section id="form" className="border-b border-border py-20 lg:py-24">
+          <div className="container mx-auto grid max-w-[1200px] gap-8 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+            <Card className="rounded-[1.75rem] border-border bg-foreground text-background shadow-sm">
+              <CardHeader>
+                <div className="mb-4 flex items-center gap-2 text-primary">
+                  <Sparkles className="h-4 w-4" />
+                  <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Leitura estrategica</span>
                 </div>
-                <div className="absolute top-0 right-0 w-64 h-full bg-primary/5 skew-x-[-15deg] translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </div>
+                <CardTitle className="font-display text-[2rem] leading-[1.05] tracking-tight text-white">
+                  A universidade vira mais forte quando entra como parte da operacao, nao so como origem de talentos.
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm font-medium leading-7 text-background/75">
+                  A parceria funciona melhor quando a IES deixa claro quais cursos, polos, trilhas e formatos de extensao quer ativar.
+                  Isso ajuda a plataforma a distribuir desafios com mais aderencia e a gerar relatorios realmente uteis.
+                </p>
+              </CardContent>
+            </Card>
 
-            <div className="md:col-span-4 bg-primary text-black rounded-[2.5rem] p-10 shadow-2xl shadow-primary/30 flex flex-col">
-                <div className="w-14 h-14 bg-black/10 rounded-2xl flex items-center justify-center mb-8 border border-black/20">
-                   <Award className="w-7 h-7 text-black" />
-                </div>
-                <h3 className="font-display text-2xl font-bold tracking-tighter mb-4 leading-tight">Certificações de Mercado</h3>
-                <p className="text-black/80 font-medium mb-6">Validação de horas complementares e competências alinhadas aos ODS.</p>
-                <div className="mt-auto pt-6 border-t border-black/10 flex items-center justify-between text-black">
-                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">Reconhecido pela ONU</span>
-                   <ShieldCheck className="w-5 h-5 opacity-90" />
-                </div>
-            </div>
+            <Card className="rounded-[1.75rem] border-border bg-card shadow-sm">
+              <CardHeader>
+                <CardTitle className="font-display text-[2rem] tracking-tight">Solicitar parceria institucional</CardTitle>
+                <CardDescription className="text-sm font-medium leading-7 text-muted-foreground">
+                  Preencha os dados abaixo para iniciarmos uma conversa sobre extensao, empregabilidade e projetos reais.
+                </CardDescription>
+              </CardHeader>
 
-            <div className="md:col-span-4 bg-card border border-border rounded-[2.5rem] p-10 group hover:border-primary/30 transition-all shadow-sm">
-                <div className="w-14 h-14 bg-secondary border border-border rounded-2xl flex items-center justify-center mb-8">
-                   <Handshake className="w-7 h-7 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <h3 className="font-display text-2xl font-bold tracking-tighter text-foreground mb-4">Conexão Corporativa</h3>
-                <p className="text-muted-foreground font-medium">Sua universidade em contato direto com as maiores empresas através de convênios estratégicos.</p>
-            </div>
+              <CardContent>
+                {partnershipSubmitted ? (
+                  <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6">
+                    <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Solicitacao recebida</div>
+                    <p className="mb-4 text-sm font-medium leading-7 text-foreground/80">
+                      Recebemos os dados da sua instituicao. Agora o proximo passo e validar aderencia, formato de parceria e melhor rota de ativacao.
+                    </p>
+                    <Button variant="outline" onClick={() => setPartnershipSubmitted(false)} className="rounded-full">
+                      Enviar nova solicitacao
+                    </Button>
+                  </div>
+                ) : (
+                  <form onSubmit={handlePartnershipSubmit} className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="universityName" className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                        Nome da instituicao
+                      </Label>
+                      <Input
+                        id="universityName"
+                        required
+                        placeholder="Universidade ou centro universitario"
+                        value={partnershipForm.universityName}
+                        onChange={(e) => setPartnershipForm({ ...partnershipForm, universityName: e.target.value })}
+                      />
+                    </div>
 
-            <div className="md:col-span-4 bg-card border border-border rounded-[2.5rem] p-10 group hover:border-primary/30 transition-all shadow-sm">
-                <div className="w-14 h-14 bg-secondary border border-border rounded-2xl flex items-center justify-center mb-8">
-                   <Target className="w-7 h-7 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <h3 className="font-display text-2xl font-bold tracking-tighter text-foreground mb-4">Relatórios ODS</h3>
-                <p className="text-muted-foreground font-medium">Métricas de impacto social e ambiental geradas por seus alunos para relatórios de sustentabilidade.</p>
-            </div>
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="state" className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                          UF
+                        </Label>
+                        <Input
+                          id="state"
+                          required
+                          maxLength={2}
+                          placeholder="SP"
+                          value={partnershipForm.state}
+                          onChange={(e) => setPartnershipForm({ ...partnershipForm, state: e.target.value.toUpperCase() })}
+                        />
+                      </div>
 
-            <div className="md:col-span-4 bg-foreground text-background rounded-[2.5rem] p-10 flex flex-col shadow-xl">
-                 <div className="w-14 h-14 bg-background/10 rounded-2xl flex items-center justify-center mb-8 border border-background/10">
-                    <Globe className="w-7 h-7 text-primary" />
-                 </div>
-                 <h3 className="font-display text-2xl font-bold tracking-tighter mb-4">Parceria Gratuita</h3>
-                 <p className="font-medium leading-relaxed opacity-80">Sem taxas de adesão, mensalidades ou burocracia excessiva.</p>
-            </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="city" className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                          Cidade
+                        </Label>
+                        <Input
+                          id="city"
+                          required
+                          placeholder="Cidade principal da operacao"
+                          value={partnershipForm.city}
+                          onChange={(e) => setPartnershipForm({ ...partnershipForm, city: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="contactName" className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                          Nome do contato
+                        </Label>
+                        <Input
+                          id="contactName"
+                          required
+                          placeholder="Responsavel pela conversa"
+                          value={partnershipForm.contactName}
+                          onChange={(e) => setPartnershipForm({ ...partnershipForm, contactName: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="contactEmail" className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                          E-mail institucional
+                        </Label>
+                        <Input
+                          id="contactEmail"
+                          type="email"
+                          required
+                          placeholder="contato@universidade.edu.br"
+                          value={partnershipForm.contactEmail}
+                          onChange={(e) => setPartnershipForm({ ...partnershipForm, contactEmail: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="message" className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                        Contexto adicional
+                      </Label>
+                      <Textarea
+                        id="message"
+                        placeholder="Conte sobre cursos, polos, quantidade de alunos, objetivos de extensao ou necessidades especificas."
+                        value={partnershipForm.message}
+                        onChange={(e) => setPartnershipForm({ ...partnershipForm, message: e.target.value })}
+                        className="min-h-28"
+                      />
+                    </div>
+
+                    <Button type="submit" disabled={partnershipMutation.isPending} className="h-12 rounded-full px-6 text-sm font-bold uppercase tracking-[0.14em]">
+                      {partnershipMutation.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Enviando
+                        </>
+                      ) : (
+                        <>
+                          Solicitar parceria
+                          <ArrowRight className="h-4 w-4" />
+                        </>
+                      )}
+                    </Button>
+                  </form>
+                )}
+              </CardContent>
+            </Card>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Stats Board */}
-      <section className="py-24 bg-background border-b border-border">
-        <div className="container max-w-[1200px] mx-auto">
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { value: '200+', label: 'IES Parceiras', color: 'text-primary' },
-                { value: '8.5k+', label: 'Alunos Impactados', color: 'text-sky-400' },
-                { value: '500+', label: 'Projetos Verificados', color: 'text-emerald-400' },
-                { value: '98%', label: 'Taxa de Retenção', color: 'text-amber-400' },
-              ].map((stat, i) => (
-                <div key={i} className="bg-card border border-border rounded-[2rem] p-8 text-center group hover:shadow-2xl hover:shadow-primary/5 transition-all outline-none">
-                   <div className={`font-display text-4xl md:text-6xl font-bold tracking-tighter mb-2 ${stat.color}`}>{stat.value}</div>
-                   <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{stat.label}</div>
-                </div>
+        <section className="border-b border-border py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="mb-12 max-w-3xl">
+              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Fluxo institucional</div>
+              <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
+                A parceria fica melhor quando a IES entende o processo inteiro, nao so o formulario.
+              </h2>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {institutionalFlow.map((step, index) => (
+                <Card key={step.title} className={index === 1 ? 'rounded-[1.5rem] border-primary/30 bg-primary/5 shadow-sm' : 'rounded-[1.5rem] border-border bg-card shadow-sm'}>
+                  <CardHeader>
+                    <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">0{index + 1}</div>
+                    <CardTitle className="font-display text-[1.55rem] tracking-tight">{step.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-[15px] font-medium leading-7 text-muted-foreground">{step.description}</p>
+                  </CardContent>
+                </Card>
               ))}
-           </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-24 bg-secondary/5 border-b border-border">
-        <div className="container max-w-[1200px] mx-auto">
-           <div className="max-w-3xl mx-auto flex flex-col gap-12">
-              <div className="text-center">
-                 <h2 className="font-display text-4xl lg:text-5xl font-bold tracking-tighter text-foreground mb-4">Acordo de <span className="italic font-serif font-light text-primary">Impacto</span>.</h2>
-                 <p className="text-[1.125rem] text-muted-foreground font-medium">As respostas que a coordenação e reitoria buscam.</p>
-              </div>
-
-              <div className="space-y-4">
-                {faqData.map((faq, index) => (
-                  <div
-                    key={index}
-                    className={`bg-card rounded-2xl border transition-all duration-300 ${expandedFaq === index ? 'border-primary/50 shadow-xl shadow-primary/5' : 'border-border shadow-sm'}`}
-                  >
-                    <button
-                      onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                      className="w-full px-8 py-6 flex items-center justify-between text-left"
-                    >
-                      <span className={`text-lg font-bold font-display tracking-tighter transition-colors ${expandedFaq === index ? 'text-primary' : 'text-foreground'}`}>{faq.question}</span>
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${expandedFaq === index ? 'bg-primary text-black rotate-180' : 'bg-secondary text-muted-foreground'}`}>
-                        <ChevronDown className="w-5 h-5" />
-                      </div>
-                    </button>
-                    {expandedFaq === index && (
-                      <div className="px-8 pb-8 text-muted-foreground font-medium leading-relaxed animate-fade-in-up">
-                        {faq.answer}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-           </div>
-        </div>
-      </section>
-
-      {/* Main Partnership Form */}
-      <section id="partnership-form" className="py-32 bg-background relative border-b border-border">
-        <div className="container max-w-[1200px] relative z-10 py-12">
-          <div className="max-w-4xl mx-auto">
-             <div className="text-center mb-16">
-                <h2 className="font-display text-5xl md:text-6xl font-bold tracking-tighter text-foreground leading-[1.05] mb-6">
-                  Solicite a <span className="text-primary italic font-serif font-light">Homologação</span> da sua Instituição.
-                </h2>
-                <p className="text-[1.125rem] text-muted-foreground font-medium max-w-2xl mx-auto">Nossos especialistas em parcerias acadêmicas retornarão em até 48 horas úteis.</p>
-             </div>
-
-             {partnershipSubmitted ? (
-               <div className="bg-card border border-primary/20 rounded-[3rem] p-16 text-center animate-fade-in shadow-2xl shadow-primary/5">
-                  <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-primary/20">
-                    <CheckCircle2 className="w-10 h-10 text-primary" />
-                  </div>
-                  <h3 className="font-display text-3xl font-bold text-foreground mb-4 tracking-tighter">Solicitação Recebida!</h3>
-                  <p className="text-xl text-muted-foreground font-medium mb-10 leading-relaxed">
-                    Agradecemos o interesse da <strong>{partnershipForm.universityName}</strong>. Protocolo: BS-{Math.floor(Math.random()*10000)}
-                  </p>
-                  <Button variant="outline" onClick={() => setPartnershipSubmitted(false)} className="h-12 px-8 rounded-xl border-border text-foreground font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white/5">Nova Solicitação</Button>
-               </div>
-             ) : (
-               <form onSubmit={handlePartnershipSubmit} className="bg-card border border-border rounded-[3rem] p-12 space-y-10 shadow-2xl">
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 rounded-full bg-primary text-black text-[10px] font-bold flex items-center justify-center shadow-lg shadow-primary/20">01</div>
-                       <h4 className="font-display text-xl font-bold text-foreground tracking-tighter">Identificação Institucional</h4>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-6">
-                       <div className="space-y-2 md:col-span-2">
-                          <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground ml-1">Nome Fantasia da Universidade</Label>
-                          <Input
-                             className="h-14 rounded-xl border-border bg-secondary/50 focus:bg-secondary focus:ring-4 focus:ring-primary/10 transition-all font-medium text-foreground"
-                             value={partnershipForm.universityName}
-                             onChange={(e) => setPartnershipForm({ ...partnershipForm, universityName: e.target.value })}
-                             placeholder="Ex: Mackenzie, USP, PUC..."
-                             required
-                          />
-                       </div>
-                       <div className="space-y-2">
-                          <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground ml-1">CNPJ Principal</Label>
-                          <Input
-                             className="h-14 rounded-xl border-border bg-secondary/50 focus:bg-secondary focus:ring-4 focus:ring-primary/10 transition-all font-medium text-foreground"
-                             value={partnershipForm.cnpj}
-                             onChange={(e) => setPartnershipForm({ ...partnershipForm, cnpj: e.target.value })}
-                             placeholder="00.000.000/0001-00"
-                          />
-                       </div>
-                       <div className="space-y-2">
-                          <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground ml-1">Website Institucional</Label>
-                          <Input
-                             type="url"
-                             className="h-14 rounded-xl border-border bg-secondary/50 focus:bg-secondary focus:ring-4 focus:ring-primary/10 transition-all font-medium text-foreground"
-                             value={partnershipForm.website}
-                             onChange={(e) => setPartnershipForm({ ...partnershipForm, website: e.target.value })}
-                             placeholder="www.univ.edu.br"
-                          />
-                       </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 rounded-full bg-foreground text-background text-[10px] font-bold flex items-center justify-center">02</div>
-                       <h4 className="font-display text-xl font-bold text-foreground tracking-tighter">Ponto de Contato Direto</h4>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-6">
-                       <div className="space-y-2">
-                          <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground ml-1">Nome do Responsável</Label>
-                          <Input
-                             className="h-14 rounded-xl border-border bg-secondary/50 focus:bg-secondary focus:ring-4 focus:ring-primary/10 transition-all font-medium text-foreground"
-                             value={partnershipForm.contactName}
-                             onChange={(e) => setPartnershipForm({ ...partnershipForm, contactName: e.target.value })}
-                             placeholder="Prof. ou Gestor(a)"
-                             required
-                          />
-                       </div>
-                       <div className="space-y-2">
-                          <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground ml-1">Email Governamental</Label>
-                          <Input
-                             type="email"
-                             className="h-14 rounded-xl border-border bg-secondary/50 focus:bg-secondary focus:ring-4 focus:ring-primary/10 transition-all font-medium text-foreground"
-                             value={partnershipForm.contactEmail}
-                             onChange={(e) => setPartnershipForm({ ...partnershipForm, contactEmail: e.target.value })}
-                             placeholder="nome@univ.edu.br"
-                             required
-                          />
-                       </div>
-                    </div>
-                  </div>
-
-                  <Button 
-                    type="submit" 
-                    disabled={partnershipMutation.isPending} 
-                    className="w-full h-16 rounded-2xl bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-[0.2em] text-[10px] shadow-2xl shadow-primary/20 transition-all active:scale-[0.98] group mt-8"
-                  >
-                    {partnershipMutation.isPending ? <Loader2 className="w-6 h-6 animate-spin" /> : <span>Formalizar Pedido de Parceria <ArrowRight className="inline ml-2 group-hover:translate-x-2 transition-transform" /></span>}
-                  </Button>
-                </form>
-              )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-24 bg-background border-b border-border">
-         <div className="container text-center py-10">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold tracking-tighter text-foreground mb-8">Integre sua Universidade ao ecossistema <span className="text-primary italic font-serif font-light">Brasil Sustenta</span>.</h2>
-            <Link href="/">
-               <Button variant="ghost" className="text-muted-foreground font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white/5 hover:text-foreground h-12 px-8 rounded-xl border border-transparent hover:border-border">
-                  Voltar ao Portal Principal
-               </Button>
-            </Link>
-         </div>
-      </section>
+        <section className="py-20 lg:py-24">
+          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
+            <div className="mb-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+              <div>
+                <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">HUBs e eventos</div>
+                <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
+                  A universidade tambem cresce como ponto de distribuicao da rede.
+                </h2>
+              </div>
+              <p className="text-[15px] font-medium leading-7 text-muted-foreground">
+                O papel institucional nao termina na validacao de horas. A IES pode operar como supply engine, palco de eventos e base local de ativacao para o Brasil Sustenta.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {hubAssets.map((asset) => (
+                <Card key={asset.title} className="rounded-[1.5rem] border-border bg-card shadow-sm">
+                  <CardHeader>
+                    <CardTitle className="font-display text-[1.55rem] tracking-tight">{asset.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-[15px] font-medium leading-7 text-muted-foreground">{asset.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
     </div>
