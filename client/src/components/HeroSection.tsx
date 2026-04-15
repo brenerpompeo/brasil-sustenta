@@ -1,186 +1,196 @@
-import { BrainCircuit, Building2, GraduationCap, ShieldCheck, Sparkles, Workflow } from 'lucide-react';
+import { BrainCircuit, Building2, GraduationCap, ShieldCheck, Sparkles, Workflow, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { Link } from 'wouter';
-import { Badge } from '@/components/ui/badge';
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+
+// ── Dados ─────────────────────────────────────────────────────────────────────
 
 const signals = [
   {
     icon: BrainCircuit,
-    title: 'Matching por IA',
-    description: 'O match considera skills, portfolio, ODS, disponibilidade e contexto real do desafio.',
-    tag: 'Portfolio + skills + ODS',
-    highlight: true,
+    title: 'Motor de Matching IA',
+    description: 'Traduz portfólios em vetores ODS. Conecta talento e desafio com similaridade matemática — sem triagem manual.',
+    tag: 'Cosine similarity · 17 ODS · 24h',
+    accent: true,
   },
   {
     icon: Workflow,
-    title: 'Squads prontos para operar',
-    description: 'Da publicacao do brief ao kickoff com curadoria humana, onboarding e checkpoints.',
-    tag: 'Brief → shortlist → kickoff',
-    highlight: false,
+    title: 'Squad as a Service',
+    description: 'Do brief ao kickoff com curadoria humana, onboarding estruturado e checkpoints de entrega.',
+    tag: 'Brief → Shortlist → Kickoff',
+    accent: false,
   },
   {
     icon: ShieldCheck,
-    title: 'Entrega auditavel',
-    description: 'Relatorio executivo, log de sprint e visibilidade para RH, ESG e inovacao.',
-    tag: 'Relatorio final + trilha de evidencia',
-    highlight: false,
+    title: 'Entrega Auditável',
+    description: 'Relatório executivo, log de sprint completo e rastreabilidade para RH, ESG e Inovação.',
+    tag: 'GRI · TCFD · Evidência real',
+    accent: false,
   },
 ];
 
-const stats = [
-  { value: '3x', label: 'mais rapido que consultoria' },
-  { value: '47+', label: 'universidades parceiras' },
-  { value: '200+', label: 'desafios ESG entregues' },
+const proofPoints = [
+  { value: 'R$2.500', label: 'Squad Box entry', sub: 'por projeto entregue' },
+  { value: '20–30%', label: 'Take-rate', sub: 'margem da plataforma' },
+  { value: 'CAC 0', label: 'via IES', sub: 'alunos chegam pela universidade' },
 ];
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[--paper] pt-[calc(3.5rem+2rem)]">
-      {/* Background layers */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="dot-grid absolute inset-0 opacity-40" />
-        <div className="gradient-mesh absolute inset-0" />
+    <section className="relative min-h-screen overflow-hidden bg-[--paper] pt-[calc(3.5rem+1.75rem)]">
+
+      {/* ── Camadas de fundo ── */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="dot-grid absolute inset-0 opacity-[0.35]" />
         <div
-          className="absolute -left-40 top-0 h-[600px] w-[600px] rounded-full opacity-[0.06]"
-          style={{ background: 'radial-gradient(circle, #00FF85 0%, transparent 70%)' }}
+          className="absolute -left-64 top-[-80px] h-[700px] w-[700px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(0,255,133,0.055) 0%, transparent 68%)' }}
         />
         <div
-          className="absolute -right-20 bottom-0 h-[400px] w-[400px] rounded-full opacity-[0.04]"
-          style={{ background: 'radial-gradient(circle, #CCFF00 0%, transparent 70%)' }}
+          className="absolute -right-32 bottom-0 h-[400px] w-[400px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(204,255,0,0.035) 0%, transparent 68%)' }}
         />
       </div>
 
-      <div className="relative mx-auto grid max-w-[1280px] xl:grid-cols-[1.2fr_0.8fr]">
-        {/* Left: headline + CTAs */}
-        <div className="flex flex-col justify-center border-b border-white/[0.06] px-6 py-16 sm:px-8 lg:border-b-0 lg:border-r lg:border-white/[0.06] lg:px-16 lg:py-24">
-          <Badge
-            variant="outline"
-            className="mb-8 w-fit border-[--leaf]/25 bg-[--leaf]/5 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-[--leaf]"
-          >
-            AI-first &nbsp;//&nbsp; ESG squads &nbsp;//&nbsp; universidade
-          </Badge>
+      <div className="relative mx-auto grid max-w-[1280px] xl:min-h-[calc(100svh-5.75rem)] xl:grid-cols-[1.15fr_0.85fr]">
 
-          <h1 className="max-w-4xl font-display text-[3rem] font-bold leading-[0.92] tracking-tight text-[--ink] sm:text-[4.5rem] lg:text-[6.3rem]">
-            Desafios ESG em
-            <span className="block font-light italic text-[--leaf]"> squads universitarios</span>
-            com IA e entrega real.
+        {/* ── Coluna esquerda — headline + CTAs ── */}
+        <div className="flex flex-col justify-center border-b border-white/[0.05] px-6 py-16 sm:px-8 lg:border-b-0 lg:border-r lg:border-white/[0.05] lg:px-14 xl:py-20">
+
+          {/* Eyebrow */}
+          <div className="mb-8 flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[--leaf]/20 bg-[--leaf]/[0.07] px-3 py-1 text-[10.5px] font-bold uppercase tracking-[0.22em] text-[--leaf]">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[--leaf]" />
+              Squad as a Service · ESG · IA
+            </span>
+          </div>
+
+          {/* Headline principal */}
+          <h1 className="max-w-[560px] font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
+              style={{ fontSize: 'clamp(3rem, 6.5vw, 6rem)' }}>
+            Seu desafio ESG
+            <span className="block font-light italic text-[--leaf]"> virou um squad</span>
+            universitário.
           </h1>
 
-          <div className="mt-8 max-w-2xl border-l-[3px] border-[--leaf]/50 pl-5">
-            <p className="text-base font-medium leading-8 text-[--ink]/60 sm:text-[1.05rem]">
-              O Brasil Sustenta conecta empresas, universidades e talentos em uma camada operacional de match, curadoria e execucao.
-              Em vez de vender vaga ou discurso, a plataforma transforma um desafio ESG em squad, sprint e entrega mensuravel.
+          {/* Tensão narrativa */}
+          <div className="mt-7 max-w-xl">
+            <p className="text-[0.975rem] font-medium leading-[1.85] text-[--ink]/55">
+              Não é consultoria. Não é job board.{' '}
+              <span className="font-semibold text-[--ink]/80">
+                É uma nova categoria:
+              </span>{' '}
+              a plataforma que transforma metas ESG em projetos multidisciplinares executados por talentos universitários — com IA, método e entrega rastreável.
             </p>
           </div>
 
-          {/* Stats bar */}
-          <div className="mt-10 flex flex-wrap gap-6 border-b border-white/[0.06] pb-10">
-            {stats.map(stat => (
-              <div key={stat.label} className="flex flex-col gap-0.5">
-                <span className="font-display text-2xl font-black text-[--leaf]">{stat.value}</span>
-                <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-[--ink]/40">{stat.label}</span>
+          {/* Proof points — unidade econômica real */}
+          <div className="mt-8 flex flex-wrap gap-6 border-y border-white/[0.05] py-7">
+            {proofPoints.map(({ value, label, sub }) => (
+              <div key={label} className="flex flex-col">
+                <span className="font-display text-[1.6rem] font-black leading-none text-[--leaf]">{value}</span>
+                <span className="mt-0.5 text-[11px] font-semibold text-[--ink]/60">{label}</span>
+                <span className="text-[10.5px] text-[--ink]/30">{sub}</span>
               </div>
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          {/* CTAs */}
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/para-empresas"
-              className={cn(
-                buttonVariants({ size: 'lg' }),
-                'h-12 rounded-full bg-[--leaf] px-6 text-sm font-bold uppercase tracking-[0.16em] text-[--paper] shadow-[0_0_32px_rgba(0,255,133,0.3)] transition-all duration-300 hover:shadow-[0_0_50px_rgba(0,255,133,0.5)]'
-              )}
+              href="/para-empresas/publicar"
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[--leaf] px-7 text-[12px] font-black uppercase tracking-[0.18em] text-[--paper] shadow-[0_0_28px_rgba(0,255,133,0.28)] transition-all duration-300 hover:shadow-[0_0_48px_rgba(0,255,133,0.45)]"
             >
-              Publicar desafio
+              Publicar desafio ESG
+              <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
             <Link
-              href="/para-universidades"
-              className={cn(
-                buttonVariants({ variant: 'outline', size: 'lg' }),
-                'h-12 rounded-full border-white/[0.12] bg-transparent px-6 text-sm font-bold uppercase tracking-[0.16em] text-[--ink]/70 hover:border-[--leaf]/30 hover:text-[--ink] transition-all duration-200'
-              )}
+              href="/para-jovens/oportunidades"
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-transparent px-7 text-[12px] font-black uppercase tracking-[0.18em] text-[--ink]/60 transition-all duration-200 hover:border-white/[0.18] hover:text-[--ink]"
             >
-              Sou universidade
+              Quero entrar num squad
+              <ChevronRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
             </Link>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[--ink]/35">
-            {['RH', 'ESG', 'Inovacao', 'Extensao universitaria'].map(tag => (
-              <span key={tag} className="rounded-full border border-white/[0.08] px-3 py-1.5">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-10 flex items-center gap-3 text-sm text-[--ink]/40">
-            <Building2 className="h-4 w-4 text-[--leaf]" />
-            <span>Entrada dedicada para empresas e universidades</span>
-            <span className="text-white/10">/</span>
-            <GraduationCap className="h-4 w-4 text-[--leaf]" />
-            <Link href="/para-jovens" className="font-semibold text-[--ink]/70 transition-colors hover:text-[--leaf]">
-              Talentos entram por oportunidades reais
-            </Link>
+          {/* Sub-linha de portais */}
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-[11px] font-semibold text-[--ink]/30">
+            <span className="flex items-center gap-1.5">
+              <Building2 className="h-3.5 w-3.5 text-[--leaf]/50" />
+              <Link href="/para-empresas" className="transition-colors hover:text-[--ink]/60">Organizações ESG</Link>
+            </span>
+            <span className="text-white/10">·</span>
+            <span className="flex items-center gap-1.5">
+              <GraduationCap className="h-3.5 w-3.5 text-[--leaf]/50" />
+              <Link href="/para-universidades" className="transition-colors hover:text-[--ink]/60">IES Parceiras</Link>
+            </span>
+            <span className="text-white/10">·</span>
+            <span className="flex items-center gap-1.5">
+              <Sparkles className="h-3.5 w-3.5 text-[--leaf]/50" />
+              <Link href="/para-jovens" className="transition-colors hover:text-[--ink]/60">Talentos universitários</Link>
+            </span>
           </div>
         </div>
 
-        {/* Right: signal cards */}
-        <div className="flex flex-col divide-y divide-white/[0.06]">
-          {signals.map((signal) => {
+        {/* ── Coluna direita — signal cards ── */}
+        <div className="flex flex-col">
+          {signals.map((signal, i) => {
             const Icon = signal.icon;
             return (
               <div
                 key={signal.title}
-                className={cn(
-                  'flex flex-col gap-4 px-6 py-8 transition-all duration-300 sm:px-8',
-                  signal.highlight
-                    ? 'bg-[--leaf]/10 border-l-2 border-[--leaf]/40'
-                    : 'hover:bg-white/[0.02]'
-                )}
+                className={`group flex flex-col gap-4 border-b border-white/[0.05] px-7 py-9 last:border-b-0 transition-all duration-300 sm:px-8 ${
+                  signal.accent
+                    ? 'bg-[--leaf]/[0.06] hover:bg-[--leaf]/[0.09]'
+                    : 'hover:bg-white/[0.015]'
+                }`}
               >
                 <div
-                  className={cn(
-                    'flex h-11 w-11 items-center justify-center rounded-2xl border',
-                    signal.highlight
-                      ? 'border-[--leaf]/30 bg-[--leaf]/15 text-[--leaf]'
-                      : 'border-white/[0.08] bg-white/[0.04] text-[--ink]/50'
-                  )}
+                  className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all duration-300 ${
+                    signal.accent
+                      ? 'border-[--leaf]/25 bg-[--leaf]/10 text-[--leaf]'
+                      : 'border-white/[0.07] bg-white/[0.03] text-[--ink]/40 group-hover:border-[--leaf]/20 group-hover:text-[--leaf]/70'
+                  }`}
                 >
                   <Icon className="h-5 w-5" />
                 </div>
+
                 <div>
-                  <h3
-                    className={cn(
-                      'font-display text-[1.5rem] tracking-tight',
-                      signal.highlight ? 'text-[--leaf]' : 'text-[--ink]'
-                    )}
-                  >
+                  <h3 className={`font-display text-[1.35rem] font-bold leading-tight tracking-tight ${
+                    signal.accent ? 'text-[--leaf]' : 'text-[--ink]/85'
+                  }`}>
                     {signal.title}
                   </h3>
-                  <p
-                    className={cn(
-                      'mt-1.5 max-w-sm text-sm font-medium leading-7',
-                      signal.highlight ? 'text-[--ink]/60' : 'text-[--ink]/45'
-                    )}
-                  >
+                  <p className="mt-2 text-[13px] font-medium leading-[1.75] text-[--ink]/40">
                     {signal.description}
                   </p>
                 </div>
-                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[--ink]/30">
+
+                <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${
+                  signal.accent ? 'text-[--leaf]/50' : 'text-[--ink]/25'
+                }`}>
                   {signal.tag}
                 </span>
               </div>
             );
           })}
 
-          <div className="flex items-center justify-between bg-white/[0.02] px-6 py-5 sm:px-8">
-            <div className="flex items-center gap-2 text-sm text-[--ink]/40">
-              <Sparkles className="h-4 w-4 text-[--leaf]" />
-              <span className="font-medium">Nao e job board. Nao e consultoria pura.</span>
-            </div>
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[--ink]/60">Categoria propria</span>
+          {/* Bottom bar */}
+          <div className="flex items-center justify-between border-t border-white/[0.05] bg-white/[0.015] px-7 py-4 sm:px-8">
+            <p className="text-[12px] font-medium text-[--ink]/35">
+              Parceiro oficial da{' '}
+              <span className="font-semibold text-[--ink]/60">Rede Pacto Global ONU Brasil</span>
+            </p>
+            <Link
+              href="/quem-somos/parceiros"
+              className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[--ink]/30 transition-colors hover:text-[--leaf]/70"
+            >
+              Ver parceiros
+              <ChevronRight className="h-3 w-3" />
+            </Link>
           </div>
         </div>
+
       </div>
     </section>
   );

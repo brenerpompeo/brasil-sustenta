@@ -1,151 +1,423 @@
-import { useState } from "react";
+import React, { createPortal } from "react";
 import { Link, useLocation } from "wouter";
-import { ArrowUpRight, Menu } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import { ChevronDown, Menu, X, ArrowUpRight } from "lucide-react";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import {
+  Dna,
+  FileText,
+  BarChart2,
+  Network,
+  MapPin,
+  Handshake,
+  Rocket,
+  Search,
+  BadgeCheck,
+  GraduationCap,
+  BookOpen,
+  Users,
+  Briefcase,
+  Lightbulb,
+  ShieldCheck,
+  TrendingUp,
+  Building2,
+  BrainCircuit,
+  Workflow,
+  ScanLine,
+  LineChart,
+  Calendar,
+  Newspaper,
+  LogIn,
+  UserPlus,
+} from "lucide-react";
 
-const portals = [
-  { name: "Manifesto", href: "/manifesto" },
-  { name: "Para Universitarios", href: "/para-jovens" },
-  { name: "Para Empresas", href: "/para-empresas" },
-  { name: "Para IES", href: "/para-universidades" },
+// ── Dados dos menus ──────────────────────────────────────────────────────────
+
+type NavItem = { title: string; href: string; icon: React.ElementType; description: string };
+
+const quemSomos: NavItem[] = [
+  { title: "DNA da Plataforma", href: "/quem-somos/dna", icon: Dna, description: "Nossa origem, missão e valores fundadores" },
+  { title: "Manifesto", href: "/manifesto", icon: FileText, description: "O que acreditamos e por que isso importa" },
+  { title: "Impacto", href: "/quem-somos/impacto", icon: BarChart2, description: "Projetos, ODS mapeados e resultados reais" },
+  { title: "Stakeholders", href: "/quem-somos/stakeholders", icon: Network, description: "Os quatro atores da Quádrupla Hélice" },
+  { title: "HUBs Regionais", href: "/quem-somos/hubs", icon: MapPin, description: "Presença e operação em todo o Brasil" },
+  { title: "Apoiadores e Parceiros", href: "/quem-somos/parceiros", icon: Handshake, description: "Quem acredita e amplifica a missão" },
 ];
 
-const Header = () => {
-  const [location] = useLocation();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const paraJovens: NavItem[] = [
+  { title: "Como Funciona", href: "/para-jovens/como-funciona", icon: Rocket, description: "Do portfólio ao primeiro squad em dias" },
+  { title: "Oportunidades Abertas", href: "/para-jovens/oportunidades", icon: Search, description: "Desafios ESG reais disponíveis agora" },
+  { title: "Perfil Público ESG", href: "/para-jovens/perfil", icon: BadgeCheck, description: 'O seu "LinkedIn Verde" verificado por IA' },
+  { title: "Extensão Universitária", href: "/para-jovens/extensao", icon: GraduationCap, description: "Horas complementares + certificação real" },
+  { title: "Comunidade", href: "/para-jovens/comunidade", icon: Users, description: "Rede de talentos criativos e de impacto" },
+  { title: "Guia dos 17 ODS", href: "/para-jovens/ods", icon: BookOpen, description: "A linguagem que conecta talento e empresa" },
+];
 
-  const navLinkClass = (href: string) =>
-    cn(
-      "inline-flex items-center rounded-full border px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] transition-all duration-200",
-      location === href
-        ? "border-[--leaf]/60 bg-[--leaf]/10 text-[--leaf]"
-        : "border-white/[0.08] bg-white/[0.03] text-[--ink]/60 hover:border-[--leaf]/30 hover:bg-[--leaf]/5 hover:text-[--ink]"
-    );
+const paraOrganizacoes: NavItem[] = [
+  { title: "Como Contratar um Squad", href: "/para-empresas/como-funciona", icon: Briefcase, description: "Brief → Matching IA → Kickoff em 24h" },
+  { title: "Publicar Desafio ESG", href: "/para-empresas/publicar", icon: Lightbulb, description: "Transforme sua meta ESG em sprint real" },
+  { title: "Relatório de Impacto", href: "/para-empresas/relatorio", icon: ShieldCheck, description: "Evidências auditáveis para RH e ESG" },
+  { title: "Squad Box — Planos", href: "/para-empresas/planos", icon: TrendingUp, description: "R$2.500 a R$10.000 por projeto entregue" },
+  { title: "Casos de Sucesso", href: "/para-empresas/casos", icon: Building2, description: "Empresas que já inovaram com squads" },
+  { title: "Signatárias do Pacto Global", href: "/para-empresas/pacto-global", icon: Handshake, description: "Canal exclusivo para a rede ONU Brasil" },
+];
+
+const paraIES: NavItem[] = [
+  { title: "Plugin de Extensão", href: "/para-universidades/como-funciona", icon: Rocket, description: "Resolva a Resolução MEC 7/2018 sem esforço" },
+  { title: "Extensão e ODS na Prática", href: "/para-universidades/extensao", icon: GraduationCap, description: "Conecte currículo ao mundo corporativo real" },
+  { title: "Hub IES", href: "/para-universidades/hub", icon: BarChart2, description: "Dashboard da sua universidade e alunos ativos" },
+  { title: "Parcerias Institucionais", href: "/para-universidades/parceria", icon: Handshake, description: "Formalize convênio e aumente seu ranking" },
+  { title: "Gestão de Talentos", href: "/para-universidades/talentos", icon: Users, description: "Acompanhe seus alunos em projetos reais" },
+];
+
+const solucao: NavItem[] = [
+  { title: "Motor de Matching IA", href: "/solucao/matching", icon: BrainCircuit, description: "Cosine similarity sobre vetores ODS em tempo real" },
+  { title: "Squad as a Service", href: "/solucao/squads", icon: Workflow, description: "Times multidisciplinares prontos para operar" },
+  { title: "ODS Score Engine", href: "/solucao/ods-score", icon: ScanLine, description: "IA que lê portfólios e converte em métricas ODS" },
+  { title: "Entrega Auditável", href: "/solucao/entrega", icon: ShieldCheck, description: "Log de sprint, checkpoint e relatório executivo" },
+  { title: "Analytics de Impacto", href: "/solucao/analytics", icon: LineChart, description: "GRI, TCFD e evidências para ESG reporting" },
+];
+
+const cadastroPortais = [
+  { label: "Sou Jovem Talento", href: "/cadastro/jovem", icon: GraduationCap },
+  { label: "Sou Organização", href: "/cadastro/organizacao", icon: Building2 },
+  { label: "Sou IES", href: "/cadastro/ies", icon: BookOpen },
+];
+
+const acessarPortais = [
+  { label: "Portal do Talento", href: "/entrar/jovem", icon: GraduationCap },
+  { label: "Portal da Organização", href: "/entrar/organizacao", icon: Building2 },
+  { label: "Portal da IES", href: "/entrar/ies", icon: BookOpen },
+];
+
+// ── Hook de scroll ───────────────────────────────────────────────────────────
+
+function useScroll(threshold: number) {
+  const [scrolled, setScrolled] = React.useState(false);
+  const onScroll = React.useCallback(() => {
+    setScrolled(window.scrollY > threshold);
+  }, [threshold]);
+  React.useEffect(() => {
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [onScroll]);
+  React.useEffect(() => { onScroll(); }, [onScroll]);
+  return scrolled;
+}
+
+// ── DropdownItem ─────────────────────────────────────────────────────────────
+
+function DropdownItem({ title, href, icon: Icon, description }: NavItem) {
+  return (
+    <NavigationMenuLink asChild>
+      <Link
+        href={href}
+        className="group flex cursor-pointer items-start gap-3 rounded-xl p-2.5 transition-all duration-200 hover:bg-[--leaf]/5"
+      >
+        <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.03] text-[--ink]/40 transition-all duration-200 group-hover:border-[--leaf]/25 group-hover:text-[--leaf]">
+          <Icon className="h-[15px] w-[15px]" />
+        </div>
+        <div className="min-w-0 pt-0.5">
+          <div className="text-[12.5px] font-semibold leading-none text-[--ink]/75 transition-colors group-hover:text-[--ink]">{title}</div>
+          <div className="mt-1 text-[11px] leading-relaxed text-[--ink]/30">{description}</div>
+        </div>
+      </Link>
+    </NavigationMenuLink>
+  );
+}
+
+function DropdownGrid({ items }: { items: NavItem[] }) {
+  return (
+    <ul className="grid grid-cols-2 gap-0.5" style={{ width: 468 }}>
+      {items.map((item) => (
+        <li key={item.href}>
+          <DropdownItem {...item} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// ── CTA com dropdown próprio ─────────────────────────────────────────────────
+
+type Portal = { label: string; href: string; icon: React.ElementType };
+
+function CtaDropdown({
+  label,
+  portais,
+  variant,
+}: {
+  label: string;
+  portais: Portal[];
+  variant: "primary" | "ghost";
+}) {
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    function handler(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   return (
-    <header className="fixed inset-x-0 top-4 z-50 px-4 font-body">
-      <div className="mx-auto flex h-14 w-full max-w-[1440px] items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-[--paper]/80 px-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl sm:px-6">
-        <Link
-          href="/"
-          aria-label="Ir para a home do Brasil Sustenta"
-          className="group flex min-w-0 items-center gap-3 rounded-full border border-transparent px-2 py-1 transition-all duration-200 hover:border-white/[0.08] hover:bg-white/[0.04]"
-        >
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[--leaf] text-[10px] font-black tracking-[0.28em] text-[--paper] shadow-[0_0_16px_rgba(0,255,133,0.4)]">
-            BS
-          </div>
-          <div className="min-w-0">
-            <div className="truncate font-display text-lg font-black leading-none tracking-tight text-[--ink]">
-              Brasil <span className="text-[--leaf] italic font-light">Sustenta</span>
-            </div>
-            <div className="truncate text-[10px] font-black uppercase tracking-[0.2em] text-[--ink]/40">
-              Plataforma ESG
-            </div>
-          </div>
-        </Link>
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className={cn(
+          "inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full px-4 text-[11px] font-bold uppercase tracking-[0.16em] transition-all duration-200",
+          variant === "primary"
+            ? "bg-[--leaf] text-[--paper] shadow-[0_0_18px_rgba(0,255,133,0.28)] hover:shadow-[0_0_28px_rgba(0,255,133,0.45)]"
+            : "border border-white/[0.1] bg-transparent text-[--ink]/60 hover:border-white/[0.18] hover:text-[--ink]"
+        )}
+      >
+        {label}
+        <ChevronDown className={cn("h-3 w-3 transition-transform duration-200", open && "rotate-180")} />
+      </button>
 
-        <nav className="hidden items-center gap-1.5 lg:flex" aria-label="Navegacao principal">
-          {portals.map(portal => (
-            <Link key={portal.href} href={portal.href} className={navLinkClass(portal.href)}>
-              {portal.name}
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-white/[0.08] bg-[--paper-2]/95 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+          {portais.map(({ label: l, href, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setOpen(false)}
+              className="flex cursor-pointer items-center gap-3 px-4 py-3 text-[13px] font-medium text-[--ink]/60 transition-all hover:bg-[--leaf]/5 hover:text-[--ink]"
+            >
+              <Icon className="h-4 w-4 text-[--leaf]/50" />
+              {l}
             </Link>
           ))}
-        </nav>
+        </div>
+      )}
+    </div>
+  );
+}
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <Link
-            href="/login"
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "h-9 rounded-full bg-[--leaf] px-5 text-[11px] font-black uppercase tracking-[0.2em] text-[--paper] shadow-[0_0_20px_rgba(0,255,133,0.3)] hover:shadow-[0_0_32px_rgba(0,255,133,0.5)] transition-all duration-200"
-            )}
-          >
-            Entrar
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </Link>
+// ── Trigger style compartilhado ───────────────────────────────────────────────
+
+const triggerCls =
+  "h-8 cursor-pointer rounded-full bg-transparent px-3 text-[12px] font-medium text-[--ink]/55 hover:bg-white/[0.04] hover:text-[--ink] data-[state=open]:bg-white/[0.04] data-[state=open]:text-[--ink] transition-colors duration-200";
+
+const contentWrap =
+  "rounded-2xl border border-white/[0.07] bg-[--paper-2]/96 p-2 shadow-[0_20px_50px_rgba(0,0,0,0.55)] backdrop-blur-xl";
+
+// ── Menu Mobile ───────────────────────────────────────────────────────────────
+
+type Section = { label: string; items: NavItem[] };
+
+function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  React.useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  if (!open || typeof window === "undefined") return null;
+
+  const sections: Section[] = [
+    { label: "Quem Somos", items: quemSomos },
+    { label: "Para Jovens", items: paraJovens },
+    { label: "Para Organizações", items: paraOrganizacoes },
+    { label: "Para IES", items: paraIES },
+    { label: "Solução", items: solucao },
+  ];
+
+  const extras = [
+    { label: "Eventos", href: "/eventos", icon: Calendar },
+    { label: "Notícias", href: "/noticias", icon: Newspaper },
+  ];
+
+  return createPortal(
+    <div className="fixed inset-0 top-[calc(3.5rem+1.25rem)] z-40 overflow-y-auto bg-[--paper]/95 backdrop-blur-xl">
+      <div className="flex flex-col gap-5 px-5 py-6 pb-24">
+        {sections.map(({ label, items }) => (
+          <div key={label}>
+            <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-[--ink]/30">{label}</p>
+            <div className="grid grid-cols-1 gap-0.5">
+              {items.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onClose}
+                    className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[--ink]/60 transition-all hover:bg-[--leaf]/5 hover:text-[--ink]"
+                  >
+                    <Icon className="h-4 w-4 flex-shrink-0 text-[--leaf]/40" />
+                    {item.title}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+
+        <div>
+          <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-[--ink]/30">Mais</p>
+          {extras.map(({ label, href, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={onClose}
+              className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[--ink]/60 transition-all hover:bg-[--leaf]/5 hover:text-[--ink]"
+            >
+              <Icon className="h-4 w-4 flex-shrink-0 text-[--leaf]/40" />
+              {label}
+            </Link>
+          ))}
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
-          <Link
-            href="/login"
-            className={cn(
-              buttonVariants({ variant: "outline", size: "sm" }),
-              "rounded-full border-white/[0.12] bg-transparent px-4 text-[11px] font-black uppercase tracking-[0.18em] text-[--ink]/70 hover:border-[--leaf]/30 hover:text-[--ink]"
-            )}
-          >
-            Entrar
-          </Link>
-
-          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger
-              aria-label="Abrir menu principal"
-              className={cn(
-                buttonVariants({ variant: "outline", size: "icon" }),
-                "rounded-full border-white/[0.12] bg-transparent text-[--ink]/70 hover:border-[--leaf]/30 hover:text-[--ink]"
-              )}
+        <div className="flex flex-col gap-2 border-t border-white/[0.06] pt-5">
+          <p className="mb-1 text-[10px] font-black uppercase tracking-[0.24em] text-[--ink]/30">Entrar na plataforma</p>
+          {acessarPortais.map(({ label, href, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={onClose}
+              className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/[0.07] px-4 py-3 text-sm font-medium text-[--ink]/60 transition-all hover:border-[--leaf]/20 hover:bg-[--leaf]/5 hover:text-[--ink]"
             >
-              <Menu className="h-5 w-5" />
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[320px] border-l border-white/[0.08] bg-[--paper] p-0">
-              <SheetHeader className="border-b border-white/[0.08] px-6 py-5 text-left">
-                <SheetTitle className="font-display text-2xl font-black tracking-tight text-[--ink]">
-                  Brasil Sustenta
-                </SheetTitle>
-                <SheetDescription className="text-sm leading-6 text-[--ink]/50">
-                  Navegacao principal — portais e acesso rapido.
-                </SheetDescription>
-              </SheetHeader>
-
-              <div className="flex flex-col gap-3 px-6 py-6">
-                {portals.map(portal => (
-                  <Link
-                    key={portal.href}
-                    href={portal.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={cn(
-                      "rounded-2xl border px-4 py-4 text-sm font-black uppercase tracking-[0.18em] transition-all duration-200",
-                      location === portal.href
-                        ? "border-[--leaf]/40 bg-[--leaf]/10 text-[--leaf]"
-                        : "border-white/[0.08] bg-white/[0.03] text-[--ink]/70 hover:border-[--leaf]/20 hover:bg-[--leaf]/5 hover:text-[--ink]"
-                    )}
-                  >
-                    {portal.name}
-                  </Link>
-                ))}
-
-                <Link
-                  href="/comunidade"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-4 text-sm font-black uppercase tracking-[0.18em] text-[--ink]/70 hover:border-[--leaf]/20 hover:bg-[--leaf]/5 hover:text-[--ink] transition-all duration-200"
-                >
-                  Comunidade
-                </Link>
-
-                <Link
-                  href="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "mt-2 rounded-2xl bg-[--leaf] text-[12px] font-black uppercase tracking-[0.2em] text-[--paper] shadow-[0_0_24px_rgba(0,255,133,0.3)]"
-                  )}
-                >
-                  Escolher portal
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </SheetContent>
-          </Sheet>
+              <Icon className="h-4 w-4 text-[--leaf]/50" />
+              {label}
+            </Link>
+          ))}
+          <Link
+            href="/cadastro"
+            onClick={onClose}
+            className="mt-1 flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[--leaf] px-4 py-3 text-sm font-black uppercase tracking-[0.16em] text-[--paper] shadow-[0_0_20px_rgba(0,255,133,0.28)]"
+          >
+            <UserPlus className="h-4 w-4" />
+            Cadastrar gratuitamente
+          </Link>
         </div>
       </div>
-    </header>
+    </div>,
+    document.body
+  );
+}
+
+// ── Header principal ──────────────────────────────────────────────────────────
+
+const Header = () => {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const scrolled = useScroll(12);
+
+  return (
+    <>
+      <header
+        className={cn(
+          "fixed inset-x-0 z-50 transition-all duration-300",
+          scrolled ? "top-0 px-0" : "top-4 px-4"
+        )}
+      >
+        <div
+          className={cn(
+            "mx-auto flex h-14 w-full max-w-[1440px] items-center justify-between gap-2 transition-all duration-300",
+            scrolled
+              ? "rounded-none border-b border-white/[0.07] bg-[--paper]/92 px-6 backdrop-blur-xl"
+              : "rounded-2xl border border-white/[0.07] bg-[--paper]/82 px-4 shadow-[0_8px_30px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:px-5"
+          )}
+        >
+          {/* ── Logo ── */}
+          <Link
+            href="/"
+            aria-label="Brasil Sustenta — voltar ao início"
+            className="flex flex-shrink-0 cursor-pointer items-center gap-2.5 rounded-full border border-transparent px-1.5 py-1 transition-all duration-200 hover:border-white/[0.07] hover:bg-white/[0.03]"
+          >
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[--leaf] text-[9px] font-black tracking-widest text-[--paper] shadow-[0_0_14px_rgba(0,255,133,0.38)]">
+              BS
+            </div>
+            <span className="font-display text-[15px] font-black leading-none tracking-tight text-[--ink]">
+              Brasil <span className="font-light italic text-[--leaf]">Sustenta</span>
+            </span>
+          </Link>
+
+          {/* ── Nav desktop ── */}
+          <NavigationMenu className="hidden xl:flex">
+            <NavigationMenuList className="gap-0">
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={triggerCls}>Quem Somos</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className={contentWrap}><DropdownGrid items={quemSomos} /></div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={triggerCls}>Para Jovens</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className={contentWrap}><DropdownGrid items={paraJovens} /></div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={triggerCls}>Para Organizações</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className={contentWrap}><DropdownGrid items={paraOrganizacoes} /></div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={triggerCls}>Para IES</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className={contentWrap}><DropdownGrid items={paraIES} /></div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={triggerCls}>Solução</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className={contentWrap}><DropdownGrid items={solucao} /></div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link href="/eventos" className="inline-flex h-8 cursor-pointer items-center rounded-full px-3 text-[12px] font-medium text-[--ink]/55 transition-colors hover:bg-white/[0.04] hover:text-[--ink]">
+                    Eventos
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link href="/noticias" className="inline-flex h-8 cursor-pointer items-center rounded-full px-3 text-[12px] font-medium text-[--ink]/55 transition-colors hover:bg-white/[0.04] hover:text-[--ink]">
+                    Notícias
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          {/* ── CTAs desktop ── */}
+          <div className="hidden items-center gap-2 xl:flex">
+            <CtaDropdown label="Cadastre-se" portais={cadastroPortais} variant="ghost" />
+            <CtaDropdown label="Acessar" portais={acessarPortais} variant="primary" />
+          </div>
+
+          {/* ── Hamburger mobile ── */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Menu principal"
+            aria-expanded={mobileOpen}
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-white/[0.1] bg-transparent text-[--ink]/60 transition-all hover:border-white/[0.18] hover:text-[--ink] xl:hidden"
+          >
+            {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
+        </div>
+      </header>
+
+      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
+    </>
   );
 };
 
