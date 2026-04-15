@@ -1,10 +1,18 @@
 {
   "permission": {
     "read": {
-      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/Projetos/brasil-sustenta/.opencode/get-shit-done/*": "allow"
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/00 System/.antigravity/prompts/*": "allow",
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/00 System/.antigravity/skills/*": "allow",
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/00 System/.antigravity/opencode/agents/*": "allow",
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/00 System/.antigravity/opencode/get-shit-done/*": "allow",
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/20 Action/21 Projects/brasil-sustenta/.opencode/get-shit-done/*": "allow"
     },
     "external_directory": {
-      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/Projetos/brasil-sustenta/.opencode/get-shit-done/*": "allow"
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/00 System/.antigravity/prompts/*": "allow",
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/00 System/.antigravity/skills/*": "allow",
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/00 System/.antigravity/opencode/agents/*": "allow",
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/00 System/.antigravity/opencode/get-shit-done/*": "allow",
+      "/Users/brenerpompeorodrigues/Library/CloudStorage/GoogleDrive-brenerpompeo@gmail.com/Meu Drive/Vault:second_brain/second_brain/20 Action/21 Projects/brasil-sustenta/.opencode/get-shit-done/*": "allow"
     }
   }
 }
