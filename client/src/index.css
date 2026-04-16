@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700;1,9..144,900&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -44,14 +44,15 @@
   /* Glow Tokens */
   --color-glow-primary: rgba(0, 255, 133, 0.35);
   --color-glow-primary-sm: rgba(0, 255, 133, 0.18);
-  --color-glow-accent: rgba(204, 255, 0, 0.3);
+  --color-glow-accent: rgba(245, 255, 0, 0.3);
+  --color-glow-blue: rgba(46, 91, 255, 0.3);
   --color-glow-white: rgba(255, 255, 255, 0.08);
 
   /* Noise & Mesh */
   --noise-opacity: 0.035;
   --mesh-color-1: rgba(0, 255, 133, 0.06);
-  --mesh-color-2: rgba(204, 255, 0, 0.04);
-  --mesh-color-3: rgba(56, 189, 248, 0.04);
+  --mesh-color-2: rgba(245, 255, 0, 0.04);
+  --mesh-color-3: rgba(46, 91, 255, 0.04);
 
   /* Shadcn Mappings */
   --color-background: var(--background);
@@ -99,7 +100,7 @@
   --secondary-foreground: #FAFAFA;
   --muted: #1A1A1A;
   --muted-foreground: #71717A;
-  --accent: #CCFF00;
+  --accent: #F5FF00;
   --accent-foreground: #050505;
   --destructive: #FF4D4D;
   --destructive-foreground: #FAFAFA;
@@ -123,12 +124,12 @@
   --leaf-3: #00C853;
   --leaf-4: rgba(0, 255, 133, 0.15);
   --leaf-5: rgba(0, 255, 133, 0.06);
-  --sky: #38BDF8;
-  --sky-2: #7DD3FC;
-  --sky-3: rgba(56, 189, 248, 0.1);
-  --sun: #CCFF00;
-  --sun-2: #D4FF33;
-  --sun-3: rgba(204, 255, 0, 0.1);
+  --sky: #2E5BFF;
+  --sky-2: #5A7FFF;
+  --sky-3: rgba(46, 91, 255, 0.1);
+  --sun: #F5FF00;
+  --sun-2: #F8FF4D;
+  --sun-3: rgba(245, 255, 0, 0.1);
   --ember: #FF6B35;
   --ember-2: #FF8C5A;
   --ember-3: rgba(255, 107, 53, 0.1);

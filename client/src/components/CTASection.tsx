@@ -1,126 +1,68 @@
-import { motion } from 'framer-motion';
-import { ArrowRight, Building2, GraduationCap, School2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'wouter';
-
-const portals = [
-  {
-    code: '01',
-    label: 'PORTAL // EMPRESA',
-    icon: Building2,
-    title: 'Empresa',
-    description: 'Publicar desafio, ver shortlist com fit score e acompanhar Entrega Auditável.',
-    cta: 'Entrar como empresa',
-    href: '/login/empresa',
-    accent: 'var(--leaf)',
-  },
-  {
-    code: '02',
-    label: 'PORTAL // UNIVERSIDADE',
-    icon: School2,
-    title: 'Universidade',
-    description: 'Ativar extensão com dados, visibilidade institucional e conexão com empresas.',
-    cta: 'Entrar como IES',
-    href: '/login/universidade',
-    accent: 'var(--sky)',
-  },
-  {
-    code: '03',
-    label: 'PORTAL // TALENTO',
-    icon: GraduationCap,
-    title: 'Talento',
-    description: 'Construir portfólio verificável, entrar em squads e ganhar experiência observável.',
-    cta: 'Entrar como talento',
-    href: '/login/jovem',
-    accent: 'var(--sun)',
-  },
-];
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
-};
 
 const CTASection = () => {
   return (
-    <section className="border-t border-white/[0.05] bg-[--paper] py-24 lg:py-32">
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, ease: 'easeOut' }}
-          className="mb-20 max-w-2xl"
-        >
-          <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
-            ENTRADA // ESCOLHA_SEU_PORTAL
-          </p>
-          <h2
-            className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
-            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
-          >
-            A proposta é uma só.
+    <section className="relative z-10 overflow-hidden bg-[--leaf] pb-32 pt-40 text-black">
+      {/* Dot pattern overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: 'radial-gradient(circle, black 1px, transparent 1px)',
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-[100rem] px-8 lg:px-24">
+        <div className="flex flex-col items-end justify-between gap-16 lg:flex-row">
+          {/* Massive provocative headline */}
+          <h2 className="font-display text-7xl font-black leading-[0.75] tracking-tighter sm:text-[8rem] lg:text-[14rem]">
+            Não é
             <br />
-            <span className="font-light italic text-[--leaf]">A porta muda por buyer</span>.
+            Caridade.
+            <br />
+            <span className="opacity-30">É Infra.</span>
           </h2>
-          <p className="mt-6 font-sans text-[15px] font-medium leading-relaxed text-[--ink]/40">
-            Empresas compram execução, universidades ativam extensão e talentos entram em projetos reais. A experiência já começa segmentada.
-          </p>
-        </motion.div>
 
-        {/* Portal Cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 gap-0 md:grid-cols-3"
-        >
-          {portals.map((portal, index) => {
-            const Icon = portal.icon;
-            return (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="group flex flex-col border border-white/[0.05] p-10 hover:bg-white/[0.018] transition-colors duration-300"
-                style={{ borderLeft: index > 0 ? 'none' : undefined }}
+          {/* Right column: manifesto + CTA */}
+          <div className="max-w-xl mb-12">
+            <p className="mb-12 font-display text-2xl font-black italic leading-[1.1] md:text-4xl">
+              Sustentabilidade sem viabilidade econômica é ficção poética.
+            </p>
+            <p className="mb-16 font-body text-lg font-bold uppercase tracking-tighter md:text-xl">
+              O Brasil Sustenta transforma a biocapacidade e o talento brasileiro em um ativo financeiro
+              auditável e soberano.
+            </p>
+
+            {/* Portal CTAs */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Link
+                href="/para-jovens"
+                className="group flex h-32 flex-col justify-center border border-black/20 p-8 transition-all hover:bg-black hover:text-[--leaf]"
               >
-                <p className="mb-7 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
-                  {portal.label}
-                </p>
-
-                <div
-                  className="mb-7 flex h-12 w-12 items-center justify-center border border-white/[0.07]"
-                  style={{ color: portal.accent }}
-                >
-                  <Icon className="h-6 w-6" strokeWidth={1.5} />
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] opacity-60">
+                  01 // TALENTO
+                </span>
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="font-display text-xl font-black">Submeter Node</span>
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
                 </div>
-
-                <h3 className="mb-4 font-display text-[1.5rem] font-bold tracking-tight text-[--ink]">
-                  {portal.title}
-                </h3>
-
-                <p className="mb-10 flex-1 font-sans text-[14px] font-medium leading-relaxed text-[--ink]/50">
-                  {portal.description}
-                </p>
-
-                <Link
-                  href={portal.href}
-                  className="inline-flex cursor-pointer items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.22em] transition-colors"
-                  style={{ color: portal.accent }}
-                >
-                  {portal.cta}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+              </Link>
+              <Link
+                href="/para-empresas"
+                className="group flex h-32 flex-col justify-center border border-black/20 p-8 transition-all hover:bg-black hover:text-[--sun]"
+              >
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] opacity-60">
+                  02 // EMPRESA
+                </span>
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="font-display text-xl font-black">Deploy Squad</span>
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
