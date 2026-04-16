@@ -1,4 +1,5 @@
-import React, { createPortal } from "react";
+import React from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import { ChevronDown, Menu, X, ArrowUpRight } from "lucide-react";
 import {
@@ -40,49 +41,194 @@ import {
 
 // ── Dados dos menus ──────────────────────────────────────────────────────────
 
-type NavItem = { title: string; href: string; icon: React.ElementType; description: string };
+type NavItem = {
+  title: string;
+  href: string;
+  icon: React.ElementType;
+  description: string;
+};
 
 const quemSomos: NavItem[] = [
-  { title: "DNA da Plataforma", href: "/quem-somos/dna", icon: Dna, description: "Nossa origem, missão e valores fundadores" },
-  { title: "Manifesto", href: "/manifesto", icon: FileText, description: "O que acreditamos e por que isso importa" },
-  { title: "Impacto", href: "/quem-somos/impacto", icon: BarChart2, description: "Projetos, ODS mapeados e resultados reais" },
-  { title: "Stakeholders", href: "/quem-somos/stakeholders", icon: Network, description: "Os quatro atores da Quádrupla Hélice" },
-  { title: "HUBs Regionais", href: "/quem-somos/hubs", icon: MapPin, description: "Presença e operação em todo o Brasil" },
-  { title: "Apoiadores e Parceiros", href: "/quem-somos/parceiros", icon: Handshake, description: "Quem acredita e amplifica a missão" },
+  {
+    title: "DNA da Plataforma",
+    href: "/quem-somos/dna",
+    icon: Dna,
+    description: "Nossa origem, missão e valores fundadores",
+  },
+  {
+    title: "Manifesto",
+    href: "/manifesto",
+    icon: FileText,
+    description: "O que acreditamos e por que isso importa",
+  },
+  {
+    title: "Impacto",
+    href: "/quem-somos/impacto",
+    icon: BarChart2,
+    description: "Projetos, ODS mapeados e resultados reais",
+  },
+  {
+    title: "Stakeholders",
+    href: "/quem-somos/stakeholders",
+    icon: Network,
+    description: "Os quatro atores da Quádrupla Hélice",
+  },
+  {
+    title: "HUBs Regionais",
+    href: "/quem-somos/hubs",
+    icon: MapPin,
+    description: "Presença e operação em todo o Brasil",
+  },
+  {
+    title: "Apoiadores e Parceiros",
+    href: "/quem-somos/parceiros",
+    icon: Handshake,
+    description: "Quem acredita e amplifica a missão",
+  },
 ];
 
 const paraJovens: NavItem[] = [
-  { title: "Como Funciona", href: "/para-jovens/como-funciona", icon: Rocket, description: "Do portfólio ao primeiro squad em dias" },
-  { title: "Oportunidades Abertas", href: "/para-jovens/oportunidades", icon: Search, description: "Desafios ESG reais disponíveis agora" },
-  { title: "Perfil Público ESG", href: "/para-jovens/perfil", icon: BadgeCheck, description: 'O seu "LinkedIn Verde" verificado por IA' },
-  { title: "Extensão Universitária", href: "/para-jovens/extensao", icon: GraduationCap, description: "Horas complementares + certificação real" },
-  { title: "Comunidade", href: "/para-jovens/comunidade", icon: Users, description: "Rede de talentos criativos e de impacto" },
-  { title: "Guia dos 17 ODS", href: "/para-jovens/ods", icon: BookOpen, description: "A linguagem que conecta talento e empresa" },
+  {
+    title: "Como Funciona",
+    href: "/para-jovens/como-funciona",
+    icon: Rocket,
+    description: "Do portfólio ao primeiro squad em dias",
+  },
+  {
+    title: "Oportunidades Abertas",
+    href: "/para-jovens/oportunidades",
+    icon: Search,
+    description: "Desafios ESG reais disponíveis agora",
+  },
+  {
+    title: "Perfil Público ESG",
+    href: "/para-jovens/perfil",
+    icon: BadgeCheck,
+    description: 'O seu "LinkedIn Verde" verificado por IA',
+  },
+  {
+    title: "Extensão Universitária",
+    href: "/para-jovens/extensao",
+    icon: GraduationCap,
+    description: "Horas complementares + certificação real",
+  },
+  {
+    title: "Comunidade",
+    href: "/para-jovens/comunidade",
+    icon: Users,
+    description: "Rede de talentos criativos e de impacto",
+  },
+  {
+    title: "Guia dos 17 ODS",
+    href: "/para-jovens/ods",
+    icon: BookOpen,
+    description: "A linguagem que conecta talento e empresa",
+  },
 ];
 
 const paraOrganizacoes: NavItem[] = [
-  { title: "Como Contratar um Squad", href: "/para-empresas/como-funciona", icon: Briefcase, description: "Brief → Matching IA → Kickoff em 24h" },
-  { title: "Publicar Desafio ESG", href: "/para-empresas/publicar", icon: Lightbulb, description: "Transforme sua meta ESG em sprint real" },
-  { title: "Relatório de Impacto", href: "/para-empresas/relatorio", icon: ShieldCheck, description: "Evidências auditáveis para RH e ESG" },
-  { title: "Squad Box — Planos", href: "/para-empresas/planos", icon: TrendingUp, description: "R$2.500 a R$10.000 por projeto entregue" },
-  { title: "Casos de Sucesso", href: "/para-empresas/casos", icon: Building2, description: "Empresas que já inovaram com squads" },
-  { title: "Signatárias do Pacto Global", href: "/para-empresas/pacto-global", icon: Handshake, description: "Canal exclusivo para a rede ONU Brasil" },
+  {
+    title: "Como Contratar um Squad",
+    href: "/para-empresas/como-funciona",
+    icon: Briefcase,
+    description: "Brief → Matching IA → Kickoff em 24h",
+  },
+  {
+    title: "Publicar Desafio ESG",
+    href: "/para-empresas/publicar",
+    icon: Lightbulb,
+    description: "Transforme sua meta ESG em sprint real",
+  },
+  {
+    title: "Relatório de Impacto",
+    href: "/para-empresas/relatorio",
+    icon: ShieldCheck,
+    description: "Evidências auditáveis para RH e ESG",
+  },
+  {
+    title: "Squad Box — Planos",
+    href: "/para-empresas/planos",
+    icon: TrendingUp,
+    description: "R$2.500 a R$10.000 por projeto entregue",
+  },
+  {
+    title: "Casos de Sucesso",
+    href: "/para-empresas/casos",
+    icon: Building2,
+    description: "Empresas que já inovaram com squads",
+  },
+  {
+    title: "Signatárias do Pacto Global",
+    href: "/para-empresas/pacto-global",
+    icon: Handshake,
+    description: "Canal exclusivo para a rede ONU Brasil",
+  },
 ];
 
 const paraIES: NavItem[] = [
-  { title: "Plugin de Extensão", href: "/para-universidades/como-funciona", icon: Rocket, description: "Resolva a Resolução MEC 7/2018 sem esforço" },
-  { title: "Extensão e ODS na Prática", href: "/para-universidades/extensao", icon: GraduationCap, description: "Conecte currículo ao mundo corporativo real" },
-  { title: "Hub IES", href: "/para-universidades/hub", icon: BarChart2, description: "Dashboard da sua universidade e alunos ativos" },
-  { title: "Parcerias Institucionais", href: "/para-universidades/parceria", icon: Handshake, description: "Formalize convênio e aumente seu ranking" },
-  { title: "Gestão de Talentos", href: "/para-universidades/talentos", icon: Users, description: "Acompanhe seus alunos em projetos reais" },
+  {
+    title: "Plugin de Extensão",
+    href: "/para-universidades/como-funciona",
+    icon: Rocket,
+    description: "Resolva a Resolução MEC 7/2018 sem esforço",
+  },
+  {
+    title: "Extensão e ODS na Prática",
+    href: "/para-universidades/extensao",
+    icon: GraduationCap,
+    description: "Conecte currículo ao mundo corporativo real",
+  },
+  {
+    title: "Hub IES",
+    href: "/para-universidades/hub",
+    icon: BarChart2,
+    description: "Dashboard da sua universidade e alunos ativos",
+  },
+  {
+    title: "Parcerias Institucionais",
+    href: "/para-universidades/parceria",
+    icon: Handshake,
+    description: "Formalize convênio e aumente seu ranking",
+  },
+  {
+    title: "Gestão de Talentos",
+    href: "/para-universidades/talentos",
+    icon: Users,
+    description: "Acompanhe seus alunos em projetos reais",
+  },
 ];
 
 const solucao: NavItem[] = [
-  { title: "Motor de Matching IA", href: "/solucao/matching", icon: BrainCircuit, description: "Cosine similarity sobre vetores ODS em tempo real" },
-  { title: "Squad as a Service", href: "/solucao/squads", icon: Workflow, description: "Times multidisciplinares prontos para operar" },
-  { title: "ODS Score Engine", href: "/solucao/ods-score", icon: ScanLine, description: "IA que lê portfólios e converte em métricas ODS" },
-  { title: "Entrega Auditável", href: "/solucao/entrega", icon: ShieldCheck, description: "Log de sprint, checkpoint e relatório executivo" },
-  { title: "Analytics de Impacto", href: "/solucao/analytics", icon: LineChart, description: "GRI, TCFD e evidências para ESG reporting" },
+  {
+    title: "Motor de Matching IA",
+    href: "/solucao/matching",
+    icon: BrainCircuit,
+    description: "Cosine similarity sobre vetores ODS em tempo real",
+  },
+  {
+    title: "Squad as a Service",
+    href: "/solucao/squads",
+    icon: Workflow,
+    description: "Times multidisciplinares prontos para operar",
+  },
+  {
+    title: "ODS Score Engine",
+    href: "/solucao/ods-score",
+    icon: ScanLine,
+    description: "IA que lê portfólios e converte em métricas ODS",
+  },
+  {
+    title: "Entrega Auditável",
+    href: "/solucao/entrega",
+    icon: ShieldCheck,
+    description: "Log de sprint, checkpoint e relatório executivo",
+  },
+  {
+    title: "Analytics de Impacto",
+    href: "/solucao/analytics",
+    icon: LineChart,
+    description: "GRI, TCFD e evidências para ESG reporting",
+  },
 ];
 
 const cadastroPortais = [
@@ -93,7 +239,11 @@ const cadastroPortais = [
 
 const acessarPortais = [
   { label: "Portal do Talento", href: "/entrar/jovem", icon: GraduationCap },
-  { label: "Portal da Organização", href: "/entrar/organizacao", icon: Building2 },
+  {
+    label: "Portal da Organização",
+    href: "/entrar/organizacao",
+    icon: Building2,
+  },
   { label: "Portal da IES", href: "/entrar/ies", icon: BookOpen },
 ];
 
@@ -108,7 +258,9 @@ function useScroll(threshold: number) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [onScroll]);
-  React.useEffect(() => { onScroll(); }, [onScroll]);
+  React.useEffect(() => {
+    onScroll();
+  }, [onScroll]);
   return scrolled;
 }
 
@@ -121,12 +273,16 @@ function DropdownItem({ title, href, icon: Icon, description }: NavItem) {
         href={href}
         className="group flex cursor-pointer items-start gap-3 rounded-xl p-2.5 transition-all duration-200 hover:bg-[--leaf]/5"
       >
-        <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.03] text-[--ink]/40 transition-all duration-200 group-hover:border-[--leaf]/25 group-hover:text-[--leaf]">
+        <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-black/8 bg-white text-[--ink]/40 transition-all duration-200 group-hover:border-[--leaf]/25 group-hover:text-[--leaf]">
           <Icon className="h-[15px] w-[15px]" />
         </div>
         <div className="min-w-0 pt-0.5">
-          <div className="text-[12.5px] font-semibold leading-none text-[--ink]/75 transition-colors group-hover:text-[--ink]">{title}</div>
-          <div className="mt-1 text-[11px] leading-relaxed text-[--ink]/30">{description}</div>
+          <div className="text-[12.5px] font-semibold leading-none text-[--ink]/75 transition-colors group-hover:text-[--ink]">
+            {title}
+          </div>
+          <div className="mt-1 text-[11px] leading-relaxed text-[--ink]/30">
+            {description}
+          </div>
         </div>
       </Link>
     </NavigationMenuLink>
@@ -136,7 +292,7 @@ function DropdownItem({ title, href, icon: Icon, description }: NavItem) {
 function DropdownGrid({ items }: { items: NavItem[] }) {
   return (
     <ul className="grid grid-cols-2 gap-0.5" style={{ width: 468 }}>
-      {items.map((item) => (
+      {items.map(item => (
         <li key={item.href}>
           <DropdownItem {...item} />
         </li>
@@ -163,7 +319,8 @@ function CtaDropdown({
 
   React.useEffect(() => {
     function handler(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpen(false);
     }
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
@@ -176,16 +333,21 @@ function CtaDropdown({
         className={cn(
           "inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full px-4 text-[11px] font-bold uppercase tracking-[0.16em] transition-all duration-200",
           variant === "primary"
-            ? "bg-[--leaf] text-[--paper] shadow-[0_0_18px_rgba(0,255,133,0.28)] hover:shadow-[0_0_28px_rgba(0,255,133,0.45)]"
-            : "border border-white/[0.1] bg-transparent text-[--ink]/60 hover:border-white/[0.18] hover:text-[--ink]"
+            ? "bg-[--leaf] text-[--foreground] shadow-[0_18px_32px_rgba(0,255,133,0.18)] hover:-translate-y-0.5 hover:shadow-[0_24px_40px_rgba(0,255,133,0.24)]"
+            : "border border-black/10 bg-white text-[--ink]/60 hover:border-black/18 hover:text-[--ink]"
         )}
       >
         {label}
-        <ChevronDown className={cn("h-3 w-3 transition-transform duration-200", open && "rotate-180")} />
+        <ChevronDown
+          className={cn(
+            "h-3 w-3 transition-transform duration-200",
+            open && "rotate-180"
+          )}
+        />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-white/[0.08] bg-[--paper-2]/95 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+        <div className="absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-black/8 bg-white/95 shadow-[0_20px_50px_rgba(5,5,5,0.08)] backdrop-blur-xl">
           {portais.map(({ label: l, href, icon: Icon }) => (
             <Link
               key={href}
@@ -206,10 +368,10 @@ function CtaDropdown({
 // ── Trigger style compartilhado ───────────────────────────────────────────────
 
 const triggerCls =
-  "h-8 cursor-pointer rounded-full bg-transparent px-3 text-[12px] font-medium text-[--ink]/55 hover:bg-white/[0.04] hover:text-[--ink] data-[state=open]:bg-white/[0.04] data-[state=open]:text-[--ink] transition-colors duration-200";
+  "h-8 cursor-pointer rounded-full bg-transparent px-3 text-[12px] font-medium text-[--ink]/60 hover:bg-black/[0.035] hover:text-[--ink] data-[state=open]:bg-black/[0.035] data-[state=open]:text-[--ink] transition-colors duration-200";
 
 const contentWrap =
-  "rounded-2xl border border-white/[0.07] bg-[--paper-2]/96 p-2 shadow-[0_20px_50px_rgba(0,0,0,0.55)] backdrop-blur-xl";
+  "rounded-2xl border border-black/8 bg-white/96 p-2 shadow-[0_20px_50px_rgba(5,5,5,0.08)] backdrop-blur-xl";
 
 // ── Menu Mobile ───────────────────────────────────────────────────────────────
 
@@ -218,7 +380,9 @@ type Section = { label: string; items: NavItem[] };
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   React.useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
   if (!open || typeof window === "undefined") return null;
@@ -237,13 +401,15 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   ];
 
   return createPortal(
-    <div className="fixed inset-0 top-[calc(3.5rem+1.25rem)] z-40 overflow-y-auto bg-[--paper]/95 backdrop-blur-xl">
+    <div className="fixed inset-0 top-[calc(3.5rem+1.25rem)] z-40 overflow-y-auto bg-[--paper]/98 backdrop-blur-xl">
       <div className="flex flex-col gap-5 px-5 py-6 pb-24">
         {sections.map(({ label, items }) => (
           <div key={label}>
-            <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-[--ink]/30">{label}</p>
+            <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-[--ink]/30">
+              {label}
+            </p>
             <div className="grid grid-cols-1 gap-0.5">
-              {items.map((item) => {
+              {items.map(item => {
                 const Icon = item.icon;
                 return (
                   <Link
@@ -262,7 +428,9 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         ))}
 
         <div>
-          <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-[--ink]/30">Mais</p>
+          <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-[--ink]/30">
+            Mais
+          </p>
           {extras.map(({ label, href, icon: Icon }) => (
             <Link
               key={href}
@@ -276,14 +444,16 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           ))}
         </div>
 
-        <div className="flex flex-col gap-2 border-t border-white/[0.06] pt-5">
-          <p className="mb-1 text-[10px] font-black uppercase tracking-[0.24em] text-[--ink]/30">Entrar na plataforma</p>
+        <div className="flex flex-col gap-2 border-t border-black/8 pt-5">
+          <p className="mb-1 text-[10px] font-black uppercase tracking-[0.24em] text-[--ink]/30">
+            Entrar na plataforma
+          </p>
           {acessarPortais.map(({ label, href, icon: Icon }) => (
             <Link
               key={href}
               href={href}
               onClick={onClose}
-              className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/[0.07] px-4 py-3 text-sm font-medium text-[--ink]/60 transition-all hover:border-[--leaf]/20 hover:bg-[--leaf]/5 hover:text-[--ink]"
+              className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/8 px-4 py-3 text-sm font-medium text-[--ink]/60 transition-all hover:border-[--leaf]/20 hover:bg-[--leaf]/5 hover:text-[--ink]"
             >
               <Icon className="h-4 w-4 text-[--leaf]/50" />
               {label}
@@ -292,7 +462,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           <Link
             href="/cadastro"
             onClick={onClose}
-            className="mt-1 flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[--leaf] px-4 py-3 text-sm font-black uppercase tracking-[0.16em] text-[--paper] shadow-[0_0_20px_rgba(0,255,133,0.28)]"
+            className="mt-1 flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[--leaf] px-4 py-3 text-sm font-black uppercase tracking-[0.16em] text-[--foreground] shadow-[0_18px_36px_rgba(0,255,133,0.16)]"
           >
             <UserPlus className="h-4 w-4" />
             Cadastrar gratuitamente
@@ -322,66 +492,91 @@ const Header = () => {
           className={cn(
             "mx-auto flex h-14 w-full max-w-[1440px] items-center justify-between gap-2 transition-all duration-300",
             scrolled
-              ? "rounded-none border-b border-white/[0.07] bg-[--paper]/92 px-6 backdrop-blur-xl"
-              : "rounded-2xl border border-white/[0.07] bg-[--paper]/82 px-4 shadow-[0_8px_30px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:px-5"
+              ? "rounded-none border-b border-black/8 bg-[--paper]/92 px-6 backdrop-blur-xl"
+              : "rounded-[1.4rem] border border-black/8 bg-white/84 px-4 shadow-[0_18px_48px_rgba(5,5,5,0.06)] backdrop-blur-xl sm:px-5"
           )}
         >
           {/* ── Logo ── */}
           <Link
             href="/"
             aria-label="Brasil Sustenta — voltar ao início"
-            className="flex flex-shrink-0 cursor-pointer items-center gap-2.5 rounded-full border border-transparent px-1.5 py-1 transition-all duration-200 hover:border-white/[0.07] hover:bg-white/[0.03]"
+            className="flex flex-shrink-0 cursor-pointer items-center gap-2.5 rounded-full border border-transparent px-1.5 py-1 transition-all duration-200 hover:border-black/8 hover:bg-black/[0.03]"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[--leaf] text-[9px] font-black tracking-widest text-[--paper] shadow-[0_0_14px_rgba(0,255,133,0.38)]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-black/8 bg-[--ink] text-[9px] font-black tracking-widest text-[--paper] shadow-[0_14px_28px_rgba(5,5,5,0.08)]">
               BS
             </div>
             <span className="font-display text-[15px] font-black leading-none tracking-tight text-[--ink]">
-              Brasil <span className="font-light italic text-[--leaf]">Sustenta</span>
+              Brasil{" "}
+              <span className="font-light italic text-[--leaf-1]">
+                Sustenta
+              </span>
             </span>
           </Link>
 
           {/* ── Nav desktop ── */}
           <NavigationMenu className="hidden xl:flex">
             <NavigationMenuList className="gap-0">
-
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerCls}>Quem Somos</NavigationMenuTrigger>
+                <NavigationMenuTrigger className={triggerCls}>
+                  Quem Somos
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className={contentWrap}><DropdownGrid items={quemSomos} /></div>
+                  <div className={contentWrap}>
+                    <DropdownGrid items={quemSomos} />
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerCls}>Para Jovens</NavigationMenuTrigger>
+                <NavigationMenuTrigger className={triggerCls}>
+                  Para Jovens
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className={contentWrap}><DropdownGrid items={paraJovens} /></div>
+                  <div className={contentWrap}>
+                    <DropdownGrid items={paraJovens} />
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerCls}>Para Organizações</NavigationMenuTrigger>
+                <NavigationMenuTrigger className={triggerCls}>
+                  Para Organizações
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className={contentWrap}><DropdownGrid items={paraOrganizacoes} /></div>
+                  <div className={contentWrap}>
+                    <DropdownGrid items={paraOrganizacoes} />
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerCls}>Para IES</NavigationMenuTrigger>
+                <NavigationMenuTrigger className={triggerCls}>
+                  Para IES
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className={contentWrap}><DropdownGrid items={paraIES} /></div>
+                  <div className={contentWrap}>
+                    <DropdownGrid items={paraIES} />
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerCls}>Solução</NavigationMenuTrigger>
+                <NavigationMenuTrigger className={triggerCls}>
+                  Solução
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className={contentWrap}><DropdownGrid items={solucao} /></div>
+                  <div className={contentWrap}>
+                    <DropdownGrid items={solucao} />
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <Link href="/eventos" className="inline-flex h-8 cursor-pointer items-center rounded-full px-3 text-[12px] font-medium text-[--ink]/55 transition-colors hover:bg-white/[0.04] hover:text-[--ink]">
+                  <Link
+                    href="/eventos"
+                    className="inline-flex h-8 cursor-pointer items-center rounded-full px-3 text-[12px] font-medium text-[--ink]/55 transition-colors hover:bg-black/[0.035] hover:text-[--ink]"
+                  >
                     Eventos
                   </Link>
                 </NavigationMenuLink>
@@ -389,19 +584,29 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <Link href="/noticias" className="inline-flex h-8 cursor-pointer items-center rounded-full px-3 text-[12px] font-medium text-[--ink]/55 transition-colors hover:bg-white/[0.04] hover:text-[--ink]">
+                  <Link
+                    href="/noticias"
+                    className="inline-flex h-8 cursor-pointer items-center rounded-full px-3 text-[12px] font-medium text-[--ink]/55 transition-colors hover:bg-black/[0.035] hover:text-[--ink]"
+                  >
                     Notícias
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-
             </NavigationMenuList>
           </NavigationMenu>
 
           {/* ── CTAs desktop ── */}
           <div className="hidden items-center gap-2 xl:flex">
-            <CtaDropdown label="Cadastre-se" portais={cadastroPortais} variant="ghost" />
-            <CtaDropdown label="Acessar" portais={acessarPortais} variant="primary" />
+            <CtaDropdown
+              label="Cadastre-se"
+              portais={cadastroPortais}
+              variant="ghost"
+            />
+            <CtaDropdown
+              label="Acessar"
+              portais={acessarPortais}
+              variant="primary"
+            />
           </div>
 
           {/* ── Hamburger mobile ── */}
@@ -409,9 +614,13 @@ const Header = () => {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu principal"
             aria-expanded={mobileOpen}
-            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-white/[0.1] bg-transparent text-[--ink]/60 transition-all hover:border-white/[0.18] hover:text-[--ink] xl:hidden"
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-[--ink]/60 transition-all hover:border-black/18 hover:text-[--ink] xl:hidden"
           >
-            {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {mobileOpen ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
           </button>
         </div>
       </header>

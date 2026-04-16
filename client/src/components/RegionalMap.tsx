@@ -1,295 +1,290 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Zap, Leaf, Globe, ChevronRight, ArrowUpRight } from 'lucide-react';
-import { Link } from 'wouter';
+import React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker,
+  ZoomableGroup,
+} from "react-simple-maps";
+import { Link } from "wouter";
+import { editorialEaseGentle } from "@/lib/motion";
+import { hubs, statusConfig, type Hub, type HubStatus } from "@/lib/hubs";
 
-// ── Status types ──────────────────────────────────────────────────────────────
-//   abertura   = Campinas — em abertura, primeiro polo ativo
-//   planejamento = SP + RJ — estruturados, aguardando operação
-//   expansao   = BH + Recife — roadmap futuro
+const geographyUrl = "/brazil-states.topo.json";
 
-export type HubStatus = 'abertura' | 'planejamento' | 'expansao';
-
-export type Hub = {
-  id: string;
-  name: string;
-  tag: string;
-  specialty: string;
-  description: string;
-  icon: React.ElementType;
-  lat: number;
-  lng: number;
-  status: HubStatus;
+type TooltipState = {
   color: string;
-  pulseColor: string;
-  stats: { talentos: number; empresas: number; projetos: number };
+  subtitle: string;
+  title: string;
+  x: number;
+  y: number;
 };
 
-export const hubs: Hub[] = [
-  {
-    id: 'campinas',
-    name: 'Campinas',
-    tag: 'HUB_CAMPINAS',
-    specialty: 'Inovação & P&D',
-    description: 'Primeiro polo em abertura. Cluster universitário denso: UNICAMP, PUC-Campinas. Deep tech, agro ESG e inovação aberta.',
-    icon: Zap,
-    lat: -22.9099,
-    lng: -47.0608,
-    status: 'abertura',
-    color: '#00FF85',
-    pulseColor: 'rgba(0,255,133,0.4)',
-    stats: { talentos: 0, empresas: 0, projetos: 0 },
-  },
-  {
-    id: 'sp',
-    name: 'São Paulo',
-    tag: 'HUB_SP',
-    specialty: 'Conectividade Urbana',
-    description: 'Maior polo B2B do Brasil. Fintechs, corporações e demanda ESG estruturada. Em planejamento para H2 2026.',
-    icon: Globe,
-    lat: -23.5505,
-    lng: -46.6333,
-    status: 'planejamento',
-    color: '#CCFF00',
-    pulseColor: 'rgba(204,255,0,0.35)',
-    stats: { talentos: 0, empresas: 0, projetos: 0 },
-  },
-  {
-    id: 'rj',
-    name: 'Rio de Janeiro',
-    tag: 'HUB_RJ',
-    specialty: 'Economia Azul & Energia',
-    description: 'Energia, petróleo sustentável e economia azul. Rede portuária e offshore. Em planejamento para H2 2026.',
-    icon: Leaf,
-    lat: -22.9068,
-    lng: -43.1729,
-    status: 'planejamento',
-    color: '#38BDF8',
-    pulseColor: 'rgba(56,189,248,0.35)',
-    stats: { talentos: 0, empresas: 0, projetos: 0 },
-  },
-  {
-    id: 'bh',
-    name: 'Belo Horizonte',
-    tag: 'HUB_BH',
-    specialty: 'Mineração Sustentável',
-    description: 'Foco em mineração responsável, saneamento e políticas públicas. Expansão planejada para 2027.',
-    icon: MapPin,
-    lat: -19.9167,
-    lng: -43.9345,
-    status: 'expansao',
-    color: '#FF6B35',
-    pulseColor: 'rgba(255,107,53,0.3)',
-    stats: { talentos: 0, empresas: 0, projetos: 0 },
-  },
-  {
-    id: 'recife',
-    name: 'Recife',
-    tag: 'HUB_RECIFE',
-    specialty: 'Impacto Social & Periférico',
-    description: 'Talentos periféricos, DEI e economia criativa regional. Nordeste. Expansão planejada para 2027.',
-    icon: MapPin,
-    lat: -8.0476,
-    lng: -34.8770,
-    status: 'expansao',
-    color: '#FF6B35',
-    pulseColor: 'rgba(255,107,53,0.3)',
-    stats: { talentos: 0, empresas: 0, projetos: 0 },
-  },
-];
+function normalizeLabel(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
 
-// ── Labels de status ──────────────────────────────────────────────────────────
+const hubsByState = hubs.reduce<Record<string, Hub[]>>((acc, hub) => {
+  const key = normalizeLabel(hub.stateName);
+  acc[key] = [...(acc[key] || []), hub];
+  return acc;
+}, {});
 
-const statusConfig: Record<HubStatus, { label: string; labelColor: string; dotColor: string; animate: boolean }> = {
-  abertura:    { label: 'Em Abertura',   labelColor: '#00FF85', dotColor: '#00FF85', animate: true  },
-  planejamento:{ label: 'Planejamento',  labelColor: '#CCFF00', dotColor: '#CCFF00', animate: false },
-  expansao:    { label: 'Em Breve',      labelColor: '#FF6B35', dotColor: '#FF6B35', animate: false },
-};
-
-// ── Mapa Leaflet ──────────────────────────────────────────────────────────────
-
-function LeafletMap({ selectedId, onSelect }: { selectedId: string | null; onSelect: (id: string) => void }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<any>(null);
-
-  useEffect(() => {
-    if (!containerRef.current || mapRef.current) return;
-
-    import('leaflet').then((L) => {
-      const map = L.map(containerRef.current!, {
-        center: [-16, -48],
-        zoom: 4,
-        zoomControl: false,
-        attributionControl: false,
-        scrollWheelZoom: false,
-        dragging: true,
-      });
-
-      mapRef.current = map;
-
-      // CartoDB Dark Matter — tile dark consistente com design system
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19,
-        subdomains: 'abcd',
-      }).addTo(map);
-
-      L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-      // Injetar animações
-      if (!document.getElementById('hub-map-style')) {
-        const style = document.createElement('style');
-        style.id = 'hub-map-style';
-        style.textContent = `
-          @keyframes hubRipple {
-            0%   { transform: scale(1);   opacity: 0.7; }
-            70%  { transform: scale(2.4); opacity: 0; }
-            100% { transform: scale(2.4); opacity: 0; }
-          }
-          @keyframes hubPulse {
-            0%, 100% { opacity: 0.5; }
-            50%       { opacity: 1;   }
-          }
-          .leaflet-container { background: #050505 !important; cursor: default !important; }
-          .leaflet-control-zoom a {
-            background: #111 !important;
-            color: rgba(250,250,250,0.5) !important;
-            border: 1px solid rgba(255,255,255,0.08) !important;
-            border-radius: 4px !important;
-          }
-          .leaflet-control-zoom a:hover {
-            background: #1a1a1a !important;
-            color: #00FF85 !important;
-          }
-        `;
-        document.head.appendChild(style);
-      }
-
-      // Marcadores customizados por status
-      hubs.forEach((hub) => {
-        const sc = statusConfig[hub.status];
-        const isAbertura = hub.status === 'abertura';
-        const isPlanejamento = hub.status === 'planejamento';
-        const coreSize = isAbertura ? 12 : isPlanejamento ? 10 : 7;
-        const wrapSize = isAbertura ? 36 : isPlanejamento ? 28 : 20;
-
-        const rippleHtml = isAbertura
-          ? `<div style="
-              position:absolute;width:${wrapSize}px;height:${wrapSize}px;
-              border-radius:50%;background:${hub.pulseColor};
-              animation:hubRipple 2.2s ease-out infinite;
-            "></div>
-             <div style="
-              position:absolute;width:${wrapSize * 0.7}px;height:${wrapSize * 0.7}px;
-              left:${wrapSize * 0.15}px;top:${wrapSize * 0.15}px;
-              border-radius:50%;background:${hub.pulseColor};
-              animation:hubRipple 2.2s ease-out 0.5s infinite;
-            "></div>`
-          : isPlanejamento
-          ? `<div style="
-              position:absolute;width:${wrapSize}px;height:${wrapSize}px;
-              border-radius:50%;border:1.5px solid ${hub.color}50;
-              animation:hubPulse 3s ease-in-out infinite;
-            "></div>`
-          : '';
-
-        const icon = L.divIcon({
-          className: '',
-          html: `
-            <div style="position:relative;width:${wrapSize}px;height:${wrapSize}px;display:flex;align-items:center;justify-content:center;">
-              ${rippleHtml}
-              <div style="
-                position:relative;z-index:2;
-                width:${coreSize}px;height:${coreSize}px;border-radius:50%;
-                background:${hub.color};
-                border:2px solid #050505;
-                box-shadow:0 0 ${isAbertura ? 14 : 6}px ${hub.color}${isAbertura ? 'cc' : '66'};
-              "></div>
-            </div>
-          `,
-          iconSize: [wrapSize, wrapSize],
-          iconAnchor: [wrapSize / 2, wrapSize / 2],
-        });
-
-        L.marker([hub.lat, hub.lng], { icon })
-          .addTo(map)
-          .on('click', () => onSelect(hub.id));
-      });
-    });
-
-    return () => { mapRef.current?.remove(); mapRef.current = null; };
-  }, []);
-
-  useEffect(() => {
-    if (!mapRef.current || !selectedId) return;
-    const hub = hubs.find((h) => h.id === selectedId);
-    if (hub) mapRef.current.flyTo([hub.lat, hub.lng], 7, { duration: 1.1, easeLinearity: 0.25 });
-  }, [selectedId]);
+function Tooltip({ tooltip }: { tooltip: TooltipState | null }) {
+  if (!tooltip) return null;
 
   return (
-    <>
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-      <div ref={containerRef} className="h-full w-full" />
-    </>
+    <div
+      className="pointer-events-none fixed z-[60] hidden rounded-[1.25rem] border border-black/8 bg-white/96 px-4 py-3 shadow-[0_18px_46px_rgba(5,5,5,0.08)] backdrop-blur-xl md:block"
+      style={{ left: tooltip.x + 18, top: tooltip.y + 18 }}
+    >
+      <p
+        className="text-xs font-black uppercase tracking-[0.2em]"
+        style={{ color: tooltip.color }}
+      >
+        {tooltip.subtitle}
+      </p>
+      <p className="mt-1 text-sm font-semibold text-foreground">
+        {tooltip.title}
+      </p>
+    </div>
   );
 }
 
-// ── Componente principal ──────────────────────────────────────────────────────
-
-const RegionalMap = ({ compact = false }: { compact?: boolean }) => {
-  const [selectedId, setSelectedId] = React.useState<string | null>('campinas');
-  const selected = hubs.find((h) => h.id === selectedId);
-
-  const aberturaHubs    = hubs.filter((h) => h.status === 'abertura');
-  const planejamentoHubs = hubs.filter((h) => h.status === 'planejamento');
-  const expansaoHubs    = hubs.filter((h) => h.status === 'expansao');
+function HubMarker({
+  active,
+  hub,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+  onMouseMove,
+}: {
+  active: boolean;
+  hub: Hub;
+  onClick: () => void;
+  onMouseEnter: (event: React.MouseEvent<SVGGElement>) => void;
+  onMouseLeave: () => void;
+  onMouseMove: (event: React.MouseEvent<SVGGElement>) => void;
+}) {
+  const ringRadius = active ? 9 : 7;
+  const coreRadius = active ? 4.6 : 3.8;
 
   return (
-    <section className="relative overflow-hidden border-y border-white/[0.05] bg-[--paper]">
+    <Marker coordinates={[hub.lng, hub.lat]}>
+      <motion.g
+        whileHover={{ scale: 1.08 }}
+        transition={{ duration: 0.2, ease: editorialEaseGentle }}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onMouseMove={onMouseMove}
+        className="cursor-pointer"
+      >
+        {hub.status === "abertura" ? (
+          <>
+            <motion.circle
+              fill={hub.pulseColor}
+              initial={{ opacity: 0.28, r: 8 }}
+              animate={{ opacity: [0.28, 0], r: [8, 20] }}
+              transition={{
+                duration: 2.3,
+                ease: editorialEaseGentle,
+                repeat: Infinity,
+              }}
+            />
+            <motion.circle
+              fill={hub.pulseColor}
+              initial={{ opacity: 0.18, r: 6 }}
+              animate={{ opacity: [0.18, 0], r: [6, 16] }}
+              transition={{
+                delay: 0.45,
+                duration: 2.3,
+                ease: editorialEaseGentle,
+                repeat: Infinity,
+              }}
+            />
+          </>
+        ) : null}
 
-      {/* ── Cabeçalho ── */}
-      <div className="border-b border-white/[0.05] px-6 py-10 sm:px-8 lg:px-14">
+        {hub.status === "planejamento" ? (
+          <motion.circle
+            r={ringRadius + 5}
+            fill="transparent"
+            stroke={hub.color}
+            strokeWidth={1.3}
+            initial={{ opacity: 0.35 }}
+            animate={{
+              opacity: [0.25, 0.8, 0.25],
+              r: [ringRadius + 4, ringRadius + 6, ringRadius + 4],
+            }}
+            transition={{
+              duration: 2.8,
+              ease: editorialEaseGentle,
+              repeat: Infinity,
+            }}
+          />
+        ) : null}
+
+        <circle
+          r={ringRadius}
+          fill="white"
+          stroke={hub.color}
+          strokeWidth={active ? 2.1 : 1.4}
+          opacity={hub.status === "expansao" ? 0.65 : 1}
+        />
+        <circle r={coreRadius} fill={hub.color} />
+      </motion.g>
+    </Marker>
+  );
+}
+
+function HubRow({
+  hub,
+  onSelect,
+  selected,
+}: {
+  hub: Hub;
+  onSelect: (id: string) => void;
+  selected: boolean;
+}) {
+  const Icon = hub.icon;
+  const state = statusConfig[hub.status];
+
+  return (
+    <motion.button
+      type="button"
+      onClick={() => onSelect(hub.id)}
+      whileTap={{ scale: 0.99 }}
+      className={`group flex w-full items-center gap-4 border-b border-black/8 px-5 py-4 text-left transition-colors ${
+        selected ? "bg-white" : "bg-transparent hover:bg-black/[0.025]"
+      }`}
+    >
+      <div
+        className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[1rem] border"
+        style={{
+          background: `${hub.color}12`,
+          borderColor: `${hub.color}28`,
+          color: hub.color,
+        }}
+      >
+        <Icon className="h-4 w-4" />
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center justify-between gap-3">
+          <span className="font-display text-[1.02rem] font-black italic text-foreground">
+            {hub.name}
+          </span>
+          <span
+            className="text-[10px] font-bold uppercase tracking-[0.18em]"
+            style={{ color: state.labelColor }}
+          >
+            {state.label}
+          </span>
+        </div>
+        <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/42">
+          {hub.specialty}
+        </p>
+      </div>
+    </motion.button>
+  );
+}
+
+const RegionalMap = ({ compact = false }: { compact?: boolean }) => {
+  const [selectedId, setSelectedId] = React.useState<string>("campinas");
+  const [hoveredState, setHoveredState] = React.useState<string | null>(null);
+  const [tooltip, setTooltip] = React.useState<TooltipState | null>(null);
+
+  const selected = hubs.find(hub => hub.id === selectedId) ?? hubs[0];
+  const selectedStateKey = normalizeLabel(selected.stateName);
+
+  const aberturaHubs = hubs.filter(hub => hub.status === "abertura");
+  const planejamentoHubs = hubs.filter(hub => hub.status === "planejamento");
+  const expansaoHubs = hubs.filter(hub => hub.status === "expansao");
+
+  const hoveredStateLabel = hoveredState
+    ? (hubsByState[hoveredState]?.[0]?.stateName ?? hoveredState)
+    : selected.stateName;
+
+  const hoveredStateHubs = hoveredState
+    ? (hubsByState[hoveredState] ?? [])
+    : [];
+
+  function updateTooltip(
+    event: React.MouseEvent<SVGPathElement | SVGGElement>,
+    title: string,
+    subtitle: string,
+    color: string
+  ) {
+    setTooltip({ title, subtitle, color, x: event.clientX, y: event.clientY });
+  }
+
+  return (
+    <section className="relative overflow-hidden border-y border-black/8 bg-[--paper]">
+      <Tooltip tooltip={tooltip} />
+
+      <div className="border-b border-black/8 px-6 py-10 sm:px-8 lg:px-14">
         <div className="mx-auto max-w-[1280px]">
-          <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
-                MAPA // OPERAÇÃO_BRASIL
+              <p className="editorial-kicker mb-4">
+                Mapa operacional // Brasil Sustenta
               </p>
               <h2
-                className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
-                style={{ fontSize: 'clamp(2rem, 4vw, 3.6rem)' }}
+                className="font-display font-black italic tracking-tight text-[--ink]"
+                style={{ fontSize: "clamp(2rem, 4vw, 3.6rem)" }}
               >
-                Operação em polos
-                <span className="font-light italic text-[--leaf]"> regionais</span>.
+                Brasil em malha vetorial,
+                <span className="text-[--leaf-1]">
+                  {" "}
+                  HUBs em coordenadas reais
+                </span>
+                .
               </h2>
+              <p className="mt-4 max-w-3xl text-sm font-medium leading-7 text-[--ink]/58">
+                Cada polo e posicionado sobre a malha TopoJSON do pais para
+                sinalizar presenca, fase operacional e leitura territorial.
+              </p>
             </div>
-            {!compact && (
+
+            {!compact ? (
               <Link
                 href="/quem-somos/hubs"
-                className="group mt-4 inline-flex cursor-pointer items-center gap-1.5 font-mono text-[10.5px] font-bold uppercase tracking-[0.2em] text-[--ink]/30 transition-colors hover:text-[--leaf]/60 sm:mt-0"
+                className="group inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[--ink]/45 transition-colors hover:text-[--leaf-1]"
               >
                 Ver todos os HUBs
-                <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
-            )}
+            ) : null}
           </div>
 
-          {/* Legenda de status */}
-          <div className="mt-5 flex flex-wrap gap-5">
-            {(Object.entries(statusConfig) as [HubStatus, typeof statusConfig[HubStatus]][]).map(([key, sc]) => (
+          <div className="mt-6 flex flex-wrap gap-5">
+            {(
+              Object.entries(statusConfig) as [
+                HubStatus,
+                (typeof statusConfig)[HubStatus],
+              ][]
+            ).map(([key, state]) => (
               <div key={key} className="flex items-center gap-2">
-                <span
-                  className="relative flex h-2.5 w-2.5 items-center justify-center"
-                >
-                  {key === 'abertura' && (
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
-                          style={{ background: sc.dotColor }} />
-                  )}
-                  <span className="relative inline-flex h-2 w-2 rounded-full"
-                        style={{ background: sc.dotColor, opacity: key === 'expansao' ? 0.5 : 1 }} />
+                <span className="relative flex h-2.5 w-2.5 items-center justify-center">
+                  <span
+                    className="relative inline-flex h-2.5 w-2.5 rounded-full"
+                    style={{
+                      background: state.dotColor,
+                      opacity: key === "expansao" ? 0.65 : 1,
+                    }}
+                  />
                 </span>
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em]"
-                      style={{ color: key === 'expansao' ? 'rgba(250,250,250,0.3)' : sc.labelColor + 'bb' }}>
-                  {sc.label}
+                <span
+                  className="text-[10px] font-bold uppercase tracking-[0.2em]"
+                  style={{ color: state.labelColor }}
+                >
+                  {state.label}
                 </span>
               </div>
             ))}
@@ -297,153 +292,243 @@ const RegionalMap = ({ compact = false }: { compact?: boolean }) => {
         </div>
       </div>
 
-      {/* ── Grid: mapa + painel ── */}
-      <div className="mx-auto grid max-w-[1280px] xl:grid-cols-[1fr_400px]">
+      <div className="mx-auto grid max-w-[1280px] xl:grid-cols-[1fr_390px]">
+        <div className="relative border-b border-black/8 xl:border-b-0 xl:border-r xl:border-black/8">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,255,133,0.08),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(46,91,255,0.06),transparent_28%)]" />
 
-        {/* Mapa */}
-        <div className="relative border-b border-white/[0.05] xl:border-b-0 xl:border-r xl:border-white/[0.05]">
-          <div className="pointer-events-none absolute left-4 top-4 z-10 border border-white/[0.07] bg-[--paper]/85 px-3 py-1.5 backdrop-blur-sm">
-            <span className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] text-[--ink]/40">
-              MAPA INTERATIVO · CLIQUE NOS POLOS
+          <div className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-black/8 bg-white/92 px-4 py-2 shadow-sm">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[--ink]/42">
+              {hoveredStateLabel}
+              {hoveredStateHubs.length > 0
+                ? ` // ${hoveredStateHubs.length} HUB(s)`
+                : ""}
             </span>
           </div>
-          <div className="h-[400px] xl:h-[540px]">
-            <LeafletMap selectedId={selectedId} onSelect={setSelectedId} />
+
+          <div className="h-[420px] px-4 py-4 sm:px-6 xl:h-[560px]">
+            <ComposableMap
+              width={980}
+              height={760}
+              projection="geoMercator"
+              projectionConfig={{ center: [-54, -15], scale: 720 }}
+              className="h-full w-full"
+            >
+              <ZoomableGroup
+                center={[-54, -15]}
+                zoom={1.02}
+                minZoom={1.02}
+                maxZoom={1.02}
+                disablePanning
+                disableZooming
+              >
+                <Geographies geography={geographyUrl}>
+                  {({ geographies }) =>
+                    geographies.map(geo => {
+                      const stateName = String(
+                        (geo.properties as { nome?: string })?.nome ?? ""
+                      );
+                      const stateKey = normalizeLabel(stateName);
+                      const hubsInState = hubsByState[stateKey] ?? [];
+                      const accent =
+                        hubsInState[0]?.color ?? "rgba(5, 5, 5, 0.12)";
+                      const isSelected = stateKey === selectedStateKey;
+                      const isHovered = stateKey === hoveredState;
+
+                      return (
+                        <Geography
+                          key={geo.rsmKey}
+                          geography={geo}
+                          onMouseEnter={event => {
+                            setHoveredState(stateKey);
+                            updateTooltip(
+                              event,
+                              stateName,
+                              hubsInState.length > 0
+                                ? `${hubsInState.length} HUB(s) mapeados`
+                                : "Sem HUB ativo",
+                              hubsInState[0]?.color ?? "rgba(5,5,5,0.45)"
+                            );
+                          }}
+                          onMouseMove={event => {
+                            updateTooltip(
+                              event,
+                              stateName,
+                              hubsInState.length > 0
+                                ? `${hubsInState.length} HUB(s) mapeados`
+                                : "Sem HUB ativo",
+                              hubsInState[0]?.color ?? "rgba(5,5,5,0.45)"
+                            );
+                          }}
+                          onMouseLeave={() => {
+                            setHoveredState(null);
+                            setTooltip(null);
+                          }}
+                          style={{
+                            default: {
+                              fill: isSelected
+                                ? `${accent}22`
+                                : hubsInState.length > 0
+                                  ? `${accent}10`
+                                  : "rgba(255, 255, 255, 0.92)",
+                              stroke: isSelected
+                                ? accent
+                                : "rgba(5, 5, 5, 0.18)",
+                              strokeWidth: isSelected ? 1.5 : 0.95,
+                              outline: "none",
+                              transition:
+                                "fill 240ms ease, stroke 240ms ease, opacity 240ms ease",
+                            },
+                            hover: {
+                              fill: `${accent}18`,
+                              stroke: accent,
+                              strokeWidth: 1.4,
+                              outline: "none",
+                            },
+                            pressed: {
+                              fill: `${accent}24`,
+                              stroke: accent,
+                              strokeWidth: 1.5,
+                              outline: "none",
+                            },
+                          }}
+                        />
+                      );
+                    })
+                  }
+                </Geographies>
+
+                {hubs.map(hub => (
+                  <HubMarker
+                    key={hub.id}
+                    active={hub.id === selectedId}
+                    hub={hub}
+                    onClick={() => setSelectedId(hub.id)}
+                    onMouseEnter={event =>
+                      updateTooltip(
+                        event,
+                        hub.name,
+                        `${hub.stateName} // ${statusConfig[hub.status].label}`,
+                        hub.color
+                      )
+                    }
+                    onMouseMove={event =>
+                      updateTooltip(
+                        event,
+                        hub.name,
+                        `${hub.stateName} // ${statusConfig[hub.status].label}`,
+                        hub.color
+                      )
+                    }
+                    onMouseLeave={() => setTooltip(null)}
+                  />
+                ))}
+              </ZoomableGroup>
+            </ComposableMap>
           </div>
         </div>
 
-        {/* Painel lateral */}
-        <div className="flex flex-col overflow-hidden">
+        <div className="flex flex-col bg-white/50">
+          <div className="border-b border-black/8 px-5 py-4">
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[--ink]/35">
+              Painel de polos
+            </p>
+          </div>
 
-          {/* Em Abertura */}
-          {aberturaHubs.length > 0 && (
-            <div className="border-b border-white/[0.05]">
-              <div className="px-5 pt-5 pb-3">
-                <p className="flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[0.24em] text-[--leaf]/50">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[--leaf] opacity-60" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[--leaf]" />
-                  </span>
-                  Em Abertura
+          {aberturaHubs.length > 0 ? (
+            <div className="border-b border-black/8">
+              <div className="px-5 pb-2 pt-5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[--leaf-1]">
+                  Em abertura
                 </p>
               </div>
-              {aberturaHubs.map((hub) => (
-                <HubRow key={hub.id} hub={hub} selected={selectedId === hub.id} onSelect={setSelectedId} />
+              {aberturaHubs.map(hub => (
+                <HubRow
+                  key={hub.id}
+                  hub={hub}
+                  onSelect={setSelectedId}
+                  selected={selectedId === hub.id}
+                />
               ))}
             </div>
-          )}
+          ) : null}
 
-          {/* Em Planejamento */}
-          {planejamentoHubs.length > 0 && (
-            <div className="border-b border-white/[0.05]">
-              <div className="px-5 pt-5 pb-3">
-                <p className="font-mono text-[9px] font-bold uppercase tracking-[0.24em] text-[--sun]/50">
+          {planejamentoHubs.length > 0 ? (
+            <div className="border-b border-black/8">
+              <div className="px-5 pb-2 pt-5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[--sun]">
                   Planejamento
                 </p>
               </div>
-              {planejamentoHubs.map((hub) => (
-                <HubRow key={hub.id} hub={hub} selected={selectedId === hub.id} onSelect={setSelectedId} />
+              {planejamentoHubs.map(hub => (
+                <HubRow
+                  key={hub.id}
+                  hub={hub}
+                  onSelect={setSelectedId}
+                  selected={selectedId === hub.id}
+                />
               ))}
             </div>
-          )}
+          ) : null}
 
-          {/* Expansão */}
-          {expansaoHubs.length > 0 && (
+          {expansaoHubs.length > 0 ? (
             <div>
-              <div className="px-5 pt-5 pb-3">
-                <p className="font-mono text-[9px] font-bold uppercase tracking-[0.24em] text-[--ember]/40">
-                  Expansão Futura
+              <div className="px-5 pb-2 pt-5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[--ink]/38">
+                  Expansao futura
                 </p>
               </div>
-              {expansaoHubs.map((hub) => (
-                <HubRow key={hub.id} hub={hub} selected={selectedId === hub.id} onSelect={setSelectedId} />
+              {expansaoHubs.map(hub => (
+                <HubRow
+                  key={hub.id}
+                  hub={hub}
+                  onSelect={setSelectedId}
+                  selected={selectedId === hub.id}
+                />
               ))}
             </div>
-          )}
+          ) : null}
 
-          {/* Detalhe do selecionado */}
           <AnimatePresence mode="wait">
-            {selected && (
-              <motion.div
-                key={selected.id}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.22 }}
-                className="mt-auto border-t border-white/[0.05] bg-white/[0.015] p-5"
+            <motion.div
+              key={selected.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.24, ease: editorialEaseGentle }}
+              className="mt-auto border-t border-black/8 bg-white/92 p-5"
+            >
+              <p
+                className="text-[10px] font-bold uppercase tracking-[0.22em]"
+                style={{ color: selected.color }}
               >
-                <p className="mb-2 font-mono text-[9px] font-bold uppercase tracking-[0.22em] text-[--ink]/28">
-                  {selected.tag} — {statusConfig[selected.status].label}
-                </p>
-                <p className="text-[12.5px] leading-relaxed text-[--ink]/40">{selected.description}</p>
-                {!compact && (
-                  <Link
-                    href={`/quem-somos/hubs`}
-                    className="group mt-3 inline-flex cursor-pointer items-center gap-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em] transition-colors"
-                    style={{ color: selected.color + '70' }}
-                  >
-                    Ver todos os polos
-                    <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </Link>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
+                {selected.tag} // {statusConfig[selected.status].label}
+              </p>
+              <h3 className="mt-2 font-display text-[1.6rem] font-black italic leading-tight text-foreground">
+                {selected.name}
+              </h3>
+              <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-foreground/38">
+                {selected.stateName} // {selected.specialty}
+              </p>
+              <p className="mt-4 text-sm leading-7 text-foreground/64">
+                {selected.description}
+              </p>
 
+              {!compact ? (
+                <Link
+                  href="/quem-somos/hubs"
+                  className="group mt-4 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] transition-colors hover:text-[--leaf-1]"
+                  style={{ color: `${selected.color}B8` }}
+                >
+                  Ver pagina completa de HUBs
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              ) : null}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
-
     </section>
   );
 };
-
-// ── HubRow — item de lista ────────────────────────────────────────────────────
-
-function HubRow({ hub, selected, onSelect }: { hub: Hub; selected: boolean; onSelect: (id: string) => void }) {
-  const Icon = hub.icon;
-  const sc = statusConfig[hub.status];
-
-  return (
-    <motion.button
-      onClick={() => onSelect(hub.id)}
-      whileTap={{ scale: 0.99 }}
-      className={`flex w-full cursor-pointer items-center gap-3.5 border-l-2 px-5 py-3.5 text-left transition-all duration-200 ${
-        selected
-          ? 'bg-white/[0.03]'
-          : 'border-l-transparent hover:bg-white/[0.015]'
-      }`}
-      style={{
-        borderLeftColor: selected ? hub.color : 'transparent',
-      }}
-    >
-      <div
-        className="flex h-8 w-8 flex-shrink-0 items-center justify-center"
-        style={{
-          background: `${hub.color}10`,
-          border: `1px solid ${hub.color}25`,
-          color: selected ? hub.color : hub.color + '60',
-        }}
-      >
-        <Icon className="h-3.5 w-3.5" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center justify-between gap-2">
-          <span className="font-display text-[14px] font-bold" style={{ color: selected ? 'rgba(250,250,250,0.85)' : 'rgba(250,250,250,0.5)' }}>
-            {hub.name}
-          </span>
-          <span
-            className="flex-shrink-0 font-mono text-[9px] font-bold uppercase tracking-[0.18em]"
-            style={{ color: sc.labelColor + (hub.status === 'expansao' ? '50' : '70') }}
-          >
-            {sc.label}
-          </span>
-        </div>
-        <p className="mt-0.5 truncate text-[11px]" style={{ color: selected ? 'rgba(250,250,250,0.38)' : 'rgba(250,250,250,0.22)' }}>
-          {hub.specialty}
-        </p>
-      </div>
-    </motion.button>
-  );
-}
 
 export default RegionalMap;

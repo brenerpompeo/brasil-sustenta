@@ -16,7 +16,9 @@ const PerfilJovem = lazy(() => import("./pages/PerfilJovem"));
 const PerfilUniversidade = lazy(() => import("./pages/PerfilUniversidade"));
 const DashboardEmpresa = lazy(() => import("./pages/DashboardEmpresa"));
 const DashboardJovem = lazy(() => import("./pages/DashboardJovem"));
-const DashboardUniversidade = lazy(() => import("./pages/DashboardUniversidade"));
+const DashboardUniversidade = lazy(
+  () => import("./pages/DashboardUniversidade")
+);
 const ParaEmpresas = lazy(() => import("./pages/ParaEmpresas"));
 const ParaJovens = lazy(() => import("./pages/ParaJovens"));
 const ParaUniversidades = lazy(() => import("./pages/ParaUniversidades"));
@@ -99,7 +101,7 @@ function RouteLoading() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 text-center text-foreground">
       <div>
-        <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
+        <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
         <p className="font-body text-sm uppercase tracking-[0.24em] text-muted-foreground">
           Carregando experi&ecirc;ncia...
         </p>
@@ -111,7 +113,7 @@ function RouteLoading() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="dark" switchable={false}>
+      <ThemeProvider defaultTheme="light" switchable={false}>
         <TooltipProvider>
           <SEO />
           <AnalyticsScript />

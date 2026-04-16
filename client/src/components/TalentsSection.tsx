@@ -1,43 +1,45 @@
-import { motion } from 'framer-motion';
-import { BarChart3, Lightbulb, Megaphone, ArrowRight } from 'lucide-react';
-import { Link } from 'wouter';
+import { motion } from "framer-motion";
+import { BarChart3, Lightbulb, Megaphone, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
+import {
+  editorialViewport,
+  fadeInTarget,
+  fadeUpTarget,
+  fadeUpVariants,
+  staggerContainer,
+} from "@/lib/motion";
 
 const talents = [
   {
-    label: 'PERFIL // DADOS_E_INDICADORES',
-    title: 'Pesquisa, dados e indicadores',
-    context: 'Administração, economia, engenharia, relações internacionais e áreas correlatas.',
-    skills: ['Benchmark', 'Pesquisa aplicada', 'Indicadores', 'Análise ESG'],
-    bio: 'Transformam desafios abertos em hipóteses, leituras de mercado, estrutura de indicadores e recomendações práticas.',
+    label: "PERFIL // DADOS_E_INDICADORES",
+    title: "Pesquisa, dados e indicadores",
+    context:
+      "Administração, economia, engenharia, relações internacionais e áreas correlatas.",
+    skills: ["Benchmark", "Pesquisa aplicada", "Indicadores", "Análise ESG"],
+    bio: "Transformam desafios abertos em hipóteses, leituras de mercado, estrutura de indicadores e recomendações práticas.",
     icon: BarChart3,
   },
   {
-    label: 'PERFIL // PRODUTO_E_UX',
-    title: 'Produto, UX e operação',
-    context: 'Design, computação, produto, service design e tecnologia.',
-    skills: ['UX', 'Prototipagem', 'Fluxos', 'Solução digital'],
-    bio: 'Estruturam jornadas, protótipos, interfaces e operações capazes de levar a tese de impacto para a experiência real.',
+    label: "PERFIL // PRODUTO_E_UX",
+    title: "Produto, UX e operação",
+    context: "Design, computação, produto, service design e tecnologia.",
+    skills: ["UX", "Prototipagem", "Fluxos", "Solução digital"],
+    bio: "Estruturam jornadas, protótipos, interfaces e operações capazes de levar a tese de impacto para a experiência real.",
     icon: Lightbulb,
   },
   {
-    label: 'PERFIL // NARRATIVA_E_ENGAJAMENTO',
-    title: 'Narrativa, comunicação e engajamento',
-    context: 'Comunicação, publicidade, jornalismo, marketing e áreas criativas.',
-    skills: ['Storytelling', 'Conteúdo', 'Marca', 'Engajamento'],
-    bio: 'Traduzem metas e entregas em mensagem clara para stakeholders, comunidades, lideranças internas e empregabilidade do projeto.',
+    label: "PERFIL // NARRATIVA_E_ENGAJAMENTO",
+    title: "Narrativa, comunicação e engajamento",
+    context:
+      "Comunicação, publicidade, jornalismo, marketing e áreas criativas.",
+    skills: ["Storytelling", "Conteúdo", "Marca", "Engajamento"],
+    bio: "Traduzem metas e entregas em mensagem clara para stakeholders, comunidades, lideranças internas e empregabilidade do projeto.",
     icon: Megaphone,
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
-};
+const containerVariants = staggerContainer(0.12);
+const itemVariants = fadeUpVariants(24, 0.55);
 
 const TalentsSection = () => {
   return (
@@ -47,9 +49,8 @@ const TalentsSection = () => {
         <div className="mb-20 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55, ease: 'easeOut' }}
+            whileInView={fadeUpTarget()}
+            viewport={editorialViewport}
             className="max-w-2xl"
           >
             <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
@@ -57,18 +58,18 @@ const TalentsSection = () => {
             </p>
             <h2
               className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
-              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+              style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
             >
               Os perfis que entram
-              <span className="font-light italic text-[--leaf]"> em squad</span>.
+              <span className="font-light italic text-[--leaf]"> em squad</span>
+              .
             </h2>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: 0.15 }}
+            whileInView={fadeInTarget(0.15)}
+            viewport={editorialViewport}
           >
             <Link
               href="/para-empresas"
@@ -85,7 +86,7 @@ const TalentsSection = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={editorialViewport}
           className="grid grid-cols-1 gap-0 md:grid-cols-3"
         >
           {talents.map((talent, index) => {
@@ -95,7 +96,7 @@ const TalentsSection = () => {
                 key={index}
                 variants={itemVariants}
                 className="group flex flex-col border border-white/[0.05] p-8 hover:bg-white/[0.018] transition-colors duration-300"
-                style={{ borderLeft: index > 0 ? 'none' : undefined }}
+                style={{ borderLeft: index > 0 ? "none" : undefined }}
               >
                 {/* Label + Icon */}
                 <div className="mb-6 flex items-start justify-between">

@@ -1,42 +1,42 @@
-import { motion } from 'framer-motion';
-import { BrainCircuit, ShieldCheck, Workflow } from 'lucide-react';
+import { motion } from "framer-motion";
+import { BrainCircuit, ShieldCheck, Workflow } from "lucide-react";
+import {
+  editorialViewport,
+  fadeInTarget,
+  fadeUpTarget,
+  fadeUpVariants,
+  staggerContainer,
+} from "@/lib/motion";
 
 const benefits = [
   {
     icon: BrainCircuit,
-    label: 'MATCHING // IA_EXPLICAVEL',
-    title: 'Motor de Matching IA que justifica o fit',
+    label: "MATCHING // IA_EXPLICAVEL",
+    title: "Motor de Matching IA que justifica o fit",
     description:
-      'O Brasil Sustenta não só ranqueia. Ele mostra porque aquele talento e aquele squad fazem sentido para aquele desafio. Sem caixa-preta.',
-    accent: 'var(--leaf)',
+      "O Brasil Sustenta não só ranqueia. Ele mostra porque aquele talento e aquele squad fazem sentido para aquele desafio. Sem caixa-preta.",
+    accent: "var(--leaf)",
   },
   {
     icon: Workflow,
-    label: 'ENTREGA // SQUAD_BOX',
-    title: 'Entrega Auditável em formato Squad Box',
+    label: "ENTREGA // SQUAD_BOX",
+    title: "Entrega Auditável em formato Squad Box",
     description:
-      'A compra deixa de ser vaga ou consultoria aberta. A empresa recebe um time montado, um ritmo de execução e uma trilha de entregas com checkpoints reais.',
-    accent: 'var(--sky)',
+      "A compra deixa de ser vaga ou consultoria aberta. A empresa recebe um time montado, um ritmo de execução e uma trilha de entregas com checkpoints reais.",
+    accent: "var(--sky)",
   },
   {
     icon: ShieldCheck,
-    label: 'PROVA // GRI_TCFD',
-    title: 'Prova ESG sem greenwashing',
+    label: "PROVA // GRI_TCFD",
+    title: "Prova ESG sem greenwashing",
     description:
-      'Brief, sprints, evidências e relatório final tornam a narrativa de impacto concreta para stakeholders internos e externos. GRI/TCFD ready.',
-    accent: 'var(--sun)',
+      "Brief, sprints, evidências e relatório final tornam a narrativa de impacto concreta para stakeholders internos e externos. GRI/TCFD ready.",
+    accent: "var(--sun)",
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
-};
+const containerVariants = staggerContainer(0.12);
+const itemVariants = fadeUpVariants(24, 0.55);
 
 const WhyChooseSection = () => {
   return (
@@ -45,9 +45,8 @@ const WhyChooseSection = () => {
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, ease: 'easeOut' }}
+          whileInView={fadeUpTarget()}
+          viewport={editorialViewport}
           className="mb-20 max-w-2xl"
         >
           <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
@@ -55,13 +54,12 @@ const WhyChooseSection = () => {
           </p>
           <h2
             className="font-display font-bold leading-[0.9] tracking-tight text-[--ink]"
-            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+            style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
           >
             Não é job board.
             <br />
             Não é consultoria.
-            <br />
-            É uma camada de
+            <br />É uma camada de
             <span className="font-light italic text-[--leaf]"> execução</span>.
           </h2>
         </motion.div>
@@ -71,7 +69,7 @@ const WhyChooseSection = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={editorialViewport}
           className="mb-20 grid grid-cols-1 gap-0 md:grid-cols-3"
         >
           {benefits.map((benefit, index) => {
@@ -81,7 +79,7 @@ const WhyChooseSection = () => {
                 key={index}
                 variants={itemVariants}
                 className="group border border-white/[0.05] p-10 hover:bg-white/[0.018] transition-colors duration-300"
-                style={{ borderLeft: index > 0 ? 'none' : undefined }}
+                style={{ borderLeft: index > 0 ? "none" : undefined }}
               >
                 <p className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-[--ink]/28">
                   {benefit.label}
@@ -106,14 +104,13 @@ const WhyChooseSection = () => {
         {/* Bottom manifest strip */}
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          whileInView={fadeInTarget(0.2, 0.6)}
+          viewport={editorialViewport}
           className="border border-white/[0.05] px-8 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4"
         >
           <div className="h-2 w-2 flex-shrink-0 bg-[--leaf] shadow-[0_0_8px_rgba(0,255,133,0.6)]" />
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[--ink]/50">
-            Comprável por{' '}
+            Comprável por{" "}
             <span className="text-[--leaf]">RH, ESG ou Inovação</span> — sem
             mudar a tese do produto
           </p>

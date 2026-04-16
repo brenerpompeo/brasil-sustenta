@@ -1,50 +1,50 @@
-import { Database, Network, Activity } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Database, Network, Activity } from "lucide-react";
+import { motion } from "framer-motion";
+import { editorialViewport, fadeUpTarget } from "@/lib/motion";
 
 const phases = [
   {
-    phase: '01',
-    label: 'INGESTÃO',
-    title: 'Mapeamento',
+    phase: "01",
+    label: "INGESTÃO",
+    title: "Mapeamento",
     description:
-      'A empresa publica o desafio com ODS, escopo e budget. A IA mapeia a rede de talentos e gera shortlist com fit score explicável.',
+      "A empresa publica o desafio com ODS, escopo e budget. A IA mapeia a rede de talentos e gera shortlist com fit score explicável.",
     icon: Database,
-    color: '#2E5BFF',
+    color: "#2E5BFF",
   },
   {
-    phase: '02',
-    label: 'DEPLOY',
-    title: 'Execução',
+    phase: "02",
+    label: "DEPLOY",
+    title: "Execução",
     description:
-      'A curadoria humana compõe o squad multidisciplinar. Kickoff, checkpoints, sprints e acompanhamento com entregáveis parciais.',
+      "A curadoria humana compõe o squad multidisciplinar. Kickoff, checkpoints, sprints e acompanhamento com entregáveis parciais.",
     icon: Network,
-    color: '#F5FF00',
+    color: "#F5FF00",
   },
   {
-    phase: '03',
-    label: 'SCALE',
-    title: 'Soberania',
+    phase: "03",
+    label: "SCALE",
+    title: "Soberania",
     description:
-      'Empresa recebe relatório executivo com trilha de evidência. Sinais para hiring, compliance GRI/TCFD e impacto mensurável.',
+      "Empresa recebe relatório executivo com trilha de evidência. Sinais para hiring, compliance GRI/TCFD e impacto mensurável.",
     icon: Activity,
-    color: '#00FF85',
+    color: "#00FF85",
   },
 ];
 
 const HowItWorksSection = () => {
   return (
-    <section className="relative z-10 border-t border-white/10 bg-[#020202]">
-      <div className="grid grid-cols-1 divide-y divide-white/10 border-b border-white/10 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+    <section className="relative z-10 border-t border-black/8 bg-[--paper]">
+      <div className="grid grid-cols-1 divide-y divide-black/8 border-b border-black/8 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
         {phases.map((p, i) => {
           const Icon = p.icon;
           return (
             <motion.div
               key={p.phase}
               initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ delay: i * 0.12, duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
-              className="group relative p-12 transition-all duration-300 hover:bg-white/[0.03] lg:p-16"
+              whileInView={fadeUpTarget(i * 0.12, 24)}
+              viewport={editorialViewport}
+              className="group relative bg-white p-12 transition-all duration-300 hover:bg-black/[0.02] lg:p-16"
             >
               {/* Progress bar on hover */}
               <div
@@ -55,7 +55,7 @@ const HowItWorksSection = () => {
               {/* Icon + phase label */}
               <div className="mb-12 flex items-center justify-between">
                 <div
-                  className="flex h-14 w-14 items-center justify-center border border-white/10 bg-white/[0.03]"
+                  className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] border border-black/8 bg-[--paper-2]"
                   style={{ color: p.color }}
                 >
                   <Icon className="h-6 w-6" />
@@ -69,7 +69,9 @@ const HowItWorksSection = () => {
               </div>
 
               {/* Title */}
-              <h3 className="mb-8 font-display text-4xl font-black italic lg:text-5xl">{p.title}</h3>
+              <h3 className="mb-8 font-display text-4xl font-black italic lg:text-5xl">
+                {p.title}
+              </h3>
 
               {/* Description */}
               <p className="font-body text-base leading-relaxed text-[--ink]/40 lg:text-lg">
