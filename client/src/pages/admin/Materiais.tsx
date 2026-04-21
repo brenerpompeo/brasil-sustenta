@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { LoadingSkeleton, EmptyState } from '@/components/ds';
 
 const AdminMateriais = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -37,7 +38,7 @@ const AdminMateriais = () => {
     return text.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
   };
 
-  const { data: materialsData, refetch } = trpc.material.getAll.useQuery({ limit: 50 });
+  const { data: materialsData, isLoading, refetch } = trpc.material.getAll.useQuery({ limit: 50 });
   const createMutation = trpc.material.create.useMutation({ onSuccess: () => { toast.success("Pronto"); setIsModalOpen(false); resetForm(); refetch(); } });
   const updateMutation = trpc.material.update.useMutation({ onSuccess: () => { toast.success("Atualizado"); setIsModalOpen(false); resetForm(); refetch(); } });
 
@@ -45,6 +46,14 @@ const AdminMateriais = () => {
     setEditingMaterial(null);
     setFormData({ title: '', slug: '', description: '', materialType: 'video', fileUrl: '', externalUrl: '', status: 'published', territoryNodeId: null });
   };
+
+  if (isLoading) {
+    return (
+      <AdminLayout>
+        <LoadingSkeleton variant="table" lines={6} className="p-8" />
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>
@@ -128,11 +137,23 @@ const AdminMateriais = () => {
         <div className="bg-white border border-paper-3 rounded-3xl overflow-hidden shadow-sm">
           <table className="w-full"><thead className="bg-paper-2"><tr><th className="px-8 py-4 text-left text-[11px] font-black uppercase text-ink-4">Material / Hub</th><th className="px-8 py-4 text-right text-[11px] font-black uppercase text-ink-4">Ações</th></tr></thead>
             <tbody className="divide-y divide-paper-3">
-              {(materialsData || []).map(mat => {
-                const terrName = territories?.find((t: NonNullable<typeof territories>[number]) => t.id === mat.territoryNodeId)?.name || 'Global';
-                return (
-                <tr key={mat.id} className="hover:bg-paper-2"><td className="px-8 py-4"><p className="font-bold text-ink">{mat.title}</p><span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black">📍 {terrName}</span></td><td className="px-8 py-4 text-right"><Button variant="ghost" onClick={() => { setEditingMaterial(mat); setFormData({ title: mat.title, slug: mat.slug, description: mat.description || '', materialType: mat.materialType as any, fileUrl: mat.fileUrl || '', externalUrl: mat.externalUrl || '', status: mat.status as any, territoryNodeId: mat.territoryNodeId }); setIsModalOpen(true); }}><Edit className="h-4 w-4" /></Button></td></tr>
-              )})}
+              {(!materialsData || materialsData.length === 0) ? (
+                <tr>
+                  <td colSpan={2} className="px-8 py-16">
+                    <EmptyState
+                      title="Nenhum material encontrado"
+                      description="Nenhum material de apoio cadastrado."
+                    />
+                  </td>
+                </tr>
+              ) : (
+                materialsData.map(mat => {
+                  const terrName = territories?.find((t: NonNullable<typeof territories>[number]) => t.id === mat.territoryNodeId)?.name || 'Global';
+                  return (
+                  <tr key={mat.id} className="hover:bg-paper-2"><td className="px-8 py-4"><p className="font-bold text-ink">{mat.title}</p><span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black">📍 {terrName}</span></td><td className="px-8 py-4 text-right"><Button variant="ghost" onClick={() => { setEditingMaterial(mat); setFormData({ title: mat.title, slug: mat.slug, description: mat.description || '', materialType: mat.materialType as any, fileUrl: mat.fileUrl || '', externalUrl: mat.externalUrl || '', status: mat.status as any, territoryNodeId: mat.territoryNodeId }); setIsModalOpen(true); }}><Edit className="h-4 w-4" /></Button></td></tr>
+                  )
+                })
+              )}
             </tbody>
           </table>
         </div>

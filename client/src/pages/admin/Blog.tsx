@@ -15,6 +15,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { LoadingSkeleton } from '@/components/ds';
 
 const AdminBlog = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -148,9 +149,7 @@ const AdminBlog = () => {
   if (isLoading) {
     return (
       <AdminLayout>
-        <div className="flex items-center justify-center h-[60vh]">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-leaf"></div>
-        </div>
+        <LoadingSkeleton variant="table" lines={6} className="p-8" />
       </AdminLayout>
     );
   }

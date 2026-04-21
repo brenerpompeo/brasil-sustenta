@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { SectionHeader } from "@/components/ds";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -23,18 +24,18 @@ import { editorialEase, editorialViewport } from "@/lib/motion";
 const benefits = [
   {
     icon: Trophy,
-    title: "Match explicado",
-    body: "Você vai saber exatamente por que foi selecionado. Sem caixa-preta. Os primeiros matches estão sendo preparados.",
-  },
-  {
-    icon: Award,
-    title: "Portfolio com prova",
-    body: "Cada projeto vai virar artefato público com avaliação real da empresa.",
+    title: "Match decodificado",
+    body: "Match explicado: 'Você tem fit com ODS 13 por causa de...'",
   },
   {
     icon: Compass,
-    title: "Empresa real, ODS real",
-    body: "Squads com empresas reais da sua cidade. Não simulação acadêmica. Os primeiros projetos nascem em Campinas.",
+    title: "Cidade real",
+    body: "Squad com empresa real da sua cidade — não simulação",
+  },
+  {
+    icon: Award,
+    title: "Prova social",
+    body: "Cada projeto vira prova no seu portfolio",
   },
 ];
 
@@ -78,25 +79,24 @@ export default function ParaJovens() {
           variant="paper"
           title={
             <>
-              Match real.
-              <br />
+              Projetos reais.{" "}
               <span className="text-[color:var(--color-sun-deep)]">
-                Projeto real.
+                Portfolio que empresas veem.
               </span>{" "}
-              Portfolio que fala.
+              Match que faz sentido.
             </>
           }
-          lede="Você vai saber por que foi selecionado para cada desafio. Vai trabalhar com empresa real, na sua cidade, com squad. E vai sair do projeto com prova pública no portfolio. Os primeiros matches estão sendo construídos em Campinas."
+          lede="Você sabe exatamente por que foi selecionado para cada desafio. Os primeiros matches estão sendo construídos em Campinas."
           actions={
             <>
               <Button asChild size="xl" variant="default">
                 <Link href="/auth/jovem">
-                  Entrar na base de talentos
+                  Ver matches para você
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
               <Button asChild size="xl" variant="outline">
-                <Link href="/oportunidades">Ver como funciona</Link>
+                <Link href="/auth/jovem">Criar perfil</Link>
               </Button>
             </>
           }
@@ -106,12 +106,13 @@ export default function ParaJovens() {
         {/* Benefits ============== */}
         <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
           <div className="grid gap-6 md:grid-cols-12 md:items-end md:gap-12">
-            <div className="md:col-span-7">
-              <span className="text-eyebrow-bright">Por que aqui</span>
-              <h2 className="text-headline mt-5 max-w-[18ch]">
-                Não é vaga. É curadoria.
-              </h2>
-            </div>
+            <SectionHeader
+              eyebrow="Por que aqui"
+              title="Não é vaga. É curadoria."
+              tone="bright"
+              showRule
+              className="md:col-span-7"
+            />
             <p className="text-body md:col-span-5">
               Aqui você não compete em job board. Aqui você é convidado para
               um projeto onde seu perfil tem fit explicado.
@@ -167,14 +168,13 @@ export default function ParaJovens() {
         <section className="container-editorial section-y">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-14 lg:items-center">
             <div className="lg:col-span-6">
-              <span className="text-eyebrow-bright">ODS em foco</span>
-              <h2 className="text-headline mt-5 max-w-[16ch]">
-                Sua área de impacto, mapeada.
-              </h2>
-              <p className="text-body mt-7 max-w-md">
-                Você escolhe seus ODS prioritários. O sistema aprende com seu
-                histórico de projetos. O Fit Score evolui com você.
-              </p>
+              <SectionHeader
+                eyebrow="ODS em foco"
+                title="Sua área de impacto, mapeada."
+                subtitle="Você escolhe seus ODS prioritários. O sistema aprende com seu histórico de projetos. O Fit Score evolui com você."
+                tone="bright"
+                showRule
+              />
 
               <div className="mt-9 flex flex-wrap gap-2.5">
                 {odsBadges.map(n => (

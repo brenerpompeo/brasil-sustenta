@@ -16,6 +16,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { LoadingSkeleton, EmptyState } from '@/components/ds';
 
 const AdminRelatorios = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -85,6 +86,14 @@ const AdminRelatorios = () => {
     else createMutation.mutate(formData as any);
   };
 
+  if (isLoading) {
+    return (
+      <AdminLayout>
+        <LoadingSkeleton variant="table" lines={6} className="p-8" />
+      </AdminLayout>
+    );
+  }
+
   return (
     <AdminLayout>
       <div className="space-y-12 pb-20">
@@ -119,13 +128,25 @@ const AdminRelatorios = () => {
           <table className="w-full">
             <thead className="bg-paper-2"><tr><th className="px-8 py-4 text-left text-[11px] font-black uppercase text-ink-4">Relatório / Hub</th><th className="px-8 py-4 text-right text-[11px] font-black uppercase text-ink-4">Ações</th></tr></thead>
             <tbody className="divide-y divide-paper-3">
-              {(reportsData || []).map(rpt => {
-                const terrName = territories?.find((t: NonNullable<typeof territories>[number]) => t.id === rpt.territoryNodeId)?.name || 'Global';
-                return (
-                <tr key={rpt.id} className="hover:bg-paper-2">
-                  <td className="px-8 py-4"><p className="font-bold text-ink">{rpt.title}</p><span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black uppercase">📍 {terrName}</span></td>
-                  <td className="px-8 py-4 text-right"><Button variant="ghost" onClick={() => { setEditingReport(rpt); setFormData({ title: rpt.title, slug: rpt.slug, summary: rpt.summary || '', reportType: rpt.reportType as any, year: rpt.year || 2024, period: rpt.period || '', fileUrl: rpt.fileUrl || '', status: rpt.status as any, territoryNodeId: rpt.territoryNodeId }); setIsModalOpen(true); }}><Edit className="h-4 w-4" /></Button></td></tr>
-              )})}
+              {(!reportsData || reportsData.length === 0) ? (
+                <tr>
+                  <td colSpan={2} className="px-8 py-16">
+                    <EmptyState
+                      title="Nenhum relatório encontrado"
+                      description="Nenhum relatório foi cadastrado ainda."
+                    />
+                  </td>
+                </tr>
+              ) : (
+                reportsData.map(rpt => {
+                  const terrName = territories?.find((t: NonNullable<typeof territories>[number]) => t.id === rpt.territoryNodeId)?.name || 'Global';
+                  return (
+                  <tr key={rpt.id} className="hover:bg-paper-2">
+                    <td className="px-8 py-4"><p className="font-bold text-ink">{rpt.title}</p><span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black uppercase">📍 {terrName}</span></td>
+                    <td className="px-8 py-4 text-right"><Button variant="ghost" onClick={() => { setEditingReport(rpt); setFormData({ title: rpt.title, slug: rpt.slug, summary: rpt.summary || '', reportType: rpt.reportType as any, year: rpt.year || 2024, period: rpt.period || '', fileUrl: rpt.fileUrl || '', status: rpt.status as any, territoryNodeId: rpt.territoryNodeId }); setIsModalOpen(true); }}><Edit className="h-4 w-4" /></Button></td></tr>
+                )
+                })
+              )}
             </tbody>
           </table>
         </div>

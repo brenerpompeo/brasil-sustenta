@@ -8,6 +8,7 @@ import {
   GraduationCap,
   School,
 } from "lucide-react";
+import { SectionHeader } from "@/components/ds";
 import { Link } from "wouter";
 
 import Footer from "@/components/Footer";
@@ -20,18 +21,18 @@ import { Button } from "@/components/ui/button";
 const benefits = [
   {
     icon: GraduationCap,
-    title: "Extensão real",
-    body: "Projetos com empresas reais da cidade. Não simulação acadêmica.",
+    title: "Projetos locais",
+    body: "Projetos reais com empresas locais — não simulações genéricas",
   },
   {
     icon: ClipboardCheck,
     title: "Horas registradas",
-    body: "Trilha auditável de horas para grade curricular e MEC.",
+    body: "Horas de extensão registradas e relatório institucional por semestre",
   },
   {
     icon: BookOpen,
-    title: "Empregabilidade mensurável",
-    body: "Dados de portfolio, ODS e contratação dos seus alunos.",
+    title: "Relatório MEC",
+    body: "Dados de empregabilidade e ODS dos alunos — material para o MEC",
   },
 ];
 
@@ -70,13 +71,11 @@ export default function ParaUniversidades() {
           title={
             <>
               Extensão com{" "}
-              <span className="italic text-[color:var(--color-clay)]">
-                entregável
-              </span>{" "}
-              real.
+              <span className="italic text-[color:var(--color-clay)]">projetos reais.</span>{" "}
+              Portfólio com empresas da cidade.
             </>
           }
-          lede="Seu campus dentro do HUB local. Alunos em squads com empresas reais, horas registradas e relatório institucional pronto para o MEC. Primeiras conversas em andamento em Campinas."
+          lede="Seu campus dentro do HUB Local. Alunos em squads com evidências para o MEC."
           actions={
             <>
               <Button asChild size="xl" variant="default">
@@ -86,7 +85,7 @@ export default function ParaUniversidades() {
                 </Link>
               </Button>
               <Button asChild size="xl" variant="outline">
-                <Link href="/quem-somos/hubs">Ver HUBs ativos</Link>
+                <Link href="/contato">Falar com coordenação</Link>
               </Button>
             </>
           }
@@ -96,14 +95,12 @@ export default function ParaUniversidades() {
         {/* Benefícios ============= */}
         <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
           <div className="grid gap-6 md:grid-cols-12 md:items-end md:gap-12">
-            <div className="md:col-span-7">
-              <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-clay-deep)]">
-                Por que ativar
-              </span>
-              <h2 className="text-headline mt-5 max-w-[16ch]">
-                Extensão que vira evidência.
-              </h2>
-            </div>
+            <SectionHeader
+              eyebrow="Por que ativar"
+              title="Extensão que vira evidência."
+              showRule
+              className="md:col-span-7"
+            />
             <p className="text-body md:col-span-5">
               Seu campus passa a entregar projetos reais com empresas da
               cidade. Mais empregabilidade, mais ODS, mais dados.
@@ -132,10 +129,11 @@ export default function ParaUniversidades() {
         <section className="surface-paper-2 border-y border-[color:var(--color-border)] section-y">
           <div className="container-editorial">
             <div className="max-w-2xl">
-              <span className="text-eyebrow">O que entra</span>
-              <h2 className="text-headline mt-5">
-                Quatro entregas no contrato de parceria.
-              </h2>
+              <SectionHeader
+                eyebrow="O que entra"
+                title="Quatro entregas no contrato de parceria."
+                showRule
+              />
             </div>
             <div className="mt-12 grid gap-4 md:grid-cols-2">
               {offerings.map(o => (
@@ -164,14 +162,13 @@ export default function ParaUniversidades() {
         <section className="container-editorial section-y">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 lg:items-center">
             <div className="lg:col-span-5">
-              <span className="text-eyebrow-bright">Quem participa</span>
-              <h2 className="text-headline mt-5">
-                Coordenação, líder, alunos.
-              </h2>
-              <p className="text-body mt-7 max-w-md">
-                A parceria entra com 3 papéis institucionais — coordenação
-                acadêmica, Líder Campus e alunos engajados.
-              </p>
+              <SectionHeader
+                eyebrow="Quem participa"
+                title="Coordenação, líder, alunos."
+                subtitle="A parceria entra com 3 papéis institucionais — coordenação acadêmica, Líder Campus e alunos engajados."
+                tone="bright"
+                showRule
+              />
 
               <div className="mt-9 flex flex-wrap gap-2">
                 <Badge variant="clay">Pró-reitoria · Extensão</Badge>

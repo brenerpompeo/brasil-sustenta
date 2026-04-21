@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { SectionHeader } from "@/components/ds";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -23,18 +24,18 @@ import { editorialEase, editorialViewport } from "@/lib/motion";
 const valueProps = [
   {
     icon: Target,
-    title: "Shortlist com Fit Score",
-    body: "3 a 5 talentos rankeados por ODS Fit Score decomposto. Nunca caixa-preta.",
+    title: "ODS Fit Score explicável",
+    body: "Squad com 3-5 talentos selecionados por ODS Fit Score explicável.",
   },
   {
     icon: Users2,
-    title: "Squad em sprint",
-    body: "Equipe formada com competências, ODS e cidade do HUB. Checkpoints quinzenais.",
+    title: "Trilha de evidência",
+    body: "Sprint de 6-8 semanas com checkpoints e trilha de evidência.",
   },
   {
     icon: FileCheck2,
-    title: "Relatório auditável",
-    body: "Trilha de evidência por entrega. ESG vira artefato comprável, não decoração.",
+    title: "Prova material",
+    body: "Relatório final auditável — o entregável que prova o resultado.",
   },
 ];
 
@@ -121,22 +122,22 @@ export default function ParaEmpresas() {
           variant="paper"
           title={
             <>
-              Desafio ESG vira{" "}
-              <span className="italic text-[color:var(--color-leaf)]">squad</span>{" "}
-              em até 6 semanas.
+              Seu desafio ESG vira{" "}
+              <span className="italic text-[color:var(--color-leaf)]">squad, sprint e relatório</span>{" "}
+              em 6 semanas.
             </>
           }
-          lede="Brief com contexto, shortlist com Fit Score explicável, squad universitário em sprint e relatório auditável. Estamos construindo o modelo que tira ESG do PowerPoint e transforma em operação."
+          lede="Brief → Shortlist com Fit Score IA → Squad otimizado → Entrega auditável."
           actions={
             <>
               <Button asChild size="xl" variant="leaf">
                 <Link href="/auth/empresa">
-                  Ser um dos primeiros buyers
+                  Enviar brief ESG
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
               <Button asChild size="xl" variant="outline">
-                <Link href="#produtos">Ver produtos</Link>
+                <Link href="#produtos">Agendar discovery call</Link>
               </Button>
             </>
           }
@@ -146,12 +147,13 @@ export default function ParaEmpresas() {
         {/* Value props ====================== */}
         <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
           <div className="grid gap-6 md:grid-cols-12 md:gap-12 md:items-end">
-            <div className="md:col-span-7">
-              <span className="text-eyebrow-bright">O que muda</span>
-              <h2 className="text-headline mt-5 max-w-[16ch]">
-                Três coisas que você não tem hoje.
-              </h2>
-            </div>
+            <SectionHeader
+              eyebrow="O que muda"
+              title="Três coisas que você não tem hoje."
+              tone="bright"
+              showRule
+              className="md:col-span-7"
+            />
             <p className="text-body md:col-span-5">
               Não vendemos uma plataforma. Vendemos uma operação completa de
               ESG com universidade, território e auditoria embutidos.
@@ -177,10 +179,11 @@ export default function ParaEmpresas() {
         <section className="surface-paper-2 border-y border-[color:var(--color-border)] section-y">
           <div className="container-editorial">
             <div className="max-w-2xl">
-              <span className="text-eyebrow">Fluxo operacional</span>
-              <h2 className="text-headline mt-5">
-                Do brief ao relatório em 4 passos legíveis.
-              </h2>
+              <SectionHeader
+                eyebrow="Fluxo operacional"
+                title="Do brief ao relatório em 4 passos legíveis."
+                showRule
+              />
             </div>
 
             <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] md:grid-cols-2 lg:grid-cols-4">
@@ -207,12 +210,13 @@ export default function ParaEmpresas() {
         {/* Produtos ========================= */}
         <section id="produtos" className="container-editorial section-y">
           <div className="grid gap-6 md:grid-cols-12 md:gap-12 md:items-end">
-            <div className="md:col-span-7">
-              <span className="text-eyebrow-bright">Produtos</span>
-              <h2 className="text-headline mt-5 max-w-[14ch]">
-                Dois formatos. Buyer escolhe.
-              </h2>
-            </div>
+            <SectionHeader
+              eyebrow="Produtos"
+              title="Dois formatos. Buyer escolhe."
+              tone="bright"
+              showRule
+              className="md:col-span-7"
+            />
             <p className="text-body md:col-span-5">
               Pilot para validar. Managed Squad para escalar. Em ambos: brief,
               shortlist, squad, sprint, relatório.

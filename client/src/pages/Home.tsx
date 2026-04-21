@@ -199,11 +199,11 @@ export default function Home() {
               </div>
               
               <h1 className="font-display text-[9vw] md:text-[5vw] lg:text-[4.5rem] leading-[0.95] font-black lowercase tracking-tighter text-[color:var(--color-ink)] max-w-[16ch]">
-                Desafio ESG vira squad universitário com <span className="text-[color:var(--color-leaf)] italic">matching</span> por IA e entrega real.
+                Seu desafio ESG vira <span className="text-[color:var(--color-leaf)] italic">squad, sprint</span> e relatório.
               </h1>
               
               <p className="mt-8 font-mono text-sm md:text-base max-w-xl text-[color:var(--color-ink-3)] leading-relaxed border-l-2 border-[color:var(--color-ink)] pl-4">
-                Universidade, empresa e as juventudes locais trabalhando juntas pela Agenda 2030 em parceria com o estado.
+                Transformamos desafios corporativos em operação real conectando empresas, juventude e universidades na mesma cidade.
               </p>
               
               <div className="mt-14 flex flex-col sm:flex-row gap-0">

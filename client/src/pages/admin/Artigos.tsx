@@ -16,6 +16,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { LoadingSkeleton } from '@/components/ds';
 
 const AdminArtigos = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -111,7 +112,7 @@ const AdminArtigos = () => {
     );
   }, [articlesData, searchTerm]);
 
-  if (isLoading) return <div className="p-8">Carregando...</div>;
+  if (isLoading) return <LoadingSkeleton variant="table" lines={5} className="p-8" />;
 
   const getTerritoryName = (id: number | null) => {
     if (!id) return 'Global';

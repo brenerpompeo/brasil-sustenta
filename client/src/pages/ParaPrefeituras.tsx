@@ -8,6 +8,7 @@ import {
   ScrollText,
   Users,
 } from "lucide-react";
+import { SectionHeader } from "@/components/ds";
 import { Link } from "wouter";
 
 import Footer from "@/components/Footer";
@@ -20,18 +21,18 @@ import { Button } from "@/components/ui/button";
 const programPillars = [
   {
     icon: Users,
-    title: "Juventude engajada",
-    body: "Talentos universitários mapeados por ODS na sua cidade. Modelo em construção.",
+    title: "Eco-sistema acadêmico",
+    body: "HUB ativo na cidade com universidades parceiras e jovens engajados.",
   },
   {
     icon: Landmark,
-    title: "HUB ativo no município",
-    body: "Cidade vira nó territorial com universidades e empresas parceiras.",
+    title: "Eventos & Mapeamento",
+    body: "4 eventos anuais, 300+ talentos mapeados por ODS.",
   },
   {
     icon: FileBadge2,
-    title: "Relatório de impacto",
-    body: "Documento público para câmara, sociedade civil e prestação de contas.",
+    title: "Entrega institucional",
+    body: "Relatório de impacto exportável para câmara e sociedade civil.",
   },
 ];
 
@@ -66,7 +67,7 @@ export default function ParaPrefeituras() {
               2030.
             </>
           }
-          lede="Programa Municipal ODS Jovem é um contrato concreto de engajamento de juventude universitária local — com HUB ativo, eventos anuais e relatório público de impacto alinhado à Agenda 2030. Formato em construção a partir de Campinas."
+          lede="Um programa concreto de engajamento de juventude local com relatório público de impacto."
           actions={
             <>
               <Button asChild size="xl" variant="atlantic">
@@ -76,7 +77,7 @@ export default function ParaPrefeituras() {
                 </Link>
               </Button>
               <Button asChild size="xl" variant="outline">
-                <Link href="/quem-somos/hubs">Ver HUBs ativos</Link>
+                <Link href="/modelo-ods">Ver modelo do Programa Municipal ODS</Link>
               </Button>
             </>
           }
@@ -86,14 +87,12 @@ export default function ParaPrefeituras() {
         {/* Pilares ================ */}
         <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
           <div className="grid gap-6 md:grid-cols-12 md:items-end md:gap-12">
-            <div className="md:col-span-7">
-              <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-atlantic)]">
-                Três pilares
-              </span>
-              <h2 className="text-headline mt-5 max-w-[16ch]">
-                ODS como operação municipal.
-              </h2>
-            </div>
+            <SectionHeader
+              eyebrow="Três pilares"
+              title="ODS como operação municipal."
+              showRule
+              className="md:col-span-7"
+            />
             <p className="text-body md:col-span-5">
               Não é evento isolado. É infraestrutura permanente para
               acompanhamento da Agenda 2030 com juventude, universidades e
@@ -157,15 +156,13 @@ export default function ParaPrefeituras() {
         <section className="container-editorial section-y">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 lg:items-center">
             <div className="lg:col-span-6">
-              <span className="text-eyebrow-bright">Agenda 2030 · ODS</span>
-              <h2 className="text-headline mt-5 max-w-[14ch]">
-                Linguagem de política pública.
-              </h2>
-              <p className="text-body mt-7 max-w-md">
-                O Programa Municipal ODS Jovem dialoga com Plano Diretor,
-                Agenda 2030 e estratégias setoriais — sem importar jargão de
-                startup.
-              </p>
+              <SectionHeader
+                eyebrow="Agenda 2030 · ODS"
+                title="Linguagem de política pública."
+                subtitle="O Programa Municipal ODS Jovem dialoga com Plano Diretor, Agenda 2030 e estratégias setoriais — sem importar jargão de startup."
+                tone="bright"
+                showRule
+              />
 
               <ul className="mt-8 grid gap-3 text-sm">
                 {[
