@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import DashboardLayout, { DashboardTheme, SidebarItem } from "@/components/DashboardLayout";
+import DashboardLayout, { type SidebarItem } from "@/components/DashboardLayout";
 import FormPerfilTalento from "@/components/FormPerfilTalento";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
@@ -7,6 +7,8 @@ import { useLocation } from "wouter";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Home, Compass, FileText, Zap, User, Settings, Plus, Briefcase, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { dashboardJovemTheme } from "@/constants/dashboard-themes";
+import { LoadingSkeleton, EmptyState } from "@/components/ds";
 
 export default function DashboardJovem() {
   const [, setLocation] = useLocation();
@@ -27,17 +29,14 @@ export default function DashboardJovem() {
 
   useEffect(() => {
     if (!isPreview && isUnauthorized) {
-      setLocation("/login/jovem");
+      setLocation("/auth/jovem");
     }
   }, [isPreview, isUnauthorized, setLocation]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center text-foreground">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky mx-auto mb-4"></div>
-          <p className="font-body opacity-60">Carregando interface do talento...</p>
-        </div>
+      <div className="min-h-screen bg-[color:var(--color-paper)] flex items-center justify-center p-10">
+        <LoadingSkeleton variant="card" lines={3} />
       </div>
     );
   }
@@ -66,24 +65,7 @@ export default function DashboardJovem() {
     impactHours: (squadsData?.total || 1) * 120,
   };
 
-  const theme: DashboardTheme = {
-    navBg: "bg-[#0A0A0A]",
-    navBorder: "border-white/10",
-    brandHighlightText: "text-[#00FF85]",
-    brandSubtitleText: "text-white/40",
-    activeText: "text-[#00FF85]",
-    activeBg: "bg-[#00FF85]/10",
-    activeBorder: "border-[#00FF85]",
-    personaOuterBorder: "border-white/5",
-    personaGradientFrom: "from-white/5",
-    personaGradientTo: "to-transparent",
-    personaTitleText: "text-white/30",
-    personaSubtitleText: "text-white",
-    avatarRing: "ring-white/10",
-    avatarBg: "bg-[#00FF85]/20",
-    avatarText: "text-[#00FF85]",
-    pageSelectionTheme: "selection:bg-[#00FF85] selection:text-[#0A0A0A]"
-  };
+  const theme = dashboardJovemTheme;
 
   const menuItems1: SidebarItem[] = [
     { id: "overview", label: "Resumo", icon: Home, onClick: () => setActiveTab("overview") },
@@ -276,11 +258,11 @@ export default function DashboardJovem() {
                 ))}
               </div>
             ) : (
-              <div className="bg-card p-12 rounded-[2rem] border border-border text-center shadow-sm">
-                <Compass className="w-16 h-16 text-primary/20 mx-auto mb-4" />
-                <h3 className="font-display text-2xl font-bold text-foreground mb-2">Sem matches no radar</h3>
-                <p className="text-muted-foreground font-semibold">Nao ha novos desafios com aderencia forte ao seu perfil neste momento.</p>
-              </div>
+              <EmptyState
+                icon={Compass}
+                title="Sem matches no radar"
+                description="Não há novos desafios com aderência forte ao seu perfil neste momento."
+              />
             )}
           </div>
         )}

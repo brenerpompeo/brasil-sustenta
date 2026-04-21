@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import DashboardLayout, { DashboardTheme, SidebarItem } from "@/components/DashboardLayout";
+import DashboardLayout, { type SidebarItem } from "@/components/DashboardLayout";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
@@ -9,6 +9,8 @@ import { AiMatchCard } from "@/components/ui/ai-match-card";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Home, Briefcase, Users, Zap, User, Settings, Plus, Check, X, Eye, Sparkles } from "lucide-react";
+import { dashboardEmpresaTheme } from "@/constants/dashboard-themes";
+import { LoadingSkeleton, EmptyState } from "@/components/ds";
 
 export default function DashboardEmpresa() {
   const [, setLocation] = useLocation();
@@ -31,18 +33,15 @@ export default function DashboardEmpresa() {
 
   useEffect(() => {
     if (!isPreview && isUnauthorized) {
-      setLocation("/login/empresa");
+      setLocation("/auth/empresa");
     }
   }, [isPreview, isUnauthorized, setLocation]);
 
   // Redirecionar se não autenticado
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center text-foreground">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="opacity-60">Carregando interface corporativa...</p>
-        </div>
+      <div className="min-h-screen bg-[color:var(--color-paper)] flex items-center justify-center p-10">
+        <LoadingSkeleton variant="card" lines={4} />
       </div>
     );
   }
@@ -107,24 +106,7 @@ export default function DashboardEmpresa() {
     setActiveTab("candidatos");
   };
 
-  const theme: DashboardTheme = {
-    navBg: "bg-[#0A0A0A]",
-    navBorder: "border-white/10",
-    brandHighlightText: "text-[#00FF85]",
-    brandSubtitleText: "text-white/40",
-    activeText: "text-[#00FF85]",
-    activeBg: "bg-[#00FF85]/10",
-    activeBorder: "border-[#00FF85]",
-    personaOuterBorder: "border-white/5",
-    personaGradientFrom: "from-white/5",
-    personaGradientTo: "to-transparent",
-    personaTitleText: "text-white/30",
-    personaSubtitleText: "text-white",
-    avatarRing: "ring-white/10",
-    avatarBg: "bg-[#00FF85]/20",
-    avatarText: "text-[#00FF85]",
-    pageSelectionTheme: "selection:bg-[#00FF85] selection:text-[#0A0A0A]"
-  };
+  const theme = dashboardEmpresaTheme;
 
   const menuItems1: SidebarItem[] = [
     { id: "overview", label: "Resumo", icon: Home, onClick: () => { setActiveTab("overview"); setShowCreateForm(false); } },
@@ -292,17 +274,13 @@ export default function DashboardEmpresa() {
             {activeTab === "candidatos" && (
               <div className="animate-fade-in-up">
                 {!selectedProjectId ? (
-                  <div className="bg-card border border-border rounded-2xl p-10 text-center">
-                    <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="font-display text-lg font-bold text-foreground mb-1">Shortlists</h3>
-                    <p className="text-sm text-muted-foreground mb-5">Acesse "Meus Briefs" e selecione um desafio ativo para analisar a shortlist contextual daquele fluxo.</p>
-                    <button 
-                      onClick={() => setActiveTab("projetos")} 
-                      className="text-sm font-semibold px-6 py-2 border-2 border-primary text-primary rounded-lg hover:bg-primary-5"
-                    >
-                      Ver Briefs
-                    </button>
-                  </div>
+                  <EmptyState
+                    icon={Users}
+                    title="Shortlists"
+                    description='Acesse "Meus Briefs" e selecione um desafio ativo para analisar a shortlist contextual daquele fluxo.'
+                    actionLabel="Ver Briefs"
+                    onAction={() => setActiveTab("projetos")}
+                  />
                 ) : (
                   <div className="bg-card border border-border rounded-2xl overflow-hidden">
                     <div className="p-5 border-b border-border bg-secondary flex items-center justify-between">
@@ -404,17 +382,13 @@ export default function DashboardEmpresa() {
             {activeTab === "squads" && (
               <div className="animate-fade-in-up">
                 {!selectedProjectId ? (
-                  <div className="bg-card border border-border rounded-2xl p-10 text-center">
-                    <Zap className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="font-display text-lg font-bold text-foreground mb-1">Squads</h3>
-                    <p className="text-sm text-muted-foreground mb-5">Selecione um brief ativo para acompanhar a composicao do squad, os papeis e o status de execucao.</p>
-                    <button 
-                      onClick={() => setActiveTab("projetos")} 
-                      className="text-sm font-semibold px-6 py-2 border border-border shadow-none bg-background text-foreground rounded-lg hover:bg-secondary"
-                    >
-                      Selecionar Brief
-                    </button>
-                  </div>
+                  <EmptyState
+                    icon={Zap}
+                    title="Squads"
+                    description="Selecione um brief ativo para acompanhar a composição do squad, os papéis e o status de execução."
+                    actionLabel="Selecionar Brief"
+                    onAction={() => setActiveTab("projetos")}
+                  />
                 ) : (
                   <div className="bg-card border border-border rounded-2xl p-6">
                     <div className="flex items-center justify-between mb-6 border-b border-border pb-4">
@@ -426,11 +400,13 @@ export default function DashboardEmpresa() {
                     </div>
 
                     {(!squadsData?.squads || squadsData.squads.length === 0) ? (
-                      <div className="text-center py-10 border-2 border-dashed border-border bg-background rounded-xl">
-                        <p className="font-semibold text-muted-foreground mb-1">Nenhum squad mapeado.</p>
-                        <p className="text-xs text-muted-foreground">A shortlist ainda nao foi convertida em composicao ativa. Revise os talentos ou acelere a aprovacao do brief.</p>
-                        <button onClick={() => setActiveTab("candidatos")} className="mt-4 px-4 py-2 bg-card border border-border rounded-md text-xs font-semibold hover:border-primary">Revisar Candidaturas</button>
-                      </div>
+                      <EmptyState
+                        icon={Zap}
+                        title="Nenhum squad mapeado"
+                        description="A shortlist ainda não foi convertida em composição ativa. Revise os talentos ou acelere a aprovação do brief."
+                        actionLabel="Revisar Candidaturas"
+                        onAction={() => setActiveTab("candidatos")}
+                      />
                     ) : (
                       <div className="space-y-4">
                         {squadsData.squads.map((squad) => (
@@ -470,24 +446,15 @@ export default function DashboardEmpresa() {
             {activeTab === "ai-match" && (
               <div className="animate-fade-in-up">
                 {!selectedProjectId ? (
-                  <div className="rounded-2xl p-10 text-center border-2 border-dashed border-primary/30 bg-gradient-to-br from-leaf/5 to-transparent">
-                    <Sparkles className="w-14 h-14 text-primary mx-auto mb-4 opacity-50" />
-                    <h3 className="font-display text-xl font-bold text-foreground mb-2">Selecione um Brief</h3>
-                    <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
-                      O motor de matching precisa de um desafio como referencia para explicar o fit e sugerir a melhor composicao de shortlist.
-                    </p>
-                    <button
-                      onClick={() => setActiveTab("projetos")}
-                      className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-2 transition-all"
-                    >
-                      <Briefcase className="w-4 h-4" /> Escolher Brief
-                    </button>
-                  </div>
+                  <EmptyState
+                    icon={Sparkles}
+                    title="Selecione um Brief"
+                    description="O motor de matching precisa de um desafio como referência para explicar o fit e sugerir a melhor composição de shortlist."
+                    actionLabel="Escolher Brief"
+                    onAction={() => setActiveTab("projetos")}
+                  />
                 ) : aiMatchLoading ? (
-                  <div className="flex flex-col items-center justify-center py-20 gap-4">
-                    <div className="w-12 h-12 rounded-full border-4 border-primary/20 border-t-leaf animate-spin" />
-                    <p className="text-sm text-muted-foreground font-medium">A IA esta calculando os fits e organizando a shortlist...</p>
-                  </div>
+                  <LoadingSkeleton variant="list" lines={4} />
                 ) : (
                   <div className="space-y-4">
                     {/* Header contextual */}
@@ -504,9 +471,11 @@ export default function DashboardEmpresa() {
 
                     {/* Cards de Match */}
                     {aiMatchData?.matches?.length === 0 ? (
-                      <div className="p-10 text-center rounded-xl border border-border">
-                        <p className="text-muted-foreground text-sm">Nenhum talento elegivel encontrado. Ajuste o brief, amplie a captacao ou ative um HUB parceiro.</p>
-                      </div>
+                      <EmptyState
+                        icon={Sparkles}
+                        title="Nenhum talento elegível"
+                        description="Ajuste o brief, amplie a captação ou ative um HUB parceiro."
+                      />
                     ) : (
                       aiMatchData?.matches?.map((match, idx) => (
                         <AiMatchCard

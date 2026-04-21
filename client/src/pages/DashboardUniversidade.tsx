@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import DashboardLayout, { DashboardTheme, SidebarItem } from "@/components/DashboardLayout";
+import DashboardLayout, { type SidebarItem } from "@/components/DashboardLayout";
+import { dashboardUniversidadeTheme } from "@/constants/dashboard-themes";
+import { LoadingSkeleton } from "@/components/ds";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
@@ -33,17 +35,14 @@ export default function DashboardUniversidade() {
 
   useEffect(() => {
     if (isUnauthorized) {
-      setLocation("/login/universidade");
+      setLocation("/auth/ies");
     }
   }, [isUnauthorized, setLocation]);
 
   if (loading && !isPreview) {
     return (
-      <div className="min-h-screen bg-paper flex items-center justify-center">
-        <div className="text-center text-ink flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-violet-2 border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="font-body font-medium opacity-60">Autenticando portal acadêmico...</p>
-        </div>
+      <div className="min-h-screen bg-[color:var(--color-paper)] flex items-center justify-center p-10">
+        <LoadingSkeleton variant="card" lines={4} />
       </div>
     );
   }
@@ -65,16 +64,7 @@ export default function DashboardUniversidade() {
 
   const uniName = statusData?.universityName || user?.name || "Instituição Parceira";
 
-  const theme: DashboardTheme = {
-    navBg: "bg-ink", navBorder: "border-white/5",
-    brandHighlightText: "text-violet-3", brandSubtitleText: "text-white/30",
-    activeText: "text-white", activeBg: "bg-violet-2 shadow-lg shadow-violet/20", activeBorder: "border-transparent",
-    personaOuterBorder: "border-white/10", personaGradientFrom: "bg-white/5", personaGradientTo: "bg-white/5",
-    personaTitleText: "text-white/40", personaSubtitleText: "text-white",
-    avatarRing: "ring-violet-2/20", avatarBg: "bg-violet", avatarText: "text-white",
-    pageSelectionTheme: "selection:bg-violet-3 selection:text-ink",
-    mainPaddingClass: "p-0 flex flex-col"
-  };
+  const theme = dashboardUniversidadeTheme;
 
   const menuItems1: SidebarItem[] = [
     { id: "overview", label: "Resumo Institucional", icon: LayoutDashboard, onClick: () => setActiveTab("overview") },
