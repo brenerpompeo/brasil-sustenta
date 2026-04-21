@@ -18,6 +18,7 @@ import {
   BookOpen,
   BarChart3,
   Library,
+  MapPinned,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -42,6 +43,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     { icon: Calendar, label: "Eventos", href: "/admin/eventos" },
     { icon: BarChart3, label: "Relatórios ESG", href: "/admin/relatorios" },
     { icon: Library, label: "Biblioteca Kit", href: "/admin/biblioteca" },
+    { icon: MapPinned, label: "Territórios", href: "/admin/territorios" },
     { icon: Bell, label: "Notificações", href: "/admin/notificacoes" },
   ];
 

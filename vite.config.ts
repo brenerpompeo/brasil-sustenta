@@ -1,16 +1,10 @@
-import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import fs from "node:fs";
 import path from "path";
 import { defineConfig } from "vite";
-import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
-
-
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime()];
 
 export default defineConfig({
-  plugins,
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -27,10 +21,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (!id.includes("node_modules")) {
-            return;
-          }
-
+          if (!id.includes("node_modules")) return;
           if (
             id.includes("node_modules/react") ||
             id.includes("node_modules/react-dom") ||
@@ -39,7 +30,6 @@ export default defineConfig({
           ) {
             return "react-core";
           }
-
           if (
             id.includes("node_modules/@tanstack") ||
             id.includes("node_modules/@trpc") ||
@@ -47,7 +37,6 @@ export default defineConfig({
           ) {
             return "data-core";
           }
-
           if (
             id.includes("node_modules/@radix-ui") ||
             id.includes("node_modules/lucide-react") ||
@@ -64,10 +53,10 @@ export default defineConfig({
           ) {
             return "ui-suite";
           }
-
           if (
             id.includes("node_modules/react-simple-maps") ||
-            id.includes("node_modules/topojson-client")
+            id.includes("node_modules/topojson-client") ||
+            id.includes("node_modules/mapbox-gl")
           ) {
             return "geo-suite";
           }
@@ -77,15 +66,6 @@ export default defineConfig({
   },
   server: {
     host: true,
-    allowedHosts: [
-      ".manuspre.computer",
-      ".manus.computer",
-      ".manus-asia.computer",
-      ".manuscomputer.ai",
-      ".manusvm.computer",
-      "localhost",
-      "127.0.0.1",
-    ],
     fs: {
       strict: true,
       deny: ["**/.*"],

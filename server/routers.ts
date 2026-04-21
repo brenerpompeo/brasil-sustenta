@@ -19,6 +19,7 @@ import { reportRouter } from "./routers/report";
 import { materialRouter } from "./routers/material";
 import { eventRouter } from "./routers/event";
 import { userRouter } from "./routers/user";
+import { territoryRouter } from "./routers/territory";
 
 export const appRouter = router({
   system: systemRouter,
@@ -50,6 +51,7 @@ export const appRouter = router({
   report: reportRouter,
   material: materialRouter,
   user: userRouter,
+  territory: territoryRouter,
 });
 
 export type AppRouter = typeof appRouter;

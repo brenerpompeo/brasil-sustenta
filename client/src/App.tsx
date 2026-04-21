@@ -2,11 +2,15 @@ import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import AnalyticsScript from "./components/AnalyticsScript";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { isPrivateThemePath } from "./lib/routeTheme";
 import Home from "./pages/Home";
+const QuemSomos = lazy(() => import("./pages/QuemSomos"));
+const Impacto = lazy(() => import("./pages/Impacto"));
+const Stakeholders = lazy(() => import("./pages/Stakeholders"));
 const LoginHub = lazy(() => import("./pages/LoginHub"));
 const LoginEmpresa = lazy(() => import("./pages/LoginEmpresa"));
 const LoginJovem = lazy(() => import("./pages/LoginJovem"));
@@ -22,6 +26,7 @@ const DashboardUniversidade = lazy(
 const ParaEmpresas = lazy(() => import("./pages/ParaEmpresas"));
 const ParaJovens = lazy(() => import("./pages/ParaJovens"));
 const ParaUniversidades = lazy(() => import("./pages/ParaUniversidades"));
+const ParaPrefeituras = lazy(() => import("./pages/ParaPrefeituras"));
 const Comunidade = lazy(() => import("./pages/Comunidade"));
 const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
 const AdminUsuarios = lazy(() => import("./pages/admin/Usuarios"));
@@ -35,6 +40,7 @@ const AdminEventos = lazy(() => import("./pages/admin/Eventos"));
 const AdminArtigos = lazy(() => import("./pages/admin/Artigos"));
 const AdminRelatorios = lazy(() => import("./pages/admin/Relatorios"));
 const AdminMateriais = lazy(() => import("./pages/admin/Materiais"));
+const AdminTerritorios = lazy(() => import("./pages/admin/Territorios"));
 const Oportunidades = lazy(() => import("./pages/Oportunidades"));
 const Blog = lazy(() => import("./pages/Blog"));
 const Eventos = lazy(() => import("./pages/Eventos"));
@@ -43,12 +49,29 @@ const Relatorios = lazy(() => import("./pages/Relatorios"));
 const Biblioteca = lazy(() => import("./pages/Biblioteca"));
 const Manifesto = lazy(() => import("./pages/Manifesto"));
 const Hubs = lazy(() => import("./pages/Hubs"));
+const AuthEmpresa = lazy(() => import("./pages/auth/EmpresaAuth"));
+const AuthJovem = lazy(() => import("./pages/auth/JovemAuth"));
+const AuthIES = lazy(() => import("./pages/auth/IESAuth"));
+const AuthEmbaixador = lazy(() => import("./pages/auth/EmbaixadorAuth"));
+const AuthPrefeitura = lazy(() => import("./pages/auth/PrefeituraAuth"));
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path="/" component={Home} />
+      {/* Novas rotas de auth por persona */}
+      <Route path="/auth/empresa" component={AuthEmpresa} />
+      <Route path="/auth/jovem" component={AuthJovem} />
+      <Route path="/auth/ies" component={AuthIES} />
+      <Route path="/auth/embaixador" component={AuthEmbaixador} />
+      <Route path="/auth/prefeitura" component={AuthPrefeitura} />
+      <Route path="/quem-somos" component={QuemSomos} />
+      <Route path="/quem-somos/dna" component={QuemSomos} />
+      <Route path="/quem-somos/manifesto" component={Manifesto} />
+      <Route path="/quem-somos/impacto" component={Impacto} />
+      <Route path="/quem-somos/stakeholders" component={Stakeholders} />
+      <Route path="/quem-somos/parceiros" component={Stakeholders} />
       <Route path="/login" component={LoginHub} />
       <Route path="/login/empresa" component={LoginEmpresa} />
       <Route path="/login/jovem" component={LoginJovem} />
@@ -60,8 +83,15 @@ function Router() {
       <Route path="/dashboard/jovem" component={DashboardJovem} />
       <Route path="/dashboard/universidade" component={DashboardUniversidade} />
       <Route path="/para-empresas" component={ParaEmpresas} />
+      <Route path="/para-empresas/publicar" component={LoginEmpresa} />
       <Route path="/para-jovens" component={ParaJovens} />
+      <Route path="/para-jovens/oportunidades" component={Oportunidades} />
       <Route path="/para-universidades" component={ParaUniversidades} />
+      <Route
+        path="/para-universidades/parceria"
+        component={LoginUniversidade}
+      />
+      <Route path="/para-prefeituras" component={ParaPrefeituras} />
       <Route path="/comunidade" component={Comunidade} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/usuarios" component={AdminUsuarios} />
@@ -75,7 +105,13 @@ function Router() {
       <Route path="/admin/artigos" component={AdminArtigos} />
       <Route path="/admin/relatorios" component={AdminRelatorios} />
       <Route path="/admin/materiais" component={AdminMateriais} />
+      <Route path="/admin/territorios" component={AdminTerritorios} />
       <Route path="/oportunidades" component={Oportunidades} />
+      <Route path="/conteudo/blog" component={Blog} />
+      <Route path="/conteudo/eventos" component={Eventos} />
+      <Route path="/conteudo/artigos" component={Artigos} />
+      <Route path="/conteudo/relatorios" component={Relatorios} />
+      <Route path="/conteudo/biblioteca" component={Biblioteca} />
       <Route path="/blog" component={Blog} />
       <Route path="/eventos" component={Eventos} />
       <Route path="/artigos" component={Artigos} />
@@ -110,6 +146,17 @@ function RouteLoading() {
   );
 }
 
+function RouteThemeBoundary({ children }: { children: React.ReactNode }) {
+  const [location] = useLocation();
+  const isPrivateTheme = isPrivateThemePath(location);
+
+  return (
+    <div className={isPrivateTheme ? "dark min-h-screen bg-background" : ""}>
+      {children}
+    </div>
+  );
+}
+
 function App() {
   return (
     <ErrorBoundary>
@@ -124,11 +171,13 @@ function App() {
           >
             Pular para o conte&uacute;do
           </a>
-          <div id="main-content">
-            <Suspense fallback={<RouteLoading />}>
-              <Router />
-            </Suspense>
-          </div>
+          <RouteThemeBoundary>
+            <div id="main-content">
+              <Suspense fallback={<RouteLoading />}>
+                <Router />
+              </Suspense>
+            </div>
+          </RouteThemeBoundary>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

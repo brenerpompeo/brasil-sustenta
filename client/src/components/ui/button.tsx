@@ -5,28 +5,38 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold tracking-tight transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold tracking-tight transition-[background,color,border-color,transform] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[color:var(--color-leaf)] focus-visible:ring-offset-[color:var(--color-paper)] aria-invalid:ring-destructive/30 aria-invalid:border-destructive cursor-pointer select-none",
   {
     variants: {
       variant: {
         default:
-          "border border-primary/10 bg-primary text-primary-foreground shadow-[0_18px_38px_rgba(0,255,133,0.14)] hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_22px_46px_rgba(0,255,133,0.2)]",
-        destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-[color:var(--color-ink)] text-[color:var(--color-paper)] border border-[color:var(--color-ink)] hover:bg-[color:var(--color-ink-2)]",
+        leaf:
+          "bg-[color:var(--color-leaf)] text-white border border-[color:var(--color-leaf)] hover:bg-[color:var(--color-leaf-deep)] hover:border-[color:var(--color-leaf-deep)]",
+        sun:
+          "bg-[color:var(--color-sun)] text-[color:var(--color-ink)] border border-[color:var(--color-sun-deep)] hover:bg-[color:var(--color-sun-bright)]",
+        atlantic:
+          "bg-[color:var(--color-atlantic)] text-white border border-[color:var(--color-atlantic)] hover:bg-[color:var(--color-atlantic-deep)] hover:border-[color:var(--color-atlantic-deep)]",
         outline:
-          "border border-border bg-white text-foreground shadow-[0_10px_24px_rgba(5,5,5,0.03)] hover:-translate-y-0.5 hover:bg-secondary",
+          "bg-transparent text-[color:var(--color-ink)] border border-[color:var(--color-ink)] hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-paper)]",
         secondary:
-          "border border-foreground/10 bg-foreground text-background shadow-[0_14px_32px_rgba(5,5,5,0.08)] hover:-translate-y-0.5 hover:bg-foreground/90",
-        ghost: "text-foreground/70 hover:bg-secondary hover:text-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-[color:var(--color-paper-2)] text-[color:var(--color-ink)] border border-transparent hover:bg-[color:var(--color-paper-3)]",
+        ghost:
+          "bg-transparent text-[color:var(--color-ink)] border border-transparent hover:bg-[color:var(--color-paper-2)]",
+        link:
+          "bg-transparent text-[color:var(--color-ink)] border-0 underline underline-offset-4 decoration-[color:var(--color-leaf)] decoration-2 hover:decoration-[color:var(--color-ink)] px-0 h-auto min-h-0",
+        destructive:
+          "bg-[color:var(--color-destructive)] text-white border border-[color:var(--color-destructive)] hover:opacity-90",
       },
       size: {
-        default: "h-10 px-5 py-2 has-[>svg]:px-4",
-        sm: "h-8 gap-1.5 px-3.5 has-[>svg]:px-3",
-        lg: "h-12 px-7 has-[>svg]:px-5",
-        icon: "size-9",
-        "icon-sm": "size-8",
-        "icon-lg": "size-10",
+        default: "min-h-11 px-5 text-[0.9375rem]",
+        xs: "min-h-7 px-2.5 text-[0.75rem] gap-1",
+        sm: "min-h-9 px-4 text-[0.8125rem] gap-1.5",
+        lg: "min-h-13 px-7 text-base",
+        xl: "min-h-14 px-8 text-base",
+        icon: "size-11",
+        "icon-sm": "size-9",
+        "icon-lg": "size-13",
       },
     },
     defaultVariants: {

@@ -97,7 +97,7 @@ const PerfilUniversidade = () => {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-foreground mb-4">Acesso Restrito</h2>
           <p className="text-muted-foreground mb-6">Você precisa estar logado para acessar esta página.</p>
-          <Link href="/login/universidade">
+          <Link href="/auth/ies">
             <Button className="bg-primary hover:bg-primary/90 text-black">
               Fazer Login
             </Button>

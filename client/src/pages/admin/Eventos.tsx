@@ -31,10 +31,11 @@ const AdminEventos = () => {
     maxParticipants: 100,
     status: 'upcoming' as 'upcoming' | 'ongoing' | 'completed' | 'cancelled',
     isFeatured: false,
-    hub: 'Global' as 'Global' | 'São Paulo (Estado)' | 'Rio de Janeiro (Estado)' | 'Campinas (Região)'
+    territoryNodeId: null as number | null
   });
 
   // TRPC Hooks
+  const { data: territories } = trpc.territory.admin.list.useQuery();
   const { data: eventsData, isLoading, refetch } = trpc.event.getAll.useQuery({ limit: 50 });
 
   const createMutation = trpc.event.create.useMutation({
@@ -83,7 +84,7 @@ const AdminEventos = () => {
       maxParticipants: 100,
       status: 'upcoming',
       isFeatured: false,
-      hub: 'Global'
+      territoryNodeId: null
     });
   };
 
@@ -99,7 +100,7 @@ const AdminEventos = () => {
       maxParticipants: event.maxParticipants || 100,
       status: event.status,
       isFeatured: event.isFeatured || false,
-      hub: (event.hub || 'Global') as any
+      territoryNodeId: event.territoryNodeId
     });
     setIsModalOpen(true);
   };
@@ -203,17 +204,17 @@ const AdminEventos = () => {
                     <div className="space-y-2">
                       <Label className="text-[11px] font-black uppercase tracking-widest text-ink-4">Hub Regional</Label>
                       <Select
-                        value={formData.hub}
-                        onValueChange={(v: 'Global' | 'São Paulo (Estado)' | 'Rio de Janeiro (Estado)' | 'Campinas (Região)') => setFormData({ ...formData, hub: v })}
+                        value={formData.territoryNodeId?.toString() || "null"}
+                        onValueChange={(v) => setFormData({ ...formData, territoryNodeId: v === "null" ? null : parseInt(v) })}
                       >
                         <SelectTrigger className="h-11 rounded-xl border-paper-3 font-bold text-ink">
                           <SelectValue placeholder="Selecione o Hub..." />
                         </SelectTrigger>
                         <SelectContent className="bg-white border-paper-3 rounded-xl shadow-2xl">
-                          <SelectItem value="Global">🌐 Global / Nacional</SelectItem>
-                          <SelectItem value="Campinas (Região)">📍 HUB Campinas</SelectItem>
-                          <SelectItem value="São Paulo (Estado)">📍 HUB São Paulo</SelectItem>
-                          <SelectItem value="Rio de Janeiro (Estado)">📍 HUB Rio de Janeiro</SelectItem>
+                          <SelectItem value="null">🌐 Global / Nacional</SelectItem>
+                          {territories?.map((t: NonNullable<typeof territories>[number]) => (
+                            <SelectItem key={t.id} value={t.id.toString()}>📍 {t.name}</SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>
@@ -373,7 +374,9 @@ const AdminEventos = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-paper-3">
-                {filteredEventos.map((event) => (
+                {filteredEventos.map((event) => {
+                  const terrName = territories?.find((t: NonNullable<typeof territories>[number]) => t.id === event.territoryNodeId)?.name || 'Global';
+                  return (
                   <tr key={event.id} className="hover:bg-paper-2 transition-all group">
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-4">
@@ -384,7 +387,7 @@ const AdminEventos = () => {
                           <p className="text-[14px] font-bold text-ink group-hover:text-sky transition-colors leading-tight">{event.title}</p>
                           <div className="flex items-center gap-2 mt-1">
                             <p className="text-[11px] font-black text-ink-4 uppercase tracking-widest">{event.location || 'Online'}</p>
-                            <span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black">HUB {event.hub || 'Global'}</span>
+                            <span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black">📍 {terrName}</span>
                           </div>
                         </div>
                       </div>
@@ -429,7 +432,7 @@ const AdminEventos = () => {
                       </div>
                     </td>
                   </tr>
-                ))}
+                )})}
               </tbody>
             </table>
           </div>

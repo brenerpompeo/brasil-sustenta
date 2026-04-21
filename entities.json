@@ -1,15 +1,16 @@
 {
   "people": [],
   "projects": [
-    "Outline",
-    "Lucide",
-    "Web",
-    "Hero",
-    "High",
-    "Design",
-    "Performance",
-    "Motion",
-    "User",
-    "Icon"
+    "Brasil Sustenta"
+  ],
+  "organizations": [
+    "Supabase",
+    "Vercel"
+  ],
+  "concepts": [
+    "ODS Fit Score",
+    "Brutalism Tropical",
+    "Territorial Architecture",
+    "ESG Squads"
   ]
 }

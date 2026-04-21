@@ -20,7 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 const AdminArtigos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingPost, setEditingPost] = useState<{ id: number; title: string; slug: string; abstract: string | null; content: string | null; articleType: string | null; status: 'draft' | 'published'; hub: 'Global' | 'São Paulo (Estado)' | 'Rio de Janeiro (Estado)' | 'Campinas (Região)' | null } | null>(null);
+  const [editingPost, setEditingPost] = useState<{ id: number; title: string; slug: string; abstract: string | null; content: string | null; articleType: string | null; status: 'draft' | 'published'; territoryNodeId: number | null } | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -28,8 +28,10 @@ const AdminArtigos = () => {
     content: '',
     articleType: 'academic' as 'academic' | 'opinion' | 'case_study' | 'whitepaper',
     status: 'draft' as 'draft' | 'published',
-    hub: 'Global' as 'Global' | 'São Paulo (Estado)' | 'Rio de Janeiro (Estado)' | 'Campinas (Região)'
+    territoryNodeId: null as number | null
   });
+
+  const { data: territories } = trpc.territory.admin.list.useQuery();
 
   const { data: articlesData, isLoading, refetch } = trpc.article.getAll.useQuery({ limit: 50 });
 
@@ -67,7 +69,7 @@ const AdminArtigos = () => {
       content: '',
       articleType: 'academic',
       status: 'draft',
-      hub: 'Global'
+      territoryNodeId: null
     });
   };
 
@@ -80,7 +82,7 @@ const AdminArtigos = () => {
       content: art.content,
       articleType: art.articleType as any,
       status: art.status as any,
-      hub: (art.hub || 'Global') as any
+      territoryNodeId: art.territoryNodeId
     });
     setFormData({
       title: art.title,
@@ -89,7 +91,7 @@ const AdminArtigos = () => {
       content: art.content || '',
       articleType: (art.articleType || 'academic') as any,
       status: art.status as any,
-      hub: (art.hub || 'Global') as any
+      territoryNodeId: art.territoryNodeId
     });
     setIsModalOpen(true);
   };
@@ -110,6 +112,11 @@ const AdminArtigos = () => {
   }, [articlesData, searchTerm]);
 
   if (isLoading) return <div className="p-8">Carregando...</div>;
+
+  const getTerritoryName = (id: number | null) => {
+    if (!id) return 'Global';
+    return territories?.find((t: NonNullable<typeof territories>[number]) => t.id === id)?.name || 'Desconhecido';
+  };
 
   return (
     <AdminLayout>
@@ -139,13 +146,13 @@ const AdminArtigos = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Hub Regional</Label>
-                    <Select value={formData.hub} onValueChange={(v: 'Global' | 'São Paulo (Estado)' | 'Rio de Janeiro (Estado)' | 'Campinas (Região)') => setFormData({ ...formData, hub: v })}>
-                      <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                    <Select value={formData.territoryNodeId?.toString() || "null"} onValueChange={(v) => setFormData({ ...formData, territoryNodeId: v === "null" ? null : parseInt(v) })}>
+                      <SelectTrigger className="rounded-xl"><SelectValue placeholder="Selecione um território..." /></SelectTrigger>
                       <SelectContent className="bg-white border-paper-3">
-                        <SelectItem value="Global">🌐 Global</SelectItem>
-                        <SelectItem value="Campinas (Região)">📍 HUB Campinas</SelectItem>
-                        <SelectItem value="São Paulo (Estado)">📍 HUB São Paulo</SelectItem>
-                        <SelectItem value="Rio de Janeiro (Estado)">📍 HUB Rio de Janeiro</SelectItem>
+                        <SelectItem value="null">🌐 Global</SelectItem>
+                        {territories?.map((t: NonNullable<typeof territories>[number]) => (
+                          <SelectItem key={t.id} value={t.id.toString()}>📍 {t.name}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -186,7 +193,7 @@ const AdminArtigos = () => {
                 <tr key={art.id} className="hover:bg-paper-2">
                   <td className="px-8 py-4">
                     <p className="font-bold text-ink">{art.title}</p>
-                    <span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black">HUB {art.hub || 'Global'}</span>
+                    <span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black">📍 {getTerritoryName(art.territoryNodeId)}</span>
                   </td>
                   <td className="px-8 py-4 uppercase text-[10px] font-black text-leaf">{art.status}</td>
                   <td className="px-8 py-4 text-right">

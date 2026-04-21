@@ -1,380 +1,242 @@
+import { motion } from "framer-motion";
 import {
   ArrowRight,
-  BrainCircuit,
-  FileBadge2,
+  ArrowUpRight,
+  Award,
+  CheckCircle2,
+  Compass,
   GraduationCap,
-  Layers3,
-  Lightbulb,
+  MapPin,
+  Sparkles,
+  Trophy,
 } from "lucide-react";
-import { motion } from "framer-motion";
 import { Link } from "wouter";
+
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { PageHero } from "@/components/PageHero";
 import { SEO } from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { editorialViewport, fadeUpTarget } from "@/lib/motion";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { editorialEase, editorialViewport } from "@/lib/motion";
 
-const signals = [
+const benefits = [
   {
-    icon: BrainCircuit,
-    title: "Oportunidades filtradas por IA",
-    description:
-      "Seu perfil cruza skills, portfolio, disponibilidade e aderencia com ODS e tipo de desafio.",
+    icon: Trophy,
+    title: "Match explicado",
+    body: "Você vai saber exatamente por que foi selecionado. Sem caixa-preta. Os primeiros matches estão sendo preparados.",
   },
   {
-    icon: Layers3,
-    title: "Experiencia em squad",
-    description:
-      "Voce entra em times multidisciplinares, aprende a operar em sprint e entrega com contexto real.",
+    icon: Award,
+    title: "Portfolio com prova",
+    body: "Cada projeto vai virar artefato público com avaliação real da empresa.",
   },
   {
-    icon: FileBadge2,
-    title: "Portfolio observavel",
-    description:
-      "Cada desafio gera repertorio, entregavel e historico de participacao mais util do que candidatura generica.",
+    icon: Compass,
+    title: "Empresa real, ODS real",
+    body: "Squads com empresas reais da sua cidade. Não simulação acadêmica. Os primeiros projetos nascem em Campinas.",
   },
 ];
 
 const journey = [
   {
-    title: "Monte um perfil forte",
-    description:
-      "Repertorio academico, projetos autorais, disponibilidade e causas de afinidade fazem diferenca.",
+    n: "01",
+    title: "Crie seu perfil",
+    body: "Skills, ODS de interesse, histórico acadêmico e disponibilidade.",
   },
   {
-    title: "Receba match com contexto",
-    description:
-      "A plataforma nao mostra so a vaga. Ela indica por que aquele desafio combina com voce.",
+    n: "02",
+    title: "Receba matches",
+    body: "Projetos abertos no HUB da sua cidade com Fit Score explicado.",
   },
   {
-    title: "Entre em projeto real",
-    description:
-      "Voce participa de uma experiencia conectada a empresa, universidade e entregas concretas.",
+    n: "03",
+    title: "Candidate-se",
+    body: "Curadoria humana valida. Você fica na shortlist da empresa.",
+  },
+  {
+    n: "04",
+    title: "Entregue & cresça",
+    body: "Sprint com squad, avaliação e portfolio público crescente.",
   },
 ];
 
-const matchSignals = [
-  {
-    title: "O que a plataforma observa",
-    description:
-      "Skills, portfolio, disponibilidade, afinidade com ODS e tipo de desafio compoem o seu match score.",
-  },
-  {
-    title: "O que a candidatura ganha",
-    description:
-      "Mais contexto sobre empresa, buyer, desafio e expectativa de entrega antes de voce decidir aplicar.",
-  },
-  {
-    title: "O que vira portfolio",
-    description:
-      "Participacao em squad, checkpoints, entregavel final e historico de contribuicao tornam seu perfil mais observavel.",
-  },
-];
+const odsBadges = [4, 7, 8, 11, 12, 13, 15, 17];
 
-const challengeExamples = [
-  {
-    title: "Pesquisa e mapeamento",
-    description:
-      "Leituras de mercado, benchmark, levantamento de dores e estruturacao de hipoteses ligadas a ESG e impacto.",
-  },
-  {
-    title: "Produto e experiencia",
-    description:
-      "Fluxos, prototipos, service design, design de interface e validacao de propostas para desafios concretos.",
-  },
-  {
-    title: "Conteudo e reputacao",
-    description:
-      "Narrativas, ativacoes, employer branding, comunicacao e materiais para stakeholders e comunidades.",
-  },
-];
-
-const ParaJovens = () => {
+export default function ParaJovens() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[color:var(--color-paper)]">
       <SEO
-        title="Para Jovens | Brasil Sustenta"
-        description="Entre em squads universitarios para desafios ESG reais, construa portfolio e desenvolva sua empregabilidade com matching por IA."
+        title="Para Jovens — Seu match real está chegando | Brasil Sustenta"
+        description="Match explicado, projeto real com empresa da sua cidade, portfolio que fala por você. Os primeiros projetos estão nascendo."
       />
       <Header />
 
-      <main className="pt-[72px]">
-        <section className="border-b border-border">
-          <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-16 lg:py-20">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={fadeUpTarget()}
-              viewport={editorialViewport}
-              className="flex flex-col justify-center"
-            >
-              <Badge
-                variant="outline"
-                className="mb-8 w-fit rounded-full border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em] text-primary"
-              >
-                Para jovens // portfolio, impacto e empregabilidade
-              </Badge>
+      <main className="pt-16 md:pt-18">
+        <PageHero
+          eyebrow="Para jovens · talentos universitários"
+          variant="paper"
+          title={
+            <>
+              Match real.
+              <br />
+              <span className="text-[color:var(--color-sun-deep)]">
+                Projeto real.
+              </span>{" "}
+              Portfolio que fala.
+            </>
+          }
+          lede="Você vai saber por que foi selecionado para cada desafio. Vai trabalhar com empresa real, na sua cidade, com squad. E vai sair do projeto com prova pública no portfolio. Os primeiros matches estão sendo construídos em Campinas."
+          actions={
+            <>
+              <Button asChild size="xl" variant="default">
+                <Link href="/auth/jovem">
+                  Entrar na base de talentos
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+              <Button asChild size="xl" variant="outline">
+                <Link href="/oportunidades">Ver como funciona</Link>
+              </Button>
+            </>
+          }
+          side={<JovemMatchPreview />}
+        />
 
-              <h1 className="max-w-4xl font-display text-[3rem] font-bold leading-[0.92] tracking-tight sm:text-[4.4rem] lg:text-[5.6rem]">
-                Entre em
-                <span className="block italic font-light text-primary">
-                  projetos reais
-                </span>
-                nao em processos genericos.
-              </h1>
+        {/* Benefits ============== */}
+        <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
+          <div className="grid gap-6 md:grid-cols-12 md:items-end md:gap-12">
+            <div className="md:col-span-7">
+              <span className="text-eyebrow-bright">Por que aqui</span>
+              <h2 className="text-headline mt-5 max-w-[18ch]">
+                Não é vaga. É curadoria.
+              </h2>
+            </div>
+            <p className="text-body md:col-span-5">
+              Aqui você não compete em job board. Aqui você é convidado para
+              um projeto onde seu perfil tem fit explicado.
+            </p>
+          </div>
 
-              <p className="mt-8 max-w-2xl border-l-[3px] border-primary pl-5 text-base font-medium leading-8 text-foreground/78 sm:text-[1.05rem]">
-                O Brasil Sustenta conecta universitarios e recem-formados a
-                desafios ESG de empresas. A ideia nao e so conseguir acesso, mas
-                construir repertorio, portfolio e leitura de negocio enquanto
-                voce aprende em trabalho real.
+          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] md:grid-cols-3">
+            {benefits.map(({ icon: Icon, title, body }) => (
+              <div key={title} className="bg-white p-7">
+                <Icon className="size-7 text-[color:var(--color-sun-deep)]" strokeWidth={1.5} />
+                <h3 className="mt-7 font-display text-2xl font-bold tracking-[-0.025em]">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-ink-3)]">
+                  {body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Jornada ================ */}
+        <section className="surface-sun border-y border-[color:var(--color-sun-deep)]/20 section-y">
+          <div className="container-editorial">
+            <div className="max-w-2xl">
+              <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-sun-deep)]">
+                Sua jornada
+              </span>
+              <h2 className="text-headline mt-5 text-[color:var(--color-ink)]">
+                Do perfil ao portfolio em 4 passos.
+              </h2>
+            </div>
+
+            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-sun-deep)]/20 bg-[color:var(--color-sun-deep)]/20 md:grid-cols-2 lg:grid-cols-4">
+              {journey.map(({ n, title, body }) => (
+                <li key={n} className="bg-[color:var(--color-sun)] p-7 md:p-8">
+                  <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--color-sun-deep)]">
+                    Passo {n}
+                  </p>
+                  <h3 className="mt-6 font-display text-xl font-bold leading-snug tracking-[-0.02em] text-[color:var(--color-ink)]">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-ink-2)]">
+                    {body}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* ODS ==================== */}
+        <section className="container-editorial section-y">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-14 lg:items-center">
+            <div className="lg:col-span-6">
+              <span className="text-eyebrow-bright">ODS em foco</span>
+              <h2 className="text-headline mt-5 max-w-[16ch]">
+                Sua área de impacto, mapeada.
+              </h2>
+              <p className="text-body mt-7 max-w-md">
+                Você escolhe seus ODS prioritários. O sistema aprende com seu
+                histórico de projetos. O Fit Score evolui com você.
               </p>
 
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <div className="mt-9 flex flex-wrap gap-2.5">
+                {odsBadges.map(n => (
+                  <motion.span
+                    key={n}
+                    initial={{ opacity: 0, scale: 0.6 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={editorialViewport}
+                    transition={{
+                      duration: 0.35,
+                      delay: n * 0.025,
+                      ease: editorialEase,
+                    }}
+                    className="inline-grid size-12 place-items-center rounded-full border border-[color:var(--color-border)] bg-white font-mono text-sm font-bold text-[color:var(--color-ink)]"
+                  >
+                    {n}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-6">
+              <PortfolioMockup />
+            </div>
+          </div>
+        </section>
+
+        {/* CTA ==================== */}
+        <section className="container-editorial pb-16 md:pb-24">
+          <div className="surface-ink relative overflow-hidden rounded-3xl p-10 md:p-14 lg:p-16">
+            <div className="grid gap-8 md:grid-cols-12 md:items-center md:gap-12">
+              <div className="md:col-span-7">
+                <span className="text-eyebrow text-white/60">
+                  Comece agora
+                </span>
+                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.75rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white">
+                  Seu primeiro match
+                  <br />
+                  está esperando.
+                </h2>
+              </div>
+              <div className="flex flex-col gap-3 md:col-span-5 md:items-end">
                 <Link
-                  href="/login/jovem"
-                  className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "h-12 rounded-full px-6 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground"
-                  )}
+                  href="/auth/jovem"
+                  className="btn-base min-h-13 w-full justify-between bg-[color:var(--color-sun)] text-[color:var(--color-ink)] hover:bg-[color:var(--color-sun-bright)]"
                 >
-                  Criar perfil
+                  Criar perfil grátis
+                  <ArrowRight className="size-4" />
                 </Link>
                 <Link
                   href="/oportunidades"
-                  className={cn(
-                    buttonVariants({ variant: "outline", size: "lg" }),
-                    "h-12 rounded-full border-border px-6 text-sm font-bold uppercase tracking-[0.14em]"
-                  )}
+                  className="btn-base min-h-13 w-full justify-between border border-white/30 bg-white/5 text-white hover:bg-white hover:text-[color:var(--color-ink)]"
                 >
-                  Ver oportunidades
+                  Ver matches abertos
+                  <ArrowUpRight className="size-4" />
                 </Link>
               </div>
-            </motion.div>
-
-            <div className="grid gap-4">
-              {signals.map((signal, index) => {
-                const Icon = signal.icon;
-
-                return (
-                  <motion.div
-                    key={signal.title}
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={editorialViewport}
-                    transition={{ delay: index * 0.08, duration: 0.5 }}
-                  >
-                    <Card className="border-border bg-card shadow-sm hover:shadow-[0_24px_40px_rgba(5,5,5,0.05)]">
-                      <CardHeader className="pb-4">
-                        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-secondary/30">
-                          <Icon className="h-5 w-5 text-primary" />
-                        </div>
-                        <CardTitle className="font-display text-[1.6rem] tracking-tight">
-                          {signal.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm font-medium leading-7 text-muted-foreground">
-                          {signal.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                );
-              })}
             </div>
-          </div>
-        </section>
-
-        <section className="border-b border-border py-20 lg:py-24">
-          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
-            <div className="mb-12 max-w-3xl">
-              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-                Como entrar forte
-              </div>
-              <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
-                A melhor candidatura aqui parece mais com repertorio do que com
-                formulario.
-              </h2>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              {journey.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={fadeUpTarget(index * 0.08, 24)}
-                  viewport={editorialViewport}
-                >
-                  <Card
-                    className={cn(
-                      "rounded-[1.5rem] border-border bg-card shadow-sm hover:shadow-[0_24px_40px_rgba(5,5,5,0.05)]",
-                      index === 1 && "border-primary/30 bg-primary/5"
-                    )}
-                  >
-                    <CardHeader>
-                      <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-                        0{index + 1}
-                      </div>
-                      <CardTitle className="font-display text-[1.6rem] tracking-tight">
-                        {item.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-[15px] font-medium leading-7 text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-b border-border py-20 lg:py-24">
-          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
-            <div className="mb-12 max-w-3xl">
-              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-                Como o match fica mais forte
-              </div>
-              <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
-                A plataforma precisa explicar por que voce combina com o
-                desafio.
-              </h2>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              {matchSignals.map((signal, index) => (
-                <motion.div
-                  key={signal.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={fadeUpTarget(index * 0.08, 24)}
-                  viewport={editorialViewport}
-                >
-                  <Card
-                    className={cn(
-                      "rounded-[1.5rem] border-border bg-card shadow-sm hover:shadow-[0_24px_40px_rgba(5,5,5,0.05)]",
-                      index === 1 && "border-primary/30 bg-primary/5"
-                    )}
-                  >
-                    <CardHeader>
-                      <CardTitle className="font-display text-[1.55rem] tracking-tight">
-                        {signal.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-[15px] font-medium leading-7 text-muted-foreground">
-                        {signal.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-20 lg:py-24">
-          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
-            <Card className="rounded-[1.75rem] border-border bg-foreground text-background shadow-sm">
-              <CardContent className="grid gap-8 p-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-                <div>
-                  <div className="mb-4 flex items-center gap-2 text-primary">
-                    <GraduationCap className="h-4 w-4" />
-                    <span className="text-[11px] font-bold uppercase tracking-[0.2em]">
-                      Leitura strategica para talentos
-                    </span>
-                  </div>
-                  <h2 className="font-display text-[2rem] font-bold leading-[1.05] tracking-tight text-white lg:text-[3rem]">
-                    Seu diferencial nao e falar de proposito.
-                    <span className="block italic font-light text-primary">
-                      E conseguir provar entrega.
-                    </span>
-                  </h2>
-                  <p className="mt-5 max-w-2xl text-sm font-medium leading-7 text-background/75">
-                    O melhor uso da plataforma para voce e construir portfolio
-                    observavel, ganhar contexto corporativo e entrar em
-                    experiencias que tornam seu perfil mais claro para o
-                    mercado.
-                  </p>
-                </div>
-
-                <div className="grid gap-4">
-                  <Card className="border-border/20 bg-background/5 shadow-none">
-                    <CardContent className="p-5">
-                      <div className="mb-2 flex items-center gap-2 text-primary">
-                        <Lightbulb className="h-4 w-4" />
-                        <span className="text-[11px] font-bold uppercase tracking-[0.18em]">
-                          Mais contexto
-                        </span>
-                      </div>
-                      <p className="text-sm font-medium leading-7 text-background/75">
-                        Voce entende o desafio, o buyer e o tipo de entrega
-                        antes de entrar.
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Link
-                    href="/login/jovem"
-                    className={cn(
-                      buttonVariants({ size: "lg" }),
-                      "h-12 rounded-full bg-primary px-6 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground hover:bg-primary/90"
-                    )}
-                  >
-                    Entrar como talento
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        <section className="border-t border-border py-20 lg:py-24">
-          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
-            <div className="mb-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-              <div>
-                <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-                  Tipos de desafio
-                </div>
-                <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
-                  Oportunidade boa tem forma. Nao e so um card bonito.
-                </h2>
-              </div>
-              <p className="text-[15px] font-medium leading-7 text-muted-foreground">
-                A landing precisa mostrar melhor o tipo de desafio que aparece
-                na rede. Esta e a referencia de densidade que devemos perseguir
-                no produto e no marketing.
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              {challengeExamples.map((example, index) => (
-                <motion.div
-                  key={example.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={fadeUpTarget(index * 0.08, 24)}
-                  viewport={editorialViewport}
-                >
-                  <Card className="rounded-[1.5rem] border-border bg-card shadow-sm hover:shadow-[0_24px_40px_rgba(5,5,5,0.05)]">
-                    <CardHeader>
-                      <CardTitle className="font-display text-[1.55rem] tracking-tight">
-                        {example.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-[15px] font-medium leading-7 text-muted-foreground">
-                        {example.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
+            <Sparkles
+              className="pointer-events-none absolute -right-6 -bottom-6 size-48 text-white/8"
+              strokeWidth={1}
+            />
           </div>
         </section>
       </main>
@@ -382,6 +244,134 @@ const ParaJovens = () => {
       <Footer />
     </div>
   );
-};
+}
 
-export default ParaJovens;
+function JovemMatchPreview() {
+  return (
+    <div className="rounded-3xl border border-[color:var(--color-border)] bg-white p-7 md:p-8">
+      <div className="flex items-center justify-between">
+        <Badge variant="solidLeaf">Novo match</Badge>
+        <span className="font-mono text-xs text-[color:var(--color-ink-4)]">
+          há 2h
+        </span>
+      </div>
+      <p className="mt-6 font-display text-xl font-semibold leading-tight tracking-[-0.02em]">
+        Mapeamento de fornecedores para ODS 12
+      </p>
+      <p className="mt-2 text-sm text-[color:var(--color-ink-3)]">
+        Empresa Beta · HUB Campinas · 6 semanas
+      </p>
+
+      <div className="mt-7 flex items-baseline gap-3">
+        <p className="font-mono text-[3.5rem] font-bold leading-none tracking-[-0.04em] text-[color:var(--color-leaf)]">
+          91
+        </p>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-4)]">
+          / 100 · alto fit
+        </p>
+      </div>
+
+      <p className="mt-6 border-t border-[color:var(--color-border)] pt-6 text-sm leading-relaxed text-[color:var(--color-ink-3)]">
+        <span className="font-display font-semibold text-[color:var(--color-ink)]">
+          Você tem fit alto
+        </span>{" "}
+        por 3 projetos de extensão em monitoramento ambiental e disponibilidade no HUB.
+      </p>
+
+      <div className="mt-7 flex flex-wrap gap-2">
+        {[7, 12, 13].map(n => (
+          <span
+            key={n}
+            className="inline-grid size-9 place-items-center rounded-full bg-[color:var(--color-paper-2)] font-mono text-xs font-bold text-[color:var(--color-ink)]"
+          >
+            {n}
+          </span>
+        ))}
+      </div>
+
+      <Button size="lg" variant="default" className="mt-7 w-full justify-between">
+        Tenho interesse
+        <ArrowRight className="size-4" />
+      </Button>
+    </div>
+  );
+}
+
+function PortfolioMockup() {
+  const items = [
+    {
+      title: "Diagnóstico ESG · Fornecedores",
+      empresa: "Empresa Beta",
+      ods: [12, 13],
+      rate: 5,
+    },
+    {
+      title: "Estudo de impacto · Logística reversa",
+      empresa: "Indústria Gama",
+      ods: [11, 12],
+      rate: 5,
+    },
+    {
+      title: "Pilot de educação ambiental",
+      empresa: "ONG Delta",
+      ods: [4, 13],
+      rate: 4,
+    },
+  ];
+  return (
+    <div className="rounded-3xl border border-[color:var(--color-border)] bg-white">
+      <div className="flex items-center justify-between border-b border-[color:var(--color-border)] p-7">
+        <div>
+          <span className="text-eyebrow">Portfolio público</span>
+          <p className="mt-2 font-display text-2xl font-bold tracking-[-0.025em]">
+            Marina Souza
+          </p>
+          <p className="mt-1 flex items-center gap-1.5 text-xs text-[color:var(--color-ink-4)]">
+            <GraduationCap className="size-3.5" />
+            UNICAMP · Eng. Ambiental ·{" "}
+            <MapPin className="size-3" /> Campinas
+          </p>
+        </div>
+        <Award className="size-7 text-[color:var(--color-sun-deep)]" strokeWidth={1.5} />
+      </div>
+      <ul className="divide-y divide-[color:var(--color-border)]">
+        {items.map(item => (
+          <li key={item.title} className="p-6">
+            <p className="font-display text-base font-semibold tracking-tight">
+              {item.title}
+            </p>
+            <p className="mt-1 text-xs text-[color:var(--color-ink-4)]">
+              {item.empresa}
+            </p>
+            <div className="mt-3 flex items-center justify-between">
+              <div className="flex gap-1">
+                {item.ods.map(o => (
+                  <span
+                    key={o}
+                    className="inline-grid size-6 place-items-center rounded-full bg-[color:var(--color-paper-2)] font-mono text-[0.625rem] font-bold"
+                  >
+                    {o}
+                  </span>
+                ))}
+              </div>
+              <div className="flex items-center gap-0.5">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className={
+                      i < item.rate
+                        ? "text-[color:var(--color-sun-deep)]"
+                        : "text-[color:var(--color-ink-5)]"
+                    }
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

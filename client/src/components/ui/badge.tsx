@@ -5,18 +5,30 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  "inline-flex items-center justify-center rounded-full px-2.5 py-1 text-[0.6875rem] font-semibold w-fit whitespace-nowrap shrink-0 gap-1.5 [&>svg]:size-3 [&>svg]:pointer-events-none border tracking-[0.16em] uppercase font-mono leading-none",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+          "bg-[color:var(--color-ink)] text-[color:var(--color-paper)] border-[color:var(--color-ink)]",
         secondary:
-          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
-        destructive:
-          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-[color:var(--color-paper-2)] text-[color:var(--color-ink-3)] border-transparent",
         outline:
-          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+          "bg-transparent text-[color:var(--color-ink)] border-[color:var(--color-ink)]",
+        leaf:
+          "bg-[rgba(0,168,107,0.08)] text-[color:var(--color-leaf)] border-[color:var(--color-leaf)]",
+        sun:
+          "bg-[rgba(244,196,48,0.14)] text-[color:var(--color-sun-deep)] border-[color:var(--color-sun-deep)]",
+        atlantic:
+          "bg-[rgba(29,78,216,0.06)] text-[color:var(--color-atlantic)] border-[color:var(--color-atlantic)]",
+        clay:
+          "bg-[rgba(196,90,58,0.10)] text-[color:var(--color-clay-deep)] border-[color:var(--color-clay)]",
+        destructive:
+          "bg-[color:var(--color-destructive)] text-white border-[color:var(--color-destructive)]",
+        solidLeaf:
+          "bg-[color:var(--color-leaf)] text-white border-[color:var(--color-leaf)]",
+        solidSun:
+          "bg-[color:var(--color-sun)] text-[color:var(--color-ink)] border-[color:var(--color-sun-deep)]",
       },
     },
     defaultVariants: {

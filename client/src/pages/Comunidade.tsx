@@ -112,7 +112,7 @@ export default function Comunidade() {
                "Somos desenvolvedores, gestores, estudantes e consumidores. Somos a academia, os escritores, líderes de negócios, as marcas e os decisores políticos. Somos a indústria e o público. Somos o ecossistema local. Nós somos a transição."
             </h2>
             <div className="mt-12 flex justify-center">
-               <a href="/login/jovem" className="bg-foreground text-background font-bold px-10 py-4 rounded-full hover:scale-105 transition-transform flex items-center gap-2">
+               <a href="/auth/jovem" className="bg-foreground text-background font-bold px-10 py-4 rounded-full hover:scale-105 transition-transform flex items-center gap-2">
                  Assinar o Manifesto <BookOpen className="w-4 h-4" />
                </a>
             </div>

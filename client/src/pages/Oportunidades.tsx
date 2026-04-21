@@ -183,7 +183,7 @@ const Oportunidades = () => {
             Mais que um currículo.<br />Sua <span className="italic font-light text-primary">Marca</span> no Mundo.
           </h2>
           <div className="flex flex-col sm:flex-row gap-5 justify-center max-w-xl mx-auto">
-             <Link href="/login/jovem" className="flex-1">
+             <Link href="/auth/jovem" className="flex-1">
                 <Button className="w-full h-16 rounded-[20px] bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-widest text-[11px] shadow-2xl shadow-primary/20 transition-all hover:scale-[1.02]">
                   Criar Meu Perfil de Talento
                 </Button>

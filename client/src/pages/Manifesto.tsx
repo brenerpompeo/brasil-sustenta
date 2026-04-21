@@ -1,140 +1,170 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { SEO } from '@/components/SEO';
-import { TerminalSquare, ShieldAlert, Cpu, Globe, ArrowRight, Network } from 'lucide-react';
-import { Link } from 'wouter';
+import { ArrowRight, ArrowUpRight, Quote } from "lucide-react";
+import { Link } from "wouter";
+
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { PageHero } from "@/components/PageHero";
+import { SEO } from "@/components/SEO";
+import { Button } from "@/components/ui/button";
+
+const declarations = [
+  {
+    n: "01",
+    title: "ESG não é selo. É operação.",
+    body: "Relatório frio, greenwashing e ações sem desenho de produto não resolvem nada. Brasil Sustenta está construindo a operação que torna ESG auditável: squad, sprint, evidência e relatório por entrega.",
+  },
+  {
+    n: "02",
+    title: "IA é artefato visível, não promessa.",
+    body: "ODS Fit Score é decomposto em Skills + ODS + Contexto. Você sempre vê por que o match faz sentido. Sem caixa-preta, sem promessa de magia.",
+  },
+  {
+    n: "03",
+    title: "Universidade é capital intelectual.",
+    body: "Squads universitários competem com consultorias em entrega — e em custo. A juventude não é estagiária. É operadora.",
+  },
+  {
+    n: "04",
+    title: "Território é infraestrutura.",
+    body: "HUBs locais conectam universidades, empresas e prefeituras na mesma cidade. Território não entra como pano de fundo — entra como motor.",
+  },
+  {
+    n: "05",
+    title: "Anti-greenwashing por design.",
+    body: "Cada entrega tem trilha de evidência por checkpoint. Sem proof, sem squad. Sem squad, sem produto.",
+  },
+  {
+    n: "06",
+    title: "Brasil pode liderar essa categoria.",
+    body: "Estamos criando o protocolo brasileiro de ESG operacional, a partir de Campinas. Pode ser exportado para o mundo. Mas começa na nossa cidade, na nossa universidade, no nosso jovem.",
+  },
+];
 
 export default function Manifesto() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[color:var(--color-paper)]">
       <SEO
-        title="Manifesto Brasil Sustenta | Criatividade, ESG e ODS"
-        description="Nosso manifesto sobre a união da Economia Criativa com os Objetivos de Desenvolvimento Sustentável. Transformando cultura em infraestrutura real."
+        title="Manifesto — Brasil Sustenta"
+        description="Seis declarações operacionais. ESG vira operação, IA vira artefato, território vira infraestrutura."
       />
       <Header />
 
-      {/* Hero Section - High Impact Editorial Brutalism */}
-      <section className="relative pt-32 pb-20 border-b border-foreground">
-        <div className="container relative z-10 px-6 max-w-screen-xl mx-auto">
-          <div className="max-w-5xl">
-            <div className="inline-flex items-center px-3 py-1 border border-foreground bg-foreground mb-12">
-              <span className="font-mono-tech text-[10px] font-bold tracking-[0.4em] uppercase text-background">/ MANIFESTO_ROOT</span>
-            </div>
+      <main className="pt-16 md:pt-18">
+        <PageHero
+          eyebrow="Manifesto · 2026"
+          variant="paper"
+          title={
+            <>
+              ESG não é{" "}
+              <span className="line-through decoration-[color:var(--color-leaf)] decoration-4">
+                relatório.
+              </span>{" "}
+              É operação.
+            </>
+          }
+          lede="Seis declarações operacionais. Não é manifesto poético. É contrato de princípios para todo squad, todo brief, toda entrega da rede Brasil Sustenta."
+          actions={
+            <Button asChild size="xl" variant="leaf">
+              <Link href="/auth/empresa">
+                Operar com a gente
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          }
+        />
 
-            <h1 className="font-display text-5xl md:text-8xl lg:text-[7rem] font-bold leading-[0.85] tracking-tight mb-12 uppercase text-foreground">
-              O FUTURO NÃO É <br />
-              <span className="italic font-light opacity-80">CARIDADE.</span> <br />
-              TEM QUE SER <span className="underline decoration-foreground border-b-8 border-foreground">SISTÊMICO.</span>
-            </h1>
+        {/* Declarations ========== */}
+        <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
+          <ol className="grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] md:grid-cols-2">
+            {declarations.map(d => (
+              <li key={d.n} className="bg-white p-8 md:p-10">
+                <span className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--color-leaf)]">
+                  Declaração {d.n}
+                </span>
+                <h3 className="mt-6 font-display text-3xl font-bold leading-tight tracking-[-0.025em]">
+                  {d.title}
+                </h3>
+                <p className="mt-4 text-base leading-relaxed text-[color:var(--color-ink-3)]">
+                  {d.body}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </section>
 
-            <p className="max-w-3xl text-sm md:text-base text-foreground font-mono-tech uppercase tracking-widest leading-relaxed border-l-4 border-foreground pl-6">
-              [CRITICAL_STATEMENT]: NÃO EXISTE FUTURO VIÁVEL SEM IMPACTO MENSURÁVEL. NO BRASIL SUSTENTA, ACREDITAMOS QUE A ECONOMIA CRIATIVA É O MOTOR DEFINITIVO PARA A REGENERAÇÃO GLOBAL E RESOLUÇÃO DOS 18_ODS.
+        {/* Pull quote =========== */}
+        <section className="surface-ink section-y border-y border-white/10">
+          <div className="container-editorial">
+            <Quote
+              className="mx-auto size-12 text-[color:var(--color-leaf-bright)]"
+              strokeWidth={1.5}
+            />
+            <blockquote className="mx-auto mt-7 max-w-4xl text-center font-display text-[clamp(1.75rem,3.5vw,3rem)] font-medium leading-[1.15] tracking-[-0.02em] text-white">
+              "Quando a universidade entra como capital intelectual e o
+              território como infraestrutura, ESG deixa de ser narrativa
+              corporativa e vira{" "}
+              <span className="text-[color:var(--color-leaf-bright)]">
+                operação pública e privada coordenada.
+              </span>
+              "
+            </blockquote>
+            <p className="mt-7 text-center font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-white/55">
+              Brasil Sustenta · Carta-fundação
             </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* The Crisis - Brutalist Split Grid */}
-      <section className="border-b border-foreground bg-secondary/20">
-        <div className="grid lg:grid-cols-2 border-b border-foreground">
-          <div className="p-8 md:p-16 border-r border-foreground flex justify-center flex-col">
-            <h2 className="text-4xl md:text-6xl font-display font-bold tracking-tighter mb-8 uppercase">A Crise da <br /><span className="italic">Superficialidade</span>.</h2>
-            <div className="space-y-6 font-mono-tech text-xs uppercase leading-relaxed text-muted-foreground">
-              <p>
-                &gt; O MUNDO CORPORATIVO ESTÁ SATURADO DE RELATÓRIOS FRIOS.
-              </p>
-              <p>
-                &gt; O <span className="text-foreground">GREENWASHING</span> TORNOU-SE UMA NÉVOA QUE ENFRAQUECE MERCADOS. O SETOR CRIATIVO É DESPERDIÇADO EM PUBLICIDADE QUANDO DEVERIA ESTAR DESENHANDO INFRAESTRUTURAS.
-              </p>
-              <p>
-                &gt; ESSA DESCONEXÃO É O QUE IMPEDE A MUDANÇA SISTÊMICA. ESG NÃO PODE SER APENAS UMA PLANILHA; ELE PRECISA SER UMA ESTRUTURA VIVA, AUDITADA E AUTÊNTICA. FORMATAMOS O CAOS CRIATIVO EM DADOS DE IMPACTO.
-              </p>
-            </div>
+        {/* Convite final ======== */}
+        <section className="container-editorial pb-16 md:pb-24">
+          <div className="grid gap-4 md:grid-cols-2">
+            {[
+              {
+                label: "Sou empresa",
+                title: "Quero escalar ESG via squad.",
+                href: "/para-empresas",
+                surface: "surface-leaf",
+              },
+              {
+                label: "Sou jovem",
+                title: "Quero deixar rastro de entrega.",
+                href: "/para-jovens",
+                surface: "surface-sun",
+              },
+              {
+                label: "Sou universidade",
+                title: "Quero ativar meu campus.",
+                href: "/para-universidades",
+                surface: "surface-clay",
+              },
+              {
+                label: "Sou prefeitura",
+                title: "Quero programa municipal ODS.",
+                href: "/para-prefeituras",
+                surface: "surface-atlantic",
+              },
+            ].map(c => (
+              <Link
+                key={c.href}
+                href={c.href}
+                className={`${c.surface} group flex flex-col justify-between rounded-2xl p-8 transition-transform hover:-translate-y-1 md:p-10`}
+              >
+                <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] opacity-70">
+                  {c.label}
+                </span>
+                <div className="mt-12">
+                  <h3 className="font-display text-3xl font-bold leading-tight tracking-[-0.025em]">
+                    {c.title}
+                  </h3>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold">
+                    Entrar
+                    <ArrowUpRight className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </span>
+                </div>
+              </Link>
+            ))}
           </div>
-          <div className="bg-foreground text-background p-8 md:p-16 flex items-center justify-center relative overflow-hidden">
-            {/* Huge background text */}
-            <div className="absolute top-1/2 left-1/2 -transform -translate-x-1/2 -translate-y-1/2 text-[20rem] font-display opacity-10">?</div>
-            <div className="relative z-10 text-center max-w-sm">
-              <ShieldAlert className="w-16 h-16 mx-auto mb-8 text-primary" />
-              <h3 className="font-mono-tech text-xl tracking-widest uppercase mb-4 text-primary">IMPACTO SEM ARQUITETURA É INVISÍVEL.</h3>
-              <p className="font-sans text-sm text-balance text-background/70">As grandes companhias precisam do olhar disruptivo para sobreviverem às metas de 2030.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* The Solution - Industrial Pillars */}
-      <section className="py-20 bg-background border-b border-foreground">
-        <div className="container px-6 max-w-screen-xl mx-auto">
-          <div className="mb-16 border-b border-foreground pb-6">
-            <h2 className="text-4xl md:text-6xl font-display font-bold tracking-tighter uppercase mb-2">TESE DE <span className="italic opacity-80">VALOR</span>.</h2>
-            <p className="font-mono-tech text-xs tracking-widest text-muted-foreground uppercase">Transformando talento em ativo de auditoria e regeneração.</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 border border-foreground">
-            <div className="p-8 border-b md:border-b-0 md:border-r border-foreground hover:bg-secondary transition-colors">
-              <TerminalSquare className="w-8 h-8 text-foreground mb-8" />
-              <h3 className="font-mono-tech text-sm tracking-widest uppercase font-bold mb-4">AUDITORIA // CRIATIVA</h3>
-              <p className="font-sans text-sm text-muted-foreground leading-relaxed">Verificamos projetos de design, tech e inovação estritamente sob a lente dos 18 Objetivos de Desenvolvimento Sustentável da ONU, adotando o contexto brasileiro de igualdade.</p>
-            </div>
-
-            <div className="p-8 border-b md:border-b-0 md:border-r border-foreground hover:bg-secondary transition-colors bg-secondary/30">
-              <Network className="w-8 h-8 text-foreground mb-8" />
-              <h3 className="font-mono-tech text-sm tracking-widest uppercase font-bold mb-4">QUÁDRUPLA // HÉLICE</h3>
-              <p className="font-sans text-sm text-muted-foreground leading-relaxed">Orquestramos uma matriz ganha-ganha onde Academia (IES), Estado (B2G), Indústria (B2B) e Sociedade Civil (Talentos) colaboram para inovar.</p>
-            </div>
-
-            <div className="p-8 hover:bg-secondary transition-colors">
-              <Cpu className="w-8 h-8 text-primary mb-8" />
-              <h3 className="font-mono-tech text-sm tracking-widest uppercase font-bold mb-4 text-primary">VALOR // COMPARTILHADO</h3>
-              <p className="font-sans text-sm text-muted-foreground leading-relaxed">Geramos lucro que constrói. Quando a força criativa atua num sistema ESG corporativo, ela regenera a sua vida e a economia local.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Statement Section: Raw Typography */}
-      <section className="py-32 bg-primary text-primary-foreground border-b border-foreground">
-        <div className="container px-6 text-center">
-          <h2 className="font-display font-bold text-5xl md:text-7xl lg:text-8xl tracking-tight max-w-5xl mx-auto leading-[0.85] uppercase">
-            "A MENTE INOVADORA É A ÚLTIMA VANTAGEM COMPETITIVA QUE <span className="italic underline decoration-foreground underline-offset-8">REGENERA</span> O PLANETA."
-          </h2>
-          <div className="mt-12 font-mono-tech text-xs tracking-widest uppercase opacity-80 border border-primary-foreground inline-block px-4 py-2">
-            STATEMENT_OF_PURPOSE [1.0]
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action Grid */}
-      <section className="py-24 bg-background">
-        <div className="container px-6 max-w-screen-xl mx-auto text-center flex flex-col items-center">
-
-          <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tighter max-w-2xl mx-auto mb-16 uppercase">
-            FAÇA PARTE DESTA <span className="italic">OPERAÇÃO</span>.
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-foreground w-full max-w-3xl">
-            <Link href="/login/empresa">
-              <div className="p-10 border-b md:border-b-0 md:border-r border-foreground cursor-pointer group hover:bg-foreground hover:text-background transition-colors flex flex-col items-center justify-center">
-                <span className="font-mono-tech text-sm tracking-widest uppercase font-bold mb-2">&gt; SOU EMPRESA</span>
-                <span className="font-sans text-xs opacity-60">Escalar ESG via Talento</span>
-              </div>
-            </Link>
-            <Link href="/login/talento">
-              <div className="p-10 cursor-pointer group hover:bg-primary hover:text-primary-foreground transition-colors flex flex-col items-center justify-center">
-                <span className="font-mono-tech text-sm tracking-widest uppercase font-bold mb-2">&gt; SOU TALENTO</span>
-                <span className="font-sans text-xs opacity-60">Resolver Problemas Mapeados</span>
-              </div>
-            </Link>
-          </div>
-
-          <Link href="/">
-            <button className="mt-12 font-mono-tech text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground inline-flex items-center transition-colors">
-              &lt; RETURN_ROOT
-            </button>
-          </Link>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

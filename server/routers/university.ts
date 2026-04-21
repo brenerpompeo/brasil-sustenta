@@ -1,13 +1,30 @@
 import { z } from "zod";
-import { protectedProcedure, router } from "../_core/trpc";
+import { protectedProcedure, publicProcedure, router } from "../_core/trpc";
 import { universityProfiles, talentProfiles, applications, projects, companyProfiles } from "../../drizzle/schema";
-import { eq, and, sql, or, ilike } from "drizzle-orm";
+import { eq, and, sql, or, ilike, asc } from "drizzle-orm";
 
 /**
  * University Router
  * Real endpoints for University (Portal Acadêmico) dashboard with advanced filters
  */
 export const universityRouter = router({
+  /** Public endpoint — powers the partner marquee on the home page */
+  public: router({
+    listPartners: publicProcedure.query(async ({ ctx }) => {
+      if (!ctx.db) return [];
+      const rows = await ctx.db
+        .select({
+          name: universityProfiles.universityName,
+          acronym: universityProfiles.acronym,
+          city: universityProfiles.city,
+        })
+        .from(universityProfiles)
+        .where(eq(universityProfiles.isActive, true))
+        .orderBy(asc(universityProfiles.universityName));
+      return rows.map(r => r.acronym || r.name);
+    }),
+  }),
+
   getPartnershipStatus: protectedProcedure
     .query(async ({ ctx }) => {
       if (!ctx.db || !ctx.user) throw new Error("Unauthorized");

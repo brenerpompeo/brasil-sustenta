@@ -87,6 +87,7 @@ export const eventRouter = router({
       registrationLink: z.string().optional(), 
       maxParticipants: z.number().optional(),
       hub: hubEnum,
+      territoryNodeId: z.number().optional().nullable(),
       status: z.enum(["upcoming", "ongoing", "completed", "cancelled"]).default("upcoming"),
       isFeatured: z.boolean().default(false)
     }))
@@ -113,6 +114,7 @@ export const eventRouter = router({
       registrationLink: z.string().optional(), 
       maxParticipants: z.number().optional(), 
       hub: hubEnum.optional(),
+      territoryNodeId: z.number().optional().nullable(),
       status: z.enum(["upcoming", "ongoing", "completed", "cancelled"]).optional(),
       isFeatured: z.boolean().optional()
     }))

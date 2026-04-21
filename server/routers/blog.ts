@@ -109,6 +109,7 @@ export const blogRouter = router({
       category: z.string().optional(), 
       tags: z.array(z.string()).optional(), 
       hub: hubEnum,
+      territoryNodeId: z.number().optional().nullable(),
       status: z.enum(["draft", "published"]).default("draft"),
       isFeatured: z.boolean().default(false)
     }))
@@ -135,6 +136,7 @@ export const blogRouter = router({
       category: z.string().optional(), 
       tags: z.array(z.string()).optional(), 
       hub: hubEnum.optional(),
+      territoryNodeId: z.number().optional().nullable(),
       status: z.enum(["draft", "published"]).optional(),
       isFeatured: z.boolean().optional()
     }))

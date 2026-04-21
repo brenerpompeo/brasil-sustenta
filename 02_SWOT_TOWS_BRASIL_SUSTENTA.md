@@ -1,63 +1,76 @@
-# Brasil Sustenta - SWOT e TOWS
+# Brasil Sustenta - SWOT e TOWS v2
 
 ## SWOT
 
 ### Strengths
 
-- categoria nova e memoravel
-- combinacao rara entre ESG, universidade, squads e IA
-- proposta multi-sided com empresas, universidades e talentos
-- white space claro frente ao benchmark
-- narrativa anti-greenwashing com potencial de virar wedge
-- possibilidade de vender nao so vagas, mas operacao e outcomes
-- potencial de moat local via HUBs e rede universitaria
+- categoria nova e memoravel num white space global confirmado
+- combinacao rara entre ESG, universidade, squads, IA e territorio municipal
+- proposta multi-sided com empresas, prefeituras, universidades e talentos
+- arquitetura territorial de HUBs Locais por cidade cria moat dificil de replicar
+- presenca municipal como ancora de legitimidade nao copiavel por plataforma digital
+- modelo de receita triple (B2B + B2G + University Partner) reduz dependencia de um unico tipo de cliente
+- narrativa anti-greenwashing com potencial de virar wedge comercial e politico
+- HUB Matriz Sao Paulo como modelo replicavel para outros estados
+- possibilidade de vender nao so vagas, mas operacao, territorio e outcomes
 
 ### Weaknesses
 
-- risco de posicionamento amplo demais
-- falta de provas duras de resultado
-- dashboards privados ainda nao alinhados estruturalmente
+- risco de posicionamento amplo demais antes de travar a categoria
+- falta de provas duras de resultado (sem casos reais ainda)
+- dashboards privados nao alinhados estruturalmente com a nova categoria
 - IA ainda mais narrativa do que artefato compravel
 - dependencia potencial do founder em operacao inicial
-- risco de escorregar para consultoria customizada
+- ciclo de venda B2G longo (6-18 meses) cria risco de caixa se ativado cedo demais
+- risco de consultoria customizada se o scope creep nao for controlado
+- governanca de HUBs Locais ainda nao testada na pratica
 
 ### Opportunities
 
-- budget hibrido entre RH, ESG e inovacao
-- demanda crescente por experiencias reais e empregabilidade
-- universidades buscando extensao com menos atrito
-- eventos como canal de distribuicao e legitimidade
-- possibilidade de virar category leader nacional cedo
-- programas patrocinados por empresas e parceiros setoriais
+- budget hibrido entre RH, ESG e inovacao nas empresas
+- demanda crescente por experiencias reais e empregabilidade entre jovens
+- universidades buscando extensao com menos atrito operacional
+- prefeituras sob pressao de Agenda 2030 (2030 esta a 4 anos)
+- prefeitos eleitos em 2024 com mandato ate 2028 — janela de novos programas aberta
+- programas federais de juventude e desenvolvimento local como fonte de matching fund
+- possibilidade de virar category leader nacional cedo (white space ainda vazio)
+- modelo de franquia social replicavel estado a estado
+- empresas nacionais buscando capilaridade territorial em ESG (HUB Matriz SP como resposta)
+- eventos como canal de distribuicao e legitimidade com CTA clara
 
 ### Threats
 
-- players fortes em distribuicao, recruiting e employer branding
-- comoditizacao como plataforma de estagio/trainee
-- dificuldade operacional se eventos virarem dependencia excessiva
-- expansao confusa para muitos buyers ao mesmo tempo
-- concorrentes poderem copiar partes superficiais da tese
-- baixa confianca inicial se nao houver prova de valor
+- players fortes em distribuicao e recruiting (Handshake, WallJobs) podem adicionar camada ESG
+- comoditizacao como plataforma de estagio/trainee se o posicionamento nao for travado
+- troca de gestao municipal cancela contratos B2G a cada 4 anos
+- instabilidade orcamentaria municipal pode afetar previsibilidade de receita B2G
+- processo licitatorio pode inviabilizar entrada rapida em alguns municipios
+- expansao confusa para muitos territories ao mesmo tempo antes de validar o playbook
+- dependencia de embaixador local com agenda propria ou credibilidade fraca
+- Riipen (Canada) ou similar pode entrar no Brasil com traducao
+- baixa confianca inicial se nao houver prova de valor nos primeiros pilotos
 
 ---
 
 ## Leitura estrategica da SWOT
 
-O principal desafio nao e “falta de mercado”. E transformar um posicionamento poderoso em produto compravel, repetivel e leve o suficiente para escalar como OPB.
+O principal desafio nao e "falta de mercado". E transformar um posicionamento poderoso em produto compravel, repetivel e leve o suficiente para escalar como OPB — mantendo a disciplina de nao ativar o B2G antes de ter prova B2B.
 
 O Brasil Sustenta ganha quando:
 
-- vende uma categoria simples
-- faz a universidade operar como moat
+- vende uma categoria simples em cima do Pilot Project
+- faz o HUB Local e a prefeitura operarem como moat territorial
 - transforma IA em fit score explicavel
-- usa HUBs e eventos como acquisition engine
+- usa HUBs e eventos como acquisition engine por cidade
+- mantem B2B como combustivel e B2G como amplificador
 
 O Brasil Sustenta perde quando:
 
-- parece agencia
-- parece job board
-- depende de operacao manual excessiva
-- amplia narrativa antes de consolidar wedge
+- parece agencia ou consultoria customizada
+- depende de contrato municipal antes de ter caixa B2B
+- ativa multiplas cidades antes de ter playbook validado
+- amplia narrativa antes de consolidar o wedge do Pilot Project
+- o embaixador opera sem playbook ou sem KPIs claros
 
 ---
 
@@ -67,125 +80,134 @@ O Brasil Sustenta perde quando:
 
 #### Produto
 
-- transformar a combinacao ESG + squads + IA em employer flow claro
-- tornar fit score e relatorio final componentes centrais da proposta
+- transformar a combinacao ESG + squads + IA + territorio em employer flow claro e compravel
+- tornar fit score e relatorio final componentes centrais da proposta B2B
+- criar dashboard municipal de impacto ODS como produto B2G
 
-#### GTM
+#### GTM B2B
 
-- vender a categoria para budgets hibridos com mensagem unica e ofertas simples
-- usar a narrativa anti-greenwashing como diferenciais de compra
+- vender a categoria para budgets hibridos com mensagem unica e Pilot Project como entrada
+- usar narrativa anti-greenwashing como diferencial de compra
 
-#### HUBs
+#### GTM B2G
 
-- usar a rede universitaria como supply e distribuicao territorial
-- ativar campus leaders e professores como extensao da operacao central
+- entrar nas prefeituras via secretaria de desenvolvimento, educacao ou juventude
+- posicionar como programa municipal de Agenda 2030, nao como prestacao de servico
+- usar o relatorio de impacto anual como instrumento de renovacao e defesa politica
 
-#### Universidades
+#### HUBs Locais
 
-- empacotar parceria como extensao + empregabilidade + dados
+- estruturar cidade piloto completa antes de replicar: HUB + Campi + prefeitura + empresa B2B
+- usar rede de HUBs como argumento para empresas nacionais que precisam de capilaridade
+
+#### HUB Matriz SP
+
+- consolidar 5+ cidades do Estado de SP antes de criar o HUB Matriz
+- usar o HUB Matriz SP como proposta para programas multiubicacao de empresas nacionais
+
+#### Universidades (Campi)
+
+- empacotar parceria como extensao + empregabilidade + dados institucionais
+- usar IES como guardia institucional do HUB contra troca de gestao municipal
 
 #### IA
 
 - posicionar IA como justificativa de match e composicao de squad
+- desenvolver ODS Fit Score v1 como primeiro artefato compravel
 
 #### Pricing
 
-- manter oferta em 3 pacotes claros e progressivos
-
-#### Operacao OPB
-
-- desenhar sistema de templates e automacoes antes de ampliar portfolio de servicos
+- manter oferta em 4 produtos claros: Pilot Project, Managed Squad, University Partner, Programa Municipal ODS
 
 ### ST - usar forcas para neutralizar ameacas
 
 #### Produto
 
 - evitar UX de job board e reforcar unidade de compra baseada em squad
+- diferenciacao pela camada territorial que concorrentes digitais nao conseguem ter
 
-#### GTM
+#### GTM B2B
 
 - focar em ICP unico no inicio para nao dispersar narrativa
+- usar HUBs Locais como argumento de presenca territorial que concorrentes nao tem
 
-#### HUBs
+#### GTM B2G
 
-- tornar cada HUB um ponto de aquisicao local com metas e scripts, evitando dependencia total do founder
+- ancorar contratos municipais em Agenda 2030 (suprapartidaria) para blindar contra troca de prefeito
+- usar universidades como guardias institucionais do programa
 
-#### Universidades
+#### HUBs Locais
 
-- criar criterios de homologacao de parceiros para evitar rede dispersa e pouco ativa
+- escolher embaixadores por credibilidade local, nao por disponibilidade
+- incluir clausula de nao-afiliacao politica no contrato de embaixador
+- validar playbook em cidade 1 antes de abrir cidade 2
+
+#### Universidades (Campi)
+
+- nao depender de uma unica IES ancora por cidade — minimo 2 Campi por HUB Local
 
 #### IA
 
-- priorizar visibilidade de IA no produto antes que concorrentes mais amplos capturem essa narrativa
-
-#### Pricing
-
-- cobrar pela clareza e execucao, nao por horas vagas de consultoria
-
-#### Operacao OPB
-
-- recusar customizacoes que quebrem o modelo replicavel
+- priorizar visibilidade de IA no produto antes que concorrentes capturem essa narrativa
 
 ### WO - usar oportunidades para corrigir fraquezas
 
 #### Produto
 
-- usar os primeiros pilotos para gerar casos, SLA e sinais de resultado
+- usar os primeiros pilotos B2B para gerar casos, SLA e sinais de resultado antes de abrir B2G
+- criar relatorio de impacto B2G a partir dos dados reais dos pilotos B2B
 
-#### GTM
+#### GTM B2G
 
-- usar eventos e conteúdo para criar prova de valor, nao so awareness
+- entrar via reuniao informal com secretario, nao via licitacao, para acelerar ciclo
+- usar mandato dos prefeitos eleitos em 2024 (primeiro semestre e a janela mais facil)
 
-#### HUBs
+#### HUBs Locais
 
-- usar HUBs como camada de aquisição de talentos e leads, reduzindo CAC manual
-
-#### Universidades
-
-- transformar parceiros institucionais em fonte de legitimidade para a venda corporativa
+- usar o primeiro evento na cidade como prova de conceito para a prefeitura
+- transformar dados de talentos e empresas locais em argumento B2G
 
 #### IA
 
-- desenvolver primeiro artefatos simples e explicaveis em vez de promessas abstratas
+- desenvolver fit score simples e explicavel antes de prometer matching sofisticado
+- documentar logica de match manualmente nos primeiros squads para alimentar o modelo
 
 #### Pricing
 
-- usar Pilot Project como forma de reduzir friccao comercial inicial
-
-#### Operacao OPB
-
-- documentar playbooks, templates e checklists para cada etapa
+- usar Pilot Project como forma de reduzir friccao inicial B2B
+- usar evento gratuito ou subsidiado como "primeiro projeto sem contrato" para a prefeitura
 
 ### WT - reduzir fraquezas e blindar contra ameacas
 
 #### Produto
 
 - eliminar claims frageis e mock data sem lastro
-- alinhar public e private product na mesma categoria
+- alinhar dashboards publicos e privados na mesma categoria
 
-#### GTM
+#### GTM B2B
 
-- evitar vender simultaneamente para muitos segmentos secundarios
+- nao vender para muitos ICPs ao mesmo tempo
+- definir ICP unico: gerente/diretor de ESG ou inovacao com budget de R$15k-80k
 
-#### HUBs
+#### GTM B2G
 
-- nao permitir que eventos virem centro de gravidade da startup
+- nunca colocar B2G como prioridade de tempo antes do mes 4-6
+- ter advogado familiar com direito publico municipal antes de assinar qualquer convenio
 
-#### Universidades
+#### HUBs Locais
 
-- evitar depender de uma unica instituicao ancora
+- nao ativar mais de 3 HUBs antes de ter playbook validado
+- nao criar HUB Matriz antes de ter 5+ HUBs Locais funcionando
+
+#### Universidades (Campi)
+
+- evitar depender de uma unica instituicao ancora por cidade
+- nao confundir "interesse do professor" com "parceria institucional da IES"
 
 #### IA
 
 - nao prometer inteligencia que o produto ainda nao entrega
-
-#### Pricing
-
-- evitar tickets e formatos impossiveis de sustentar em modelo OPB
-
-#### Operacao OPB
-
-- manter fronteiras claras entre plataforma, servico assistido e comunidade
+- chamar de "curadoria especializada" enquanto o fit score nao estiver rodando
 
 ---
 
@@ -193,21 +215,22 @@ O Brasil Sustenta perde quando:
 
 ### P1
 
-- travar categoria
-- reposicionar areas privadas
-- explicitar fit score e relatorio final
+- travar categoria com frase de compra simples e Pilot Project como unidade de venda
+- reposicionar areas privadas para refletir fluxo brief -> shortlist -> squad -> relatorio
+- definir cidade piloto e nomear primeiro Embaixador de HUB
 
 ### P2
 
-- vender Pilot Project para um ICP unico
-- montar kit comercial separado para empresa e universidade
+- vender Pilot Project para 1-2 empresas do ICP (B2B primeiro)
+- montar kit comercial separado para empresa, universidade e prefeitura
 
 ### P3
 
-- estruturar 2-5 HUBs pilotos
-- validar eventos com conversao real
+- estruturar HUB Local na cidade piloto: Campi + Embaixador + primeira reuniao com prefeitura
+- validar eventos com conversao real de leads
 
 ### P4
 
-- criar primeiros casos e provas com numeros
-- reduzir dependencia do founder com sistemas e templates
+- criar primeiros casos B2B com numeros reais
+- proposta formal para prefeitura baseada nos resultados dos pilotos
+- reduzir dependencia do founder com playbooks e templates para Embaixadores

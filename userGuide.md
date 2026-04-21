@@ -1,88 +1,120 @@
-# Guia do Usuário - Brasil Sustenta
+# Brasil Sustenta — Guia do Produto v2
 
-## Sobre o Site
+## Objetivo
 
-**Propósito:** Conectar empresas brasileiras com jovens talentos universitários para projetos de sustentabilidade e inovação ESG através do modelo Squad as a Service.
-
-**Acesso:** Público - navegação livre para conhecer a plataforma. Login disponível para empresas e talentos cadastrados.
+Resumo operacional para modelos, designers e engenheiros entenderem o estado atual sem ler todos os .mds.
 
 ---
 
-## Powered by Manus
+## 1. O que e o Brasil Sustenta
 
-Este site foi desenvolvido com tecnologias modernas e de ponta para garantir a melhor experiência possível:
+Plataforma AI-first que transforma desafios ESG em squads universitarios com matching por IA, presenca territorial e entregas mensuraveis.
 
-**Frontend:** React 19 com TypeScript, Tailwind CSS 4, e componentes shadcn/ui para uma interface elegante e responsiva.
+Fluxo: Brief → Shortlist com ODS Fit Score → Squad → Sprint → Relatorio auditavel
 
-**Backend:** tRPC para APIs type-safe, MySQL para banco de dados relacional, e sistema de autenticação OAuth integrado.
-
-**Deployment:** Infraestrutura auto-escalável com CDN global, garantindo velocidade e disponibilidade em qualquer lugar do Brasil e do mundo.
-
-**Design System:** Paleta de cores rebrandizada com verde #1ED760 e base escura #121212, tipografia Poppins para sofisticação, e animações sutis para uma experiência fluida.
-
-**Performance:** Otimizado para carregamento rápido, responsividade mobile-first, e acessibilidade completa em todos os dispositivos.
+Nao tratar como: job board, consultoria ESG, portal institucional, comunidade estudantil.
 
 ---
 
-## Usando Seu Website
+## 2. Direcao visual vigente
 
-### Navegação e Login
+- **Tema**: dark (unico)
+- **Filosofia**: Brutalism Tropical / Neon Patria
+- **Background**: #050505 (negro absoluto)
+- **Cores**: #00FF41 (verde neon), #FFD700 (amarelo neon), #0047FF (azul neon)
+- **Fontes**: Fraunces (display), Inter (body), JetBrains Mono (scores/metricas)
+- **Principio**: Mobile-first, anti-AI estetico, zero fotografia
 
-Clique no menu hamburguer no canto superior direito (mobile) ou use a navegação horizontal (desktop) para acessar "Início", "Para Empresas", "Para Jovens", "Blog", "Eventos" e "Projetos". O botão "Login" verde no cabeçalho abre um dropdown com 3 opções: "Empresas", "Jovens Talentos" e "Universidades". Cada opção leva para uma página de login/cadastro específica com formulários personalizados.
-
-### Página Para Jovens
-
-Acesse "/para-jovens" para explorar oportunidades para estudantes universitários. A página apresenta 6 benefícios (experiência profissional, remuneração R$800-2.500, networking, certificações, desenvolvimento de habilidades e oportunidades de carreira). Role até a seção FAQ para encontrar respostas organizadas em 3 categorias (Geral, Processo, Benefícios). Se sua dúvida não estiver na FAQ, preencha o formulário "Envie sua Dúvida" com nome, email, universidade, curso e pergunta. Para convidar sua universidade a se tornar parceira, role até "Convide sua Universidade", preencha seus dados, informações da universidade e envie o convite. Nossa equipe entrará em contato com a instituição.
-
-### Página Para Universidades
-
-Acesse "/para-universidades" para conhecer como instituições de ensino podem se tornar parceiras. A página apresenta 6 benefícios da parceria (empregabilidade, conexão com mercado, desenvolvimento integral, reconhecimento, alinhamento com ODS e relatórios de impacto), processo em 4 etapas (solicitação, reunião, assinatura, ativação), estatísticas (200+ universidades, 8.5k+ alunos, 500+ projetos, 95% satisfação) e FAQ com 8 perguntas. Role até "Solicite uma Parceria", preencha dados da universidade (nome, CNPJ, estado, cidade, website, número de alunos, cursos) e dados do contato (nome, cargo, email, telefone). Após enviar, você verá confirmação e nossa equipe entrará em contato em até 48 horas.
-
-### Painel Administrativo
-
-Administradores podem acessar "/admin" para gerenciar a plataforma. O painel possui sidebar com navegação para Dashboard (estatísticas gerais), Usuários (listar e gerenciar todos os cadastros), Empresas, Talentos, Universidades, Projetos, Squads, Blog e Eventos. O dashboard mostra métricas em tempo real, projetos recentes e aprovações pendentes.
-
-### Conhecendo Talentos
-
-Role até a seção "Conheça nossos Talentos" para ver perfis de estudantes universitários. Cada card mostra foto, universidade, curso, avaliação com estrelas e habilidades. Clique em "Ver Perfil Completo" para detalhes ou "Ver Todos os Talentos" para explorar mais.
-
-### Publicando Projetos ESG
-
-Na seção "Como Funciona o Processo", veja as 4 etapas: publicar projeto, talentos demonstram interesse, formação do squad e execução. Clique em "Publicar Projeto ESG" para iniciar ou "Conhecer Talentos" para explorar primeiro.
-
-### Escolhendo um Squad
-
-Na seção "Squads Sob Medida", navegue pelos 8 tipos de especialidades disponíveis: ESG, Direitos Humanos, ODS, Comunicação, Marketing, UI/UX Design, Design Thinking e Website. Cada card mostra a descrição da área.
-
-### Modelos de Impacto
-
-Explore os dois modelos na seção "Nosso Modelo de Impacto": Squad Box de Impacto (a partir de R$2.500) com 3 pacotes diferentes, ou Soluções Premium para desafios complexos. Clique em "Ver Pacotes e Preços" ou "Falar com um Consultor" para avançar.
-
-### Página Para Empresas
-
-Acesse "/para-empresas" para conhecer como empresas podem contratar squads ESG. A página apresenta 6 benefícios, processo em 4 etapas e 3 modelos de Squad com pricing. Role até o formulário "Solicite um Orçamento Personalizado", preencha informações da empresa (nome, CNPJ, setor, porte), dados de contato (nome, email, telefone) e detalhes do projeto (tipo, orçamento, prazo, mensagem). Clique em "Solicitar Orçamento" para enviar. Após o envio, você verá uma confirmação na tela e receberá um email. Nossa equipe entrará em contato em até 24 horas úteis.
-
-### Perguntas Frequentes
-
-Na seção "Tire suas Dúvidas", encontre respostas para as perguntas mais comuns. Use as abas "Para Empresas", "Para Estudantes" ou "Geral" para filtrar por categoria. Clique em qualquer pergunta para expandir e ver a resposta completa. Se não encontrar sua dúvida, clique em "Entre em contato com nossa equipe".
-
-### Newsletter
-
-Role até o final da página para encontrar o formulário de newsletter. Digite seu e-mail no campo com ícone de envelope e clique em "Inscrever-se" para receber oportunidades de impacto, insights do mercado e networking qualificado.
+Arquivo canonico: `DESIGN_SYSTEM_V2.md`
 
 ---
 
-## Gerenciando Seu Website
+## 3. Stack tecnica
 
-Use a interface de gerenciamento Manus para:
-
-- **Preview:** Visualize o site ao vivo e teste todas as funcionalidades
-- **Code:** Acesse e baixe todos os arquivos do projeto
-- **Settings → General:** Personalize nome e logo do site (VITE_APP_TITLE e VITE_APP_LOGO)
-- **Dashboard:** Monitore visitas e analytics após publicação
+- Frontend: React 19 + Vite + Tailwind 4 + shadcn/ui + Framer Motion
+- Backend: Express + tRPC v11 + Drizzle ORM
+- Auth: Supabase Auth (migrando de OAuth legado — Sprint -1)
+- DB: PostgreSQL (Supabase)
+- Deploy: Vercel (frontend) + Supabase (backend/db)
 
 ---
 
-## Próximos Passos
+## 4. Sitemap ativo
 
-Converse com a IA Manus a qualquer momento para solicitar alterações ou adicionar recursos. Experimente clicar em "Para Empresas" ou "Para Jovens" na hero section para começar sua jornada de impacto ESG!
+### Publicas
+- `/` (Home)
+- `/para-empresas`
+- `/para-jovens`
+- `/para-universidades`
+- `/para-prefeituras` [NOVO — Sprint 5]
+- `/hubs`
+- `/conteudo/blog`, `/conteudo/eventos`, `/conteudo/artigos`
+
+### Auth
+- `/login`, `/login/empresa`, `/login/jovem`, `/login/universidade`
+- `/login/prefeitura` [NOVO — Sprint 4]
+
+### Dashboards
+- `/dashboard/empresa`
+- `/dashboard/jovem`
+- `/dashboard/universidade`
+- `/dashboard/prefeitura` [NOVO — Sprint 4]
+- `/dashboard/hub-local` [NOVO — Sprint 4]
+- `/admin/*`
+
+---
+
+## 5. 5 Tipos de usuario
+
+| Tipo | userType | Dashboard |
+|---|---|---|
+| Empresa | empresa | DashboardEmpresa |
+| Jovem | jovem | DashboardJovem |
+| Universidade | universidade | DashboardUniversidade |
+| Prefeitura | prefeitura | DashboardPrefeitura [Sprint 4] |
+| Embaixador | embaixador | DashboardHubLocal [Sprint 4] |
+
+---
+
+## 6. Sprints de codigo
+
+Ver `SPRINT_PLAN_CODE.md` para detalhes completos.
+
+- Sprint -1: Migracao Auth/Deploy → Vercel/Supabase
+- Sprint 0: Schema Evolution (4 tabelas novas)
+- Sprint 1: ODS Fit Score v1
+- Sprint 2: Dashboard Empresa v2
+- Sprint 3: Dashboard Jovem v2
+- Sprint 4: Dashboard Prefeitura + HUB Local
+- Sprint 5: Paginas Publicas v2
+- Sprint 6: CMS + Relatorios
+- Sprint 7: QA + Deploy
+
+---
+
+## 7. Fontes de verdade
+
+| Area | Arquivo |
+|---|---|
+| Design | DESIGN_SYSTEM_V2.md |
+| Copy | COPYWRITING_GUIDE.md |
+| Super Menu + Auth | SUPER_MENU_AUTH_WALKTHROUGH.md |
+| Sprints | SPRINT_PLAN_CODE.md |
+| Orquestracao | MASTER_ORCHESTRATION.md |
+| Contexto agents | .agent/PROJECT_CONTEXT.md |
+| Estrategia | 00_MASTER_STRATEGY.md |
+| Dashboards | 07_PRIVATE_PRODUCT_REPOSITION.md |
+| Memo founder | Brasil_Sustenta_CEO_COO_v2.md (NAO ALTERAR) |
+
+---
+
+## 8. Regras para outros modelos
+
+1. Ler `DESIGN_SYSTEM_V2.md` antes de propor interfaces
+2. Ler `COPYWRITING_GUIDE.md` antes de escrever qualquer copy
+3. Ler `SUPER_MENU_AUTH_WALKTHROUGH.md` se a tarefa tocar em header, navegacao ou acessos por persona
+4. Ler `.agent/PROJECT_CONTEXT.md` para contexto rapido
+5. Mobile-first: sempre comecar pelo breakpoint menor
+6. Anti-AI: recusar qualquer visual que pareca template ou gerado por IA
+7. Nunca alterar `Brasil_Sustenta_CEO_COO_v2.md`
+8. Atualizar este guia sempre que sitemap, header ou home mudarem

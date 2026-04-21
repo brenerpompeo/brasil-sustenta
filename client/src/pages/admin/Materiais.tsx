@@ -28,8 +28,10 @@ const AdminMateriais = () => {
     fileUrl: '', 
     externalUrl: '', 
     status: 'published' as 'draft' | 'published', 
-    hub: 'Global' as 'Global' | 'São Paulo (Estado)' | 'Rio de Janeiro (Estado)' | 'Campinas (Região)'
+    territoryNodeId: null as number | null
   });
+
+  const { data: territories } = trpc.territory.admin.list.useQuery();
 
   const generateSlug = (text: string) => {
     return text.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
@@ -41,7 +43,7 @@ const AdminMateriais = () => {
 
   const resetForm = () => {
     setEditingMaterial(null);
-    setFormData({ title: '', slug: '', description: '', materialType: 'video', fileUrl: '', externalUrl: '', status: 'published', hub: 'Global' });
+    setFormData({ title: '', slug: '', description: '', materialType: 'video', fileUrl: '', externalUrl: '', status: 'published', territoryNodeId: null });
   };
 
   return (
@@ -84,13 +86,13 @@ const AdminMateriais = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label className="text-[11px] font-black uppercase tracking-widest text-ink-4">Hub Regional</Label>
-                    <Select value={formData.hub} onValueChange={(v: 'Global' | 'São Paulo (Estado)' | 'Rio de Janeiro (Estado)' | 'Campinas (Região)') => setFormData({ ...formData, hub: v })}>
-                      <SelectTrigger className="h-11 rounded-xl border-paper-3"><SelectValue /></SelectTrigger>
+                    <Select value={formData.territoryNodeId?.toString() || "null"} onValueChange={(v) => setFormData({ ...formData, territoryNodeId: v === "null" ? null : parseInt(v) })}>
+                      <SelectTrigger className="h-11 rounded-xl border-paper-3"><SelectValue placeholder="Selecione um território..." /></SelectTrigger>
                       <SelectContent className="bg-white border-paper-3">
-                        <SelectItem value="Global">🌐 Global</SelectItem>
-                        <SelectItem value="Campinas (Região)">📍 HUB Campinas</SelectItem>
-                        <SelectItem value="São Paulo (Estado)">📍 HUB São Paulo</SelectItem>
-                        <SelectItem value="Rio de Janeiro (Estado)">📍 HUB Rio de Janeiro</SelectItem>
+                        <SelectItem value="null">🌐 Global</SelectItem>
+                        {territories?.map((t: NonNullable<typeof territories>[number]) => (
+                           <SelectItem key={t.id} value={t.id.toString()}>📍 {t.name}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -126,9 +128,11 @@ const AdminMateriais = () => {
         <div className="bg-white border border-paper-3 rounded-3xl overflow-hidden shadow-sm">
           <table className="w-full"><thead className="bg-paper-2"><tr><th className="px-8 py-4 text-left text-[11px] font-black uppercase text-ink-4">Material / Hub</th><th className="px-8 py-4 text-right text-[11px] font-black uppercase text-ink-4">Ações</th></tr></thead>
             <tbody className="divide-y divide-paper-3">
-              {(materialsData || []).map(mat => (
-                <tr key={mat.id} className="hover:bg-paper-2"><td className="px-8 py-4"><p className="font-bold text-ink">{mat.title}</p><span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black">HUB {mat.hub || 'Global'}</span></td><td className="px-8 py-4 text-right"><Button variant="ghost" onClick={() => { setEditingMaterial(mat); setFormData({ title: mat.title, slug: mat.slug, description: mat.description || '', materialType: mat.materialType as any, fileUrl: mat.fileUrl || '', externalUrl: mat.externalUrl || '', status: mat.status as any, hub: (mat.hub || 'Global') as any }); setIsModalOpen(true); }}><Edit className="h-4 w-4" /></Button></td></tr>
-              ))}
+              {(materialsData || []).map(mat => {
+                const terrName = territories?.find((t: NonNullable<typeof territories>[number]) => t.id === mat.territoryNodeId)?.name || 'Global';
+                return (
+                <tr key={mat.id} className="hover:bg-paper-2"><td className="px-8 py-4"><p className="font-bold text-ink">{mat.title}</p><span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black">📍 {terrName}</span></td><td className="px-8 py-4 text-right"><Button variant="ghost" onClick={() => { setEditingMaterial(mat); setFormData({ title: mat.title, slug: mat.slug, description: mat.description || '', materialType: mat.materialType as any, fileUrl: mat.fileUrl || '', externalUrl: mat.externalUrl || '', status: mat.status as any, territoryNodeId: mat.territoryNodeId }); setIsModalOpen(true); }}><Edit className="h-4 w-4" /></Button></td></tr>
+              )})}
             </tbody>
           </table>
         </div>

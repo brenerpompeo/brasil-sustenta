@@ -21,7 +21,7 @@ const impactModels = [
       "Squad piloto com kickoff e sprint curta",
       "Relatório executivo final",
     ],
-    href: "/login/empresa",
+    href: "/auth/empresa",
     cta: "Solicitar piloto",
     highlight: "PERFEITO PARA PRIMEIRA COMPRA",
     icon: Target,

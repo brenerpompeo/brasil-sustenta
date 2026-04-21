@@ -1,4 +1,5 @@
 import {
+  doublePrecision,
   integer,
   pgEnum,
   pgTable,
@@ -6,6 +7,7 @@ import {
   timestamp,
   varchar,
   boolean,
+  foreignKey,
   json,
   serial,
 } from "drizzle-orm/pg-core";
@@ -31,6 +33,8 @@ export const partnershipRequestStatusEnum = pgEnum("partnership_request_status",
 export const articleTypeEnum = pgEnum("article_type", ["academic", "opinion", "case_study", "whitepaper"]);
 export const reportTypeEnum = pgEnum("report_type", ["esg", "impact", "ods", "annual", "sustainability"]);
 export const materialTypeEnum = pgEnum("material_type", ["video", "ebook", "infographic", "podcast", "webinar", "toolkit"]);
+export const territoryNodeTypeEnum = pgEnum("territory_node_type", ["state_hub", "city_hub", "campus"]);
+export const territoryNodeStatusEnum = pgEnum("territory_node_status", ["planning", "active", "expanding", "paused"]);
 
 // ── Tables ─────────────────────────────────────────────────────────────────────
 
@@ -114,6 +118,52 @@ export const universityProfiles = pgTable("university_profiles", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+/**
+ * Territory nodes powering the public map and admin CRUD.
+ */
+export const territoryNodes = pgTable(
+  "territory_nodes",
+  {
+    id: serial("id").primaryKey(),
+    slug: varchar("slug", { length: 255 }).notNull().unique(),
+    name: varchar("name", { length: 255 }).notNull(),
+    nodeType: territoryNodeTypeEnum("node_type").notNull(),
+    status: territoryNodeStatusEnum("status").default("planning").notNull(),
+    stateCode: varchar("state_code", { length: 2 }),
+    cityName: varchar("city_name", { length: 120 }),
+    latitude: doublePrecision("latitude").notNull(),
+    longitude: doublePrecision("longitude").notNull(),
+    shortDescription: text("short_description"),
+    longDescription: text("long_description"),
+    badge: varchar("badge", { length: 120 }),
+    heroImage: varchar("hero_image", { length: 500 }),
+    colorToken: varchar("color_token", { length: 32 }).default("leaf").notNull(),
+    metrics: json("metrics").$type<
+      { label: string; value: string; note?: string }[]
+    >(),
+    ctaLinks: json("cta_links").$type<
+      { label: string; href: string; variant?: "primary" | "secondary" | "ghost" }[]
+    >(),
+    legacyHubLabel: varchar("legacy_hub_label", { length: 120 }),
+    parentNodeId: integer("parent_node_id"),
+    universityProfileId: integer("university_profile_id").references(
+      () => universityProfiles.id,
+      { onDelete: "set null" }
+    ),
+    isPublished: boolean("is_published").default(true).notNull(),
+    sortOrder: integer("sort_order").default(0).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  table => ({
+    parentNodeFk: foreignKey({
+      columns: [table.parentNodeId],
+      foreignColumns: [table.id],
+      name: "territory_nodes_parent_node_id_fk",
+    }).onDelete("set null"),
+  })
+);
 
 /**
  * Projects (Squad Boxes) created by companies.
@@ -203,12 +253,16 @@ export const blogPosts = pgTable("blog_posts", {
   coverImage: varchar("cover_image", { length: 500 }),
   category: varchar("category", { length: 100 }),
   tags: json("tags").$type<string[]>(),
-   hub: varchar("hub", { length: 50 }),
-   status: postStatusEnum("status").default("draft").notNull(),
-   isFeatured: boolean("is_featured").default(false).notNull(),
-   publishedAt: timestamp("published_at"),
-   createdAt: timestamp("created_at").defaultNow().notNull(),
-   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  hub: varchar("hub", { length: 50 }),
+  territoryNodeId: integer("territory_node_id").references(
+    () => territoryNodes.id,
+    { onDelete: "set null" }
+  ),
+  status: postStatusEnum("status").default("draft").notNull(),
+  isFeatured: boolean("is_featured").default(false).notNull(),
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 /**
@@ -228,11 +282,15 @@ export const events = pgTable("events", {
   isOnline: boolean("is_online").default(false),
   registrationLink: varchar("registration_link", { length: 500 }),
   maxParticipants: integer("max_participants"),
-   hub: varchar("hub", { length: 50 }),
-   status: eventStatusEnum("status").default("upcoming").notNull(),
-   isFeatured: boolean("is_featured").default(false).notNull(),
-   createdAt: timestamp("created_at").defaultNow().notNull(),
-   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  hub: varchar("hub", { length: 50 }),
+  territoryNodeId: integer("territory_node_id").references(
+    () => territoryNodes.id,
+    { onDelete: "set null" }
+  ),
+  status: eventStatusEnum("status").default("upcoming").notNull(),
+  isFeatured: boolean("is_featured").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 /**
@@ -330,6 +388,10 @@ export const articles = pgTable("articles", {
   externalLink: varchar("external_link", { length: 500 }),
   coverImage: varchar("cover_image", { length: 500 }),
   hub: varchar("hub", { length: 50 }),
+  territoryNodeId: integer("territory_node_id").references(
+    () => territoryNodes.id,
+    { onDelete: "set null" }
+  ),
   status: postStatusEnum("status").default("draft").notNull(),
   publishedAt: timestamp("published_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -353,6 +415,10 @@ export const reports = pgTable("reports", {
   coverImage: varchar("cover_image", { length: 500 }),
   tags: json("tags").$type<string[]>(),
   hub: varchar("hub", { length: 50 }),
+  territoryNodeId: integer("territory_node_id").references(
+    () => territoryNodes.id,
+    { onDelete: "set null" }
+  ),
   status: postStatusEnum("status").default("draft").notNull(),
   publishedAt: timestamp("published_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -375,6 +441,10 @@ export const supportMaterials = pgTable("support_materials", {
   duration: varchar("duration", { length: 20 }),
   tags: json("tags").$type<string[]>(),
   hub: varchar("hub", { length: 50 }),
+  territoryNodeId: integer("territory_node_id").references(
+    () => territoryNodes.id,
+    { onDelete: "set null" }
+  ),
   status: postStatusEnum("status").default("draft").notNull(),
   publishedAt: timestamp("published_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -411,6 +481,33 @@ export const usersRelations = relations(users, ({ one }) => ({
     references: [universityProfiles.userId],
   }),
 }));
+
+export const territoryNodesRelations = relations(territoryNodes, ({ one, many }) => ({
+  parent: one(territoryNodes, {
+    fields: [territoryNodes.parentNodeId],
+    references: [territoryNodes.id],
+    relationName: "territory_node_tree",
+  }),
+  children: many(territoryNodes, {
+    relationName: "territory_node_tree",
+  }),
+  universityProfile: one(universityProfiles, {
+    fields: [territoryNodes.universityProfileId],
+    references: [universityProfiles.id],
+  }),
+  blogPosts: many(blogPosts),
+  events: many(events),
+  articles: many(articles),
+  reports: many(reports),
+  supportMaterials: many(supportMaterials),
+}));
+
+export const universityProfilesRelations = relations(
+  universityProfiles,
+  ({ many }) => ({
+    territoryNodes: many(territoryNodes),
+  })
+);
 
 export const projectsRelations = relations(projects, ({ one, many }) => ({
   company: one(companyProfiles, {
@@ -454,6 +551,44 @@ export const squadMembersRelations = relations(squadMembers, ({ one }) => ({
   }),
 }));
 
+export const blogPostsRelations = relations(blogPosts, ({ one }) => ({
+  territoryNode: one(territoryNodes, {
+    fields: [blogPosts.territoryNodeId],
+    references: [territoryNodes.id],
+  }),
+}));
+
+export const eventsRelations = relations(events, ({ one }) => ({
+  territoryNode: one(territoryNodes, {
+    fields: [events.territoryNodeId],
+    references: [territoryNodes.id],
+  }),
+}));
+
+export const articlesRelations = relations(articles, ({ one }) => ({
+  territoryNode: one(territoryNodes, {
+    fields: [articles.territoryNodeId],
+    references: [territoryNodes.id],
+  }),
+}));
+
+export const reportsRelations = relations(reports, ({ one }) => ({
+  territoryNode: one(territoryNodes, {
+    fields: [reports.territoryNodeId],
+    references: [territoryNodes.id],
+  }),
+}));
+
+export const supportMaterialsRelations = relations(
+  supportMaterials,
+  ({ one }) => ({
+    territoryNode: one(territoryNodes, {
+      fields: [supportMaterials.territoryNodeId],
+      references: [territoryNodes.id],
+    }),
+  })
+);
+
 // ── Type Exports ───────────────────────────────────────────────────────────────
 
 export type User = typeof users.$inferSelect;
@@ -464,6 +599,8 @@ export type TalentProfile = typeof talentProfiles.$inferSelect;
 export type InsertTalentProfile = typeof talentProfiles.$inferInsert;
 export type UniversityProfile = typeof universityProfiles.$inferSelect;
 export type InsertUniversityProfile = typeof universityProfiles.$inferInsert;
+export type TerritoryNode = typeof territoryNodes.$inferSelect;
+export type InsertTerritoryNode = typeof territoryNodes.$inferInsert;
 export type Project = typeof projects.$inferSelect;
 export type InsertProject = typeof projects.$inferInsert;
 export type Application = typeof applications.$inferSelect;

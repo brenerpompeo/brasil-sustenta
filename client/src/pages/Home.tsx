@@ -29,6 +29,7 @@ import { cn } from "@/lib/utils";
 import TerritoryMap from "@/components/TerritoryMap";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
+import { SectionHeader } from "@/components/ds";
 
 // Fallback shown while DB has no active partners yet
 const MARQUEE_FALLBACK = [
@@ -337,12 +338,12 @@ export default function Home() {
         {/* PERSONAS ========================================== */}
         <section className="container-editorial section-y">
           <div className="grid gap-6 md:grid-cols-2 md:items-end md:gap-12">
-            <div>
-              <span className="text-[color:var(--color-leaf-dark)] font-mono text-xs font-bold uppercase tracking-widest">Acesso Restrito</span>
-              <h2 className="font-display text-4xl md:text-5xl font-black tracking-tighter text-[color:var(--color-ink)] mt-5 max-w-[18ch] lowercase">
-                Para quem estamos construindo?
-              </h2>
-            </div>
+            <SectionHeader
+              eyebrow="Acesso Restrito"
+              title="Para quem estamos construindo?"
+              titleClassName="lowercase text-4xl md:text-5xl"
+              showRule
+            />
             <p className="font-mono text-sm text-[color:var(--color-ink-3)] max-w-md md:text-right border-l md:border-l-0 md:border-r border-[color:var(--color-ink)] pl-4 md:pl-0 md:pr-4">
               Cada parceiro acessa a base pelo funil correto — garantindo evidências para empresas, horas de extensão para IES e impacto na ponta.
             </p>
@@ -427,12 +428,13 @@ export default function Home() {
         {/* PROTOCOLO ========================================= */}
         <section className="container-editorial section-y">
           <div className="grid gap-6 md:grid-cols-12 md:items-end md:gap-12">
-            <div className="md:col-span-7">
-              <span className="text-eyebrow-bright">Protocolo</span>
-              <h2 className="text-headline mt-5 max-w-[16ch]">
-                Quatro etapas. Zero clima de consultoria genérica.
-              </h2>
-            </div>
+            <SectionHeader
+              eyebrow="Protocolo"
+              title="Quatro etapas. Zero clima de consultoria genérica."
+              tone="bright"
+              showRule
+              className="md:col-span-7"
+            />
             <p className="text-body md:col-span-5">
               O valor da plataforma aparece quando a sequência fica legível —
               do brief até a evidência. Cada etapa tem artefato. Cada artefato
@@ -467,12 +469,12 @@ export default function Home() {
         <section className="surface-paper-2 section-y border-y border-[color:var(--color-border)]">
           <div className="container-editorial">
             <div className="grid gap-10 md:grid-cols-12 md:gap-12 md:items-end">
-              <div className="md:col-span-6">
-                <span className="text-eyebrow">Onde estamos</span>
-                <h2 className="text-headline mt-5 max-w-[14ch]">
-                  Transparência desde o dia zero.
-                </h2>
-              </div>
+              <SectionHeader
+                eyebrow="Onde estamos"
+                title="Transparência desde o dia zero."
+                showRule
+                className="md:col-span-6"
+              />
               <p className="text-body md:col-span-6">
                 Não inflamos números. Mostramos exatamente onde estamos —
                 e convidamos quem quer construir junto desde o início.
@@ -502,12 +504,13 @@ export default function Home() {
         {/* PRODUTOS ========================================= */}
         <section className="container-editorial section-y">
           <div className="grid gap-6 md:grid-cols-12 md:items-end md:gap-12">
-            <div className="md:col-span-7">
-              <span className="text-eyebrow-bright">Formatos em construção</span>
-              <h2 className="text-headline mt-5 max-w-[16ch]">
-                Quatro formatos. Um para cada buyer.
-              </h2>
-            </div>
+            <SectionHeader
+              eyebrow="Formatos em construção"
+              title="Quatro formatos. Um para cada buyer."
+              tone="bright"
+              showRule
+              className="md:col-span-7"
+            />
             <p className="text-body md:col-span-5">
               Do pilot para validação ao programa municipal de longo prazo.
               Os primeiros formatos estão sendo testados com early adopters.
@@ -526,15 +529,13 @@ export default function Home() {
           <div className="container-editorial">
             <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
               <div className="lg:col-span-5">
-                <span className="text-eyebrow-bright">Território</span>
-                <h2 className="text-headline mt-5 max-w-[14ch]">
-                  HUBs como base local.
-                </h2>
-                <p className="text-body mt-7 max-w-md">
-                  A rede cresce por polos regionais que conectam campus,
-                  organizações e articulação local. Território não entra como
-                  pano de fundo — entra como infraestrutura.
-                </p>
+                <SectionHeader
+                  eyebrow="Território"
+                  title="HUBs como base local."
+                  subtitle="A rede cresce por polos regionais que conectam campus, organizações e articulação local. Território não entra como pano de fundo — entra como infraestrutura."
+                  tone="bright"
+                  showRule
+                />
 
                 <div className="mt-8 flex flex-wrap gap-2">
                   <Badge variant="leaf">
@@ -569,15 +570,13 @@ export default function Home() {
         <section className="container-editorial section-y">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-14 lg:items-center">
             <div className="lg:col-span-6">
-              <span className="text-eyebrow-bright">IA visível</span>
-              <h2 className="text-headline mt-5">
-                ODS Fit Score: o match que se explica.
-              </h2>
-              <p className="text-body mt-7 max-w-md">
-                Cada candidato traz um score decomposto em três dimensões.
-                Sem caixa-preta, sem promessa de magia. Apenas explicação em
-                linguagem natural.
-              </p>
+              <SectionHeader
+                eyebrow="IA visível"
+                title="ODS Fit Score: o match que se explica."
+                subtitle="Cada candidato traz um score decomposto em três dimensões. Sem caixa-preta, sem promessa de magia. Apenas explicação em linguagem natural."
+                tone="bright"
+                showRule
+              />
 
               <ul className="mt-9 grid gap-4">
                 {[

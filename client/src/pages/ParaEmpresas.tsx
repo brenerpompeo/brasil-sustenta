@@ -1,495 +1,323 @@
+import { motion } from "framer-motion";
 import {
   ArrowRight,
-  BrainCircuit,
-  BriefcaseBusiness,
-  FileStack,
+  ArrowUpRight,
+  CheckCircle2,
+  ClipboardList,
+  FileCheck2,
+  LineChart,
   ShieldCheck,
-  Sparkles,
   Target,
-  Workflow,
+  Users2,
 } from "lucide-react";
-import { motion } from "framer-motion";
 import { Link } from "wouter";
+
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { PageHero } from "@/components/PageHero";
 import { SEO } from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { editorialViewport, fadeUpTarget } from "@/lib/motion";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { editorialEase, editorialViewport } from "@/lib/motion";
 
-const companySignals = [
+const valueProps = [
   {
-    icon: BrainCircuit,
-    title: "Shortlist com fit score",
-    description:
-      "A empresa enxerga por que cada talento e cada squad fazem sentido para aquele desafio.",
+    icon: Target,
+    title: "Shortlist com Fit Score",
+    body: "3 a 5 talentos rankeados por ODS Fit Score decomposto. Nunca caixa-preta.",
   },
   {
-    icon: Workflow,
-    title: "Operacao em sprint",
-    description:
-      "O desafio sai do slide e entra em kickoff, checkpoints e entrega observavel.",
+    icon: Users2,
+    title: "Squad em sprint",
+    body: "Equipe formada com competências, ODS e cidade do HUB. Checkpoints quinzenais.",
   },
   {
-    icon: ShieldCheck,
-    title: "Trilha de evidencia",
-    description:
-      "RH, ESG e inovacao conseguem acompanhar resultado sem transformar a compra em consultoria pesada.",
+    icon: FileCheck2,
+    title: "Relatório auditável",
+    body: "Trilha de evidência por entrega. ESG vira artefato comprável, não decoração.",
   },
 ];
 
-const buyingTracks = [
+const flow = [
   {
-    title: "RH e early talent",
-    description:
-      "Use squads para observar repertorio e execucao em trabalho real, indo alem do curriculo e da dinamica padrao.",
+    n: "01",
+    label: "Brief ESG",
+    title: "Você descreve o desafio.",
+    body: "Buyer interno, ODS prioritários, prazo, ticket e tipo de entrega — tudo claro antes do match.",
   },
   {
-    title: "ESG e sustentabilidade",
-    description:
-      "Transforme metas, indicadores e frentes de impacto em projetos que avancam com ritmo, logica e entregaveis.",
+    n: "02",
+    label: "Shortlist 72h",
+    title: "Shortlist explicável.",
+    body: "Em até 72h, 3-5 talentos universitários rankeados por Fit Score com explicação em PT-BR.",
   },
   {
-    title: "Inovacao e marca",
-    description:
-      "Teste formatos, prototipos, pesquisas, comunicacao e experiencias com mais velocidade e diversidade de repertorio.",
+    n: "03",
+    label: "Squad",
+    title: "Squad formado.",
+    body: "Você seleciona o squad final. Curadoria humana valida. Sprint começa em até 7 dias.",
+  },
+  {
+    n: "04",
+    label: "Entrega",
+    title: "Relatório auditável.",
+    body: "Ao final, dossiê completo com artefatos, métricas de impacto e badges de ODS atendidos.",
   },
 ];
 
-const offers = [
+const products = [
   {
-    label: "Pilot Project",
-    title: "Comece por um desafio prioritario.",
-    description:
-      "Entrada indicada para validar aderencia, ritmo e ganho percebido antes de ampliar a operacao.",
+    tag: "Pilot",
+    name: "Pilot Project",
+    ticket: "R$ 15k–25k",
+    duration: "4–6 semanas",
+    body: "Validação de buyer, escopo enxuto, entrega única.",
+    bullets: ["1 desafio ESG", "Squad de 3 talentos", "1 entrega final"],
+    cta: "Iniciar pilot",
+  },
+  {
+    tag: "Recorrente",
+    name: "Managed Squad",
+    ticket: "R$ 35k–60k",
+    duration: "8–12 semanas",
+    body: "Squad estável em sprint contínuo. Mais previsibilidade, mais maturidade.",
     bullets: [
-      "1 brief estrategico",
-      "shortlist com justificativa de fit",
-      "squad piloto e sprint enxuta",
-      "relatorio executivo final",
+      "Múltiplos desafios",
+      "Squad de 4–5 talentos",
+      "Checkpoints quinzenais",
+      "Relatórios mensais",
     ],
-  },
-  {
-    label: "Managed Squad",
-    title: "Transforme a frente em operacao recorrente.",
-    description:
-      "Modelo para equipes que ja querem repetir o fluxo, escalar squads e conectar multiple stakeholders.",
-    bullets: [
-      "squads recorrentes",
-      "checkpoints e monitoramento",
-      "camada para RH, ESG e inovacao",
-      "mais previsibilidade operacional",
-    ],
+    cta: "Ativar squad",
+    highlight: true,
   },
 ];
 
-const proofPoints = [
-  {
-    title: "O que entra no brief",
-    items: [
-      "objetivo de negocio",
-      "ODS e contexto de impacto",
-      "prazo e budget",
-      "tipo de entrega esperada",
-    ],
-  },
-  {
-    title: "O que a IA devolve",
-    items: [
-      "fit score explicavel",
-      "shortlist priorizada",
-      "riscos de lacuna no squad",
-      "recomendacao de composicao",
-    ],
-  },
-  {
-    title: "O que sai da sprint",
-    items: [
-      "entregavel do desafio",
-      "log de checkpoints",
-      "sinais para hiring",
-      "relatorio executivo final",
-    ],
-  },
+const proof = [
+  { value: "2026", label: "Primeiros pilots" },
+  { value: "6 sem", label: "Sprint médio projetado" },
+  { value: "4", label: "Etapas do protocolo" },
+  { value: "100%", label: "Transparência de processo" },
 ];
 
-const deliverables = [
-  {
-    title: "Pesquisa e intelligence",
-    description:
-      "Benchmark, mapeamento de dores, entrevistas, leitura setorial e framing de oportunidade para ESG, marca ou inovacao.",
-  },
-  {
-    title: "Produto e experiencia",
-    description:
-      "Protótipos, jornadas, fluxos, MVPs conceituais e recomendacoes de experiencia ligadas ao desafio real.",
-  },
-  {
-    title: "Narrativa e ativacao",
-    description:
-      "Storytelling, ativacao em campus, materiais de reputacao, employer branding e leituras para stakeholders.",
-  },
+const guarantees = [
+  "Confidencialidade contratual com NDA padrão",
+  "Curadoria humana antes da apresentação",
+  "Substituição de talento em até 5 dias úteis",
+  "Trilha de evidência por checkpoint",
 ];
 
-const ParaEmpresas = () => {
+export default function ParaEmpresas() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[color:var(--color-paper)]">
       <SEO
-        title="Para Empresas | Brasil Sustenta"
-        description="Transforme desafios ESG em squads universitarios com matching por IA, curadoria e entrega auditavel."
+        title="Para Empresas — Seu desafio ESG vira squad em 6 semanas | Brasil Sustenta"
+        description="Brief → shortlist com Fit Score → squad em sprint → relatório auditável. Os primeiros pilots estão sendo construídos."
       />
       <Header />
 
-      <main className="pt-[72px]">
-        <section className="border-b border-border">
-          <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-16 lg:py-20">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={fadeUpTarget()}
-              viewport={editorialViewport}
-              className="flex flex-col justify-center"
-            >
-              <Badge
-                variant="outline"
-                className="mb-8 w-fit rounded-full border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em] text-primary"
-              >
-                Para empresas // RH, ESG e inovacao
-              </Badge>
-
-              <h1 className="max-w-4xl font-display text-[3rem] font-bold leading-[0.92] tracking-tight sm:text-[4.4rem] lg:text-[5.6rem]">
-                Transforme um desafio ESG em
-                <span className="block italic font-light text-primary">
-                  squad, sprint e entrega
-                </span>
-              </h1>
-
-              <p className="mt-8 max-w-2xl border-l-[3px] border-primary pl-5 text-base font-medium leading-8 text-foreground/78 sm:text-[1.05rem]">
-                O Brasil Sustenta foi desenhado para empresas que nao querem
-                comprar apenas awareness, nem abrir mais uma vaga generica. A
-                plataforma recebe um desafio real, organiza o match por IA,
-                monta o squad com curadoria e acompanha a execucao com mais
-                clareza.
-              </p>
-
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <Link
-                  href="/login/empresa"
-                  className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "h-12 rounded-full px-6 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground"
-                  )}
-                >
-                  Publicar desafio
+      <main className="pt-16 md:pt-18">
+        <PageHero
+          eyebrow="Para empresas · B2B"
+          variant="paper"
+          title={
+            <>
+              Desafio ESG vira{" "}
+              <span className="italic text-[color:var(--color-leaf)]">squad</span>{" "}
+              em até 6 semanas.
+            </>
+          }
+          lede="Brief com contexto, shortlist com Fit Score explicável, squad universitário em sprint e relatório auditável. Estamos construindo o modelo que tira ESG do PowerPoint e transforma em operação."
+          actions={
+            <>
+              <Button asChild size="xl" variant="leaf">
+                <Link href="/auth/empresa">
+                  Ser um dos primeiros buyers
+                  <ArrowRight className="size-4" />
                 </Link>
-                <a
-                  href="#ofertas"
-                  className={cn(
-                    buttonVariants({ variant: "outline", size: "lg" }),
-                    "h-12 rounded-full border-border px-6 text-sm font-bold uppercase tracking-[0.14em]"
-                  )}
-                >
-                  Ver modelos de oferta
-                </a>
-              </div>
+              </Button>
+              <Button asChild size="xl" variant="outline">
+                <Link href="#produtos">Ver produtos</Link>
+              </Button>
+            </>
+          }
+          side={<EmpresaSidePanel />}
+        />
 
-              <div className="mt-8 flex flex-wrap gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-                <span className="rounded-full border border-border px-3 py-1.5">
-                  Brief unico
-                </span>
-                <span className="rounded-full border border-border px-3 py-1.5">
-                  Matching por IA
-                </span>
-                <span className="rounded-full border border-border px-3 py-1.5">
-                  Curadoria humana
-                </span>
-                <span className="rounded-full border border-border px-3 py-1.5">
-                  Relatorio final
-                </span>
-              </div>
-            </motion.div>
-
-            <div className="grid gap-4">
-              {companySignals.map((signal, index) => {
-                const Icon = signal.icon;
-
-                return (
-                  <motion.div
-                    key={signal.title}
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={editorialViewport}
-                    transition={{ delay: index * 0.08, duration: 0.5 }}
-                  >
-                    <Card
-                      className={cn(
-                        "border-border bg-card shadow-sm hover:shadow-[0_26px_44px_rgba(5,5,5,0.05)]",
-                        index === 0 && "border-primary/30 bg-primary/5"
-                      )}
-                    >
-                      <CardHeader className="pb-4">
-                        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-secondary/30">
-                          <Icon className="h-5 w-5 text-primary" />
-                        </div>
-                        <CardTitle className="font-display text-[1.6rem] tracking-tight">
-                          {signal.title}
-                        </CardTitle>
-                        <CardDescription className="text-sm font-medium leading-7 text-muted-foreground">
-                          {signal.description}
-                        </CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </motion.div>
-                );
-              })}
+        {/* Value props ====================== */}
+        <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
+          <div className="grid gap-6 md:grid-cols-12 md:gap-12 md:items-end">
+            <div className="md:col-span-7">
+              <span className="text-eyebrow-bright">O que muda</span>
+              <h2 className="text-headline mt-5 max-w-[16ch]">
+                Três coisas que você não tem hoje.
+              </h2>
             </div>
+            <p className="text-body md:col-span-5">
+              Não vendemos uma plataforma. Vendemos uma operação completa de
+              ESG com universidade, território e auditoria embutidos.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] md:grid-cols-3">
+            {valueProps.map(({ icon: Icon, title, body }) => (
+              <div key={title} className="bg-white p-7">
+                <Icon className="size-7 text-[color:var(--color-leaf)]" strokeWidth={1.5} />
+                <h3 className="mt-7 font-display text-2xl font-bold tracking-[-0.025em]">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-ink-3)]">
+                  {body}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className="border-b border-border py-20 lg:py-24">
-          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
-            <div className="mb-12 max-w-3xl">
-              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-                Onde a compra entra
-              </div>
-              <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
-                A mesma operacao pode nascer de budgets diferentes.
+        {/* Fluxo ============================ */}
+        <section className="surface-paper-2 border-y border-[color:var(--color-border)] section-y">
+          <div className="container-editorial">
+            <div className="max-w-2xl">
+              <span className="text-eyebrow">Fluxo operacional</span>
+              <h2 className="text-headline mt-5">
+                Do brief ao relatório em 4 passos legíveis.
               </h2>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-3">
-              {buyingTracks.map((track, index) => (
-                <motion.div
-                  key={track.title}
-                  initial={{ opacity: 0, y: 26 }}
-                  whileInView={fadeUpTarget(index * 0.08, 26)}
-                  viewport={editorialViewport}
-                >
-                  <Card className="rounded-[1.5rem] border-border bg-card shadow-sm hover:shadow-[0_24px_40px_rgba(5,5,5,0.05)]">
-                    <CardHeader>
-                      <CardTitle className="font-display text-[1.5rem] tracking-tight">
-                        {track.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-[15px] font-medium leading-7 text-muted-foreground">
-                        {track.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-b border-border py-20 lg:py-24">
-          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
-            <div className="mb-12 max-w-3xl">
-              <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-                Artefatos de produto
-              </div>
-              <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
-                O comprador precisa enxergar como a operacao vira decisao.
-              </h2>
-              <p className="mt-4 text-[15px] font-medium leading-7 text-muted-foreground">
-                Esta camada ainda precisa aparecer mais no produto, mas ja e a
-                espinha correta da oferta: brief claro, IA explicavel e entrega
-                com evidencia.
-              </p>
-            </div>
-
-            <div className="grid gap-6 lg:grid-cols-3">
-              {proofPoints.map((point, index) => (
-                <motion.div
-                  key={point.title}
-                  initial={{ opacity: 0, y: 26 }}
-                  whileInView={fadeUpTarget(index * 0.08, 26)}
-                  viewport={editorialViewport}
-                >
-                  <Card
-                    className={cn(
-                      "rounded-[1.5rem] border-border bg-card shadow-sm hover:shadow-[0_24px_40px_rgba(5,5,5,0.05)]",
-                      index === 1 && "border-primary/30 bg-primary/5"
-                    )}
-                  >
-                    <CardHeader>
-                      <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-secondary/30">
-                        {index === 0 && (
-                          <Target className="h-5 w-5 text-primary" />
-                        )}
-                        {index === 1 && (
-                          <BrainCircuit className="h-5 w-5 text-primary" />
-                        )}
-                        {index === 2 && (
-                          <FileStack className="h-5 w-5 text-primary" />
-                        )}
-                      </div>
-                      <CardTitle className="font-display text-[1.55rem] tracking-tight">
-                        {point.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-3">
-                        {point.items.map(item => (
-                          <li
-                            key={item}
-                            className="flex items-start gap-3 text-[14px] font-medium leading-6 text-foreground/80"
-                          >
-                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="ofertas" className="py-20 lg:py-24">
-          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
-            <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-3xl">
-                <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-                  Modelos de oferta
-                </div>
-                <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
-                  Menos menu confuso, mais produtos que um comprador entende.
-                </h2>
-              </div>
-              <Link
-                href="/para-universidades"
-                className="text-sm font-bold uppercase tracking-[0.14em] text-primary"
-              >
-                Ver tambem a frente institucional{" "}
-                <ArrowRight className="ml-2 inline h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="grid gap-6 lg:grid-cols-2">
-              {offers.map((offer, index) => (
-                <motion.div
-                  key={offer.label}
-                  initial={{ opacity: 0, x: index === 0 ? -24 : 24 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={editorialViewport}
-                  transition={{ delay: index * 0.08, duration: 0.5 }}
-                >
-                  <Card
-                    className={cn(
-                      "rounded-[1.75rem] border-border bg-card shadow-sm hover:shadow-[0_26px_44px_rgba(5,5,5,0.05)]",
-                      index === 0 && "border-primary/30 bg-primary/5"
-                    )}
-                  >
-                    <CardHeader className="space-y-5">
-                      <Badge
-                        variant={index === 0 ? "default" : "outline"}
-                        className="w-fit rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
-                      >
-                        {offer.label}
-                      </Badge>
-                      <CardTitle className="font-display text-[1.8rem] leading-[1.15] tracking-tight">
-                        {offer.title}
-                      </CardTitle>
-                      <CardDescription className="text-sm font-medium leading-7 text-muted-foreground">
-                        {offer.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-4">
-                        {offer.bullets.map(bullet => (
-                          <li
-                            key={bullet}
-                            className="flex items-start gap-3 text-[14px] font-medium leading-6 text-foreground/80"
-                          >
-                            <Sparkles className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                            <span>{bullet}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-
-            <Card className="mt-8 rounded-[1.75rem] border-border bg-foreground text-background shadow-sm">
-              <CardContent className="flex flex-col gap-6 p-8 lg:flex-row lg:items-center lg:justify-between">
-                <div className="max-w-2xl">
-                  <div className="mb-3 flex items-center gap-2 text-primary">
-                    <BriefcaseBusiness className="h-4 w-4" />
-                    <span className="text-[11px] font-bold uppercase tracking-[0.2em]">
-                      Compra mais clara
+            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] md:grid-cols-2 lg:grid-cols-4">
+              {flow.map(({ n, label, title, body }) => (
+                <li key={n} className="bg-white p-7 md:p-8">
+                  <div className="flex items-center justify-between">
+                    <Badge variant="leaf">{label}</Badge>
+                    <span className="font-mono text-xs font-semibold text-[color:var(--color-ink-4)]">
+                      {n}
                     </span>
                   </div>
-                  <p className="text-sm font-medium leading-7 text-background/75">
-                    A categoria mais forte para a empresa nao e "job board ESG".
-                    E "plataforma AI-first que transforma um desafio em squad
-                    universitario com entrega operacional".
+                  <h3 className="mt-7 font-display text-xl font-bold leading-snug tracking-[-0.02em]">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-ink-3)]">
+                    {body}
                   </p>
-                </div>
-
-                <Link
-                  href="/login/empresa"
-                  className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "h-12 rounded-full bg-primary px-6 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground hover:bg-primary/90"
-                  )}
-                >
-                  Abrir conta da empresa
-                </Link>
-              </CardContent>
-            </Card>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
-        <section className="border-t border-border py-20 lg:py-24">
-          <div className="container mx-auto max-w-[1200px] px-6 lg:px-8">
-            <div className="mb-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-              <div>
-                <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-                  Exemplos de entrega
-                </div>
-                <h2 className="font-display text-[2.2rem] font-bold tracking-tight text-foreground lg:text-[3.2rem]">
-                  O squad nao e abstrato. Ele precisa sair em formato de
-                  entregavel.
+        {/* Produtos ========================= */}
+        <section id="produtos" className="container-editorial section-y">
+          <div className="grid gap-6 md:grid-cols-12 md:gap-12 md:items-end">
+            <div className="md:col-span-7">
+              <span className="text-eyebrow-bright">Produtos</span>
+              <h2 className="text-headline mt-5 max-w-[14ch]">
+                Dois formatos. Buyer escolhe.
+              </h2>
+            </div>
+            <p className="text-body md:col-span-5">
+              Pilot para validar. Managed Squad para escalar. Em ambos: brief,
+              shortlist, squad, sprint, relatório.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {products.map(p => (
+              <ProductDetail key={p.name} {...p} />
+            ))}
+          </div>
+        </section>
+
+        {/* Provas ========================== */}
+        <section className="surface-ink section-y border-y border-white/10">
+          <div className="container-editorial">
+            <div className="grid gap-12 lg:grid-cols-12 lg:gap-14 lg:items-center">
+              <div className="lg:col-span-5">
+                <span className="text-eyebrow text-white/55">Provas</span>
+                <h2 className="text-headline mt-5 text-white">
+                  O modelo está sendo construído com transparência.
                 </h2>
+                <p className="text-body mt-7 text-white/72">
+                  Cada formato gera métricas auditáveis desde o primeiro pilot.
+                  Pediu, entregou, documentou.
+                </p>
               </div>
-              <p className="text-[15px] font-medium leading-7 text-muted-foreground">
-                O Brasil Sustenta fica mais forte quando a empresa enxerga o
-                tipo de resultado que pode sair do processo, e nao apenas o
-                discurso de talento ou impacto.
+
+              <div className="lg:col-span-7">
+                <div className="grid gap-px bg-white/12 sm:grid-cols-2">
+                  {proof.map(p => (
+                    <div key={p.label} className="bg-[color:var(--color-ink)] p-7">
+                      <p className="text-numeric text-[color:var(--color-leaf-bright)]">
+                        {p.value}
+                      </p>
+                      <p className="mt-4 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-white/55">
+                        {p.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Garantias ======================= */}
+        <section className="container-editorial section-y">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
+            <div className="lg:col-span-5">
+              <span className="text-eyebrow-bright">Garantias</span>
+              <h2 className="text-headline mt-5">O que entra no contrato.</h2>
+              <p className="text-body mt-7 max-w-md">
+                Sem letra miúda. As regras do squad estão na proposta — antes
+                de assinar.
               </p>
             </div>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              {deliverables.map(deliverable => (
-                <Card
-                  key={deliverable.title}
-                  className="rounded-[1.5rem] border-border bg-card shadow-sm"
+            <ul className="grid gap-3 lg:col-span-7">
+              {guarantees.map((g, i) => (
+                <motion.li
+                  key={g}
+                  initial={{ opacity: 0, x: 12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={editorialViewport}
+                  transition={{ duration: 0.4, delay: i * 0.06, ease: editorialEase }}
+                  className="flex items-start gap-4 border-b border-[color:var(--color-border)] pb-5 last:border-b-0"
                 >
-                  <CardHeader>
-                    <CardTitle className="font-display text-[1.55rem] tracking-tight">
-                      {deliverable.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-[15px] font-medium leading-7 text-muted-foreground">
-                      {deliverable.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[color:var(--color-leaf)]" />
+                  <p className="text-base font-medium leading-relaxed text-[color:var(--color-ink)]">
+                    {g}
+                  </p>
+                </motion.li>
               ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* CTA ============================= */}
+        <section className="container-editorial pb-16 md:pb-24">
+          <div className="surface-leaf rounded-3xl p-10 md:p-14 lg:p-16">
+            <div className="grid gap-8 md:grid-cols-12 md:items-center md:gap-12">
+              <div className="md:col-span-7">
+                <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-white/70">
+                  Próximo passo
+                </span>
+                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.75rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white">
+                  Envie o brief. Receba shortlist em 72h.
+                </h2>
+              </div>
+              <div className="flex flex-col gap-3 md:col-span-5 md:items-end">
+                <Link
+                  href="/auth/empresa"
+                  className="btn-base min-h-13 w-full justify-between bg-white text-[color:var(--color-ink)] hover:bg-[color:var(--color-paper)]"
+                >
+                  Ser early adopter
+                  <ArrowRight className="size-4" />
+                </Link>
+                <Link
+                  href="/quem-somos/impacto"
+                  className="btn-base min-h-13 w-full justify-between border border-white/30 bg-white/5 text-white hover:bg-white hover:text-[color:var(--color-ink)]"
+                >
+                  Ver camada de evidência
+                  <ArrowUpRight className="size-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -498,6 +326,170 @@ const ParaEmpresas = () => {
       <Footer />
     </div>
   );
-};
+}
 
-export default ParaEmpresas;
+function ProductDetail({
+  tag,
+  name,
+  ticket,
+  duration,
+  body,
+  bullets,
+  cta,
+  highlight,
+}: {
+  tag: string;
+  name: string;
+  ticket: string;
+  duration: string;
+  body: string;
+  bullets: string[];
+  cta: string;
+  highlight?: boolean;
+}) {
+  return (
+    <article
+      className={
+        highlight
+          ? "surface-ink relative flex flex-col rounded-2xl p-8 md:p-10"
+          : "surface-card flex flex-col rounded-2xl p-8 md:p-10"
+      }
+    >
+      {highlight && (
+        <Badge variant="solidLeaf" className="absolute -top-3 left-8">
+          Mais escolhido
+        </Badge>
+      )}
+      <div className="flex items-center justify-between">
+        <Badge
+          variant={highlight ? "outline" : "leaf"}
+          className={highlight ? "border-white/40 text-white" : ""}
+        >
+          {tag}
+        </Badge>
+        <span
+          className={
+            highlight
+              ? "font-mono text-xs font-semibold text-white/55"
+              : "font-mono text-xs font-semibold text-[color:var(--color-ink-4)]"
+          }
+        >
+          {duration}
+        </span>
+      </div>
+      <h3
+        className={
+          highlight
+            ? "mt-7 font-display text-3xl font-bold tracking-[-0.025em] text-white"
+            : "mt-7 font-display text-3xl font-bold tracking-[-0.025em]"
+        }
+      >
+        {name}
+      </h3>
+      <p
+        className={
+          highlight
+            ? "mt-2 font-display text-2xl font-semibold text-[color:var(--color-leaf-bright)]"
+            : "mt-2 font-display text-2xl font-semibold text-[color:var(--color-leaf)]"
+        }
+      >
+        {ticket}
+      </p>
+      <p
+        className={
+          highlight
+            ? "mt-5 text-sm leading-relaxed text-white/72"
+            : "mt-5 text-sm leading-relaxed text-[color:var(--color-ink-3)]"
+        }
+      >
+        {body}
+      </p>
+      <ul
+        className={
+          highlight
+            ? "mt-7 space-y-3 border-t border-white/12 pt-7"
+            : "mt-7 space-y-3 border-t border-[color:var(--color-border)] pt-7"
+        }
+      >
+        {bullets.map(b => (
+          <li key={b} className="flex items-start gap-2.5">
+            <CheckCircle2
+              className={
+                highlight
+                  ? "mt-0.5 size-4 shrink-0 text-[color:var(--color-leaf-bright)]"
+                  : "mt-0.5 size-4 shrink-0 text-[color:var(--color-leaf)]"
+              }
+            />
+            <span
+              className={
+                highlight
+                  ? "text-sm leading-relaxed text-white/85"
+                  : "text-sm leading-relaxed text-[color:var(--color-ink-3)]"
+              }
+            >
+              {b}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-8 pt-2">
+        <Button
+          asChild
+          size="lg"
+          variant={highlight ? "leaf" : "default"}
+          className="w-full justify-between"
+        >
+          <Link href="/auth/empresa">
+            {cta}
+            <ArrowRight className="size-4" />
+          </Link>
+        </Button>
+      </div>
+    </article>
+  );
+}
+
+function EmpresaSidePanel() {
+  return (
+    <div className="rounded-3xl border border-[color:var(--color-border)] bg-white p-7 md:p-8">
+      <div className="flex items-center justify-between">
+        <span className="text-eyebrow">Brief padrão</span>
+        <ClipboardList className="size-4 text-[color:var(--color-ink-4)]" />
+      </div>
+      <p className="mt-6 font-display text-xl font-semibold leading-tight tracking-[-0.02em]">
+        O que entra no brief
+      </p>
+      <ul className="mt-5 grid gap-2.5 text-sm">
+        {[
+          { k: "Buyer interno", v: "Quem aprova e cobra" },
+          { k: "ODS prioritários", v: "1 a 3 dos 17" },
+          { k: "Tipo de entrega", v: "Estudo · Pilot · Implementação" },
+          { k: "Prazo", v: "4 a 12 semanas" },
+          { k: "Ticket", v: "R$ 15k–60k" },
+          { k: "HUB", v: "Cidade preferencial" },
+        ].map(item => (
+          <li
+            key={item.k}
+            className="flex items-baseline justify-between border-b border-[color:var(--color-border)] pb-2.5 last:border-b-0"
+          >
+            <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-ink-4)]">
+              {item.k}
+            </span>
+            <span className="text-right text-[0.8125rem] font-medium text-[color:var(--color-ink)]">
+              {item.v}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-7 flex items-center justify-between rounded-xl bg-[color:var(--color-paper-2)] p-4">
+        <div className="flex items-center gap-2.5">
+          <ShieldCheck className="size-4 text-[color:var(--color-leaf)]" />
+          <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.18em]">
+            NDA padrão incluso
+          </span>
+        </div>
+        <LineChart className="size-4 text-[color:var(--color-ink-4)]" />
+      </div>
+    </div>
+  );
+}

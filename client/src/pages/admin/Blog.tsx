@@ -29,10 +29,11 @@ const AdminBlog = () => {
     category: 'Geral',
     status: 'draft' as 'draft' | 'published',
     isFeatured: false,
-    hub: 'Global' as 'Global' | 'São Paulo (Estado)' | 'Rio de Janeiro (Estado)' | 'Campinas (Região)'
+    territoryNodeId: null as number | null
   });
 
   // TRPC Hooks
+  const { data: territories } = trpc.territory.admin.list.useQuery();
   const { data: postsData, isLoading, refetch } = trpc.blog.getAll.useQuery({ limit: 50 });
   
   const createMutation = trpc.blog.create.useMutation({
@@ -87,7 +88,7 @@ const AdminBlog = () => {
       category: 'Geral',
       status: 'draft',
       isFeatured: false,
-      hub: 'Global'
+      territoryNodeId: null
     });
   };
 
@@ -101,7 +102,7 @@ const AdminBlog = () => {
       category: post.category || 'Geral',
       status: post.status,
       isFeatured: post.isFeatured || false,
-      hub: post.hub || 'Global'
+      territoryNodeId: post.territoryNodeId
     });
     setIsModalOpen(true);
   };
@@ -241,20 +242,20 @@ const AdminBlog = () => {
                             <SelectItem value="published">Publicar Imediatamente</SelectItem>
                           </SelectContent>
                         </Select>
-                        <div className="space-y-2">
+                        <div className="space-y-2 mt-4">
                         <Label className="text-[11px] font-black uppercase tracking-widest text-ink-4">Hub Regional</Label>
                         <Select 
-                          value={formData.hub} 
-                          onValueChange={(v: 'Global' | 'São Paulo (Estado)' | 'Rio de Janeiro (Estado)' | 'Campinas (Região)') => setFormData({...formData, hub: v})}
+                          value={formData.territoryNodeId?.toString() || "null"} 
+                          onValueChange={(v) => setFormData({...formData, territoryNodeId: v === "null" ? null : parseInt(v)})}
                         >
                           <SelectTrigger className="h-11 rounded-xl border-paper-3 font-bold">
                             <SelectValue placeholder="Selecione o Hub..." />
                           </SelectTrigger>
                           <SelectContent className="bg-white border-paper-3 rounded-xl shadow-2xl">
-                            <SelectItem value="Global text-leaf font-bold">🌐 Global / Nacional</SelectItem>
-                            <SelectItem value="Campinas (Região)">📍 HUB Campinas</SelectItem>
-                            <SelectItem value="São Paulo (Estado)">📍 HUB São Paulo</SelectItem>
-                            <SelectItem value="Rio de Janeiro (Estado)">📍 HUB Rio de Janeiro</SelectItem>
+                            <SelectItem value="null" className="text-leaf font-bold">🌐 Global / Nacional</SelectItem>
+                            {territories?.map((t: NonNullable<typeof territories>[number]) => (
+                               <SelectItem key={t.id} value={t.id.toString()}>📍 {t.name}</SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </div>

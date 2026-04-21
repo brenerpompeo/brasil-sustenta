@@ -1,233 +1,158 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { SEO } from "@/components/SEO";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import {
-  ArrowRight,
-  Bot,
-  Building2,
-  GraduationCap,
-  School,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 
-const portals = [
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { SEO } from "@/components/SEO";
+import {
+  AUTH_PERSONAS,
+  AUTH_PERSONA_ORDER,
+  type AccentTone,
+} from "@/constants/auth-personas";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const accentClasses: Record<
+  AccentTone,
   {
-    href: "/login/jovem",
-    title: "Portal do Talento",
-    eyebrow: "Universitarios",
-    icon: GraduationCap,
-    accent: "text-sky border-sky/30 bg-sky/10",
-    description:
-      "Receba match inteligente com desafios reais, construa portfolio de impacto e acompanhe sua trilha de crescimento.",
-    bullets: [
-      "Oportunidades filtradas por IA",
-      "Candidaturas e squads em um so lugar",
-      "Experiencia mobile-first para rotina academica",
-    ],
+    badge: string;
+    icon: string;
+    card: string;
+    button: "leaf" | "atlantic" | "sun";
+  }
+> = {
+  green: {
+    badge:
+      "border-[color:var(--color-leaf)]/20 bg-[color:var(--color-leaf-soft)] text-[color:var(--color-leaf-deep)]",
+    icon: "bg-[color:var(--color-leaf-soft)] text-[color:var(--color-leaf-deep)]",
+    card: "hover:border-[color:var(--color-leaf)]/25",
+    button: "leaf",
   },
-  {
-    href: "/login/empresa",
-    title: "Portal Corporativo",
-    eyebrow: "Empresas",
-    icon: Building2,
-    accent: "text-primary border-primary/30 bg-primary/10",
-    description:
-      "Publique projetos, monte squads com rapidez e transforme metas ESG em operacao monitoravel.",
-    bullets: [
-      "Gestao de projetos e aprovacoes",
-      "Talentos ranqueados por aderencia",
-      "Escalabilidade pronta para novos squads",
-    ],
+  blue: {
+    badge:
+      "border-[color:var(--color-atlantic)]/20 bg-[color:var(--color-atlantic-soft)] text-[color:var(--color-atlantic-deep)]",
+    icon: "bg-[color:var(--color-atlantic-soft)] text-[color:var(--color-atlantic-deep)]",
+    card: "hover:border-[color:var(--color-atlantic)]/25",
+    button: "atlantic",
   },
-  {
-    href: "/login/universidade",
-    title: "Portal Academico",
-    eyebrow: "Instituicoes",
-    icon: School,
-    accent: "text-violet-2 border-violet/30 bg-violet/10",
-    description:
-      "Acompanhe extensao, parcerias e indicadores com uma experiencia clara para coordenacao e reitoria.",
-    bullets: [
-      "Convenios e relatorios em contexto",
-      "Visibilidade de alunos engajados",
-      "Base pronta para auditoria e impacto",
-    ],
+  yellow: {
+    badge:
+      "border-[color:var(--color-sun-deep)]/20 bg-[color:var(--color-sun-soft)] text-[color:var(--color-sun-deep)]",
+    icon: "bg-[color:var(--color-sun-soft)] text-[color:var(--color-sun-deep)]",
+    card: "hover:border-[color:var(--color-sun-deep)]/25",
+    button: "sun",
   },
-];
+};
 
 export default function LoginHub() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[color:var(--color-paper)] text-[color:var(--color-ink)]">
       <SEO
-        title="Entrar | Brasil Sustenta"
-        description="Escolha o portal certo para talentos, empresas e universidades dentro da experiencia Brasil Sustenta."
+        title="Acesso por Persona | Brasil Sustenta"
+        description="Escolha o portal da sua operação: talento, empresa, IES, prefeitura ou liderança territorial."
       />
       <Header />
 
-      <main className="pt-28">
-        <section className="container py-8 sm:py-12 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+      <main className="pt-[4.75rem]">
+        <section className="container-editorial section-y border-b border-[color:var(--color-border)]">
+          <div className="grid gap-8 xl:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] xl:items-end">
             <div className="space-y-6">
-              <Badge
-                variant="outline"
-                className="rounded-full border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-black uppercase tracking-[0.24em] text-primary"
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                Startup UX Operating System
-              </Badge>
-
-              <div className="space-y-4">
-                <h1 className="max-w-4xl text-5xl font-black tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-                  Entre no portal certo para acelerar impacto, operacao e escala.
-                </h1>
-                <p className="max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-                  Organizamos a jornada por persona para melhorar foco, acessibilidade,
-                  legibilidade e velocidade de execucao desde o primeiro clique.
-                </p>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-3">
-                <div className="rounded-3xl border border-border bg-card p-5">
-                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                    <Bot className="h-5 w-5" />
-                  </div>
-                  <p className="text-sm font-semibold text-foreground">IA-first</p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Matchmaking e triagem com experiencia orientada por contexto.
-                  </p>
-                </div>
-                <div className="rounded-3xl border border-border bg-card p-5">
-                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/20 text-accent-foreground">
-                    <ShieldCheck className="h-5 w-5" />
-                  </div>
-                  <p className="text-sm font-semibold text-foreground">Acessivel</p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Navegacao mais clara, foco visivel e hierarquia de leitura melhor resolvida.
-                  </p>
-                </div>
-                <div className="rounded-3xl border border-border bg-card p-5">
-                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary text-foreground">
-                    <ArrowRight className="h-5 w-5" />
-                  </div>
-                  <p className="text-sm font-semibold text-foreground">Escalavel</p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Entrada consistente para novos fluxos, jornadas e produtos da startup.
-                  </p>
-                </div>
-              </div>
+              <p className="text-eyebrow-bright">Acesso por persona</p>
+              <h1 className="max-w-[12ch] text-display">
+                Uma entrada clara para cada operação.
+              </h1>
+              <p className="max-w-3xl text-lede">
+                O hub de acesso organiza a jornada por buyer, campus, juventude,
+                município e liderança local. Cada portal abre uma leitura própria
+                de produto, linguagem e próxima ação.
+              </p>
             </div>
 
-            <Card className="overflow-hidden rounded-[2rem] border-border bg-foreground text-background shadow-2xl">
-              <CardHeader className="gap-4 border-b border-white/10">
-                <Badge
-                  variant="outline"
-                  className="rounded-full border-white/15 bg-white/5 px-3 py-1 text-[11px] font-black uppercase tracking-[0.24em] text-white/80"
-                >
-                  Operating Brief
-                </Badge>
-                <CardTitle className="font-display text-3xl font-black tracking-tight text-white">
-                  Um unico ecossistema, tres portas de entrada bem definidas.
-                </CardTitle>
-                <CardDescription className="text-base leading-7 text-white/65">
-                  Esse hub reduz atrito na descoberta, elimina rotas quebradas e prepara
-                  a plataforma para experiencias mais especializadas sem poluir a home.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4 pt-6">
+            <div className="surface-ink overflow-hidden rounded-[2rem] border border-white/10 p-8">
+              <p className="text-eyebrow text-white/60">Operating brief</p>
+              <h2 className="mt-5 font-display text-[clamp(2rem,3vw,3.2rem)] font-black leading-[0.92] tracking-[-0.045em] text-white">
+                Cinco portas, uma operação coordenada.
+              </h2>
+              <div className="mt-7 grid gap-3">
                 {[
-                  "Arquitetura de navegacao mais previsivel",
-                  "Melhor clareza para conversao por persona",
-                  "Base pronta para onboarding e experimentacao futura",
+                  "Brief, curadoria, sprint e relatório como linguagem comum.",
+                  "Persona-first para reduzir ruído de navegação e copy.",
+                  "Rotas /auth/* como entrada canônica para cada stakeholder.",
                 ].map(item => (
                   <div
                     key={item}
-                    className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4"
+                    className="rounded-[1.3rem] border border-white/10 bg-white/6 px-4 py-4 text-sm leading-6 text-white/72"
                   >
-                    <div className="mt-0.5 h-2.5 w-2.5 rounded-full bg-primary" />
-                    <p className="text-sm leading-7 text-white/75">{item}</p>
+                    {item}
                   </div>
                 ))}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-3">
-            {portals.map(portal => {
-              const Icon = portal.icon;
+          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {AUTH_PERSONA_ORDER.map(key => {
+              const persona = AUTH_PERSONAS[key];
+              const Icon = persona.icon;
+              const accent = accentClasses[persona.tone];
 
               return (
-                <Card
-                  key={portal.href}
-                  className="rounded-[2rem] border-border bg-card/95 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                <article
+                  key={persona.key}
+                  className={cn(
+                    "rounded-[2rem] border border-[color:var(--color-border)] bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(10,10,10,0.08)]",
+                    accent.card
+                  )}
                 >
-                  <CardHeader className="gap-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <Badge
-                        variant="outline"
-                        className={cn(
-                          "rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em]",
-                          portal.accent
-                        )}
-                      >
-                        {portal.eyebrow}
-                      </Badge>
-                      <div
-                        className={cn(
-                          "flex h-12 w-12 items-center justify-center rounded-2xl border",
-                          portal.accent
-                        )}
-                      >
-                        <Icon className="h-5 w-5" />
-                      </div>
-                    </div>
+                  <div className="flex items-start justify-between gap-4">
+                    <span
+                      className={cn(
+                        "rounded-full border px-3 py-1.5 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em]",
+                        accent.badge
+                      )}
+                    >
+                      {persona.hubEyebrow}
+                    </span>
+                    <span
+                      className={cn(
+                        "inline-flex size-12 items-center justify-center rounded-[1.1rem]",
+                        accent.icon
+                      )}
+                    >
+                      <Icon className="size-5" />
+                    </span>
+                  </div>
 
-                    <div className="space-y-3">
-                      <CardTitle className="font-display text-3xl font-black tracking-tight text-foreground">
-                        {portal.title}
-                      </CardTitle>
-                      <CardDescription className="text-base leading-7 text-muted-foreground">
-                        {portal.description}
-                      </CardDescription>
-                    </div>
-                  </CardHeader>
+                  <h2 className="mt-6 font-display text-[2rem] font-black leading-[0.94] tracking-[-0.04em] text-[color:var(--color-ink)]">
+                    {persona.portalLabel}
+                  </h2>
+                  <p className="mt-3 text-base leading-7 text-[color:var(--color-ink-3)]">
+                    {persona.hubDescription}
+                  </p>
 
-                  <CardContent className="space-y-3">
-                    {portal.bullets.map(bullet => (
+                  <div className="mt-5 grid gap-2.5">
+                    {persona.hubBullets.map(bullet => (
                       <div
                         key={bullet}
-                        className="rounded-2xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground"
+                        className="rounded-[1.2rem] border border-[color:var(--color-border)] bg-[color:var(--color-paper-2)] px-4 py-3 text-sm leading-6 text-[color:var(--color-ink-3)]"
                       >
                         {bullet}
                       </div>
                     ))}
-                  </CardContent>
+                  </div>
 
-                  <CardFooter className="pt-2">
-                    <Link
-                      href={portal.href}
-                      className={cn(
-                        buttonVariants({ size: "lg" }),
-                        "w-full rounded-full text-[12px] font-black uppercase tracking-[0.22em]"
-                      )}
-                    >
+                  <Button
+                    asChild
+                    size="lg"
+                    variant={accent.button}
+                    className="mt-6 w-full justify-between rounded-[1.1rem] text-[0.75rem] font-black uppercase tracking-[0.22em]"
+                  >
+                    <Link href={persona.href}>
                       Entrar no portal
-                      <ArrowRight className="h-4 w-4" />
+                      <ArrowRight className="size-4" />
                     </Link>
-                  </CardFooter>
-                </Card>
+                  </Button>
+                </article>
               );
             })}
           </div>

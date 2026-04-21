@@ -1,4 +1,4 @@
-# Brasil Sustenta - Benchmark Action Map
+# Brasil Sustenta - Benchmark Action Map v2
 
 ## Como usar este documento
 
@@ -13,15 +13,29 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 
 ---
 
+## Nota estrategica sobre o white space confirmado
+
+Apos benchmark de 8 players globais e nacionais, nenhum combina:
+
+- empresa + universidade + squads ESG + IA de matching
+- arquitetura territorial por cidade (HUB Local com multiplos Campi)
+- prefeitura como cliente B2G e ancora institucional
+- modelo replicavel cidade -> estado -> Brasil
+
+O quadrante "Inovacao/Impacto/ESG + Operacao/Entrega" esta praticamente desocupado. A Riipen e o comparavel global mais proximo, mas sem camada ESG-native e sem modelo territorial-municipal. Esse e o principal ativo estrategico do Brasil Sustenta.
+
+---
+
 ## Riipen
 
 ### Produto
 
 - copiar:
-  - empresa + universidade + projeto real
+  - empresa + universidade + projeto real como estrutura central
   - estrutura clara de experiencias baseadas em desafios
 - adaptar:
-  - employer flow com brief, match e cohort mais simples
+  - employer flow com brief, match e cohort mais simples e compravel
+  - modelo multiuniversitario sob guarda-chuva de cidade (HUB Local)
 - evitar:
   - excesso de camada institucional pesada no inicio
 
@@ -30,48 +44,54 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 - copiar:
   - discurso de ponte entre educacao e trabalho real
 - adaptar:
-  - vender para budgets hibridos, nao so educacionais
+  - vender para budgets hibridos (RH + ESG + inovacao), nao so educacionais
+  - adicionar camada B2G que a Riipen nao tem (prefeitura como ancora)
 - evitar:
-  - depender de grants como motor principal cedo
+  - depender de grants governamentais como motor principal cedo
 
 ### Modelo operacional
 
 - copiar:
   - desafio real como unidade de valor
+  - ciclos por sprint com validacoes intermediarias
 - adaptar:
   - squad operacional em vez de apenas projeto listado
+  - HUB Local como camada de governanca territorial
 
 ### IA
 
 - copiar:
-  - relevancia de matching
+  - relevancia de matching entre empresa e talent pool
 - adaptar:
-  - fit score explicavel orientado por ODS
+  - fit score explicavel orientado por ODS e contexto de desafio
 
 ### Universidades
 
 - copiar:
-  - papel institucional forte
+  - papel institucional forte e formalizado
 - adaptar:
-  - extensao + empregabilidade + supply de talentos
+  - Campus dentro de HUB Local, nao IES isolada
+  - extensao + empregabilidade + supply de talentos como valor para a IES
 
 ### Eventos
 
 - copiar:
-  - programas tematicos
+  - programas tematicos e cohorts por area
 - adaptar:
-  - edicoes patrocinadas e challenge days
+  - edicoes patrocinadas, challenge days por cidade, demo days de HUB
 
 ### Monetizacao
 
 - copiar:
   - programas e formatos patrocinados
+  - co-investimento empregador + funding publico (no Brasil: via prefeitura)
 - adaptar:
-  - Pilot Project e edicoes setoriais
+  - Pilot Project como entrada + escalada para Managed Squad + Programa Municipal
 
 ### Veredito
 
 - melhor comparavel global em `empresa + universidade + projeto real`
+- referencia principal para o fluxo do produto
 
 ---
 
@@ -81,6 +101,7 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 
 - copiar:
   - trabalho real como prova de talento
+  - escopos pequenos, compraveis, sem risco juridico inicial
 - adaptar:
   - squad curto em vez de micro-internship individual
 - evitar:
@@ -91,46 +112,39 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 - copiar:
   - discurso de avaliacao antes da contratacao
 - adaptar:
-  - “observe talento em contexto ESG”
+  - "observe talento em contexto ESG real" como hook
 
 ### Modelo operacional
 
 - copiar:
-  - escopos pequenos e compraveis
+  - escopos pequenos e bem definidos como unidade transacional
 - adaptar:
-  - Pilot Project como wedge
+  - Pilot Project como wedge com entrega observavel
 
 ### IA
 
 - copiar:
-  - leitura de candidato baseada em experiencia real
+  - leitura de candidato baseada em experiencia real, nao em CV
 - adaptar:
-  - score com justificativa por projeto
+  - score com justificativa por projeto e por ODS
 
 ### Universidades
 
 - copiar:
-  - valor para carreira e empregabilidade
+  - valor para carreira e empregabilidade do talento
 - adaptar:
-  - parceria formal com extensao
-
-### Eventos
-
-- copiar:
-  - educacao de mercado sobre novo formato
-- adaptar:
-  - Labs de briefings e campus sessions
+  - parceria formal como Campus dentro do HUB Local
 
 ### Monetizacao
 
 - copiar:
-  - unidade transacional por projeto
+  - unidade transacional por projeto com ticket fixo
 - adaptar:
-  - ticket por sprint ou squad
+  - ticket por sprint ou squad, nao por hora ou candidato
 
 ### Veredito
 
-- melhor referencia para converter trabalho real em mecanismo de hiring
+- melhor referencia para converter trabalho real em mecanismo de avaliacao e hiring
 
 ---
 
@@ -139,47 +153,19 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 ### Produto
 
 - copiar:
-  - topo de funil educacional
-  - experiencia curta, clara e autoexplicativa
+  - topo de funil educacional com experiencia curta e autoexplicativa
+  - employer branding educacional
 - adaptar:
-  - mini simulacoes de desafios ESG e briefs publicos
+  - mini simulacoes de desafios ESG e briefs publicos para atrair talentos
 - evitar:
-  - virar so conteudo sem operacao
+  - virar so conteudo sem operacao real
 
 ### Go-to-market
 
 - copiar:
-  - employer branding educacional
+  - employer branding como canal de atracao de talentos qualificados
 - adaptar:
-  - usar simulacoes para prequalificar interesse
-
-### Modelo operacional
-
-- copiar:
-  - onboarding leve e descoberta simples
-- adaptar:
-  - simulacoes conectadas a squads reais
-
-### IA
-
-- copiar:
-  - leitura de intencao e relevancia
-- adaptar:
-  - conectar simulacao com recomendacao de match
-
-### Universidades
-
-- copiar:
-  - valor didatico e de carreira
-- adaptar:
-  - material para professores e coordenacao
-
-### Eventos
-
-- copiar:
-  - trilhas educativas
-- adaptar:
-  - challenge sessions em campus
+  - simulacoes para prequalificar interesse antes do match real
 
 ### Monetizacao
 
@@ -188,7 +174,7 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 
 ### Veredito
 
-- melhor referencia para topo de funil e formacao de interesse
+- melhor referencia para topo de funil e formacao de interesse de talento
 
 ---
 
@@ -198,58 +184,30 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 
 - copiar:
   - distribuicao em escala
-  - paginas por buyer
-  - IA visivel
+  - IA visivel como parte central do produto, nao como promessa
+  - paginas separadas por buyer
 - adaptar:
   - discovery mais enxuto e focado em desafios, nao vagas
 - evitar:
   - virar marketplace generico de oportunidades
 
-### Go-to-market
-
-- copiar:
-  - relacao forte com universidades e empregadores
-- adaptar:
-  - categoria menor, mais especializada e mais vertical
-
-### Modelo operacional
-
-- copiar:
-  - plataforma multi-sided com data layer clara
-- adaptar:
-  - menos breadth, mais profundidade
-
 ### IA
 
 - copiar:
-  - visibilidade da inteligencia como parte do produto
+  - visibilidade da inteligencia como parte do produto (autofill, relevance ranking, match reasoning)
 - adaptar:
-  - fit score, match reasoning, composicao de squad
-
-### Universidades
-
-- copiar:
-  - integracao institucional
-- adaptar:
-  - foco em extensao e projetos
-
-### Eventos
-
-- copiar:
-  - eventos como vetor de distribuicao
-- adaptar:
-  - demo days e campus recruiting focado em desafios ESG
+  - fit score por ODS, skills e contexto de desafio
 
 ### Monetizacao
 
 - copiar:
   - upsell de recursos premium
 - adaptar:
-  - Pilot -> Managed -> Sponsored Editions
+  - Pilot -> Managed -> Programa Municipal -> Sponsored Editions
 
 ### Veredito
 
-- melhor benchmark de `escala + distribuicao + IA visivel`
+- melhor benchmark de `escala + IA visivel + distribuicao`
 
 ---
 
@@ -258,58 +216,30 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 ### Produto
 
 - copiar:
-  - linguagem jovem
-  - marca empregadora brasileira
+  - linguagem jovem e proxima da realidade brasileira
+  - marca empregadora como argumento de venda
 - adaptar:
-  - discurso jovem conectado a ESG e impacto real
+  - discurso jovem conectado a ESG, impacto real e portfolio observavel
 - evitar:
-  - cair no mesmo campo de estagio/trainee
+  - cair no mesmo campo de estagio/trainee tradicional
 
 ### Go-to-market
 
 - copiar:
-  - leitura de juventudes e employer branding
+  - leitura de juventudes e employer branding como argumentos
 - adaptar:
-  - reposicionar para “experiencia real e squads”
-
-### Modelo operacional
-
-- copiar:
-  - conhecimento de mercado brasileiro
-- adaptar:
-  - programas e narrativas de atracao de talentos
-
-### IA
-
-- copiar:
-  - menos pela IA
-- adaptar:
-  - usar IA como diferencial onde a Eureca e mais method-led
-
-### Universidades
-
-- copiar:
-  - conexao com juventude e educacao
-- adaptar:
-  - parceria mais formal com IES
+  - reposicionar para "experiencia real com squads e impacto ESG"
 
 ### Eventos
 
 - copiar:
-  - linguagem de movimento
+  - linguagem de movimento e engajamento com campus
 - adaptar:
-  - eventos de engajamento em campus com CTA comercial
-
-### Monetizacao
-
-- copiar:
-  - marca empregadora e programas especiais
-- adaptar:
-  - employer branding ligado a desafios reais
+  - eventos com CTA comercial clara por cidade (lead -> brief -> squad)
 
 ### Veredito
 
-- melhor referencia brasileira de linguagem e aproximacao com juventude
+- melhor referencia brasileira de linguagem jovem e aproximacao com campus
 
 ---
 
@@ -318,55 +248,19 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 ### Produto
 
 - copiar:
-  - automacao operacional
-  - IA em triagem
-  - backoffice fluido
+  - automacao operacional de backoffice
+  - IA em triagem e ranqueamento de candidatos
 - adaptar:
-  - backoffice para desafios, candidatos e squads
+  - backoffice para desafios, briefings e squads (nao apenas vagas)
 - evitar:
-  - categoria centrada em agente integrador ou estagio tradicional
-
-### Go-to-market
-
-- copiar:
-  - eficiencia operacional como argumento
-- adaptar:
-  - “menos atrito do brief ao squad”
-
-### Modelo operacional
-
-- copiar:
-  - plataforma mais robusta no dia a dia
-- adaptar:
-  - dashboards internos reposicionados por JTBD
+  - categoria centrada em agente integrador de estagio tradicional
 
 ### IA
 
 - copiar:
-  - visibilidade de ranking e automacao
+  - visibilidade de ranking e automacao como argumento de produto
 - adaptar:
-  - score por ODS e entrega
-
-### Universidades
-
-- copiar:
-  - ligacao com IES
-- adaptar:
-  - menos contrato/gestao escolar, mais supply e extensao
-
-### Eventos
-
-- copiar:
-  - pouco
-- adaptar:
-  - trazer apenas fluidez de operacao para eventos
-
-### Monetizacao
-
-- copiar:
-  - receita B2B de backoffice
-- adaptar:
-  - camada premium de operacao para squads
+  - score por ODS + entrega + contexto de desafio
 
 ### Veredito
 
@@ -379,54 +273,18 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 ### Produto
 
 - copiar:
-  - ofertas bem productizadas
+  - ofertas bem productizadas com escopo, entrega e preco claros
 - adaptar:
-  - Pilot Project, Managed Squad, University Partner
+  - Pilot Project, Managed Squad, University Partner, Programa Municipal como 4 produtos claros
 - evitar:
   - dependencia de servico gerenciado aberto demais
 
 ### Go-to-market
 
 - copiar:
-  - clareza comercial
-  - leitura de pacotes e modulos
+  - clareza comercial e leitura de pacotes progressivos
 - adaptar:
   - empacotar categoria nova de forma compravel
-
-### Modelo operacional
-
-- copiar:
-  - metodologia comercial e de entrega
-- adaptar:
-  - manter servico assistido leve
-
-### IA
-
-- copiar:
-  - pouco
-- adaptar:
-  - diferenciar fortemente por IA explicavel
-
-### Universidades
-
-- copiar:
-  - pouco
-- adaptar:
-  - usar camada institucional que a Matchbox nao tem como nucleo
-
-### Eventos
-
-- copiar:
-  - employer branding e ativacoes
-- adaptar:
-  - demo day e challenge day com CTA de projeto
-
-### Monetizacao
-
-- copiar:
-  - pacotes claros
-- adaptar:
-  - progressao de complexidade e ticket
 
 ### Veredito
 
@@ -439,54 +297,19 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 ### Produto
 
 - copiar:
-  - desafio real conectado ao curriculo
+  - desafio real conectado ao curriculo como espinha do produto
+  - ciclos por sprint com entrega de prototipos
 - adaptar:
-  - modelo multiuniversitario e marketplace de supply
+  - modelo multiuniversitario via HUBs Locais (nao dependente de uma IES unica)
 - evitar:
-  - dependencia de uma instituicao unica
+  - dependencia de uma instituicao ancora
 
 ### Go-to-market
 
 - copiar:
-  - parceria universidade-empresa como tese forte
+  - parceria universidade-empresa como tese forte e diferenciada
 - adaptar:
-  - vender extensao com mais capilaridade e menos centralizacao
-
-### Modelo operacional
-
-- copiar:
-  - ciclos por sprint
-  - entrega com prototipos e validacao
-- adaptar:
-  - squads e relatorio final
-
-### IA
-
-- copiar:
-  - proximidade com dados e tecnologia
-- adaptar:
-  - IA como camada de orquestracao
-
-### Universidades
-
-- copiar:
-  - profundidade institucional
-- adaptar:
-  - playbook replicavel de HUBs e IES
-
-### Eventos
-
-- copiar:
-  - demos e entregas
-- adaptar:
-  - demo days regionais e showcase de squads
-
-### Monetizacao
-
-- copiar:
-  - entrada institucional e por projeto
-- adaptar:
-  - patrocinio corporativo e parcerias sem custo inicial para IES piloto
+  - vender extensao com mais capilaridade territorial via rede de HUBs
 
 ### Veredito
 
@@ -494,26 +317,56 @@ O objetivo e transformar benchmark em decisao pratica, nao em admiracao passiva.
 
 ---
 
+## White spaces que ninguem ocupa (oportunidades exclusivas do Brasil Sustenta)
+
+### White space 1: ESG-native early talent platform
+
+- Nenhum player usa ESG/ODS como espinha dorsal da alocacao, do discovery e da prova de valor.
+
+### White space 2: Arquitetura territorial por cidade
+
+- Nenhum player organiza o modelo em HUBs Locais por cidade com multiplos Campi universitarios sob um guarda-chuva.
+
+### White space 3: Prefeitura como cliente B2G
+
+- Nenhum player vende "Programa Municipal ODS Jovem" para prefeituras como produto formal. Esse mercado esta completamente virgem no Brasil.
+
+### White space 4: Rede cidade -> estado -> nacional
+
+- Nenhum player tem uma logica de franquia social replicavel com HUBs estaduais como coordenacao de rede.
+
+### White space 5: AI-first matching orientado por ODS e desafio real
+
+- Existem motores de matching, mas nenhum com skill graph + ODS graph + project fit + territory como variaveis.
+
+### White space 6: Budget bridge entre RH, ESG e inovacao + governo
+
+- Nenhum player consegue capturar simultaneamente os budgets B2B hibridos e o budget B2G municipal.
+
+---
+
 ## Sintese final
 
 ### Copiar fortemente
 
-- Riipen: empresa + universidade + projeto real
-- Parker Dewey: trabalho real como avaliacao
-- Handshake: IA e distribuicao visiveis
-- Matchbox: oferta productizada
+- Riipen: empresa + universidade + projeto real + sprint
+- Parker Dewey: trabalho real como avaliacao + escopo pequeno e compravel
+- Handshake: IA e distribuicao visiveis + paginas por buyer
+- Matchbox: oferta productizada com progressao clara
 - Inteli: desafio real no contexto universitario
-- WallJobs: fluidez operacional
+- WallJobs: fluidez operacional de backoffice
 
 ### Adaptar com cuidado
 
 - Forage: simulacoes e topo de funil
-- Eureca: linguagem jovem e employer branding
+- Eureca: linguagem jovem e employer branding brasileiro
+- Riipen FuturePath: co-investimento publico-privado (adaptar para modelo B2G brasileiro)
 
 ### Evitar
 
-- marketplace generico de vagas
-- servico customizado demais
-- dependencia juridica/operacional pesada
+- marketplace generico de vagas ou estagios
+- servico customizado demais por cliente
+- dependencia juridica/operacional pesada no inicio
 - community-first sem wedge comercial
-- dependencia de um unico parceiro institucional
+- dependencia de um unico parceiro institucional por cidade
+- B2G como fonte de receita principal antes de ter prova B2B

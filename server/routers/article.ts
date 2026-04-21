@@ -46,6 +46,7 @@ export const articleRouter = router({
       externalLink: z.string().optional(), 
       coverImage: z.string().optional(), 
       hub: hubEnum,
+      territoryNodeId: z.number().optional().nullable(),
       status: z.enum(["draft", "published"]).default("draft") 
     }))
     .mutation(async ({ ctx, input }) => {
@@ -72,6 +73,7 @@ export const articleRouter = router({
       externalLink: z.string().optional(),
       coverImage: z.string().optional(),
       hub: hubEnum.optional(),
+      territoryNodeId: z.number().optional().nullable(),
       status: z.enum(["draft", "published"]).optional() 
     }))
     .mutation(async ({ ctx, input }) => {
