@@ -78,6 +78,23 @@
   --radius-2xl: 1.5rem;
   --radius-3xl: 2rem;
   --radius-pill: 9999px;
+
+  /* ── Z-Index Ladder ─────────────────────────────────────────── */
+  --z-base: 0;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-header: 50;
+  --z-modal-bg: 60;
+  --z-modal: 70;
+  --z-popover: 80;
+  --z-tooltip: 90;
+  --z-toast: 100;
+
+  /* ── Shadows editorial \u2014 padronizadas ────────────────────────── */
+  --shadow-editorial-sm: 0 4px 12px -4px rgba(10, 10, 10, 0.06);
+  --shadow-editorial-md: 0 12px 32px -16px rgba(10, 10, 10, 0.18);
+  --shadow-editorial-lg: 0 24px 48px -24px rgba(10, 10, 10, 0.22);
+  --shadow-editorial-focus: 0 0 0 3px rgba(0, 96, 58, 0.22);
 }
 
 /* =====================================================================
@@ -383,7 +400,14 @@
 
   .surface-sun {
     background: var(--color-sun);
+    /* ink + sun = 8.9:1 WCAG AAA \u2014 preserva contraste correto */
     color: var(--color-ink);
+  }
+  .surface-sun .text-eyebrow,
+  .surface-sun .text-body,
+  .surface-sun .text-body-sm {
+    /* Fix WCAG: branco sobre #f4c430 s\u00f3 atinge 1.8:1. Ink/ink-2 atinge 8.9:1 */
+    color: var(--color-ink-2);
   }
   .surface-sun-soft {
     background: var(--color-sun-soft);
@@ -665,6 +689,36 @@
   display: none;
 }
 
+/* Scroll indicator editorial \u2014 gradiente fade para tabelas mobile */
+.scroll-fade-right {
+  position: relative;
+}
+.scroll-fade-right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 2rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(245, 241, 234, 0.9)
+  );
+}
+
+/* =====================================================================
+ * SHADOW UTILITIES \u2014 padronizadas, reutiliz\u00e1veis
+ * =====================================================================*/
+
+@layer utilities {
+  .shadow-editorial-sm { box-shadow: var(--shadow-editorial-sm); }
+  .shadow-editorial-md { box-shadow: var(--shadow-editorial-md); }
+  .shadow-editorial-lg { box-shadow: var(--shadow-editorial-lg); }
+  .shadow-editorial-focus { box-shadow: var(--shadow-editorial-focus); }
+}
+
 /* =====================================================================
  * REDUCED MOTION
  * =====================================================================*/
@@ -676,4 +730,25 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  /* Desativa marquee decorativo completamente */
+  .animate-marquee,
+  .animate-marquee-slow {
+    animation: none !important;
+  }
+}
+
+/* =====================================================================
+ * A11Y UTILITIES
+ * =====================================================================*/
+
+/* Screen-reader only (h\u00eder\u00e1rquico, shadcn-style) */
+.sr-only-focus:focus,
+.sr-only-focus:active {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
 }
