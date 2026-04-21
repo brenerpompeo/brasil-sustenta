@@ -1,151 +1,160 @@
-import { ArrowRight, Shield } from "lucide-react";
+import { ArrowUpRight, Instagram, Linkedin, Mail } from "lucide-react";
 import { Link } from "wouter";
 
-const networkLinks = [
-  { label: "Manifesto", href: "/manifesto" },
-  { label: "HUBs", href: "/quem-somos/hubs" },
-  { label: "Comunidade", href: "/comunidade" },
+const NAV_PERSONAS = [
+  { label: "Para empresas", href: "/para-empresas" },
+  { label: "Para jovens", href: "/para-jovens" },
+  { label: "Para universidades", href: "/para-universidades" },
+  { label: "Para prefeituras", href: "/para-prefeituras" },
 ];
 
-const complianceLinks = [
-  { label: "Relatorios", href: "/relatorios" },
+const NAV_REDE = [
+  { label: "Quem somos", href: "/quem-somos" },
+  { label: "Manifesto", href: "/quem-somos/manifesto" },
+  { label: "Impacto", href: "/quem-somos/impacto" },
+  { label: "HUBs ativos", href: "/quem-somos/hubs" },
+  { label: "Stakeholders", href: "/quem-somos/stakeholders" },
+];
+
+const NAV_CONTEUDO = [
+  { label: "Notícias", href: "/blog" },
+  { label: "Eventos", href: "/eventos" },
+  { label: "Artigos", href: "/artigos" },
+  { label: "Relatórios", href: "/relatorios" },
   { label: "Biblioteca", href: "/biblioteca" },
-  { label: "Termos", href: "#" },
 ];
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
+const NAV_SOCIAL = [
+  { label: "Instagram", href: "https://instagram.com/brasilsustenta", icon: Instagram },
+  { label: "LinkedIn", href: "https://linkedin.com/company/brasilsustenta", icon: Linkedin },
+  { label: "Contato", href: "mailto:contato@brasilsustenta.org", icon: Mail },
+];
 
+export default function Footer() {
   return (
-    <footer className="border-t border-black/8 bg-[--paper]">
-      <div className="editorial-grid mx-auto max-w-[100rem]">
-        <div className="editorial-cell grid gap-10 px-8 py-16 lg:px-16 lg:py-20">
-          <div className="max-w-3xl">
-            <p className="editorial-kicker mb-5">
-              Brasil Sustenta // The Paper of Impact
-            </p>
-            <h2 className="mb-6 max-w-3xl font-display text-5xl font-black italic leading-[0.84] tracking-tight text-[--ink] md:text-7xl">
-              Infraestrutura editorial para impacto, reputacao e operacao.
+    <footer className="surface-ink relative overflow-hidden">
+      <div className="container-editorial relative section-y">
+        {/* CTA banner */}
+        <div className="grid gap-8 border-b border-white/12 pb-12 md:grid-cols-[1.4fr_auto] md:items-end md:gap-16 md:pb-16">
+          <div>
+            <p className="text-eyebrow text-white/50">Próximo passo</p>
+            <h2 className="text-display mt-4 max-w-3xl text-white">
+              Tem um desafio ESG?
+              <span className="block text-[color:var(--color-leaf-bright)]">
+                Vira squad em 6 semanas.
+              </span>
             </h2>
-            <p className="max-w-2xl text-base font-medium leading-8 text-[--ink]/58 md:text-lg">
-              A plataforma organiza talentos, buyers e instituicoes em torno de
-              desafios reais. Menos ruido de category building. Mais contexto,
-              entrega e evidencias.
-            </p>
           </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="flex flex-col gap-3 md:items-end">
             <Link
-              href="/para-jovens"
-              className="group editorial-cell flex min-h-[168px] flex-col justify-between px-7 py-8"
+              href="/auth/empresa"
+              className="btn-base btn-leaf min-h-13 text-base"
             >
-              <span className="editorial-kicker text-[--sky]">
-                01 // Talento
-              </span>
-              <div className="flex items-end justify-between gap-6">
-                <span className="font-display text-2xl font-black italic text-[--ink]">
-                  Entrar na rede
-                </span>
-                <ArrowRight className="h-5 w-5 text-[--ink]/35 transition-transform duration-300 group-hover:translate-x-1" />
-              </div>
+              Publicar desafio
+              <ArrowUpRight className="size-4" />
             </Link>
             <Link
-              href="/para-empresas"
-              className="group editorial-cell flex min-h-[168px] flex-col justify-between px-7 py-8"
+              href="/auth/jovem"
+              className="btn-base text-base min-h-13 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-[color:var(--color-ink)]"
             >
-              <span className="editorial-kicker text-[--sun]">
-                02 // Organizacao
-              </span>
-              <div className="flex items-end justify-between gap-6">
-                <span className="font-display text-2xl font-black italic text-[--ink]">
-                  Publicar desafio
-                </span>
-                <ArrowRight className="h-5 w-5 text-[--ink]/35 transition-transform duration-300 group-hover:translate-x-1" />
-              </div>
+              Entrar como talento
+              <ArrowUpRight className="size-4" />
             </Link>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="editorial-cell px-8 py-12 lg:px-16 lg:py-16">
-            <div className="grid gap-10 sm:grid-cols-2">
-              <div>
-                <p className="editorial-kicker mb-5">Rede</p>
-                <div className="space-y-4">
-                  {networkLinks.map(link => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block text-sm font-bold uppercase tracking-[0.18em] text-[--ink]/45 transition-colors hover:text-[--leaf-1]"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+        {/* Nav grid */}
+        <div className="grid gap-12 pt-12 md:grid-cols-2 md:pt-16 lg:grid-cols-[1.5fr_repeat(3,1fr)]">
+          <div className="max-w-sm">
+            <div className="flex items-center gap-2.5">
+              <span className="inline-grid size-10 place-items-center rounded-md bg-white text-[color:var(--color-ink)]">
+                <span className="font-display text-base font-black leading-none">
+                  BS
+                </span>
+              </span>
+              <span className="font-display text-lg font-bold tracking-tight text-white">
+                Brasil Sustenta
+              </span>
+            </div>
+            <p className="mt-5 text-sm leading-7 text-white/65">
+              Squads ESG universitários com matching por IA, presença
+              territorial e entregas mensuráveis. Operamos por HUBs locais —
+              cidade como infraestrutura de impacto.
+            </p>
 
-              <div>
-                <p className="editorial-kicker mb-5">Compliance</p>
-                <div className="space-y-4">
-                  {complianceLinks.map(link => (
-                    <Link
-                      key={link.label}
-                      href={link.href}
-                      className="block text-sm font-bold uppercase tracking-[0.18em] text-[--ink]/45 transition-colors hover:text-[--sky]"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+            <div className="mt-7 flex items-center gap-2.5">
+              {NAV_SOCIAL.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="inline-grid size-10 place-items-center rounded-full border border-white/16 text-white/72 transition hover:bg-white hover:text-[color:var(--color-ink)]"
+                >
+                  <Icon className="size-4" />
+                </a>
+              ))}
             </div>
           </div>
 
-          <div className="bg-[--ink] px-8 py-12 text-[--paper] lg:px-16 lg:py-16">
-            <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-[1.2rem] border border-white/10 bg-white/5">
-              <Shield className="h-6 w-6 text-[--leaf]" />
-            </div>
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-white/45">
-              Intel feed // newsletter
-            </p>
-            <p className="max-w-md text-sm font-medium leading-7 text-white/65">
-              Receba sinais de mercado, repertorio de extensao e novos formatos
-              de squads com leitura institucional.
-            </p>
-
-            <form
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
-              onSubmit={event => event.preventDefault()}
-            >
-              <input
-                type="email"
-                placeholder="seu@email.com"
-                className="h-12 flex-1 rounded-full border border-white/12 bg-white/6 px-5 text-sm font-medium text-white placeholder:text-white/28 focus:border-[--leaf]/45 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="h-12 rounded-full bg-[--leaf] px-6 text-sm font-black uppercase tracking-[0.22em] text-[--foreground] transition-all hover:-translate-y-0.5"
-              >
-                Assinar
-              </button>
-            </form>
-          </div>
+          <FooterColumn title="Personas" items={NAV_PERSONAS} />
+          <FooterColumn title="Rede" items={NAV_REDE} />
+          <FooterColumn title="Conteúdo" items={NAV_CONTEUDO} />
         </div>
 
-        <div className="editorial-cell flex flex-col gap-4 px-8 py-6 lg:flex-row lg:items-end lg:justify-between lg:px-16">
-          <p className="max-w-xl text-[10px] font-bold uppercase leading-relaxed tracking-[0.24em] text-[--ink]/35">
-            © {currentYear} Brasil Sustenta. Plataforma editorial para talentos,
-            organizacoes e instituicoes em rede nacional.
+        {/* bottom rule */}
+        <div className="mt-14 flex flex-col gap-4 border-t border-white/12 pt-8 text-xs text-white/52 md:flex-row md:items-center md:justify-between">
+          <p className="font-mono uppercase tracking-[0.22em]">
+            © {new Date().getFullYear()} Brasil Sustenta · Todos os direitos reservados
           </p>
-          <div className="flex gap-3">
-            <div className="h-[3px] w-14 bg-[--leaf]" />
-            <div className="h-[3px] w-14 bg-[--sun]" />
-            <div className="h-[3px] w-14 bg-[--sky]" />
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link href="/quem-somos/parceiros" className="hover:text-white">
+              Parceiros
+            </Link>
+            <Link href="/quem-somos/manifesto" className="hover:text-white">
+              Princípios
+            </Link>
+            <a href="mailto:contato@brasilsustenta.org" className="hover:text-white">
+              contato@brasilsustenta.org
+            </a>
           </div>
+        </div>
+      </div>
+
+      {/* mega type */}
+      <div className="border-t border-white/8 bg-[color:var(--color-ink-2)] py-8">
+        <div className="container-editorial">
+          <p className="font-display text-[clamp(3rem,15vw,16rem)] font-extrabold leading-[0.8] tracking-[-0.06em] text-white/6">
+            BRASIL SUSTENTA
+          </p>
         </div>
       </div>
     </footer>
   );
-};
+}
 
-export default Footer;
+function FooterColumn({
+  title,
+  items,
+}: {
+  title: string;
+  items: { label: string; href: string }[];
+}) {
+  return (
+    <div>
+      <p className="text-eyebrow text-white/50">{title}</p>
+      <ul className="mt-5 flex flex-col gap-3">
+        {items.map(item => (
+          <li key={item.href}>
+            <Link
+              href={item.href}
+              className="group inline-flex items-center gap-2 text-sm text-white/72 transition hover:text-white"
+            >
+              {item.label}
+              <ArrowUpRight className="size-3.5 -translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
