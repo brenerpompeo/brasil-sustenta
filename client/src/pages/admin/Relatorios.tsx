@@ -1,155 +1,467 @@
-// 2. client/src/pages/admin/Relatorios.tsx
 import { useState, useMemo } from 'react';
 import AdminLayout from '@/components/AdminLayout';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Search, FileText, Edit, Trash2, Download, BarChart3, Plus, Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
-import { trpc } from '@/lib/trpc';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { LoadingSkeleton, EmptyState } from '@/components/ds';
+import { trpc } from '@/lib/trpc';
+import { LoadingSkeleton } from '@/components/ds';
+import { Download, Link2, FileText, MapPin, Users, Building2, Target, BarChart3, CheckSquare } from 'lucide-react';
+import { toast } from 'sonner';
 
-const AdminRelatorios = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingReport, setEditingReport] = useState<any>(null);
-  const [formData, setFormData] = useState({
-    title: '',
-    slug: '',
-    summary: '',
-    reportType: 'esg' as 'esg' | 'impact' | 'ods' | 'annual' | 'sustainability',
-    year: new Date().getFullYear(),
-    period: '',
-    fileUrl: '',
-    status: 'draft' as 'draft' | 'published',
-    territoryNodeId: null as number | null
-  });
+// ─── Utilitários ──────────────────────────────────────────────────────────────
 
-  const { data: territories } = trpc.territory.admin.list.useQuery();
+const formatDate = (d: string | Date | null | undefined) => {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('pt-BR');
+};
 
-  const { data: reportsData, isLoading, refetch } = trpc.report.getAll.useQuery({ limit: 50 });
+const diffDays = (start: string | Date | null | undefined, end: string | Date | null | undefined) => {
+  if (!start || !end) return '—';
+  const ms = new Date(end).getTime() - new Date(start).getTime();
+  return `${Math.max(1, Math.round(ms / 86400000))} dias`;
+};
 
-  const createMutation = trpc.report.create.useMutation({
-    onSuccess: () => {
-      toast.success("Relatório criado com sucesso");
-      setIsModalOpen(false);
-      resetForm();
-      refetch();
-    }
-  });
+const ODS_LABELS: Record<string, string> = {
+  ods_1: 'ODS 1 — Erradicação da Pobreza',
+  ods_2: 'ODS 2 — Fome Zero',
+  ods_3: 'ODS 3 — Saúde e Bem-Estar',
+  ods_4: 'ODS 4 — Educação de Qualidade',
+  ods_5: 'ODS 5 — Igualdade de Gênero',
+  ods_6: 'ODS 6 — Água Potável',
+  ods_7: 'ODS 7 — Energia Limpa',
+  ods_8: 'ODS 8 — Trabalho Decente',
+  ods_9: 'ODS 9 — Indústria e Inovação',
+  ods_10: 'ODS 10 — Redução das Desigualdades',
+  ods_11: 'ODS 11 — Cidades Sustentáveis',
+  ods_12: 'ODS 12 — Consumo Responsável',
+  ods_13: 'ODS 13 — Ação Climática',
+  ods_14: 'ODS 14 — Vida na Água',
+  ods_15: 'ODS 15 — Vida Terrestre',
+  ods_16: 'ODS 16 — Paz e Justiça',
+  ods_17: 'ODS 17 — Parcerias e Meios de Implementação',
+};
 
-  const updateMutation = trpc.report.update.useMutation({
-    onSuccess: () => {
-      toast.success("Relatório atualizado com sucesso");
-      setIsModalOpen(false);
-      resetForm();
-      refetch();
-    }
-  });
+// ─── Tab: Relatório de Projeto ─────────────────────────────────────────────
 
-  const deleteMutation = trpc.report.delete.useMutation({
-    onSuccess: () => { toast.success("Excluído"); refetch(); }
-  });
+const RelatorioProjetoTab = () => {
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('');
 
-  const resetForm = () => {
-    setEditingReport(null);
-    setFormData({
-      title: '', slug: '', summary: '', reportType: 'esg',
-      year: new Date().getFullYear(), period: '', fileUrl: '',
-      status: 'draft', territoryNodeId: null
-    });
+  const { data: projectsData, isLoading: loadingProjects } = trpc.project.getAll.useQuery(
+    { status: 'completed', limit: 100, offset: 0 },
+    { retry: 1 }
+  );
+
+  const allProjects = projectsData?.projects ?? [];
+
+  const selectedProject = useMemo(
+    () => allProjects.find((p) => String(p.id) === selectedProjectId) ?? null,
+    [allProjects, selectedProjectId]
+  );
+
+  const handlePrint = () => {
+    window.print();
   };
 
-  const handleEdit = (rpt: any) => {
-    setEditingReport(rpt);
-    setFormData({
-      title: rpt.title, slug: rpt.slug, summary: rpt.summary || '',
-      reportType: rpt.reportType, year: rpt.year || new Date().getFullYear(),
-      period: rpt.period || '', fileUrl: rpt.fileUrl || '',
-      status: rpt.status, territoryNodeId: rpt.territoryNodeId
-    });
-    setIsModalOpen(true);
+  const handleCopyLink = async () => {
+    await navigator.clipboard.writeText(window.location.href + `?projeto=${selectedProjectId}`);
+    toast.success('Link copiado para a área de transferência');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (editingReport) updateMutation.mutate({ id: editingReport.id, ...formData } as any);
-    else createMutation.mutate(formData as any);
-  };
+  const odsAlinhados: string[] = useMemo(() => {
+    const p = selectedProject as any;
+    if (!p) return [];
+    const raw = p.odsPrimary || p.odsAlignment || p.ods_primary || [];
+    return Array.isArray(raw) ? raw : [];
+  }, [selectedProject]);
 
-  if (isLoading) {
-    return (
-      <AdminLayout>
-        <LoadingSkeleton variant="table" lines={6} className="p-8" />
-      </AdminLayout>
-    );
+  if (loadingProjects) {
+    return <LoadingSkeleton variant="card" lines={5} />;
   }
 
   return (
-    <AdminLayout>
-      <div className="space-y-12 pb-20">
-        <div className="flex items-center justify-between">
-          <h1 className="text-4xl font-black text-ink font-display">Relatórios <span className="text-ink-4">Mensuráveis</span></h1>
-          <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-            <DialogTrigger asChild><Button className="bg-ink text-white font-black uppercase text-xs tracking-widest h-12 px-6 rounded-xl"><Plus className="mr-2 h-4 w-4" /> Novo Relatório</Button></DialogTrigger>
-            <DialogContent className="max-w-2xl bg-white border-paper-3 rounded-3xl p-8">
-              <DialogHeader><DialogTitle>{editingReport ? 'Editar' : 'Novo'} Relatório</DialogTitle></DialogHeader>
-              <form onSubmit={handleSubmit} className="space-y-6 mt-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2"><Label>Título</Label><Input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} required className="rounded-xl" /></div>
-                  <div className="space-y-2"><Label>Hub Regional</Label>
-                    <Select value={formData.territoryNodeId?.toString() || "null"} onValueChange={(v) => setFormData({ ...formData, territoryNodeId: v === "null" ? null : parseInt(v) })}>
-                      <SelectTrigger className="rounded-xl h-11 border-paper-3 shadow-sm bg-white hover:bg-paper-2 transition-colors"><SelectValue placeholder="Selecione um território..." /></SelectTrigger>
-                      <SelectContent className="bg-white border-paper-3 shadow-xl">
-                        <SelectItem value="null">🌐 Global</SelectItem>
-                        {territories?.map((t: NonNullable<typeof territories>[number]) => (
-                           <SelectItem key={t.id} value={t.id.toString()}>📍 {t.name}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+    <div className="space-y-8">
+      {/* Seleção do Projeto */}
+      <div className="bg-[#0A0A0A] border border-white/8 rounded-2xl p-6 space-y-4 print:hidden">
+        <label className="text-[11px] font-black uppercase tracking-[0.3em] text-white/40">
+          Selecionar Projeto Concluído
+        </label>
+        <Select value={selectedProjectId} onValueChange={setSelectedProjectId}>
+          <SelectTrigger className="h-12 bg-black border-white/10 text-white font-bold rounded-xl focus:ring-[#00FF41]/20">
+            <SelectValue placeholder="Escolha um projeto concluído..." />
+          </SelectTrigger>
+          <SelectContent className="bg-[#0A0A0A] border-white/10 text-white">
+            {allProjects.length === 0 ? (
+              <SelectItem value="__none__" disabled>Nenhum projeto concluído encontrado</SelectItem>
+            ) : (
+              allProjects.map((p) => (
+                <SelectItem key={p.id} value={String(p.id)} className="focus:bg-white/5">
+                  {(p as any).title ?? `Projeto #${p.id}`}
+                </SelectItem>
+              ))
+            )}
+          </SelectContent>
+        </Select>
+
+        {selectedProject && (
+          <div className="flex items-center gap-3 pt-2">
+            <Button
+              onClick={handlePrint}
+              className="h-11 px-6 bg-[#00FF41] hover:bg-[#00FF41]/80 text-black font-black text-xs uppercase tracking-widest rounded-xl gap-2"
+            >
+              <Download className="w-4 h-4" />
+              Exportar PDF
+            </Button>
+            <Button
+              onClick={handleCopyLink}
+              variant="outline"
+              className="h-11 px-6 border-white/10 text-white hover:bg-white/5 font-black text-xs uppercase tracking-widest rounded-xl gap-2"
+            >
+              <Link2 className="w-4 h-4" />
+              Copiar Link
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Preview do Relatório */}
+      {selectedProject ? (
+        <div
+          id="relatorio-projeto-preview"
+          className="bg-white rounded-3xl overflow-hidden shadow-2xl border border-paper-3 print:shadow-none print:rounded-none print:border-0"
+        >
+          {/* Cabeçalho */}
+          <div className="bg-[#050505] text-white p-10 print:p-8">
+            <div className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00FF41] mb-3">
+              Brasil Sustenta — Relatório de Impacto ESG
+            </div>
+            <h1 className="text-3xl font-black leading-tight tracking-tight mb-1">
+              {(selectedProject as any).title}
+            </h1>
+            <p className="text-white/50 text-sm font-medium">
+              Emitido em {new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}
+            </p>
+          </div>
+
+          {/* Corpo */}
+          <div className="p-10 print:p-8 space-y-8">
+
+            {/* Linha 1: Empresa + Duração */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-paper-2 border border-paper-3 rounded-2xl p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <Building2 className="w-4 h-4 text-ink-4" />
+                  <span className="text-[11px] font-black uppercase tracking-widest text-ink-4">Empresa</span>
                 </div>
-                <div className="flex justify-end gap-3 pt-6"><Button type="submit" className="bg-leaf text-white font-black rounded-xl h-12 px-8">Salvar Relatório</Button></div>
-              </form>
-            </DialogContent>
-          </Dialog>
+                <p className="text-lg font-black text-ink">{(selectedProject as any).companyName ?? '—'}</p>
+                <p className="text-sm text-ink-3 font-medium mt-1">{(selectedProject as any).category ?? ''}</p>
+              </div>
+              <div className="bg-paper-2 border border-paper-3 rounded-2xl p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <FileText className="w-4 h-4 text-ink-4" />
+                  <span className="text-[11px] font-black uppercase tracking-widest text-ink-4">Duração</span>
+                </div>
+                <p className="text-lg font-black text-ink">
+                  {diffDays((selectedProject as any).startDate, (selectedProject as any).endDate ?? (selectedProject as any).updatedAt)}
+                </p>
+                <p className="text-sm text-ink-3 font-medium mt-1">
+                  {formatDate((selectedProject as any).startDate)} → {formatDate((selectedProject as any).endDate ?? (selectedProject as any).updatedAt)}
+                </p>
+              </div>
+            </div>
+
+            {/* Linha 2: Squad + Fit Score */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-paper-2 border border-paper-3 rounded-2xl p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Users className="w-4 h-4 text-ink-4" />
+                  <span className="text-[11px] font-black uppercase tracking-widest text-ink-4">Squad</span>
+                </div>
+                <p className="text-2xl font-black text-ink mb-1">
+                  {(selectedProject as any).appCount ?? (selectedProject as any).squadSize ?? '—'}
+                </p>
+                <p className="text-sm text-ink-3 font-medium">jovens universitários</p>
+              </div>
+              <div className="bg-[#050505] border border-[#00FF41]/20 rounded-2xl p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <BarChart3 className="w-4 h-4 text-[#00FF41]" />
+                  <span className="text-[11px] font-black uppercase tracking-widest text-[#00FF41]/70">Fit Score Médio</span>
+                </div>
+                <p className="text-3xl font-black text-[#00FF41]">
+                  {(selectedProject as any).fitScoreAvg != null
+                    ? `${Math.round((selectedProject as any).fitScoreAvg)}%`
+                    : '—'}
+                </p>
+                <p className="text-sm text-white/30 font-medium mt-1">compatibilidade do squad</p>
+              </div>
+            </div>
+
+            {/* ODS Alinhados */}
+            {odsAlinhados.length > 0 && (
+              <div className="border border-paper-3 rounded-2xl p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <Target className="w-4 h-4 text-ink-4" />
+                  <span className="text-[11px] font-black uppercase tracking-widest text-ink-4">ODS Alinhados</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {odsAlinhados.map((ods: string) => (
+                    <span
+                      key={ods}
+                      className="px-3 py-1.5 bg-leaf/10 text-leaf border border-leaf/20 rounded-full text-[11px] font-black uppercase tracking-widest"
+                    >
+                      {ODS_LABELS[ods] ?? ods}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Descrição / Entregáveis */}
+            <div className="border border-paper-3 rounded-2xl p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <CheckSquare className="w-4 h-4 text-ink-4" />
+                <span className="text-[11px] font-black uppercase tracking-widest text-ink-4">Descrição do Desafio</span>
+              </div>
+              <p className="text-ink-2 text-sm font-medium leading-relaxed">
+                {(selectedProject as any).description ?? 'Sem descrição disponível.'}
+              </p>
+            </div>
+
+            {/* Rodapé */}
+            <div className="border-t border-paper-3 pt-6 flex items-center justify-between">
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-widest text-ink-4 mb-1">Brasil Sustenta</p>
+                <p className="text-xs text-ink-4">Plataforma de Squads ESG Universitários</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[11px] font-black uppercase tracking-widest text-ink-4 mb-1">Documento Oficial</p>
+                <p className="text-xs text-ink-4">Gerado em {new Date().toLocaleDateString('pt-BR')}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-[#0A0A0A] border border-white/8 rounded-2xl p-16 text-center">
+          <FileText className="w-12 h-12 text-white/10 mx-auto mb-4" />
+          <p className="text-white/30 font-bold text-sm">Selecione um projeto concluído para visualizar o relatório</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── Tab: Relatório Municipal ──────────────────────────────────────────────
+
+const RelatorioMunicipalTab = () => {
+  const [selectedTerritoryId, setSelectedTerritoryId] = useState<string>('');
+
+  const { data: territories, isLoading: loadingTerr } = trpc.territory.admin.list.useQuery();
+  const { data: statsData } = trpc.dashboard.getStats.useQuery();
+
+  const selectedTerritory = useMemo(
+    () => territories?.find((t: NonNullable<typeof territories>[number]) => String(t.id) === selectedTerritoryId) ?? null,
+    [territories, selectedTerritoryId]
+  );
+
+  const handlePrint = () => window.print();
+
+  const handleCopyLink = async () => {
+    await navigator.clipboard.writeText(window.location.href + `?hub=${selectedTerritoryId}`);
+    toast.success('Link copiado para a área de transferência');
+  };
+
+  if (loadingTerr) return <LoadingSkeleton variant="card" lines={4} />;
+
+  return (
+    <div className="space-y-8">
+      {/* Seleção do Hub */}
+      <div className="bg-[#0A0A0A] border border-white/8 rounded-2xl p-6 space-y-4 print:hidden">
+        <label className="text-[11px] font-black uppercase tracking-[0.3em] text-white/40">
+          Selecionar Hub Regional
+        </label>
+        <Select value={selectedTerritoryId} onValueChange={setSelectedTerritoryId}>
+          <SelectTrigger className="h-12 bg-black border-white/10 text-white font-bold rounded-xl">
+            <SelectValue placeholder="Escolha um hub/cidade..." />
+          </SelectTrigger>
+          <SelectContent className="bg-[#0A0A0A] border-white/10 text-white">
+            {(!territories || territories.length === 0) ? (
+              <SelectItem value="__none__" disabled>Nenhum hub cadastrado</SelectItem>
+            ) : (
+              territories.map((t: NonNullable<typeof territories>[number]) => (
+                <SelectItem key={t.id} value={String(t.id)} className="focus:bg-white/5">
+                  📍 {t.name}
+                </SelectItem>
+              ))
+            )}
+          </SelectContent>
+        </Select>
+
+        {selectedTerritory && (
+          <div className="flex items-center gap-3 pt-2">
+            <Button
+              onClick={handlePrint}
+              className="h-11 px-6 bg-[#00FF41] hover:bg-[#00FF41]/80 text-black font-black text-xs uppercase tracking-widest rounded-xl gap-2"
+            >
+              <Download className="w-4 h-4" />
+              Exportar PDF
+            </Button>
+            <Button
+              onClick={handleCopyLink}
+              variant="outline"
+              className="h-11 px-6 border-white/10 text-white hover:bg-white/5 font-black text-xs uppercase tracking-widest rounded-xl gap-2"
+            >
+              <Link2 className="w-4 h-4" />
+              Copiar Link
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Preview do Relatório Municipal */}
+      {selectedTerritory ? (
+        <div
+          id="relatorio-municipal-preview"
+          className="bg-white rounded-3xl overflow-hidden shadow-2xl border border-paper-3 print:shadow-none print:rounded-none print:border-0"
+        >
+          {/* Cabeçalho */}
+          <div className="bg-[#050505] text-white p-10 print:p-8">
+            <div className="text-[10px] font-black uppercase tracking-[0.4em] text-[#FFD700] mb-3">
+              Brasil Sustenta — Relatório Municipal de Impacto ODS
+            </div>
+            <h1 className="text-3xl font-black leading-tight tracking-tight mb-1">
+              {(selectedTerritory as any).name}
+            </h1>
+            <p className="text-white/50 text-sm font-medium">
+              {(selectedTerritory as any).nodeType === 'state_hub' ? 'Hub Estadual' :
+               (selectedTerritory as any).nodeType === 'city_hub' ? 'Hub Municipal' : 'Hub Campus'}
+              {' · '}Emitido em {new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}
+            </p>
+          </div>
+
+          {/* Métricas globais (proxy) */}
+          <div className="p-10 print:p-8 space-y-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              {[
+                { label: 'Talentos Cadastrados', value: statsData?.talents?.toLocaleString() ?? '—', icon: Users, color: 'text-sky-600' },
+                { label: 'Universidades Ativas', value: statsData?.universities?.toLocaleString() ?? '—', icon: Building2, color: 'text-violet-600' },
+                { label: 'Squads Formados', value: statsData?.squads?.toLocaleString() ?? '—', icon: BarChart3, color: 'text-leaf' },
+                { label: 'Projetos Entregues', value: statsData?.completedProjects?.toLocaleString() ?? '—', icon: CheckSquare, color: 'text-emerald-600' },
+                { label: 'Hub Mais Ativo', value: statsData?.activeHub ?? '—', icon: MapPin, color: 'text-amber-600' },
+                { label: 'Investimento Gerado', value: statsData?.totalValue ? `R$ ${statsData.totalValue.toLocaleString()}` : '—', icon: Target, color: 'text-ink' },
+              ].map((m) => (
+                <div key={m.label} className="bg-paper-2 border border-paper-3 rounded-2xl p-5">
+                  <div className={`flex items-center gap-2 mb-3 ${m.color}`}>
+                    <m.icon className="w-4 h-4" />
+                    <span className="text-[11px] font-black uppercase tracking-widest text-ink-4">{m.label}</span>
+                  </div>
+                  <p className={`text-2xl font-black ${m.color}`}>{m.value}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Hub info */}
+            <div className="border border-paper-3 rounded-2xl p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <MapPin className="w-4 h-4 text-ink-4" />
+                <span className="text-[11px] font-black uppercase tracking-widest text-ink-4">Informações do Hub</span>
+              </div>
+              <dl className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+                {[
+                  ['Tipo', (selectedTerritory as any).nodeType === 'state_hub' ? 'Hub Estadual' : (selectedTerritory as any).nodeType === 'city_hub' ? 'Hub Municipal' : 'Hub Campus'],
+                  ['Status', (selectedTerritory as any).status ?? '—'],
+                  ['Estado', (selectedTerritory as any).state ?? '—'],
+                  ['Cidade', (selectedTerritory as any).city ?? '—'],
+                ].map(([k, v]) => (
+                  <div key={k} className="flex flex-col">
+                    <dt className="text-ink-4 font-black text-[10px] uppercase tracking-widest mb-0.5">{k}</dt>
+                    <dd className="text-ink font-bold capitalize">{v || '—'}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            {/* Rodapé */}
+            <div className="border-t border-paper-3 pt-6 flex items-center justify-between">
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-widest text-ink-4 mb-1">Brasil Sustenta</p>
+                <p className="text-xs text-ink-4">Plataforma de Squads ESG Universitários</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[11px] font-black uppercase tracking-widest text-ink-4 mb-1">Documento Oficial</p>
+                <p className="text-xs text-ink-4">Gerado em {new Date().toLocaleDateString('pt-BR')}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-[#0A0A0A] border border-white/8 rounded-2xl p-16 text-center">
+          <MapPin className="w-12 h-12 text-white/10 mx-auto mb-4" />
+          <p className="text-white/30 font-bold text-sm">Selecione um hub regional para visualizar o relatório municipal</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── Componente Principal ──────────────────────────────────────────────────
+
+type TabKey = 'projeto' | 'municipal';
+
+const AdminRelatorios = () => {
+  const [activeTab, setActiveTab] = useState<TabKey>('projeto');
+
+  return (
+    <AdminLayout>
+      {/* Print styles */}
+      <style>{`
+        @media print {
+          body * { visibility: hidden; }
+          #relatorio-projeto-preview, #relatorio-projeto-preview *,
+          #relatorio-municipal-preview, #relatorio-municipal-preview * { visibility: visible; }
+          #relatorio-projeto-preview, #relatorio-municipal-preview {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+          }
+        }
+      `}</style>
+
+      <div className="space-y-10 pb-20">
+        {/* Header */}
+        <div className="animate-fade-in-up">
+          <div className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30 mb-3">
+            Gerador de Relatórios
+          </div>
+          <h1 className="text-[2.75rem] font-black text-white font-display leading-[0.9] tracking-tight">
+            Relatórios <span className="italic font-light text-white/30">ESG / PDF</span>.
+          </h1>
+          <p className="max-w-xl text-[15px] text-white/40 font-medium mt-4 leading-relaxed">
+            Gere relatórios de impacto para projetos concluídos e dashboards municipais de ODS com exportação em PDF.
+          </p>
         </div>
 
-        <div className="bg-white border border-paper-3 rounded-3xl overflow-hidden shadow-sm">
-          <table className="w-full">
-            <thead className="bg-paper-2"><tr><th className="px-8 py-4 text-left text-[11px] font-black uppercase text-ink-4">Relatório / Hub</th><th className="px-8 py-4 text-right text-[11px] font-black uppercase text-ink-4">Ações</th></tr></thead>
-            <tbody className="divide-y divide-paper-3">
-              {(!reportsData || reportsData.length === 0) ? (
-                <tr>
-                  <td colSpan={2} className="px-8 py-16">
-                    <EmptyState
-                      title="Nenhum relatório encontrado"
-                      description="Nenhum relatório foi cadastrado ainda."
-                    />
-                  </td>
-                </tr>
-              ) : (
-                reportsData.map(rpt => {
-                  const terrName = territories?.find((t: NonNullable<typeof territories>[number]) => t.id === rpt.territoryNodeId)?.name || 'Global';
-                  return (
-                  <tr key={rpt.id} className="hover:bg-paper-2">
-                    <td className="px-8 py-4"><p className="font-bold text-ink">{rpt.title}</p><span className="text-[10px] bg-paper-3 px-1.5 py-0.5 rounded text-leaf font-black uppercase">📍 {terrName}</span></td>
-                    <td className="px-8 py-4 text-right"><Button variant="ghost" onClick={() => { setEditingReport(rpt); setFormData({ title: rpt.title, slug: rpt.slug, summary: rpt.summary || '', reportType: rpt.reportType as any, year: rpt.year || 2024, period: rpt.period || '', fileUrl: rpt.fileUrl || '', status: rpt.status as any, territoryNodeId: rpt.territoryNodeId }); setIsModalOpen(true); }}><Edit className="h-4 w-4" /></Button></td></tr>
-                )
-                })
-              )}
-            </tbody>
-          </table>
+        {/* Tabs */}
+        <div className="flex bg-[#0A0A0A] border border-white/8 rounded-2xl p-1.5 gap-1.5 w-fit print:hidden">
+          {([
+            { key: 'projeto' as TabKey, label: 'Relatório de Projeto', icon: FileText },
+            { key: 'municipal' as TabKey, label: 'Relatório Municipal', icon: MapPin },
+          ] as const).map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              onClick={() => setActiveTab(key)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-[12px] font-black uppercase tracking-widest transition-all ${
+                activeTab === key
+                  ? 'bg-[#00FF41] text-black shadow-lg shadow-[#00FF41]/20'
+                  : 'text-white/40 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Icon className="w-3.5 h-3.5" />
+              {label}
+            </button>
+          ))}
         </div>
+
+        {/* Tab Content */}
+        {activeTab === 'projeto' ? <RelatorioProjetoTab /> : <RelatorioMunicipalTab />}
       </div>
     </AdminLayout>
   );
