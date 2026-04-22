@@ -654,7 +654,7 @@ export const territoryRouter = router({
           longDescription: currentNode.longDescription,
           colorToken: currentNode.colorToken as MapNodeDetail["colorToken"],
           metrics: (currentNode.metrics as TerritoryMetric[] | null) ?? [],
-          ctaLinks: (currentNode.ctaLinks as TerritoryCtaLink[] | null) ?? [],
+          ctaLinks: (currentNode.cta_links as TerritoryCtaLink[] | null) ?? [],
           parent: parentRows[0]
             ? {
                 id: parentRows[0].id,
@@ -808,7 +808,7 @@ export const territoryRouter = router({
             heroImage: input.heroImage ?? null,
             colorToken: input.colorToken,
             metrics: input.metrics,
-            ctaLinks: input.ctaLinks,
+            cta_links: input.ctaLinks,
             legacyHubLabel: input.legacyHubLabel ?? null,
             parentNodeId:
               input.nodeType === "state_hub" ? null : input.parentNodeId ?? null,
@@ -859,7 +859,7 @@ export const territoryRouter = router({
             heroImage: input.heroImage ?? null,
             colorToken: input.colorToken,
             metrics: input.metrics,
-            ctaLinks: input.ctaLinks,
+            cta_links: input.ctaLinks,
             legacyHubLabel: input.legacyHubLabel ?? null,
             parentNodeId:
               input.nodeType === "state_hub" ? null : input.parentNodeId ?? null,

@@ -1,7 +1,22 @@
 import ControlPlaneLayout from "@/components/ControlPlaneLayout";
-import { DSCard, MetricBlock } from "@/components/ds";
 import { Activity, Brain, Globe, Database, Network } from "lucide-react";
 import { motion } from "framer-motion";
+import type { LucideIcon } from "lucide-react";
+
+function MetricBlock({ label, value, sub, icon: Icon, variant: _variant }: {
+  label: string; value: string; sub: string; icon: LucideIcon; variant?: string;
+}) {
+  return (
+    <div className="bg-[#0A0A0A] border border-white/8 rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-3">
+        <Icon className="size-4 text-white/40" />
+        <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">{label}</span>
+      </div>
+      <p className="text-3xl font-black font-mono">{value}</p>
+      <p className="text-xs text-white/40 mt-1">{sub}</p>
+    </div>
+  );
+}
 
 const boardMetrics = [
   { label: "Agentes Ativos", value: "40", sub: "Operational Pool", icon: Brain },
@@ -38,7 +53,7 @@ export default function BoardIndex() {
       <div className="grid gap-6 lg:grid-cols-12">
         {/* Status da Suzely */}
         <div className="lg:col-span-12">
-          <DSCard className="bg-white/5 border-white/10 p-8">
+          <div className="bg-white/5 border-white/10 p-8">
             <div className="flex items-start justify-between mb-8">
               <div>
                 <h3 className="font-mono text-sm font-bold uppercase tracking-[0.3em] text-[color:var(--color-leaf)] mb-2">Protocolo_SUZELY_v3.0</h3>
@@ -67,12 +82,12 @@ export default function BoardIndex() {
                   <span className="text-2xl font-bold">842ms</span>
                </div>
             </div>
-          </DSCard>
+          </div>
         </div>
 
         {/* Logs de Operação */}
         <div className="lg:col-span-8">
-          <DSCard className="bg-white/5 border-white/10 p-0 h-[400px] flex flex-col">
+          <div className="bg-white/5 border-white/10 p-0 h-[400px] flex flex-col">
             <div className="p-6 border-b border-white/10 flex items-center justify-between">
                <h3 className="text-xs font-bold uppercase tracking-[0.2em] flex items-center gap-2">
                  <Activity className="size-4 text-white/40" />
@@ -99,12 +114,12 @@ export default function BoardIndex() {
                   <span className="size-1.5 bg-white/40" />
                </div>
             </div>
-          </DSCard>
+          </div>
         </div>
 
         {/* Territory Status */}
         <div className="lg:col-span-4">
-          <DSCard className="bg-white/5 border-white/10 p-6 flex flex-col h-full">
+          <div className="bg-white/5 border-white/10 p-6 flex flex-col h-full">
             <h3 className="text-xs font-bold uppercase tracking-[0.2em] mb-6">Territory_Health</h3>
             <div className="space-y-6 flex-1">
                <div className="space-y-2">
@@ -135,7 +150,7 @@ export default function BoardIndex() {
                  A infraestrutura territorial está sendo ativada por polos estrategicamente localizados junto a universidades IES-Parceiras.
                </p>
             </div>
-          </DSCard>
+          </div>
         </div>
       </div>
     </ControlPlaneLayout>

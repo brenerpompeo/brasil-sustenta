@@ -316,7 +316,7 @@ export default function AdminTerritorios() {
         heroImage: node.heroImage ?? "",
         colorToken: (node.colorToken as TerritoryEditorState["colorToken"]) ?? "leaf",
         metrics: (node.metrics as TerritoryMetric[] | null) ?? [],
-        ctaLinks: (node.ctaLinks as TerritoryCtaLink[] | null) ?? [],
+        ctaLinks: (node.cta_links as TerritoryCtaLink[] | null) ?? [],
         legacyHubLabel: node.legacyHubLabel ?? "",
         parentNodeId: node.parentNodeId,
         universityProfileId: node.universityProfileId,

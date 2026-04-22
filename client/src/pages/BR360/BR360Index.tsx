@@ -1,6 +1,21 @@
 import ControlPlaneLayout from "@/components/ControlPlaneLayout";
-import { DSCard, MetricBlock } from "@/components/ds";
 import { BarChart3, Target, Globe, MapPin } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+function MetricBlock({ label, value, sub, icon: Icon, variant: _variant }: {
+  label: string; value: string; sub: string; icon: LucideIcon; variant?: string;
+}) {
+  return (
+    <div className="bg-[#0A0A0A] border border-white/8 rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-3">
+        <Icon className="size-4 text-white/40" />
+        <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">{label}</span>
+      </div>
+      <p className="text-3xl font-black font-mono">{value}</p>
+      <p className="text-xs text-white/40 mt-1">{sub}</p>
+    </div>
+  );
+}
 
 export default function BR360Index() {
   return (
@@ -15,7 +30,7 @@ export default function BR360Index() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-         <DSCard className="bg-white/5 border-white/10 p-8">
+         <div className="bg-white/5 border-white/10 p-8">
             <h3 className="text-xs font-bold uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
                <BarChart3 className="size-4 text-[color:var(--color-sun)]" />
                Regional_Growth_Matrix
@@ -26,9 +41,9 @@ export default function BR360Index() {
                  Injesting Real-time territorial data...
                </p>
             </div>
-         </DSCard>
+         </div>
 
-         <DSCard className="bg-white/5 border-white/10 p-8">
+         <div className="bg-white/5 border-white/10 p-8">
             <h3 className="text-xs font-bold uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
                <Target className="size-4 text-[color:var(--color-leaf)]" />
                ODS_Conversion_Opportunities
@@ -48,7 +63,7 @@ export default function BR360Index() {
                  </div>
                ))}
             </div>
-         </DSCard>
+         </div>
       </div>
     </ControlPlaneLayout>
   );

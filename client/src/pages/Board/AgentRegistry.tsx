@@ -1,7 +1,8 @@
 import ControlPlaneLayout from "@/components/ControlPlaneLayout";
-import { DSCard } from "@/components/ds";
-import { Shield, Brain, Zap, Search, Filter } from "lucide-react";
+import { Shield, Zap, Search, Filter, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const agents = [
   { id: "CB_CEO_CERBERUS", name: "Cerberus", role: "Sovereign Governance", status: "Active", type: "Orchestrator", color: "var(--color-ink)" },
@@ -82,14 +83,14 @@ export default function AgentRegistry() {
       </div>
 
       <div className="mt-12">
-         <DSCard className="bg-white/5 border-dashed border-white/20 p-12 text-center">
+         <div className="bg-[#0A0A0A] border border-white/8 rounded-xl p-12 text-center border-dashed border-white/20">
             <p className="text-sm text-white/40 font-mono uppercase tracking-[0.2em] mb-4">
               Restraining pool 35/40 agents in standby...
             </p>
             <Button variant="outline" className="border-white/10 text-white/40 hover:text-white hover:border-white">
                Initialize Bulk Activation
             </Button>
-         </DSCard>
+         </div>
       </div>
     </ControlPlaneLayout>
   );

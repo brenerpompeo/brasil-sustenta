@@ -69,7 +69,6 @@ export const companyRouter = router({
         requiredSkills: input.requiredSkills,
         budget: input.budget,
         deliverables: input.deliverables || null,
-        coverImage: input.coverImage || null,
         status: "draft",
       });
 
