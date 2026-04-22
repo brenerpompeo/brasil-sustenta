@@ -2,10 +2,9 @@ import { ENV } from "../_core/env";
 
 /**
  * Suzely Intelligence (V3.1) - 2026 Post-Migration
- * Using the new gemini-embedding-001 model.
+ * Model: text-embedding-004 via v1beta (768d output_dimensionality)
  */
 
-const GEMINI_API_V1 = "https://generativelanguage.googleapis.com/v1";
 const GEMINI_API_V1BETA = "https://generativelanguage.googleapis.com/v1beta";
 
 export interface SuzelyMatchCandidate {
@@ -17,39 +16,34 @@ export interface SuzelyMatchCandidate {
 
 export const suzely = {
   /**
-   * Generates a 768-dimension embedding using the new Gemini Standard.
-   * Model: gemini-embedding-001
+   * Generates a 768-dimension embedding using text-embedding-004.
+   * Model: text-embedding-004 via v1beta API
    */
   async generateEmbedding(text: string): Promise<number[]> {
     if (!ENV.geminiApiKey) {
-      throw new Error("Suzely: GEMINI_API_KEY is missing in ENV");
+      throw new Error("Suzely: GEMINI_API_KEY is missing em ENV");
     }
 
-    try {
-      const response = await fetch(
-        `${GEMINI_API_V1}/models/gemini-embedding-001:embedContent?key=${ENV.geminiApiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            model: "models/gemini-embedding-001",
-            content: { parts: [{ text }] },
-            output_dimensionality: 768, // Hard-compatibility with our schema
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(`Suzely API Error (v1): ${JSON.stringify(error)}`);
+    const response = await fetch(
+      `${GEMINI_API_V1BETA}/models/gemini-embedding-001:embedContent?key=${ENV.geminiApiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "models/gemini-embedding-001",
+          content: { parts: [{ text }] },
+          output_dimensionality: 768,
+        }),
       }
+    );
 
-      const data = await response.json();
-      return data.embedding.values;
-    } catch (error) {
-      console.error("[Suzely] Failed to generate embedding with gemini-embedding-001:", error);
-      throw error;
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`Suzely API Error: ${JSON.stringify(error)}`);
     }
+
+    const data = await response.json();
+    return data.embedding.values;
   },
 
   /**
