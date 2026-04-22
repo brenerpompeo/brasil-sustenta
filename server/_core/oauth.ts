@@ -1,53 +1,49 @@
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+import { createClient } from "@supabase/supabase-js";
 import type { Express, Request, Response } from "express";
-import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
-import { sdk } from "./sdk";
+import { ENV } from "./env";
 
-function getQueryParam(req: Request, key: string): string | undefined {
-  const value = req.query[key];
-  return typeof value === "string" ? value : undefined;
-}
+// Cliente público Supabase (anon key) para troca de código OAuth
+const supabase = createClient(ENV.supabaseUrl, ENV.supabaseAnonKey);
 
 export function registerOAuthRoutes(app: Express) {
-  app.get("/api/oauth/callback", async (req: Request, res: Response) => {
-    const code = getQueryParam(req, "code");
-    const state = getQueryParam(req, "state");
+  // Callback principal para OAuth social do Supabase (Google, GitHub, etc.)
+  app.get("/api/auth/callback", async (req: Request, res: Response) => {
+    const code = req.query.code as string;
+    const next = (req.query.next as string) ?? "/";
 
-    if (!code || !state) {
-      res.status(400).json({ error: "code and state are required" });
-      return;
+    if (!code) {
+      console.warn("[Auth] Callback sem code");
+      return res.redirect(`/?error=missing_code`);
     }
 
-    try {
-      const tokenResponse = await sdk.exchangeCodeForToken(code, state);
-      const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
-      if (!userInfo.openId) {
-        res.status(400).json({ error: "openId missing from user info" });
-        return;
-      }
-
-      await db.upsertUser({
-        openId: userInfo.openId,
-        name: userInfo.name || null,
-        email: userInfo.email ?? null,
-        loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
-        lastSignedIn: new Date(),
-      });
-
-      const sessionToken = await sdk.createSessionToken(userInfo.openId, {
-        name: userInfo.name || "",
-        expiresInMs: ONE_YEAR_MS,
-      });
-
-      const cookieOptions = getSessionCookieOptions(req);
-      res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
-
-      res.redirect(302, "/");
-    } catch (error) {
-      console.error("[OAuth] Callback failed", error);
-      res.status(500).json({ error: "OAuth callback failed" });
+    if (error || !data.session) {
+      console.error("[Auth] Falha no callback OAuth:", error);
+      return res.redirect(`/?error=auth_failed`);
     }
+
+    const cookieOptions = getSessionCookieOptions(req);
+    res.cookie(COOKIE_NAME, data.session.access_token, {
+      ...cookieOptions,
+      maxAge: ONE_YEAR_MS,
+    });
+
+    console.log("[Auth] Sessão estabelecida para usuário:", data.session.user.id);
+    return res.redirect(next);
+  });
+
+  // Logout — limpa cookie de sessão
+  app.post("/api/auth/logout", (_req: Request, res: Response) => {
+    res.clearCookie(COOKIE_NAME);
+    res.json({ success: true });
+  });
+
+  // Alias legado mantido para compatibilidade durante transição
+  app.get("/api/oauth/callback", (req: Request, res: Response) => {
+    const params = new URLSearchParams(req.query as Record<string, string>);
+    return res.redirect(`/api/auth/callback?${params.toString()}`);
   });
 }
