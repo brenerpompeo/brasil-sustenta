@@ -5,10 +5,12 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Home, Compass, FileText, Zap, User, Settings, Plus, Briefcase, Sparkles } from "lucide-react";
+import { Home, Compass, FileText, Zap, User, Settings, Plus, Briefcase, Sparkles, Trophy } from "lucide-react";
 import { toast } from "sonner";
 import { dashboardJovemTheme } from "@/constants/dashboard-themes";
 import { LoadingSkeleton, EmptyState } from "@/components/ds";
+import { MatchCard, type MatchCardProject } from "@/components/MatchCard";
+import { PortfolioView, type PortfolioProject } from "@/components/PortfolioView";
 
 export default function DashboardJovem() {
   const [, setLocation] = useLocation();
@@ -69,9 +71,11 @@ export default function DashboardJovem() {
 
   const menuItems1: SidebarItem[] = [
     { id: "overview", label: "Resumo", icon: Home, onClick: () => setActiveTab("overview") },
-    { id: "oportunidades", label: "Matches", icon: Compass, onClick: () => setActiveTab("oportunidades") },
+    { id: "matches", label: "Matches para você", icon: Sparkles, onClick: () => setActiveTab("matches") },
+    { id: "oportunidades", label: "Oportunidades", icon: Compass, onClick: () => setActiveTab("oportunidades") },
     { id: "candidaturas", label: "Candidaturas", icon: FileText, onClick: () => setActiveTab("candidaturas") },
-    { id: "squads", label: "Squads", icon: Zap, onClick: () => setActiveTab("squads") }
+    { id: "squads", label: "Squads", icon: Zap, onClick: () => setActiveTab("squads") },
+    { id: "portfolio", label: "Portfolio", icon: Trophy, onClick: () => setActiveTab("portfolio") },
   ];
 
   const menuItems2: SidebarItem[] = [
@@ -140,6 +144,26 @@ export default function DashboardJovem() {
               <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Execution Layer</div>
             </div>
             <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground italic">Squads e repertorio.</h1>
+          </div>
+        )}
+        {activeTab === "matches" && (
+          <div className="mb-12 animate-fade-in-up">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+              <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Match-First</div>
+            </div>
+            <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground mb-4 italic">Seu radar de projetos.</h1>
+            <p className="text-[18px] text-muted-foreground font-medium">Projetos abertos ordenados por aderência ao seu perfil.</p>
+          </div>
+        )}
+        {activeTab === "portfolio" && (
+          <div className="mb-12 animate-fade-in-up">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+              <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Portfolio Público</div>
+            </div>
+            <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground mb-4 italic">Repertorio construido.</h1>
+            <p className="text-[18px] text-muted-foreground font-medium">Projetos concluídos que compõem seu portfolio de entrega real.</p>
           </div>
         )}
 
@@ -320,6 +344,89 @@ export default function DashboardJovem() {
             </div>
           </div>
         )}
+
+        {/* MATCHES MATCH-FIRST */}
+        {activeTab === "matches" && (
+          <div className="animate-fade-in-up">
+            {projectsLoading && !isPreview ? (
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="bg-[#0A0A0A] border border-white/8 rounded-xl h-64 animate-pulse" />
+                ))}
+              </div>
+            ) : displayProjects.length > 0 ? (
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
+                {displayProjects.map((p) => {
+                  const matchProject: MatchCardProject = {
+                    id: p.id,
+                    title: p.title,
+                    company: p.company ?? "",
+                    category: p.category ?? undefined,
+                    requiredSkills: (p.requiredSkills as string[] | null) ?? undefined,
+                    duration: ("duration" in p && p.duration != null) ? String(p.duration) : undefined,
+                    budget: p.budget != null ? String(p.budget) : undefined,
+                  };
+                  return (
+                    <MatchCard
+                      key={p.id}
+                      project={matchProject}
+                      onApply={(id) => applyMutation.mutate({ projectId: id })}
+                      isApplying={applyMutation.isPending}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <EmptyState
+                icon={Sparkles}
+                title="Nenhum projeto aberto no momento"
+                description="Volte em breve. Novos projetos são adicionados toda semana."
+              />
+            )}
+          </div>
+        )}
+
+        {/* PORTFOLIO */}
+        {activeTab === "portfolio" && (() => {
+          const completedSquads = squadsData?.squads?.filter((s) => s.status === "completed") ?? [];
+
+          const portfolioProjects: PortfolioProject[] = isPreview
+            ? [
+                {
+                  id: 1,
+                  title: "Diagnóstico de Emissões",
+                  company: "Vale ESG",
+                  skills: ["Python", "Dados", "GHG Protocol"],
+                  odsAlignment: [13, 9],
+                  rating: 5,
+                  completedAt: "Mar 2025",
+                },
+              ]
+            : completedSquads.map((s) => ({
+                id: s.id,
+                title: s.project?.title ?? s.name,
+                company: "",
+                completedAt: s.completedAt
+                  ? new Date(s.completedAt).toLocaleDateString("pt-BR", { month: "short", year: "numeric" })
+                  : undefined,
+              }));
+
+          return (
+            <div className="animate-fade-in-up">
+              <PortfolioView projects={portfolioProjects} />
+              {portfolioProjects.length === 0 && !isPreview && (
+                <div className="mt-10 flex justify-center">
+                  <button
+                    onClick={() => setActiveTab("matches")}
+                    className="inline-flex items-center gap-2 bg-[#00FF41] text-[#050505] font-black text-[13px] uppercase tracking-widest px-8 min-h-[44px] rounded-lg hover:bg-[#CCFF00] transition-all"
+                  >
+                    <Sparkles className="w-4 h-4" /> Explorar Matches
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         {/* PERFIL PROFISSIONAL */}
         {activeTab === "perfil" && (
