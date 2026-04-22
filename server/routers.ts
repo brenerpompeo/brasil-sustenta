@@ -20,6 +20,8 @@ import { materialRouter } from "./routers/material";
 import { eventRouter } from "./routers/event";
 import { userRouter } from "./routers/user";
 import { territoryRouter } from "./routers/territory";
+import { prefeituraRouter } from "./routers/prefeitura";
+import { hubLocalRouter } from "./routers/hubLocal";
 
 export const appRouter = router({
   system: systemRouter,
@@ -52,6 +54,8 @@ export const appRouter = router({
   material: materialRouter,
   user: userRouter,
   territory: territoryRouter,
+  prefeitura: prefeituraRouter,
+  hubLocal: hubLocalRouter,
 });
 
 export type AppRouter = typeof appRouter;

@@ -109,6 +109,54 @@ export const dashboardAdminTheme: DashboardTheme = {
 };
 
 /**
+ * Dashboard Prefeitura (B2G) — acento azul institucional #0047FF.
+ * Cor dominante: azul B2G — representa governo, confiança, poder público.
+ */
+export const dashboardPrefeituraTheme: DashboardTheme = {
+  navBg: "bg-[color:var(--color-paper)]",
+  navBorder: "border-[color:var(--color-border)]",
+  brandHighlightText: "text-[#0047FF]",
+  brandSubtitleText: "text-[color:var(--color-ink-3)]",
+  activeText: "text-[#0047FF]",
+  activeBg: "bg-[#0047FF]/10",
+  activeBorder: "border-[#0047FF]",
+  personaOuterBorder: "border-[#0047FF]/30",
+  personaGradientFrom: "from-[#0047FF]/10",
+  personaGradientTo: "to-[color:var(--color-paper-2)]",
+  personaTitleText: "text-[#0047FF]",
+  personaSubtitleText: "text-[color:var(--color-ink-3)]",
+  avatarRing: "ring-[#0047FF]",
+  avatarBg: "bg-[#0047FF]",
+  avatarText: "text-white",
+  pageSelectionTheme: "selection:bg-[#0047FF] selection:text-white",
+  mainPaddingClass: "p-6 md:p-10",
+};
+
+/**
+ * Dashboard HUB Local — acento azul B2G compartilhado com prefeitura,
+ * pois o embaixador opera em parceria com o poder público territorial.
+ */
+export const dashboardHubTheme: DashboardTheme = {
+  navBg: "bg-[color:var(--color-paper)]",
+  navBorder: "border-[color:var(--color-border)]",
+  brandHighlightText: "text-[#0047FF]",
+  brandSubtitleText: "text-[color:var(--color-ink-3)]",
+  activeText: "text-[#0047FF]",
+  activeBg: "bg-[#0047FF]/10",
+  activeBorder: "border-[#0047FF]",
+  personaOuterBorder: "border-[#0047FF]/30",
+  personaGradientFrom: "from-[#0047FF]/10",
+  personaGradientTo: "to-[color:var(--color-paper-2)]",
+  personaTitleText: "text-[#0047FF]",
+  personaSubtitleText: "text-[color:var(--color-ink-3)]",
+  avatarRing: "ring-[#0047FF]",
+  avatarBg: "bg-[#0047FF]",
+  avatarText: "text-white",
+  pageSelectionTheme: "selection:bg-[#0047FF] selection:text-white",
+  mainPaddingClass: "p-6 md:p-10",
+};
+
+/**
  * Mapa persona → theme, útil para factory patterns.
  */
 export const dashboardThemes = {
@@ -116,6 +164,8 @@ export const dashboardThemes = {
   jovem: dashboardJovemTheme,
   universidade: dashboardUniversidadeTheme,
   admin: dashboardAdminTheme,
+  prefeitura: dashboardPrefeituraTheme,
+  hub: dashboardHubTheme,
 } as const;
 
 export type DashboardPersona = keyof typeof dashboardThemes;

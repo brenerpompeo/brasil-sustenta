@@ -23,6 +23,12 @@ const DashboardJovem = lazy(() => import("./pages/DashboardJovem"));
 const DashboardUniversidade = lazy(
   () => import("./pages/DashboardUniversidade")
 );
+const DashboardPrefeitura = lazy(
+  () => import("./pages/DashboardPrefeitura")
+);
+const DashboardHubLocal = lazy(
+  () => import("./pages/DashboardHubLocal")
+);
 const ParaEmpresas = lazy(() => import("./pages/ParaEmpresas"));
 const ParaJovens = lazy(() => import("./pages/ParaJovens"));
 const ParaUniversidades = lazy(() => import("./pages/ParaUniversidades"));
@@ -99,6 +105,8 @@ function Router() {
       <Route path="/dashboard/empresa" component={DashboardEmpresa} />
       <Route path="/dashboard/jovem" component={DashboardJovem} />
       <Route path="/dashboard/universidade" component={DashboardUniversidade} />
+      <Route path="/dashboard/prefeitura" component={DashboardPrefeitura} />
+      <Route path="/dashboard/hub" component={DashboardHubLocal} />
       <Route path="/para-empresas" component={ParaEmpresas} />
       <Route path="/para-empresas/publicar" component={LoginEmpresa} />
       <Route path="/para-jovens" component={ParaJovens} />
