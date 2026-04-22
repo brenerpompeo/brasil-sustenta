@@ -22,18 +22,18 @@ import { Button } from "@/components/ui/button";
 const programPillars = [
   {
     icon: Users,
-    title: "Eco-sistema acadêmico",
-    body: "HUB ativo na cidade com universidades parceiras e jovens engajados.",
+    title: "HUB municipal ativo",
+    body: "HUB ativo na cidade com universidades parceiras e jovens engajados na Agenda 2030.",
   },
   {
     icon: Landmark,
-    title: "Eventos & Mapeamento",
-    body: "4 eventos anuais, 300+ talentos mapeados por ODS.",
+    title: "Mobilização e mapeamento",
+    body: "4 eventos anuais, 300+ talentos mapeados por ODS — base para prestação de contas.",
   },
   {
     icon: FileBadge2,
-    title: "Entrega institucional",
-    body: "Relatório de impacto exportável para câmara e sociedade civil.",
+    title: "Relatório público de impacto",
+    body: "Relatório de impacto exportável para câmara municipal e sociedade civil.",
   },
 ];
 

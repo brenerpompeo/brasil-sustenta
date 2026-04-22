@@ -25,18 +25,18 @@ import { editorialEase, editorialViewport } from "@/lib/motion";
 const benefits = [
   {
     icon: Trophy,
-    title: "Match decodificado",
-    body: "Match explicado: 'Você tem fit com ODS 13 por causa de...'",
+    title: "Match explicado",
+    body: "\"Você tem fit com ODS 13 por causa de...\" — sem caixa-preta, sem promessa vaga.",
   },
   {
     icon: Compass,
-    title: "Cidade real",
-    body: "Squad com empresa real da sua cidade — não simulação",
+    title: "Empresa real na sua cidade",
+    body: "Squad com empresa real da sua cidade — não simulação, não case fictício.",
   },
   {
     icon: Award,
-    title: "Prova social",
-    body: "Cada projeto vira prova no seu portfolio",
+    title: "Portfolio que empresas veem",
+    body: "Cada projeto vira prova no seu portfolio público com evidência auditável.",
   },
 ];
 

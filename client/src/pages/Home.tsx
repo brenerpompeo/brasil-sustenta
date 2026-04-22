@@ -315,8 +315,8 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 md:grid-cols-4 md:divide-x divide-y md:divide-y-0 divide-[color:var(--color-ink)]">
             
             {[
-              { num: "01", title: "O Desafio", desc: "Empresa publica um briefing de projeto (remunerado ou voluntário) em nossa plataforma." },
-              { num: "02", title: "O Match", desc: "Nossa inteligência cruza os perfis, ODS e skills para escalar um Squad focado e exato." },
+              { num: "01", title: "O Desafio", desc: "Empresa envia um brief de projeto com buyer, ODS prioritários, prazo e tipo de entrega." },
+              { num: "02", title: "O Match", desc: "Curadoria cruza perfis, ODS e skills para montar shortlist com Fit Score explicado." },
               { num: "03", title: "A Tração", desc: "A equipe trabalha em estrutura de sprints focadas com alinhamento contínuo." },
               { num: "04", title: "A Evidência", desc: "Todo o desenvolvimento vira um relatório auditável (empresa) e portfólio prático (talento)." },
             ].map((step) => (
@@ -437,7 +437,7 @@ export default function Home() {
               className="md:col-span-7"
             />
             <p className="text-body md:col-span-5">
-              O valor da plataforma aparece quando a sequência fica legível —
+              O valor do protocolo aparece quando a sequência fica legível —
               do brief até a evidência. Cada etapa tem artefato. Cada artefato
               tem auditor.
             </p>

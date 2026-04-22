@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
-import { SectionHeader, Badge } from "@/components/ds";
+import { SectionHeader } from "@/components/ds";
 import { WaitlistCTA } from "@/components/LeadCaptureComponents";
 import {
   ArrowRight,
-  ArrowUpRight,
   CheckCircle2,
   ClipboardList,
   FileCheck2,
@@ -25,18 +24,18 @@ import { editorialEase, editorialViewport } from "@/lib/motion";
 const valueProps = [
   {
     icon: Target,
-    title: "ODS Fit Score explicável",
-    body: "Squad com 3-5 talentos selecionados por ODS Fit Score explicável.",
+    title: "Squad com Fit Score explicável",
+    body: "Squad com 3-5 talentos selecionados por ODS Fit Score explicável — sem caixa-preta.",
   },
   {
     icon: Users2,
-    title: "Trilha de evidência",
-    body: "Sprint de 6-8 semanas com checkpoints e trilha de evidência.",
+    title: "Sprint com trilha de evidência",
+    body: "Sprint de 6-8 semanas com checkpoints e trilha de evidência por entrega.",
   },
   {
     icon: FileCheck2,
-    title: "Prova material",
-    body: "Relatório final auditável — o entregável que prova o resultado.",
+    title: "Relatório auditável",
+    body: "Relatório final auditável — o entregável que prova o resultado para ESG real.",
   },
 ];
 
