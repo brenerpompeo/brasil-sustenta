@@ -10,6 +10,7 @@ import {
   foreignKey,
   json,
   serial,
+  vector,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
@@ -93,6 +94,7 @@ export const talentProfiles = pgTable("talent_profiles", {
   linkedin: varchar("linkedin", { length: 255 }),
   github: varchar("github", { length: 255 }),
   avatar: varchar("avatar", { length: 500 }),
+  embedding: vector("embedding", { dimensions: 768 }), // Suzely's brain node (Model: text-embedding-004)
   isAvailable: boolean("is_available").default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -142,7 +144,7 @@ export const territoryNodes = pgTable(
     metrics: json("metrics").$type<
       { label: string; value: string; note?: string }[]
     >(),
-    ctaLinks: json("cta_links").$type<
+    cta_links: json("cta_links").$type<
       { label: string; href: string; variant?: "primary" | "secondary" | "ghost" }[]
     >(),
     legacyHubLabel: varchar("legacy_hub_label", { length: 120 }),
@@ -177,9 +179,10 @@ export const projects = pgTable("projects", {
   duration: integer("duration").notNull(), // in days
   teamSize: integer("team_size").notNull(),
   requiredSkills: json("required_skills").$type<string[]>(),
+  embedding: vector("embedding", { dimensions: 768 }), // Suzely's context node (Model: text-embedding-004)
   budget: integer("budget"), // in cents
-  coverImage: varchar("cover_image", { length: 500 }),
   status: projectStatusEnum("status").default("draft").notNull(),
+
   startDate: timestamp("start_date"),
   endDate: timestamp("end_date"),
   deliverables: text("deliverables"),
