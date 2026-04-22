@@ -6,10 +6,7 @@ import { useLocation } from "wouter";
 import FormularioCriarProjeto from "@/components/FormularioCriarProjeto";
 import ListagemProjetos from "@/components/ListagemProjetos";
 import { AiMatchCard } from "@/components/ui/ai-match-card";
-// Sprint 1 — ODS Fit Score: importar ODSFitScoreCard e ODSBadge quando integrar seção de fit
-// import { ODSFitScoreCard, ODSBadge } from "@/components/ds";
-// Uso: <ODSFitScoreCard score={trpc.ai.calculateFitScore.useQuery({projectId, talentId})} />
-// Shortlist: trpc.ai.getShortlist.useQuery({ projectId, limit: 10 })
+import { ShortlistView } from "@/components/ShortlistView";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Home, Briefcase, Users, Zap, User, Settings, Plus, Check, X, Eye, Sparkles } from "lucide-react";
@@ -33,6 +30,8 @@ export default function DashboardEmpresa() {
   const [activeTab, setActiveTab] = useState("overview");
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+  const [shortlistProjectId, setShortlistProjectId] = useState<number | null>(null);
+  const [selectedTalentIds, setSelectedTalentIds] = useState<number[]>([]);
   const isUnauthorized = !loading && (!user || user.userType !== "empresa");
 
   useEffect(() => {
@@ -70,6 +69,12 @@ export default function DashboardEmpresa() {
   const { data: squadsData } = trpc.company.getMySquads.useQuery(
     { projectId: selectedProjectId! },
     { enabled: !!selectedProjectId && activeTab === "squads" }
+  );
+
+  // Shortlist IA: rankeados por fit score para o projeto selecionado
+  const { data: shortlistData, isLoading: shortlistLoading } = trpc.ai.getShortlist.useQuery(
+    { projectId: shortlistProjectId!, limit: 10 },
+    { enabled: !!shortlistProjectId && activeTab === "shortlist" }
   );
 
   // AI Match: busca os melhores talentos para o projeto selecionado
@@ -118,6 +123,7 @@ export default function DashboardEmpresa() {
     { id: "candidatos", label: "Shortlists", icon: Users, onClick: () => { setActiveTab("candidatos"); setShowCreateForm(false); } },
     { id: "squads", label: "Squads", icon: Zap, onClick: () => { setActiveTab("squads"); setShowCreateForm(false); } },
     { id: "ai-match", label: "Fit IA", icon: Sparkles, onClick: () => { setActiveTab("ai-match"); setShowCreateForm(false); } },
+    { id: "shortlist", label: "Shortlist IA", icon: Sparkles, onClick: () => { setActiveTab("shortlist"); setShowCreateForm(false); } },
   ];
 
   const menuItems2: SidebarItem[] = [
@@ -178,6 +184,16 @@ export default function DashboardEmpresa() {
                   <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Squad Execution</div>
                 </div>
                 <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground italic">Squads em Execução.</h1>
+              </div>
+            )}
+            {activeTab === "shortlist" && (
+              <div className="mb-12 animate-fade-in-up">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-10 h-[1px] bg-[#00FF85]"></span>
+                  <div className="text-[11px] font-black tracking-[0.3em] uppercase text-[#00FF85]">Suzely Matching Engine</div>
+                </div>
+                <h1 className="font-display text-5xl md:text-7xl leading-[0.9] font-black tracking-tighter text-foreground italic">Shortlist por IA.</h1>
+                <p className="text-[18px] text-muted-foreground max-w-[650px] leading-relaxed font-body font-medium mt-6">Talentos rankeados pela Suzely para seus projetos ativos — com fit score explicado por skills, ODS e contexto.</p>
               </div>
             )}
             {activeTab === "ai-match" && (
@@ -447,6 +463,105 @@ export default function DashboardEmpresa() {
                 )}
               </div>
             )}
+            {activeTab === "shortlist" && (
+              <div className="animate-fade-in-up space-y-6">
+                {/* Seletor de projeto */}
+                {projects.length === 0 ? (
+                  <EmptyState
+                    icon={Sparkles}
+                    title="Nenhum brief ativo"
+                    description="Crie um brief ESG para que a Suzely possa gerar a shortlist rankeada de talentos."
+                    actionLabel="Criar Brief"
+                    onAction={() => setShowCreateForm(true)}
+                  />
+                ) : (
+                  <>
+                    <div className="bg-[#0A0A0A] border border-white/8 rounded-xl p-5">
+                      <label className="block text-xs font-bold uppercase tracking-widest text-white/50 mb-2">
+                        Selecionar Brief para Shortlist
+                      </label>
+                      <select
+                        value={shortlistProjectId ?? ""}
+                        onChange={(e) => {
+                          const val = e.target.value ? Number(e.target.value) : null;
+                          setShortlistProjectId(val);
+                          setSelectedTalentIds([]);
+                        }}
+                        className="w-full bg-[#050505] border border-white/8 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00FF41]/40 transition-colors min-h-[44px]"
+                      >
+                        <option value="" style={{ background: "#0A0A0A" }}>— Escolha um brief —</option>
+                        {projects.map((p) => (
+                          <option key={p.id} value={p.id} style={{ background: "#0A0A0A" }}>
+                            {p.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {shortlistProjectId && (
+                      <>
+                        {shortlistLoading ? (
+                          <LoadingSkeleton variant="list" lines={4} />
+                        ) : shortlistData ? (
+                          <>
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-xs font-bold uppercase tracking-widest text-[#00FF41]">
+                                  Brief Analisado
+                                </p>
+                                <p
+                                  className="text-white font-bold text-lg mt-0.5"
+                                  style={{ fontFamily: "Fraunces, serif" }}
+                                >
+                                  {shortlistData.projectTitle}
+                                </p>
+                              </div>
+                              <div className="text-right">
+                                <p className="text-xs text-white/40">Talentos Rankeados</p>
+                                <p
+                                  className="text-2xl font-black text-[#00FF41]"
+                                  style={{ fontFamily: "JetBrains Mono, monospace" }}
+                                >
+                                  {shortlistData.shortlist.length}
+                                </p>
+                              </div>
+                            </div>
+                            <ShortlistView
+                              items={shortlistData.shortlist}
+                              selectedTalentIds={selectedTalentIds}
+                              onSelectTalent={(talentId) => {
+                                setSelectedTalentIds((prev) =>
+                                  prev.includes(talentId)
+                                    ? prev.filter((id) => id !== talentId)
+                                    : [...prev, talentId]
+                                );
+                              }}
+                            />
+                            {selectedTalentIds.length > 0 && (
+                              <div className="sticky bottom-4 bg-[#0A0A0A] border border-[#00FF41]/20 rounded-xl p-4 flex items-center justify-between">
+                                <p className="text-sm text-white/60">
+                                  <span
+                                    className="font-black text-[#00FF41]"
+                                    style={{ fontFamily: "JetBrains Mono, monospace" }}
+                                  >
+                                    {selectedTalentIds.length}
+                                  </span>{" "}
+                                  {selectedTalentIds.length === 1 ? "talento selecionado" : "talentos selecionados"}
+                                </p>
+                                <button className="min-h-[44px] px-6 bg-[#00FF41] text-black font-black text-xs uppercase tracking-widest rounded-lg hover:bg-[#00FF41]/90 transition-all">
+                                  Montar Squad
+                                </button>
+                              </div>
+                            )}
+                          </>
+                        ) : null}
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+
             {activeTab === "ai-match" && (
               <div className="animate-fade-in-up">
                 {!selectedProjectId ? (
@@ -483,12 +598,12 @@ export default function DashboardEmpresa() {
                     ) : (
                       aiMatchData?.matches?.map((match, idx) => (
                         <AiMatchCard
-                          key={match.talent.id}
-                          talentName={match.talent.fullName}
-                          avatarUrl={match.talent.avatar || undefined}
+                          key={match.talent?.id}
+                          talentName={match.talent?.fullName ?? ""}
+                          avatarUrl={match.talent?.avatar || undefined}
                           fitScore={match.aiFitScore}
                           reasoning={match.aiMatchReason}
-                          skills={match.talent.skills || []}
+                          skills={match.talent?.skills || []}
                         />
                       ))
                     )}
