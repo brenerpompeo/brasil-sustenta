@@ -107,7 +107,7 @@ export default function Header() {
                 Brasil Sustenta
               </p>
               <p className="font-display text-xl font-bold tracking-[-0.03em] text-[color:var(--color-ink)]">
-                Central de Informações
+                Impact Infrastructure
               </p>
             </div>
 
@@ -121,73 +121,92 @@ export default function Header() {
             </button>
           </div>
 
-          <div className="flex-1 w-full bg-[color:var(--color-ink)] overflow-hidden flex flex-col">
-            <div className="flex-1 flex overflow-x-auto snap-x snap-mandatory gap-4 px-6 py-8 items-center hidescrollbar">
-              {NAV.map(section => (
-                <div
+          <div className="flex flex-col flex-1 w-full bg-[color:var(--color-ink)] overflow-y-auto overflow-x-hidden hide-scrollbar">
+            <Accordion type="single" collapsible className="w-full">
+              {NAV.map((section, idx) => (
+                <AccordionItem
                   key={section.id}
-                  className="snap-center shrink-0 w-[82vw] max-w-[320px] h-full max-h-[600px] min-h-[450px] relative flex flex-col justify-end overflow-hidden border border-white/10"
+                  value={section.id}
+                  className={cn(
+                    "border-b border-white/10",
+                    !section.hasPanel && "h-auto"
+                  )}
                 >
-                  {/* Background Image / Overlay */}
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700"
-                    style={{ backgroundImage: `url(${section.backgroundImage})` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10" />
-
-                  {/* Content Container */}
-                  <div className="relative z-10 flex flex-col h-full justify-between p-6">
-                    {/* Top Top */}
-                    <div>
-                      {section.hasPanel && section.panel?.eyebrow && (
-                        <span className="font-mono text-[0.55rem] font-bold uppercase tracking-widest text-white/70 border border-white/30 px-3 py-1.5 inline-flex items-center gap-2 mb-4">
-                          <span className="inline-block size-1.5 rounded-full bg-white/70" />
-                          {section.panel.eyebrow}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Bottom Area */}
-                    <div className="space-y-6">
-                      <div className="space-y-2">
-                        <h2 className="font-display text-4xl font-black lowercase leading-[0.9] tracking-[0.02em] text-white break-words">
-                          {section.hasPanel && section.panel ? section.panel.title : section.label}
-                        </h2>
-                        {section.hasPanel && section.panel?.description && (
-                          <p className="text-sm leading-6 text-white/70 font-mono border-l-2 border-white/30 pl-4 mt-4">
-                            {section.panel.description}
-                          </p>
-                        )}
-                      </div>
-
-                      <Button asChild size="lg" className="w-full justify-between rounded-none bg-white text-black hover:bg-[color:var(--color-paper-2)] px-6 py-6 font-mono text-[0.65rem] font-bold uppercase tracking-[0.2em] transition-colors shadow-none">
-                        <Link href={section.hasPanel && section.panel ? section.panel.ctaHref : section.href ?? "/"}>
-                          {section.hasPanel && section.panel ? section.panel.ctaLabel : "Acessar Plataforma"}
-                          <ArrowUpRight className="size-4" />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              <div className="snap-center shrink-0 w-[75vw] max-w-[280px] h-full max-h-[600px] min-h-[450px] relative flex flex-col justify-end p-6 border border-white/10 bg-black/40">
-                <p className="font-mono text-[0.625rem] font-bold uppercase tracking-[0.22em] text-white/60 mb-6">
-                  Navegação Global
-                </p>
-                <div className="flex flex-col gap-px bg-white/10 border border-white/10">
-                  {NAV_SUPPORT_LINKS.map(link => (
+                  {section.hasPanel ? (
+                    <>
+                      <AccordionTrigger className="w-full px-6 py-8 hover:no-underline text-left group">
+                        <div className="flex flex-col items-start gap-2">
+                          <h2 className="font-display text-[2.5rem] md:text-5xl font-black lowercase leading-[0.9] tracking-[0.02em] text-white group-hover:text-[color:var(--color-leaf-bright)] transition-colors">
+                            {section.label}
+                          </h2>
+                          {section.panel?.eyebrow && (
+                            <span className="font-mono text-[0.6rem] font-bold uppercase tracking-widest text-white/50 group-hover:text-white/80 transition-colors">
+                              {section.panel.eyebrow}
+                            </span>
+                          )}
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="bg-black/40 px-6 py-6 pb-12 border-t border-white/5">
+                        <div className="flex flex-col gap-6">
+                          {section.panel?.description && (
+                            <p className="text-sm leading-relaxed text-white/70 font-mono border-l-2 border-[color:var(--color-leaf-bright)] pl-4">
+                              {section.panel.description}
+                            </p>
+                          )}
+                          <div className="flex flex-col gap-2 mt-4">
+                            {section.panel?.tiles.map((tile) => (
+                              <Link
+                                key={tile.href}
+                                href={tile.href}
+                                className="group/item flex items-center justify-between py-4 border-b border-white/10 last:border-0"
+                              >
+                                <span className="font-mono text-xs font-bold uppercase tracking-widest text-white/80 group-hover/item:text-white transition-colors">
+                                  {tile.label}
+                                </span>
+                                <ArrowUpRight className="size-4 text-white/30 group-hover/item:text-white transition-colors" />
+                              </Link>
+                            ))}
+                          </div>
+                          
+                          <Button asChild size="lg" className="w-full justify-between mt-4 rounded-none bg-white text-black hover:bg-[color:var(--color-paper-2)] px-6 py-6 font-mono text-[0.65rem] font-bold uppercase tracking-[0.2em] transition-colors shadow-none">
+                            <Link href={section.panel?.ctaHref ?? "/"}>
+                              {section.panel?.ctaLabel ?? "Acessar Plataforma"}
+                              <ArrowUpRight className="size-4" />
+                            </Link>
+                          </Button>
+                        </div>
+                      </AccordionContent>
+                    </>
+                  ) : (
                     <Link
-                      key={link.href}
-                      href={link.href}
-                      className="group flex items-center justify-between bg-black px-5 py-6 text-sm font-bold text-white hover:bg-white hover:text-black transition-colors"
+                      href={section.href ?? "/"}
+                      className="w-full flex items-center justify-between px-6 py-8 group"
                     >
-                      {link.label}
-                      <ArrowUpRight className="size-4 text-white/60 group-hover:text-black transition-colors" />
+                      <h2 className="font-display text-[2.5rem] md:text-5xl font-black lowercase leading-[0.9] tracking-[0.02em] text-white group-hover:text-white/70 transition-colors">
+                        {section.label}
+                      </h2>
+                      <ArrowUpRight className="size-6 text-white/30 group-hover:text-white transition-colors" />
                     </Link>
-                  ))}
-                </div>
-              </div>
+                  )}
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+
+          <div className="border-t border-[color:var(--color-ink)] bg-black px-6 py-6 lg:px-12 flex flex-col gap-4">
+            <p className="font-mono text-[0.625rem] font-bold uppercase tracking-[0.22em] text-white/60">
+              Acesso Rápido
+            </p>
+            <div className="flex flex-wrap gap-4 lg:hidden">
+              {NAV_SUPPORT_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="font-mono text-[0.7rem] font-bold uppercase tracking-[0.1em] text-white hover:text-[color:var(--color-leaf-bright)] transition-colors underline-offset-4 hover:underline"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
 

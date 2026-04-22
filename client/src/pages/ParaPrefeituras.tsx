@@ -9,6 +9,7 @@ import {
   Users,
 } from "lucide-react";
 import { SectionHeader } from "@/components/ds";
+import { WaitlistCTA } from "@/components/LeadCaptureComponents";
 import { Link } from "wouter";
 
 import Footer from "@/components/Footer";
@@ -192,32 +193,9 @@ export default function ParaPrefeituras() {
         {/* CTA ==================== */}
         <section className="container-editorial pb-16 md:pb-24">
           <div className="surface-ink rounded-3xl p-10 md:p-14 lg:p-16">
-            <div className="grid gap-8 md:grid-cols-12 md:items-center md:gap-12">
-              <div className="md:col-span-7">
-                <span className="text-eyebrow text-white/55">
-                  Próximo passo
-                </span>
-                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.75rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white">
-                  Reunião institucional em até 5 dias.
-                </h2>
+              <div className="md:col-span-12">
+                <WaitlistCTA personaLabel="programa municipal B2G" isDark />
               </div>
-              <div className="flex flex-col gap-3 md:col-span-5 md:items-end">
-                <Link
-                  href="/auth/prefeitura"
-                  className="btn-base min-h-13 w-full justify-between bg-[color:var(--color-atlantic)] text-white hover:bg-[color:var(--color-atlantic-deep)]"
-                >
-                  Agendar reunião
-                  <ArrowRight className="size-4" />
-                </Link>
-                <Link
-                  href="/quem-somos/impacto"
-                  className="btn-base min-h-13 w-full justify-between border border-white/30 bg-white/5 text-white hover:bg-white hover:text-[color:var(--color-ink)]"
-                >
-                  Ver modelo do programa
-                  <ArrowUpRight className="size-4" />
-                </Link>
-              </div>
-            </div>
           </div>
         </section>
       </main>

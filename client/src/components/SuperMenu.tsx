@@ -275,26 +275,38 @@ function PanelHero({ section }: { section: NavSection }) {
   if (!section.panel) return null;
 
   return (
-    <div className="bg-[color:var(--color-paper-2)] p-10 xl:p-16 flex flex-col justify-center border-r border-[color:var(--color-ink)] relative">
-      <div className="flex flex-col gap-12">
+    <div className="bg-[color:var(--color-ink)] p-10 xl:p-16 flex flex-col justify-center border-r border-[color:var(--color-ink)] relative overflow-hidden group">
+      {/* Background Image / Overlay */}
+      {section.backgroundImage && (
+        <>
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
+            style={{ backgroundImage: `url(${section.backgroundImage})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/30 mix-blend-multiply" />
+        </>
+      )}
+
+      {/* Content Container */}
+      <div className="relative z-10 flex flex-col gap-12">
         <div className="space-y-8">
-          <span className="font-mono text-[0.65rem] font-bold uppercase tracking-widest text-[color:var(--color-ink)] border border-[color:var(--color-ink)] px-4 py-2 inline-flex items-center gap-2">
-            <span className="inline-block size-1.5 rounded-full bg-[color:var(--color-ink)]" />
+          <span className="font-mono text-[0.65rem] font-bold uppercase tracking-widest text-white/80 border border-white/30 px-4 py-2 inline-flex items-center gap-2 bg-black/20 backdrop-blur-sm">
+            <span className="inline-block size-1.5 rounded-full bg-white/80 animate-pulse" />
             {section.panel.eyebrow}
           </span>
 
           <div className="space-y-6">
-            <h2 className="max-w-[12ch] font-display text-5xl xl:text-7xl font-black lowercase tracking-tighter text-[color:var(--color-ink)] leading-[0.9]">
+            <h2 className="max-w-[12ch] font-display text-5xl xl:text-7xl font-black lowercase tracking-tighter text-white leading-[0.9] drop-shadow-md">
               {section.panel.title}
             </h2>
-            <p className="max-w-md font-mono text-sm text-[color:var(--color-ink-3)] leading-relaxed border-l-2 border-[color:var(--color-ink)] pl-4">
+            <p className="max-w-md font-mono text-sm text-white/80 leading-relaxed border-l-2 border-white/60 pl-4 bg-black/10 backdrop-blur-sm p-4">
               {section.panel.description}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-6">
-          <Button asChild size="lg" className="rounded-none border-2 border-[color:var(--color-ink)] bg-[color:var(--color-ink)] text-white hover:bg-white hover:text-[color:var(--color-ink)] text-xs uppercase tracking-[0.2em] font-mono font-bold transition-colors shadow-none px-8 py-6">
+          <Button asChild size="lg" className="rounded-none border-2 border-white bg-white text-black hover:bg-[color:var(--color-paper-2)] text-xs uppercase tracking-[0.2em] font-mono font-bold transition-colors shadow-none px-8 py-6">
             <Link href={section.panel.ctaHref}>
               {section.panel.ctaLabel}
               <ArrowUpRight className="size-4 ml-3" />
@@ -302,7 +314,7 @@ function PanelHero({ section }: { section: NavSection }) {
           </Button>
           
           {NAV_SUPPORT_LINKS.slice(0, 2).map((link) => (
-             <Link key={link.href} href={link.href} className="font-mono text-[0.65rem] font-bold uppercase tracking-widest text-[color:var(--color-ink-3)] hover:text-[color:var(--color-ink)] hover:underline underline-offset-4 transition-all">
+             <Link key={link.href} href={link.href} className="font-mono text-[0.65rem] font-bold uppercase tracking-widest text-white/60 hover:text-white hover:underline underline-offset-4 transition-all bg-black/40 px-3 py-2">
                 {link.label}
              </Link>
           ))}
@@ -317,47 +329,80 @@ function PanelTileGrid({ section }: { section: NavSection }) {
 
   return (
     <div
-      className="grid auto-rows-[minmax(160px,1fr)] gap-px bg-[color:var(--color-ink)]"
+      className="grid auto-rows-[minmax(160px,1fr)] gap-px bg-[color:var(--color-ink)] p-px"
       style={{
         gridTemplateColumns: `repeat(${section.panel.gridCols}, minmax(0, 1fr))`,
       }}
     >
-      {section.panel.tiles.map((tile, i) => (
-        <motion.div
-          key={tile.href}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.15, delay: i * 0.04 }}
-          style={{
-            gridColumn: `span ${tile.colSpan} / span ${tile.colSpan}`,
-            gridRow: `span ${tile.rowSpan ?? 1} / span ${tile.rowSpan ?? 1}`,
-          }}
-          className="bg-[color:var(--color-paper-2)] hover:bg-[color:var(--color-ink)] group transition-colors duration-300 relative"
-        >
-          <PanelTile tile={tile} />
-        </motion.div>
-      ))}
+      {section.panel.tiles.map((tile, i) => {
+        // Obter os estilos de accent definidos (fallback para paper)
+        const accent = tile.accent && accentStyles[tile.accent] ? accentStyles[tile.accent] : accentStyles.paper;
+
+        return (
+          <motion.div
+            key={tile.href}
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2, delay: i * 0.03, ease: "easeOut" }}
+            style={{
+              gridColumn: `span ${tile.colSpan} / span ${tile.colSpan}`,
+              gridRow: `span ${tile.rowSpan ?? 1} / span ${tile.rowSpan ?? 1}`,
+            }}
+            className={cn(
+              "group relative overflow-hidden transition-all duration-300",
+              "bg-[color:var(--color-paper)] border border-transparent hover:border-[color:var(--color-ink)] hover:z-10",
+              "hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+            )}
+          >
+            {/* High-Production Accent Overlay */}
+            <div className={cn(
+              "absolute inset-0 translate-y-full opacity-0 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-0 group-hover:opacity-10",
+              accent.strongSurface
+            )} />
+            
+            {/* Neon Accent Line */}
+            <div className={cn(
+              "absolute top-0 left-0 w-full h-[3px] scale-x-0 transition-transform duration-500 origin-left group-hover:scale-x-100",
+              accent.strongSurface
+            )} />
+
+            <PanelTile tile={tile} accent={accent} />
+          </motion.div>
+        );
+      })}
     </div>
   );
 }
 
-function PanelTile({ tile }: { tile: NavPanelTile }) {
+function PanelTile({ tile, accent }: { tile: NavPanelTile, accent: any }) {
   const Icon = navIcons[tile.iconKey];
 
   return (
     <Link
       href={tile.href}
-      className="flex h-full w-full flex-col justify-between p-6"
+      className="relative z-10 flex h-full w-full flex-col justify-between p-6 xl:p-8"
     >
       <div className="flex items-start justify-between">
-        <Icon className="size-6 text-[color:var(--color-ink)] group-hover:text-[color:var(--color-paper-2)] transition-colors" />
-        <ArrowUpRight className="size-4 text-[color:var(--color-ink-4)] group-hover:text-[color:var(--color-paper-2)] opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300 delay-75" />
+        <div className="relative">
+           <div className={cn(
+             "absolute -inset-2 rounded-full opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-40",
+             accent.strongSurface
+           )} />
+           <Icon className={cn(
+             "relative size-7 transition-all duration-300",
+             "text-[color:var(--color-ink)] group-hover:text-[color:var(--color-ink)] group-hover:-translate-y-0.5 group-hover:scale-110"
+           )} />
+        </div>
+        <ArrowUpRight className="size-5 text-[color:var(--color-ink-4)] opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[color:var(--color-ink)] transition-all duration-300" />
       </div>
-      <div>
-        <h4 className="font-mono text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[color:var(--color-ink)] group-hover:text-white transition-colors mb-2">
-          {tile.label}
-        </h4>
-        <p className="font-mono text-xs text-[color:var(--color-ink-3)] group-hover:text-[color:var(--color-ink-4)] transition-colors pr-4">
+      <div className="mt-8">
+        <div className="flex items-center gap-2 mb-2">
+           <span className={cn("size-1.5 rounded-full transition-all duration-300 group-hover:scale-150", accent.strongSurface)} />
+           <h4 className="font-mono text-[0.75rem] xl:text-[0.8rem] font-bold uppercase tracking-[0.25em] text-[color:var(--color-ink)] transition-colors">
+             {tile.label}
+           </h4>
+        </div>
+        <p className="font-sans text-sm text-[color:var(--color-ink-3)] group-hover:text-[color:var(--color-ink)] transition-colors pr-4 leading-relaxed line-clamp-2">
           {tile.description}
         </p>
       </div>

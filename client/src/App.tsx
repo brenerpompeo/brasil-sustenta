@@ -54,6 +54,9 @@ const AuthJovem = lazy(() => import("./pages/auth/JovemAuth"));
 const AuthIES = lazy(() => import("./pages/auth/IESAuth"));
 const AuthEmbaixador = lazy(() => import("./pages/auth/EmbaixadorAuth"));
 const AuthPrefeitura = lazy(() => import("./pages/auth/PrefeituraAuth"));
+const BoardIndex = lazy(() => import("./pages/Board/BoardIndex"));
+const AgentRegistry = lazy(() => import("./pages/Board/AgentRegistry"));
+const BR360Index = lazy(() => import("./pages/BR360/BR360Index"));
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -66,6 +69,20 @@ function Router() {
       <Route path="/auth/ies" component={AuthIES} />
       <Route path="/auth/embaixador" component={AuthEmbaixador} />
       <Route path="/auth/prefeitura" component={AuthPrefeitura} />
+
+      {/* Control Plane / Board Routes */}
+      <Route path="/board" component={BoardIndex} />
+      <Route path="/board/registry" component={AgentRegistry} />
+      <Route path="/board/assets" component={BoardIndex} />
+      <Route path="/board/knowledge" component={BoardIndex} />
+      <Route path="/board/status" component={BoardIndex} />
+
+      {/* BI / Intel Routes */}
+      <Route path="/br360" component={BR360Index} />
+      <Route path="/br360/mapa" component={BR360Index} />
+      <Route path="/br360/reports" component={BR360Index} />
+      <Route path="/br360/squad" component={BR360Index} />
+      <Route path="/dashboard/br360" component={BR360Index} />
       <Route path="/quem-somos" component={QuemSomos} />
       <Route path="/quem-somos/dna" component={QuemSomos} />
       <Route path="/quem-somos/manifesto" component={Manifesto} />

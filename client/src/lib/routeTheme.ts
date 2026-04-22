@@ -4,6 +4,8 @@ const PRIVATE_THEME_PREFIXES = [
   "/dashboard",
   "/admin",
   "/perfil",
+  "/board",
+  "/br360",
 ];
 
 const PRIVATE_THEME_EXACT = new Set([

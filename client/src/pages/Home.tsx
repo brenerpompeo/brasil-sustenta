@@ -30,6 +30,7 @@ import TerritoryMap from "@/components/TerritoryMap";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { SectionHeader } from "@/components/ds";
+import { NewsletterForm } from "@/components/LeadCaptureComponents";
 
 // Fallback shown while DB has no active partners yet
 const MARQUEE_FALLBACK = [
@@ -624,35 +625,24 @@ export default function Home() {
         <section className="container-editorial pb-16 md:pb-24">
           <div className="surface-leaf relative overflow-hidden rounded-3xl">
             <div className="relative grid gap-8 p-10 md:grid-cols-12 md:items-center md:gap-12 md:p-14 lg:p-16">
-              <div className="md:col-span-7">
+              <div className="md:col-span-6">
                 <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-white/70">
-                  Chegou cedo?
+                  Acesso Restrito
                 </span>
                 <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.75rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white">
-                  Os primeiros sempre
-                  <br />
-                  definem as regras.
+                  Infraestrutura 
+                  <br />em Early Access.
                 </h2>
+                <p className="font-mono text-sm mt-6 text-white/80 leading-relaxed max-w-sm">
+                  Não estamos abertos ao público. As allocations ocorrem por território conforme a capacidade dos campus. Garanta sua prioridade na fila de ODS Fit Score.
+                </p>
               </div>
-              <div className="flex flex-col gap-3 md:col-span-5 md:items-end">
-                <Link
-                  href="/auth/empresa"
-                  className="btn-base min-h-13 w-full justify-between bg-white text-[color:var(--color-ink)] hover:bg-[color:var(--color-paper)] md:w-auto"
-                >
-                  <span>Entrar como early adopter</span>
-                  <ArrowRight className="size-4" />
-                </Link>
-                <Link
-                  href="/quem-somos/impacto"
-                  className="btn-base min-h-13 w-full justify-between border border-white/30 bg-white/5 text-white hover:bg-white hover:text-[color:var(--color-ink)] md:w-auto"
-                >
-                  <span>Ver camada de evidência</span>
-                  <ArrowUpRight className="size-4" />
-                </Link>
+              <div className="md:col-span-6 flex flex-col items-start md:items-end w-full">
+                <NewsletterForm variant="dark" className="w-full max-w-md bg-white/5 border-white/20 p-6 md:p-8 rounded-xl" />
               </div>
             </div>
 
-            <div className="pointer-events-none absolute -right-10 -top-10 h-64 w-64 opacity-20">
+            <div className="pointer-events-none absolute -left-20 -bottom-20 h-96 w-96 opacity-10">
               <Compass className="size-full text-white" strokeWidth={1} />
             </div>
           </div>
