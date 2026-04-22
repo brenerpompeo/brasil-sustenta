@@ -8,3 +8,5 @@
 export { SectionHeader, type SectionHeaderProps } from "./SectionHeader";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";
 export { LoadingSkeleton, type LoadingSkeletonProps } from "./LoadingSkeleton";
+export { ODSBadge } from "../ODSBadge";
+export { ODSFitScoreCard } from "../ODSFitScoreCard";

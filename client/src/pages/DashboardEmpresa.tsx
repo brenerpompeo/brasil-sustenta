@@ -6,6 +6,10 @@ import { useLocation } from "wouter";
 import FormularioCriarProjeto from "@/components/FormularioCriarProjeto";
 import ListagemProjetos from "@/components/ListagemProjetos";
 import { AiMatchCard } from "@/components/ui/ai-match-card";
+// Sprint 1 — ODS Fit Score: importar ODSFitScoreCard e ODSBadge quando integrar seção de fit
+// import { ODSFitScoreCard, ODSBadge } from "@/components/ds";
+// Uso: <ODSFitScoreCard score={trpc.ai.calculateFitScore.useQuery({projectId, talentId})} />
+// Shortlist: trpc.ai.getShortlist.useQuery({ projectId, limit: 10 })
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Home, Briefcase, Users, Zap, User, Settings, Plus, Check, X, Eye, Sparkles } from "lucide-react";
