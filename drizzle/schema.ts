@@ -18,7 +18,7 @@ import { relations } from "drizzle-orm";
 
 export const roleEnum = pgEnum("role", ["user", "admin"]);
 export const userStatusEnum = pgEnum("user_status", ["active", "pending", "inactive"]);
-export const userTypeEnum = pgEnum("user_type", ["empresa", "jovem", "universidade"]);
+export const userTypeEnum = pgEnum("user_type", ["empresa", "jovem", "universidade", "prefeitura", "embaixador"]);
 export const companySizeEnum = pgEnum("company_size", ["pequena", "media", "grande"]);
 export const projectStatusEnum = pgEnum("project_status", ["draft", "open", "in_progress", "completed", "cancelled"]);
 export const projectCategoryEnum = pgEnum("project_category", ["esg", "direitos_humanos", "ods", "comunicacao", "marketing", "website", "ui_ux", "design_thinking"]);
@@ -28,6 +28,9 @@ export const notificationTypeEnum = pgEnum("notification_type", ["info", "succes
 export const postStatusEnum = pgEnum("post_status", ["draft", "published"]);
 export const eventStatusEnum = pgEnum("event_status", ["upcoming", "ongoing", "completed", "cancelled"]);
 export const contactStatusEnum = pgEnum("contact_status", ["pending", "contacted", "converted", "rejected"]);
+export const hubStatusEnum = pgEnum("hub_status", ["piloto", "consolidado", "flagship"]);
+export const campusStatusEnum = pgEnum("campus_status", ["ativo", "inativo", "onboarding"]);
+export const programStatusEnum = pgEnum("program_status", ["informal", "engajada", "negociacao", "ativo"]);
 export const studentQuestionStatusEnum = pgEnum("student_question_status", ["pending", "answered", "archived"]);
 export const invitationStatusEnum = pgEnum("invitation_status", ["pending", "contacted", "partnered", "rejected"]);
 export const partnershipRequestStatusEnum = pgEnum("partnership_request_status", ["pending", "in_review", "approved", "rejected"]);
@@ -180,9 +183,10 @@ export const projects = pgTable("projects", {
   teamSize: integer("team_size").notNull(),
   requiredSkills: json("required_skills").$type<string[]>(),
   embedding: vector("embedding", { dimensions: 768 }), // Suzely's context node (Model: text-embedding-004)
+  hubLocalId: integer("hub_local_id"),
+  odsAlignment: json("ods_alignment").$type<number[]>(),
   budget: integer("budget"), // in cents
   status: projectStatusEnum("status").default("draft").notNull(),
-
   startDate: timestamp("start_date"),
   endDate: timestamp("end_date"),
   deliverables: text("deliverables"),
@@ -199,6 +203,8 @@ export const applications = pgTable("applications", {
   talentId: integer("talent_id").notNull(),
   coverLetter: text("cover_letter"),
   status: applicationStatusEnum("status").default("pending").notNull(),
+  odsFitScore: integer("ods_fit_score"),
+  odsFitExplanation: text("ods_fit_explanation"),
   appliedAt: timestamp("applied_at").defaultNow().notNull(),
   reviewedAt: timestamp("reviewed_at"),
   reviewedBy: integer("reviewed_by"),
@@ -468,6 +474,58 @@ export const notifications = pgTable("notifications", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// ── Sprint 0: Tabelas novas ────────────────────────────────────────────────────
+
+export const hubLocals = pgTable("hub_locals", {
+  id: serial("id").primaryKey(),
+  cityName: varchar("city_name", { length: 100 }).notNull(),
+  state: varchar("state", { length: 2 }).notNull(),
+  status: hubStatusEnum("status").default("piloto"),
+  embaixadorUserId: integer("embaixador_user_id"),
+  prefeituraPartnerId: integer("prefeitura_partner_id"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const campuses = pgTable("campuses", {
+  id: serial("id").primaryKey(),
+  hubLocalId: integer("hub_local_id").notNull(),
+  universityProfileId: integer("university_profile_id").notNull(),
+  liderName: varchar("lider_name", { length: 255 }),
+  liderEmail: varchar("lider_email", { length: 320 }),
+  status: campusStatusEnum("status").default("onboarding"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const prefeituraProfiles = pgTable("prefeitura_profiles", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().unique(),
+  cityName: varchar("city_name", { length: 100 }).notNull(),
+  state: varchar("state", { length: 2 }).notNull(),
+  secretaria: varchar("secretaria", { length: 255 }),
+  contactPerson: varchar("contact_person", { length: 255 }),
+  contactEmail: varchar("contact_email", { length: 320 }),
+  contactPhone: varchar("contact_phone", { length: 20 }),
+  programStatus: programStatusEnum("program_status").default("informal"),
+  contractType: varchar("contract_type", { length: 100 }),
+  contractValue: integer("contract_value"),
+  odsTargets: json("ods_targets").$type<number[]>(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const hubMetrics = pgTable("hub_metrics", {
+  id: serial("id").primaryKey(),
+  hubLocalId: integer("hub_local_id").notNull(),
+  period: varchar("period", { length: 20 }).notNull(),
+  talentosEngajados: integer("talentos_engajados").default(0),
+  squadsEntregues: integer("squads_entregues").default(0),
+  empresasParceiras: integer("empresas_parceiras").default(0),
+  eventosRealizados: integer("eventos_realizados").default(0),
+  horasExtensao: integer("horas_extensao").default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // ── Relations ──────────────────────────────────────────────────────────────────
 
 export const usersRelations = relations(users, ({ one }) => ({
@@ -565,6 +623,36 @@ export const eventsRelations = relations(events, ({ one }) => ({
   territoryNode: one(territoryNodes, {
     fields: [events.territoryNodeId],
     references: [territoryNodes.id],
+  }),
+}));
+
+export const hubLocalsRelations = relations(hubLocals, ({ many }) => ({
+  campuses: many(campuses),
+  metrics: many(hubMetrics),
+}));
+
+export const campusesRelations = relations(campuses, ({ one }) => ({
+  hubLocal: one(hubLocals, {
+    fields: [campuses.hubLocalId],
+    references: [hubLocals.id],
+  }),
+  universityProfile: one(universityProfiles, {
+    fields: [campuses.universityProfileId],
+    references: [universityProfiles.id],
+  }),
+}));
+
+export const prefeituraProfilesRelations = relations(prefeituraProfiles, ({ one }) => ({
+  user: one(users, {
+    fields: [prefeituraProfiles.userId],
+    references: [users.id],
+  }),
+}));
+
+export const hubMetricsRelations = relations(hubMetrics, ({ one }) => ({
+  hubLocal: one(hubLocals, {
+    fields: [hubMetrics.hubLocalId],
+    references: [hubLocals.id],
   }),
 }));
 
