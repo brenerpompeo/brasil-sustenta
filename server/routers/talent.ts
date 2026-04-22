@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { protectedProcedure, adminProcedure, router } from "../_core/trpc";
 import { projects, applications, companyProfiles, talentProfiles, squads, squadMembers } from "../../drizzle/schema";
-import { eq, desc, count, and } from "drizzle-orm";
+import { eq, desc, count, and, inArray, getTableColumns, sql } from "drizzle-orm";
 
 /**
  * Talent Router
@@ -14,12 +14,18 @@ export const talentRouter = router({
   getAll: adminProcedure
     .input(z.object({ limit: z.number().default(50), offset: z.number().default(0) }))
     .query(async ({ ctx, input }) => {
-      const rows = await ctx.db.select().from(talentProfiles).orderBy(desc(talentProfiles.createdAt)).limit(input.limit).offset(input.offset);
-      const enriched = await Promise.all(rows.map(async (t) => {
-        const [appCountResult] = await ctx.db.select({ value: count() }).from(applications).where(eq(applications.talentId, t.id));
-        return { ...t, applicationCount: appCountResult?.value || 0 };
-      }));
-      return { talents: enriched, total: rows.length };
+      const enriched = await ctx.db
+        .select({
+          ...getTableColumns(talentProfiles),
+          applicationCount: sql<number>`count(${applications.id})`.as('application_count'),
+        })
+        .from(talentProfiles)
+        .leftJoin(applications, eq(applications.talentId, talentProfiles.id))
+        .groupBy(talentProfiles.id)
+        .orderBy(desc(talentProfiles.createdAt))
+        .limit(input.limit)
+        .offset(input.offset);
+      return { talents: enriched, total: enriched.length };
     }),
 
   getOpenProjects: protectedProcedure
@@ -122,11 +128,12 @@ export const talentRouter = router({
         .where(eq(squadMembers.talentId, talent.id))
         .orderBy(desc(squads.formedAt));
 
-      // Get members for each squad
-      const squadsWithMembers = await Promise.all(
-        squadsList.map(async (squad) => {
-          const membersList = await ctx.db
+      // Buscar membros de todos os squads em uma única query (batch)
+      const squadIds = squadsList.map(s => s.id);
+      const allMembers = squadIds.length > 0
+        ? await ctx.db
             .select({
+              squadId: squadMembers.squadId,
               id: squadMembers.id,
               role: squadMembers.role,
               talent: {
@@ -137,11 +144,19 @@ export const talentRouter = router({
             })
             .from(squadMembers)
             .innerJoin(talentProfiles, eq(squadMembers.talentId, talentProfiles.id))
-            .where(eq(squadMembers.squadId, squad.id));
+            .where(inArray(squadMembers.squadId, squadIds))
+        : [];
 
-          return { ...squad, members: membersList };
-        })
-      );
+      const membersBySquad = allMembers.reduce((acc, m) => {
+        if (!acc[m.squadId]) acc[m.squadId] = [];
+        acc[m.squadId].push({ id: m.id, role: m.role, talent: m.talent });
+        return acc;
+      }, {} as Record<number, Array<{ id: number; role: string | null; talent: { fullName: string | null; course: string | null; avatar: string | null } }>>);
+
+      const squadsWithMembers = squadsList.map(squad => ({
+        ...squad,
+        members: membersBySquad[squad.id] || [],
+      }));
 
       const countResult = await ctx.db
         .select({ count: squads.id })

@@ -130,7 +130,7 @@ function MapUnavailableState() {
   );
 }
 
-export function TerritoryMap({
+export const TerritoryMap = React.memo(function TerritoryMap({
   className,
   data,
   isLoading = false,
@@ -467,6 +467,6 @@ export function TerritoryMap({
       />
     </div>
   );
-}
+});
 
 export default TerritoryMap;
