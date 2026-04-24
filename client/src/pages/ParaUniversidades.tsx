@@ -1,14 +1,13 @@
+import { motion } from "framer-motion";
 import {
   ArrowRight,
-  ArrowUpRight,
   BookOpen,
   Building,
   CheckCircle2,
-  ClipboardCheck,
   GraduationCap,
   School,
 } from "lucide-react";
-import { SectionHeader } from "@/components/ds";
+import { ProofStrip, SectionHeader } from "@/components/ds";
 import { WaitlistCTA } from "@/components/LeadCaptureComponents";
 import { Link } from "wouter";
 
@@ -18,24 +17,7 @@ import { PageHero } from "@/components/PageHero";
 import { SEO } from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
-const benefits = [
-  {
-    icon: GraduationCap,
-    title: "Projetos locais",
-    body: "Projetos reais com empresas locais — não simulações genéricas",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Horas registradas",
-    body: "Horas de extensão registradas e relatório institucional por semestre",
-  },
-  {
-    icon: BookOpen,
-    title: "Relatório MEC",
-    body: "Dados de empregabilidade e ODS dos alunos — material para o MEC",
-  },
-];
+import { editorialEase, editorialViewport } from "@/lib/motion";
 
 const offerings = [
   {
@@ -54,6 +36,31 @@ const offerings = [
     title: "Visibilidade do campus",
     body: "Aparece no mapa territorial nacional como universidade ESG-ativa.",
   },
+];
+
+// Department/area tags — research-report visual
+const departmentTags = [
+  "Pró-reitoria · Extensão",
+  "Engenharia Ambiental",
+  "Administração · ESG",
+  "Ciências Sociais",
+  "Líder Campus",
+  "Alunos do squad",
+  "Gestão Pública",
+  "Design Estratégico",
+];
+
+const semesterDeliverables = [
+  { label: "Horas de extensão registradas", value: "120h", unit: "/ aluno / semestre" },
+  { label: "Projetos ativos mínimos", value: "1", unit: "squad / semestre" },
+  { label: "Relatório MEC gerado", value: "100%", unit: "automatizado" },
+  { label: "Ticket de parceria", value: "R$ 5k", unit: "– 12k / semestre" },
+];
+
+const heroTrustItems = [
+  { value: "120h", label: "Extensão por aluno", tone: "clay" as const },
+  { value: "1 squad", label: "Mínimo por semestre", tone: "default" as const },
+  { value: "MEC", label: "Relatório semestral pronto", tone: "atlantic" as const },
 ];
 
 export default function ParaUniversidades() {
@@ -90,116 +97,176 @@ export default function ParaUniversidades() {
               </Button>
             </>
           }
+          trustRail={
+            <ProofStrip
+              compact
+              ariaLabel="Sinais de confiança para universidades"
+              items={heroTrustItems}
+            />
+          }
           side={<UniversidadeSidePanel />}
         />
 
-        {/* Benefícios ============= */}
-        <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
-          <div className="grid gap-6 md:grid-cols-12 md:items-end md:gap-12">
-            <SectionHeader
-              eyebrow="Por que ativar"
-              title="Extensão que vira evidência."
-              showRule
-              className="md:col-span-7"
-            />
-            <p className="text-body md:col-span-5">
-              Seu campus passa a entregar projetos reais com empresas da
-              cidade. Mais empregabilidade, mais ODS, mais dados.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] md:grid-cols-3">
-            {benefits.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="bg-white p-7">
-                <Icon
-                  className="size-7 text-[color:var(--color-clay)]"
-                  strokeWidth={1.5}
-                />
-                <h3 className="mt-7 font-display text-2xl font-bold tracking-[-0.025em]">
-                  {title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-ink-3)]">
-                  {body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* O que entra ============= */}
-        <section className="surface-paper-2 border-y border-[color:var(--color-border)] section-y">
+        {/* SPLIT-SCREEN — dark panel left (Fraunces manifesto quote) + light benefits right */}
+        <section className="border-t border-[color:var(--color-ink)] section-y">
           <div className="container-editorial">
-            <div className="max-w-2xl">
-              <SectionHeader
-                eyebrow="O que entra"
-                title="Quatro entregas no contrato de parceria."
-                showRule
-              />
-            </div>
-            <div className="mt-12 grid gap-4 md:grid-cols-2">
-              {offerings.map(o => (
-                <article
-                  key={o.title}
-                  className="surface-card flex gap-5 rounded-2xl p-7"
-                >
-                  <div className="mt-1 inline-grid size-10 shrink-0 place-items-center rounded-full bg-[color:var(--color-clay-soft)] text-[color:var(--color-clay-deep)]">
-                    <CheckCircle2 className="size-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-display text-xl font-bold leading-snug tracking-[-0.02em]">
-                      {o.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[color:var(--color-ink-3)]">
-                      {o.body}
+            <div className="grid grid-cols-1 lg:grid-cols-12 lg:divide-x lg:divide-[color:var(--color-ink)] lg:gap-0 gap-10">
+              {/* Dark left panel — academic manifesto tone */}
+              <div className="lg:col-span-5 surface-ink rounded-2xl lg:rounded-none lg:bg-transparent lg:surface-ink p-10 md:p-12 lg:pr-12 flex flex-col justify-between">
+                <div>
+                  <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-white/50">
+                    Convite institucional
+                  </span>
+                  {/* Large Fraunces italic pull-quote */}
+                  <blockquote className="mt-8">
+                    <p className="font-display text-[clamp(1.5rem,3vw,2.25rem)] font-medium italic leading-[1.2] tracking-[-0.02em] text-white">
+                      "A universidade sai do papel de fornecedora de estagiários e entra como
+                      parceira de operação ESG real na cidade."
                     </p>
+                    <cite className="mt-6 block font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-white/40 not-italic">
+                      — Carta-manifesto Brasil Sustenta · Reitorias 2026
+                    </cite>
+                  </blockquote>
+                </div>
+
+                {/* Semester metrics at bottom of dark panel */}
+                <div className="mt-12 pt-8 border-t border-white/15 grid grid-cols-2 gap-6">
+                  {semesterDeliverables.map((d) => (
+                    <div key={d.label}>
+                      <p className="font-mono text-[2rem] font-bold leading-none tracking-[-0.04em] text-[color:var(--color-clay-soft)]">
+                        {d.value}
+                      </p>
+                      <p className="mt-1 font-mono text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-white/40 leading-snug">
+                        {d.label}
+                      </p>
+                      <p className="mt-0.5 font-mono text-[0.6rem] text-white/25 uppercase tracking-[0.12em]">
+                        {d.unit}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Light right panel — benefits list */}
+              <div className="lg:col-span-7 lg:pl-12 flex flex-col">
+                <div className="mb-10">
+                  <SectionHeader
+                    eyebrow="Por que ativar"
+                    title="Extensão que vira evidência."
+                    subtitle="Seu campus passa a entregar projetos reais com empresas da cidade. Mais empregabilidade, mais ODS, mais dados."
+                    tone="bright"
+                    showRule
+                  />
+                </div>
+
+                {/* Offerings as a research-report list */}
+                <ol className="space-y-0 divide-y divide-[color:var(--color-ink)] flex-1">
+                  {offerings.map((o, i) => (
+                    <motion.li
+                      key={o.title}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={editorialViewport}
+                      transition={{ duration: 0.4, delay: i * 0.08, ease: editorialEase }}
+                      className="grid grid-cols-12 gap-4 py-7 first:pt-0 last:pb-0 items-start"
+                    >
+                      {/* Report-style item number */}
+                      <span className="col-span-2 font-mono text-[0.6875rem] font-bold text-[color:var(--color-clay)] uppercase tracking-[0.15em] pt-1">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div className="col-span-10">
+                        <h3 className="font-display text-xl font-bold leading-snug tracking-[-0.02em] mb-2">
+                          {o.title}
+                        </h3>
+                        <p className="text-sm leading-relaxed text-[color:var(--color-ink-3)]">
+                          {o.body}
+                        </p>
+                      </div>
+                    </motion.li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* DEPARTMENT TAGS SECTION — research report visual */}
+        <section className="surface-paper-2 border-y border-[color:var(--color-ink)] section-y">
+          <div className="container-editorial">
+            <div className="grid gap-12 lg:grid-cols-12 lg:gap-14 lg:items-center">
+              <div className="lg:col-span-5">
+                <SectionHeader
+                  eyebrow="Quem participa"
+                  title="Coordenação, líder, alunos."
+                  subtitle="A parceria entra com 3 papéis institucionais — coordenação acadêmica, Líder Campus e alunos engajados."
+                  tone="bright"
+                  showRule
+                />
+
+                <div className="mt-9">
+                  <Button asChild size="lg" variant="default">
+                    <Link href="/auth/ies">
+                      Ativar campus agora
+                      <ArrowRight className="size-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Highlighted department tags — research-report feel */}
+              <div className="lg:col-span-7">
+                <div className="border border-[color:var(--color-ink)] rounded-2xl overflow-hidden">
+                  {/* Header row like a report table */}
+                  <div className="border-b border-[color:var(--color-ink)] bg-[color:var(--color-ink)] px-7 py-4">
+                    <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-white/70">
+                      Áreas e papéis envolvidos · Mapeamento institucional
+                    </span>
                   </div>
-                </article>
-              ))}
+                  <div className="p-7">
+                    <div className="flex flex-wrap gap-2.5">
+                      {departmentTags.map((tag, i) => (
+                        <motion.span
+                          key={tag}
+                          initial={{ opacity: 0, scale: 0.85 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={editorialViewport}
+                          transition={{ duration: 0.3, delay: i * 0.05 }}
+                          className="inline-flex items-center gap-2 border border-[color:var(--color-clay)]/30 bg-[color:var(--color-clay-soft)] px-3.5 py-2 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-clay-deep)]"
+                        >
+                          <BookOpen className="size-3 opacity-60" />
+                          {tag}
+                        </motion.span>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 border-t border-[color:var(--color-border)] pt-7 grid grid-cols-3 gap-5">
+                      {[
+                        { icon: GraduationCap, label: "Alunos ativos", value: "3–5 / squad" },
+                        { icon: School, label: "Campus ativados", value: "Campinas · 2026" },
+                        { icon: Building, label: "Relatório MEC", value: "Semestral" },
+                      ].map(({ icon: Icon, label, value }) => (
+                        <div key={label} className="text-center">
+                          <Icon className="size-5 mx-auto text-[color:var(--color-clay)]" strokeWidth={1.5} />
+                          <p className="mt-2 font-mono text-[0.6rem] font-bold uppercase tracking-[0.15em] text-[color:var(--color-ink-4)] leading-tight">
+                            {label}
+                          </p>
+                          <p className="mt-1 font-display text-sm font-semibold text-[color:var(--color-ink)]">
+                            {value}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Quem participa ========== */}
-        <section className="container-editorial section-y">
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 lg:items-center">
-            <div className="lg:col-span-5">
-              <SectionHeader
-                eyebrow="Quem participa"
-                title="Coordenação, líder, alunos."
-                subtitle="A parceria entra com 3 papéis institucionais — coordenação acadêmica, Líder Campus e alunos engajados."
-                tone="bright"
-                showRule
-              />
-
-              <div className="mt-9 flex flex-wrap gap-2">
-                <Badge variant="clay">Pró-reitoria · Extensão</Badge>
-                <Badge variant="clay">Líder Campus</Badge>
-                <Badge variant="clay">Alunos do squad</Badge>
-              </div>
-            </div>
-            <div className="lg:col-span-7">
-              <div className="surface-ink rounded-3xl p-7 md:p-9">
-                <span className="text-eyebrow text-white/55">
-                  Convite institucional
-                </span>
-                <p className="mt-5 font-display text-2xl font-semibold leading-tight text-white">
-                  "A universidade sai do papel de fornecedora de estagiários e
-                  entra como parceira de operação ESG real na cidade."
-                </p>
-                <p className="mt-5 text-sm text-white/55">
-                  — Carta-manifesto Brasil Sustenta para reitorias
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA ==================== */}
+        {/* CTA */}
         <section className="container-editorial pb-16 md:pb-24">
           <div className="surface-clay rounded-3xl p-10 md:p-14 lg:p-16">
-              <div className="md:col-span-12">
-                <WaitlistCTA personaLabel="campus" isDark />
-              </div>
+            <WaitlistCTA personaLabel="campus" isDark />
           </div>
         </section>
       </main>

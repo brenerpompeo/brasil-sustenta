@@ -1,8 +1,9 @@
-import { defineConfig } from "vitest/config";
 import path from "path";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  root: path.resolve(import.meta.dirname),
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -11,7 +12,12 @@ export default defineConfig({
     },
   },
   test: {
+    globals: true,
+    css: true,
+    include: ["server/**/*.test.ts", "client/src/**/*.test.tsx"],
+    exclude: [".claude/**", "dist/**", "node_modules/**"],
     environment: "node",
-    include: ["server/**/*.test.ts", "server/**/*.spec.ts"],
+    environmentMatchGlobs: [["client/src/**/*.{test,spec}.tsx", "jsdom"]],
+    setupFiles: ["./client/src/test/setup.ts"],
   },
 });

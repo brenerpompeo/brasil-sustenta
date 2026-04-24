@@ -1,6 +1,6 @@
 # Brasil Sustenta — Implementation Status v2
 
-Atualizado: 2026-04-17
+Atualizado: 2026-04-23
 
 ---
 
@@ -39,8 +39,10 @@ Atualizado: 2026-04-17
 
 ### Backend
 - 17 routers: auth, profile, upload, contact, student, company, talent, university, blog, project, dashboard, ai, event, article, report, material, user
-- 18 tabelas no schema Drizzle
-- AI matching basico (skills + ESG keywords)
+- schema Drizzle ampliado para multi-vector + auditoria de match
+- Suzely VNext com pipeline explicito: retrieval -> reranking -> allocation
+- ODS Score com subscores, evidencia e confidence
+- endpoint admin para allocation batch
 
 ---
 
@@ -57,6 +59,13 @@ Ver `SPRINT_PLAN_CODE.md` e `todo.md` para breakdown completo.
 
 Resumo: 4 tabelas novas, ODS Fit Score, 5 dashboards (2 novos), pagina B2G, Design System v2 aplicado, CMS, relatorios PDF, QA.
 
+### Suzely VNext
+- `Retrieval`: candidate set com pre-filtering, sinais vetoriais e lexicais
+- `Reranking`: ODS Score composto por `skills`, `ods`, `context`, `availability`, `territory`
+- `Allocation`: matching estavel com `allocated`, `waitlisted` e `excluded`
+- trilha auditavel em `applications.matchAudit` e `match_decisions`
+- contratos compartilhados em `shared/suzely.ts`
+
 ---
 
 ## Arquivos-chave
@@ -70,6 +79,8 @@ Resumo: 4 tabelas novas, ODS Fit Score, 5 dashboards (2 novos), pagina B2G, Desi
 | Footer | client/src/components/Footer.tsx |
 | Schema | drizzle/schema.ts |
 | AI Router | server/routers/ai.ts |
+| Suzely Pipeline | server/lib/suzely-pipeline.ts |
+| Suzely Types | shared/suzely.ts |
 | Auth (migrar) | server/_core/sdk.ts, server/_core/oauth.ts |
 | Hub Data | client/src/lib/hubs.ts |
 

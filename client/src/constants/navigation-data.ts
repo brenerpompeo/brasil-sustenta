@@ -67,188 +67,214 @@ export type NavSupportLink = {
   iconKey: NavIconKey;
 };
 
+export type PublicNavLink = {
+  label: string;
+  href: string;
+  description?: string;
+  iconKey?: NavIconKey;
+};
+
+export type PublicNavLinkGroup = {
+  id: string;
+  title: string;
+  items: PublicNavLink[];
+};
+
 export const NAV: NavSection[] = [
   {
-    id: "consul-brain",
-    label: "Conselho",
-    accent: "ink",
-    hasPanel: true,
-    href: "/board",
-    backgroundImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop",
-    panel: {
-      eyebrow: "SOVEREIGN_PLANE // CB_CEO_CERBERUS",
-      title: "Consul-Brain Control Center.",
-      description:
-        "Governança centralizada para orquestração de IAs multi-company. Do Conselho ao Squad operacional.",
-      ctaLabel: "Acessar Board",
-      ctaHref: "/board",
-      gridCols: 6,
-      tiles: [
-        {
-          label: "C-Suite Registry",
-          href: "/board/registry",
-          description: "Relação de 40 agentes ativos e seus reporting lines.",
-          iconKey: "Users2",
-          colSpan: 3,
-        },
-        {
-          label: "Intel Assets",
-          href: "/board/assets",
-          description: "Modelos Ativos: Gemini, Claude, Ollama, Codex.",
-          iconKey: "Network",
-          colSpan: 3,
-          accent: "blue",
-        },
-        {
-          label: "Memória KG",
-          href: "/board/knowledge",
-          description: "Sincronização de fatos via MemPalace Graph.",
-          iconKey: "BookOpen",
-          colSpan: 6,
-          invert: true,
-        },
-      ],
-    },
-  },
-  {
-    id: "brasil-sustenta",
-    label: "Brasil Sustenta",
+    id: "manifesto",
+    label: "Manifesto",
+    href: "/manifesto",
     accent: "green",
-    hasPanel: true,
-    href: "/brasil-sustenta",
-    backgroundImage: "https://images.unsplash.com/photo-1518398046578-8cca57782e17?q=80&w=2000&auto=format&fit=crop",
-    panel: {
-      eyebrow: "IMPACT_INFRA // BS_CEO_ATLAS",
-      title: "Infraestrutura de Impacto.",
-      description:
-        "Mercado de talentos e squads ESG auditáveis comandado por ATLAS.",
-      ctaLabel: "Ver Operação",
-      ctaHref: "/para-empresas",
-      gridCols: 6,
-      tiles: [
-        {
-          label: "Managed Squads",
-          href: "/para-empresas",
-          description: "Squads de Social Media, CRM e UI/UX.",
-          iconKey: "Briefcase",
-          colSpan: 3,
-          accent: "green",
-        },
-        {
-          label: "Territórios Vivos",
-          href: "/quem-somos/hubs",
-          description: "Ativações municipais e hub de evidência.",
-          iconKey: "MapPin",
-          colSpan: 3,
-        },
-        {
-          label: "Para Prefeituras",
-          href: "/para-prefeituras",
-          description: "Programa Municipal ODS — juventude, Agenda 2030 e relatório público.",
-          iconKey: "Landmark",
-          colSpan: 3,
-          accent: "blue",
-        },
-        {
-          label: "Dossiês de Entrega",
-          href: "/quem-somos/impacto",
-          description: "Provas públicas contra greenwashing.",
-          iconKey: "ShieldCheck",
-          colSpan: 3,
-          invert: true,
-        },
-      ],
-    },
+    hasPanel: false,
   },
   {
-    id: "pacto-global",
-    label: "Pacto Global",
+    id: "para-jovens",
+    label: "Para Jovens",
+    href: "/para-jovens",
+    accent: "green",
+    hasPanel: false,
+  },
+  {
+    id: "para-empresas",
+    label: "Para Empresas",
+    href: "/para-empresas",
+    accent: "green",
+    hasPanel: false,
+  },
+  {
+    id: "para-ies",
+    label: "Para IES",
+    href: "/para-ies",
+    accent: "green",
+    hasPanel: false,
+  },
+  {
+    id: "para-prefeituras",
+    label: "Para Prefeituras",
+    href: "/para-prefeituras",
     accent: "blue",
-    hasPanel: true,
-    href: "/pacto-global",
-    backgroundImage: "https://images.unsplash.com/photo-1511649475669-e288648b2339?q=80&w=2000&auto=format&fit=crop",
-    panel: {
-      eyebrow: "GLOBAL_LEGAL // PG_CEO_LEGACY",
-      title: "Legitimidade e Rede ONU.",
-      description:
-        "Operação institucional CLT para alinhamento com a Agenda 2030.",
-      ctaLabel: "Ver Rede",
-      ctaHref: "/pacto-global",
-      gridCols: 6,
-      tiles: [
-        {
-          label: "Rede Institucional",
-          href: "/stakeholders",
-          description: "Empresas e agências conectadas ao Pacto Global.",
-          iconKey: "Globe2",
-          colSpan: 3,
-        },
-        {
-          label: "Compliance ODS",
-          href: "/compliance",
-          description: "Checklists de conformidade global.",
-          iconKey: "FileCheck2",
-          colSpan: 3,
-          accent: "blue",
-        },
-      ],
-    },
+    hasPanel: false,
   },
   {
-    id: "br360-intel",
-    label: "BR360 Intel",
-    accent: "yellow",
-    hasPanel: true,
-    href: "/br360",
-    backgroundImage: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=2000&auto=format&fit=crop",
-    panel: {
-      eyebrow: "B2B_BI_ENGINE // BR_CEO_SOVEREIGN",
-      title: "Inteligência de Mercado 360.",
-      description:
-        "Dashboards de BI e análise de dados territoriais em tempo real.",
-      ctaLabel: "Acessar Dash",
-      ctaHref: "/dashboard/br360",
-      gridCols: 6,
-      tiles: [
-        {
-          label: "Exploração B2B",
-          href: "/br360/mapa",
-          description: "Oportunidades em tempo real por setor.",
-          iconKey: "Target",
-          colSpan: 3,
-          accent: "yellow",
-        },
-        {
-          label: "Relatórios de BI",
-          href: "/br360/reports",
-          description: "Anítica avançada para tomada de decisão.",
-          iconKey: "BarChart3",
-          colSpan: 3,
-        },
-        {
-          label: "Squad de Dados",
-          href: "/br360/squad",
-          description: "Engenharia e modelos preditivos ativados.",
-          iconKey: "Network",
-          colSpan: 6,
-          invert: true,
-        },
-      ],
-    },
+    id: "hubs",
+    label: "HUBs",
+    href: "/quem-somos/hubs",
+    accent: "green",
+    hasPanel: false,
+  },
+  {
+    id: "noticias",
+    label: "Notícias",
+    href: "/blog",
+    accent: "green",
+    hasPanel: false,
+  },
+];
+
+export const NAV_PRIMARY_LINKS: PublicNavLink[] = NAV.map(item => ({
+  label: item.label,
+  href: item.href ?? "/",
+}));
+
+export const NAV_INSTITUTIONAL_LINKS: PublicNavLink[] = [
+  {
+    label: "Quem Somos",
+    href: "/quem-somos",
+    description: "Base institucional da rede.",
+  },
+  {
+    label: "Impacto",
+    href: "/quem-somos/impacto",
+    description: "Resultados, tese e entregas.",
+  },
+  {
+    label: "Stakeholders",
+    href: "/quem-somos/stakeholders",
+    description: "Ecossistema e articulação.",
+  },
+];
+
+export const NAV_CONTENT_LINKS: PublicNavLink[] = [
+  {
+    label: "Notícias",
+    href: "/blog",
+    description: "Atualizações e posicionamento.",
+  },
+  {
+    label: "Eventos",
+    href: "/eventos",
+    description: "Agenda pública da rede.",
+  },
+  {
+    label: "Artigos",
+    href: "/artigos",
+    description: "Análises e teses editoriais.",
+  },
+  {
+    label: "Relatórios",
+    href: "/relatorios",
+    description: "Publicações e evidências.",
+  },
+  {
+    label: "Biblioteca",
+    href: "/biblioteca",
+    description: "Materiais de apoio e acervo.",
+  },
+];
+
+export const PORTAL_ACCESS = [
+  {
+    label: "Empresa",
+    href: "/auth/empresa",
+    iconKey: "Building2",
+    description: "Portal de contratação e gestão de squads ESG.",
+  },
+  {
+    label: "Jovem",
+    href: "/auth/jovem",
+    iconKey: "Sparkles",
+    description: "Hub de oportunidades e trilhas de impacto.",
+  },
+  {
+    label: "IES",
+    href: "/auth/ies",
+    iconKey: "GraduationCap",
+    description: "Conexão acadêmica e extensão territorial.",
+  },
+  {
+    label: "Embaixador",
+    href: "/auth/embaixador",
+    iconKey: "Target",
+    description: "Liderança local e ativação de territórios.",
+  },
+  {
+    label: "Prefeitura",
+    href: "/auth/prefeitura",
+    iconKey: "Landmark",
+    description: "Gestão pública e monitoramento de ODS.",
   },
 ];
 
 export const NAV_SUPPORT_LINKS: NavSupportLink[] = [
   {
-    label: "Board Registry",
-    href: "/board/registry",
-    description: "40 Agents C-Suite.",
-    iconKey: "Users2",
+    label: "Termos de Uso",
+    href: "/termos",
+    description: "Base legal da operação.",
+    iconKey: "FileText",
   },
   {
-    label: "SysStatus",
-    href: "/board/status",
-    description: "Orchestration Live.",
-    iconKey: "Sparkles",
+    label: "Privacidade",
+    href: "/privacidade",
+    description: "Segurança de dados.",
+    iconKey: "ShieldCheck",
+  },
+];
+
+export const PUBLIC_SHELL_IA = {
+  primary: NAV_PRIMARY_LINKS,
+  institutional: NAV_INSTITUTIONAL_LINKS,
+  content: NAV_CONTENT_LINKS,
+  portalAccess: PORTAL_ACCESS,
+  utility: NAV_SUPPORT_LINKS,
+} satisfies Record<string, PublicNavLink[] | typeof PORTAL_ACCESS | typeof NAV_SUPPORT_LINKS>;
+
+export const NAV_FOOTER_GROUPS: PublicNavLinkGroup[] = [
+  {
+    id: "navegacao",
+    title: "Navegação",
+    items: NAV_PRIMARY_LINKS,
+  },
+  {
+    id: "rede",
+    title: "Rede",
+    items: NAV_INSTITUTIONAL_LINKS,
+  },
+  {
+    id: "conteudo",
+    title: "Conteúdo",
+    items: NAV_CONTENT_LINKS,
+  },
+  {
+    id: "acesso",
+    title: "Acesso",
+    items: PORTAL_ACCESS.map(({ label, href, description }) => ({
+      label,
+      href,
+      description,
+    })),
+  },
+];
+
+export const NAV_DRAWER_GROUPS: PublicNavLinkGroup[] = [
+  {
+    id: "rede",
+    title: "Rede",
+    items: NAV_INSTITUTIONAL_LINKS,
+  },
+  {
+    id: "conteudo",
+    title: "Conteúdo",
+    items: NAV_CONTENT_LINKS,
   },
 ];

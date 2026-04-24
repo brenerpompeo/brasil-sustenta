@@ -453,7 +453,7 @@ export const AUTH_PERSONAS: Record<AuthPersonaKey, AuthPersonaConfig> = {
           name: "email",
           label: "E-mail institucional",
           type: "email",
-          placeholder: "coordenacao@universidade.edu.br",
+          placeholder: "coordenacao@ies.edu.br",
           required: true,
         },
         {
@@ -510,7 +510,7 @@ export const AUTH_PERSONAS: Record<AuthPersonaKey, AuthPersonaConfig> = {
           name: "emailCadastro",
           label: "E-mail institucional",
           type: "email",
-          placeholder: "coordenacao@universidade.edu.br",
+          placeholder: "coordenacao@ies.edu.br",
           required: true,
         },
         {

@@ -1,15 +1,12 @@
 import { motion } from "framer-motion";
-import { SectionHeader } from "@/components/ds";
+import { ProofStrip, SectionHeader } from "@/components/ds";
 import { WaitlistCTA } from "@/components/LeadCaptureComponents";
 import {
   ArrowRight,
   CheckCircle2,
   ClipboardList,
-  FileCheck2,
   LineChart,
   ShieldCheck,
-  Target,
-  Users2,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -21,19 +18,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { editorialEase, editorialViewport } from "@/lib/motion";
 
-const valueProps = [
+const benefits = [
   {
-    icon: Target,
+    n: "01",
     title: "Squad com Fit Score explicável",
     body: "Squad com 3-5 talentos selecionados por ODS Fit Score explicável — sem caixa-preta.",
   },
   {
-    icon: Users2,
+    n: "02",
     title: "Sprint com trilha de evidência",
     body: "Sprint de 6-8 semanas com checkpoints e trilha de evidência por entrega.",
   },
   {
-    icon: FileCheck2,
+    n: "03",
     title: "Relatório auditável",
     body: "Relatório final auditável — o entregável que prova o resultado para ESG real.",
   },
@@ -93,11 +90,17 @@ const products = [
   },
 ];
 
-const proof = [
-  { value: "2026", label: "Primeiros pilots" },
+const metrics = [
   { value: "6 sem", label: "Sprint médio projetado" },
+  { value: "72h", label: "Shortlist entregue" },
   { value: "4", label: "Etapas do protocolo" },
   { value: "100%", label: "Transparência de processo" },
+];
+
+const heroTrustItems = [
+  { value: "72h", label: "Shortlist explicável", tone: "leaf" as const },
+  { value: "NDA", label: "Base contratual padrão", tone: "atlantic" as const },
+  { value: "4 etapas", label: "Protocolo auditável", tone: "default" as const },
 ];
 
 const guarantees = [
@@ -120,6 +123,7 @@ export default function ParaEmpresas() {
         <PageHero
           eyebrow="Para empresas · B2B"
           variant="paper"
+          metaRail={<Badge variant="leaf">Pilots corporativos em curadoria</Badge>}
           title={
             <>
               Seu desafio ESG vira{" "}
@@ -141,167 +145,182 @@ export default function ParaEmpresas() {
               </Button>
             </>
           }
+          trustRail={
+            <ProofStrip
+              compact
+              ariaLabel="Sinais de confiança para empresas"
+              items={heroTrustItems}
+            />
+          }
           side={<EmpresaSidePanel />}
         />
 
-        {/* Value props ====================== */}
-        <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
-          <div className="grid gap-6 md:grid-cols-12 md:gap-12 md:items-end">
-            <SectionHeader
-              eyebrow="O que muda"
-              title="Três coisas que você não tem hoje."
-              tone="bright"
-              showRule
-              className="md:col-span-7"
-            />
-            <p className="text-body md:col-span-5">
-              Não vendemos uma plataforma. Vendemos uma operação completa de
-              ESG com universidade, território e auditoria embutidos.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] md:grid-cols-3">
-            {valueProps.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="bg-white p-7">
-                <Icon className="size-7 text-[color:var(--color-leaf)]" strokeWidth={1.5} />
-                <h3 className="mt-7 font-display text-2xl font-bold tracking-[-0.025em]">
-                  {title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-ink-3)]">
-                  {body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Fluxo ============================ */}
-        <section className="surface-paper-2 border-y border-[color:var(--color-border)] section-y">
+        {/* NUMBERED BENEFIT LIST — editorial B2B gravitas */}
+        <section className="border-t border-[color:var(--color-ink)] section-y">
           <div className="container-editorial">
-            <div className="max-w-2xl">
-              <SectionHeader
-                eyebrow="Fluxo operacional"
-                title="Do brief ao relatório em 4 passos legíveis."
-                showRule
-              />
+            {/* Pull-quote Fraunces italic — breaks the grid */}
+            <blockquote className="border-l-4 border-[color:var(--color-leaf)] pl-6 md:pl-10 mb-16">
+              <p className="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-medium italic leading-[1.15] tracking-[-0.02em] text-[color:var(--color-ink)] max-w-3xl">
+                "Não vendemos uma plataforma. Vendemos uma operação completa de ESG com
+                universidade, território e auditoria embutidos."
+              </p>
+              <cite className="mt-4 block font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-ink-4)] not-italic">
+                — Brasil Sustenta · Proposta de valor B2B
+              </cite>
+            </blockquote>
+
+            {/* Numbered benefit list — full-width, divider-ruled */}
+            <div className="flex items-baseline gap-6 mb-10">
+              <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-[color:var(--color-ink-4)]">
+                O que muda
+              </span>
+              <div className="flex-1 h-px bg-[color:var(--color-ink)]" />
             </div>
 
-            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] md:grid-cols-2 lg:grid-cols-4">
-              {flow.map(({ n, label, title, body }) => (
-                <li key={n} className="bg-white p-7 md:p-8">
-                  <div className="flex items-center justify-between">
-                    <Badge variant="leaf">{label}</Badge>
-                    <span className="font-mono text-xs font-semibold text-[color:var(--color-ink-4)]">
-                      {n}
-                    </span>
-                  </div>
-                  <h3 className="mt-7 font-display text-xl font-bold leading-snug tracking-[-0.02em]">
+            <ol className="divide-y divide-[color:var(--color-ink)]">
+              {benefits.map(({ n, title, body }, i) => (
+                <motion.li
+                  key={n}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={editorialViewport}
+                  transition={{ duration: 0.45, delay: i * 0.08, ease: editorialEase }}
+                  className="grid grid-cols-12 gap-4 py-10 md:py-12 items-baseline"
+                >
+                  {/* Number — oversized editorial anchor */}
+                  <span className="col-span-2 md:col-span-1 font-mono text-[2.5rem] font-bold leading-none text-[color:var(--color-leaf)] tracking-tighter">
+                    {n}
+                  </span>
+                  <h3 className="col-span-10 md:col-span-4 font-display text-[1.6rem] md:text-[2rem] font-bold leading-tight tracking-[-0.025em]">
                     {title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-ink-3)]">
+                  <p className="col-span-12 md:col-span-7 text-base leading-relaxed text-[color:var(--color-ink-3)]">
                     {body}
                   </p>
-                </li>
+                </motion.li>
               ))}
             </ol>
           </div>
         </section>
 
-        {/* Produtos ========================= */}
+        {/* METRICS STRIP — JetBrains Mono numbers, full-width dark band */}
+        <section className="surface-ink border-y border-white/10">
+          <div className="container-editorial">
+            <div className="grid grid-cols-2 divide-x divide-y divide-white/10 md:grid-cols-4 md:divide-y-0">
+              {metrics.map((m, i) => (
+                <motion.div
+                  key={m.label}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={editorialViewport}
+                  transition={{ duration: 0.4, delay: i * 0.06 }}
+                  className="px-8 py-10 md:py-12"
+                >
+                  <p className="font-mono text-[3rem] md:text-[3.5rem] font-bold leading-none tracking-[-0.04em] text-[color:var(--color-leaf-bright)]">
+                    {m.value}
+                  </p>
+                  <p className="mt-3 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-white/50">
+                    {m.label}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FLUXO — horizontal 4-step with hard dividers */}
+        <section className="surface-paper-2 border-b border-[color:var(--color-ink)] section-y">
+          <div className="container-editorial">
+            <div className="flex items-baseline gap-6 mb-12">
+              <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-[color:var(--color-ink-4)]">
+                Fluxo operacional
+              </span>
+              <div className="flex-1 h-px bg-[color:var(--color-ink)]" />
+              <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-[color:var(--color-ink-4)]">
+                4 passos
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[color:var(--color-ink)]">
+              {flow.map(({ n, label, title, body }) => (
+                <div key={n} className="py-8 md:py-0 md:px-8 first:md:pl-0 last:md:pr-0">
+                  <div className="flex items-center justify-between mb-6">
+                    <Badge variant="leaf">{label}</Badge>
+                    <span className="font-mono text-[2rem] font-bold leading-none text-[color:var(--color-ink)] opacity-15">
+                      {n}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-xl font-bold leading-snug tracking-[-0.02em] mb-3">
+                    {title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-[color:var(--color-ink-3)]">
+                    {body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* PRODUTOS — 2-col asymmetric */}
         <section id="produtos" className="container-editorial section-y">
-          <div className="grid gap-6 md:grid-cols-12 md:gap-12 md:items-end">
-            <SectionHeader
-              eyebrow="Produtos"
-              title="Dois formatos. Buyer escolhe."
-              tone="bright"
-              showRule
-              className="md:col-span-7"
-            />
-            <p className="text-body md:col-span-5">
-              Pilot para validar. Managed Squad para escalar. Em ambos: brief,
-              shortlist, squad, sprint, relatório.
-            </p>
+          <div className="flex items-baseline gap-6 mb-12">
+            <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-[color:var(--color-ink-4)]">
+              Produtos
+            </span>
+            <div className="flex-1 h-px bg-[color:var(--color-ink)]" />
+            <span className="font-display text-lg font-bold italic text-[color:var(--color-leaf)]">
+              Dois formatos. Buyer escolhe.
+            </span>
           </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
+          <div className="grid gap-5 md:grid-cols-2">
             {products.map(p => (
               <ProductDetail key={p.name} {...p} />
             ))}
           </div>
         </section>
 
-        {/* Provas ========================== */}
-        <section className="surface-ink section-y border-y border-white/10">
+        {/* GARANTIAS — full-width checklist with strong rule */}
+        <section className="surface-paper-2 border-t border-[color:var(--color-ink)] section-y">
           <div className="container-editorial">
-            <div className="grid gap-12 lg:grid-cols-12 lg:gap-14 lg:items-center">
-              <div className="lg:col-span-5">
-                <span className="text-eyebrow text-white/55">Provas</span>
-                <h2 className="text-headline mt-5 text-white">
-                  O modelo está sendo construído com transparência.
+            <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-4">
+                <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-[color:var(--color-ink-4)]">
+                  Garantias
+                </span>
+                <h2 className="mt-4 font-display text-[clamp(2rem,4vw,3rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+                  O que entra no contrato.
                 </h2>
-                <p className="text-body mt-7 text-white/72">
-                  Cada formato gera métricas auditáveis desde o primeiro pilot.
-                  Pediu, entregou, documentou.
+                <p className="mt-5 text-base leading-relaxed text-[color:var(--color-ink-3)] max-w-xs">
+                  Sem letra miúda. As regras do squad estão na proposta — antes de assinar.
                 </p>
               </div>
-
-              <div className="lg:col-span-7">
-                <div className="grid gap-px bg-white/12 sm:grid-cols-2">
-                  {proof.map(p => (
-                    <div key={p.label} className="bg-[color:var(--color-ink)] p-7">
-                      <p className="text-numeric text-[color:var(--color-leaf-bright)]">
-                        {p.value}
-                      </p>
-                      <p className="mt-4 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-white/55">
-                        {p.label}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <ul className="lg:col-span-8 divide-y divide-[color:var(--color-ink)]">
+                {guarantees.map((g, i) => (
+                  <motion.li
+                    key={g}
+                    initial={{ opacity: 0, x: 12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={editorialViewport}
+                    transition={{ duration: 0.4, delay: i * 0.06, ease: editorialEase }}
+                    className="flex items-start gap-5 py-6 first:pt-0 last:pb-0"
+                  >
+                    <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[color:var(--color-leaf)]" />
+                    <p className="text-lg font-medium leading-relaxed text-[color:var(--color-ink)]">
+                      {g}
+                    </p>
+                  </motion.li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Garantias ======================= */}
-        <section className="container-editorial section-y">
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-            <div className="lg:col-span-5">
-              <span className="text-eyebrow-bright">Garantias</span>
-              <h2 className="text-headline mt-5">O que entra no contrato.</h2>
-              <p className="text-body mt-7 max-w-md">
-                Sem letra miúda. As regras do squad estão na proposta — antes
-                de assinar.
-              </p>
-            </div>
-            <ul className="grid gap-3 lg:col-span-7">
-              {guarantees.map((g, i) => (
-                <motion.li
-                  key={g}
-                  initial={{ opacity: 0, x: 12 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={editorialViewport}
-                  transition={{ duration: 0.4, delay: i * 0.06, ease: editorialEase }}
-                  className="flex items-start gap-4 border-b border-[color:var(--color-border)] pb-5 last:border-b-0"
-                >
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[color:var(--color-leaf)]" />
-                  <p className="text-base font-medium leading-relaxed text-[color:var(--color-ink)]">
-                    {g}
-                  </p>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* CTA ============================= */}
+        {/* CTA */}
         <section className="container-editorial pb-16 md:pb-24">
           <div className="surface-leaf rounded-3xl p-10 md:p-14 lg:p-16">
-            <div className="grid gap-8 md:grid-cols-12 md:items-center md:gap-12">
-              <div className="md:col-span-12">
-                <WaitlistCTA personaLabel="programa Corporativo" isDark />
-              </div>
-            </div>
+            <WaitlistCTA personaLabel="programa Corporativo" isDark />
           </div>
         </section>
       </main>

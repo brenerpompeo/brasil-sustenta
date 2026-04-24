@@ -1,111 +1,161 @@
 import { z } from "zod";
-import { publicProcedure, router } from "../_core/trpc";
+import { eq, inArray } from "drizzle-orm";
+import { adminProcedure, publicProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
-import { talentProfiles, projects, type TalentProfile } from "../../drizzle/schema";
-import { eq, sql, desc, inArray } from "drizzle-orm";
+import { projects, talentProfiles } from "../../drizzle/schema";
+import {
+  computeDeterministicSubscores,
+  runAllocationBatch,
+  runReranking,
+  scoreSubscores,
+} from "../lib/suzely-pipeline";
 import { suzely } from "../lib/suzely";
-import { fuseRRF } from "../lib/vector-utils";
+
+async function resolveDb(ctx: unknown) {
+  return ((ctx as { db?: Awaited<ReturnType<typeof getDb>> })?.db || (await getDb())) as NonNullable<
+    Awaited<ReturnType<typeof getDb>>
+  >;
+}
 
 export const aiRouter = router({
-  /**
-   * Suzely Smart Match (V3.0)
-   * The unicorn-level matching engine for Brasil Sustenta.
-   */
   calculateFitScore: publicProcedure
     .input(z.object({ projectId: z.number(), talentId: z.number() }))
     .query(async ({ ctx, input }) => {
-      const db = (ctx as any).db || await getDb();
-      if (!db) throw new Error("DB unavailable");
+      const db = await resolveDb(ctx);
 
-      const [project] = await db.select().from(projects).where(eq(projects.id, input.projectId)).limit(1);
-      const [talent] = await db.select().from(talentProfiles).where(eq(talentProfiles.id, input.talentId)).limit(1);
+      const [project] = await db
+        .select({
+          id: projects.id,
+          title: projects.title,
+          description: projects.description,
+          requiredSkills: projects.requiredSkills,
+          odsAlignment: projects.odsAlignment,
+          teamSize: projects.teamSize,
+          companyId: projects.companyId,
+          hubLocalId: projects.hubLocalId,
+          embedding: projects.embedding,
+          briefEmbedding: projects.briefEmbedding,
+          skillsEmbedding: projects.skillsEmbedding,
+          odsEmbedding: projects.odsEmbedding,
+          category: projects.category,
+        })
+        .from(projects)
+        .where(eq(projects.id, input.projectId))
+        .limit(1);
 
-      if (!project || !talent) throw new Error("Project or talent not found");
+      const [talent] = await db
+        .select({
+          id: talentProfiles.id,
+          userId: talentProfiles.userId,
+          fullName: talentProfiles.fullName,
+          bio: talentProfiles.bio,
+          skills: talentProfiles.skills,
+          portfolio: talentProfiles.portfolio,
+          linkedin: talentProfiles.linkedin,
+          github: talentProfiles.github,
+          avatar: talentProfiles.avatar,
+          course: talentProfiles.course,
+          universityId: talentProfiles.universityId,
+          embedding: talentProfiles.embedding,
+          bioEmbedding: talentProfiles.bioEmbedding,
+          skillsEmbedding: talentProfiles.skillsEmbedding,
+          odsEmbedding: talentProfiles.odsEmbedding,
+          isAvailable: talentProfiles.isAvailable,
+        })
+        .from(talentProfiles)
+        .where(eq(talentProfiles.id, input.talentId))
+        .limit(1);
 
-      const requiredSkills: string[] = project.requiredSkills || [];
-      const talentSkills: string[] = talent.skills || [];
-      const skillMatches = requiredSkills.filter(s =>
-        talentSkills.some(ts => ts.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(ts.toLowerCase()))
+      if (!project || !talent) {
+        throw new Error("Project or talent not found");
+      }
+
+      const subscores = computeDeterministicSubscores(project, talent);
+      const deterministicScore = scoreSubscores(subscores);
+      const evidence = await suzely.generateEvidenceBatch(
+        `${project.title}. ${project.description}`,
+        [
+          {
+            id: talent.id,
+            content: `${talent.fullName}. ${talent.bio || ""} Skills: ${(talent.skills || []).join(", ")}`,
+            skills: talent.skills || [],
+            deterministicScore,
+            fallbackReasoning: suzely.buildFallbackReasoning(subscores),
+            fallbackQuotesFromTalent: [suzely.sentenceSnippet(`${talent.fullName}. ${talent.bio || ""}`)],
+            fallbackQuotesFromProject: [suzely.sentenceSnippet(`${project.title}. ${project.description}`)],
+          },
+        ]
       );
-      const skillsFit = requiredSkills.length > 0
-        ? Math.round((skillMatches.length / requiredSkills.length) * 100)
-        : 50;
 
-      const projectOds: number[] = (project.odsAlignment as number[]) || [];
-      const esgSkills = ['esg', 'sustentabilidade', 'ods', 'impacto', 'ambiental', 'social', 'carbono', 'clima'];
-      const talentEsgScore = talentSkills.filter(s =>
-        esgSkills.some(e => s.toLowerCase().includes(e))
-      ).length;
-      const odsFit = projectOds.length > 0
-        ? Math.min(100, Math.round(50 + (talentEsgScore * 10)))
-        : 50;
-
-      const contextFit = talent.isAvailable ? 80 : 30;
-
-      const totalScore = Math.round((skillsFit * 0.40) + (odsFit * 0.35) + (contextFit * 0.25));
-
-      let explanation = `${talent.fullName} tem `;
-      if (totalScore >= 75) explanation += `fit alto (${totalScore}/100) com este projeto. `;
-      else if (totalScore >= 50) explanation += `fit moderado (${totalScore}/100) com este projeto. `;
-      else explanation += `fit baixo (${totalScore}/100) com este projeto. `;
-
-      if (skillMatches.length > 0) {
-        explanation += `Suas skills em ${skillMatches.slice(0, 2).join(' e ')} são diretamente relevantes. `;
-      }
-      if (projectOds.length > 0) {
-        explanation += `O projeto foca nos ODS ${projectOds.slice(0, 3).join(', ')}. `;
-      }
-      if (!talent.isAvailable) {
-        explanation += `Atenção: talento marcado como indisponível no momento.`;
-      }
+      const matchEvidence = evidence[talent.id];
+      const finalScore = Math.round((matchEvidence?.score ?? deterministicScore) * 0.65 + deterministicScore * 0.35);
 
       return {
-        skillsFit,
-        odsFit,
-        contextFit,
-        totalScore,
-        explanation,
-        odsBadges: projectOds.slice(0, 5),
+        skillsFit: subscores.skills,
+        odsFit: subscores.ods,
+        contextFit: Math.round((subscores.context + subscores.availability + subscores.territory) / 3),
+        totalScore: finalScore,
+        explanation: matchEvidence?.reasoning || suzely.buildFallbackReasoning(subscores),
+        odsBadges: (project.odsAlignment || []).slice(0, 5),
+        subscores,
+        evidence: matchEvidence,
+        confidence: matchEvidence?.confidence || "low",
+        pipelineVersion: suzely.pipelineVersion,
       };
     }),
 
   getShortlist: publicProcedure
     .input(z.object({ projectId: z.number(), limit: z.number().default(10) }))
     .query(async ({ ctx, input }) => {
-      const db = (ctx as any).db || await getDb();
-      if (!db) throw new Error("DB unavailable");
+      const db = await resolveDb(ctx);
+      const { project, reranked } = await runReranking(db, {
+        projectId: input.projectId,
+        limit: input.limit,
+        candidatePoolLimit: Math.max(input.limit * 5, 30),
+      });
+      const talentIds = reranked.map(candidate => candidate.talentId);
 
-      const [project] = await db.select().from(projects).where(eq(projects.id, input.projectId)).limit(1);
-      if (!project) throw new Error("Project not found");
-
-      const talents = await db.select().from(talentProfiles).where(eq(talentProfiles.isAvailable, true)).limit(input.limit);
-
-      const esgSkills = ['esg', 'sustentabilidade', 'ods', 'impacto', 'ambiental', 'social', 'carbono'];
-      const projectOds: number[] = (project.odsAlignment as number[]) || [];
-
-      const results = talents.map((talent: TalentProfile) => {
-        const requiredSkills: string[] = project.requiredSkills || [];
-        const talentSkills: string[] = talent.skills || [];
-        const skillMatches = requiredSkills.filter(s =>
-          talentSkills.some(ts => ts.toLowerCase().includes(s.toLowerCase()))
+      const talents = await db
+        .select({
+          id: talentProfiles.id,
+          fullName: talentProfiles.fullName,
+          bio: talentProfiles.bio,
+          skills: talentProfiles.skills,
+          avatar: talentProfiles.avatar,
+          course: talentProfiles.course,
+          isAvailable: talentProfiles.isAvailable,
+        })
+        .from(talentProfiles)
+        .where(
+          talentIds.length
+            ? inArray(talentProfiles.id, talentIds)
+            : inArray(talentProfiles.id, [-1])
         );
-        const skillsFit = requiredSkills.length > 0 ? Math.round((skillMatches.length / requiredSkills.length) * 100) : 50;
-        const talentEsgScore = talentSkills.filter(s => esgSkills.some(e => s.toLowerCase().includes(e))).length;
-        const odsFit = Math.min(100, 50 + talentEsgScore * 10);
-        const contextFit = talent.isAvailable ? 80 : 30;
-        const totalScore = Math.round(skillsFit * 0.40 + odsFit * 0.35 + contextFit * 0.25);
 
-        return {
-          talent,
-          skillsFit,
-          odsFit,
-          contextFit,
-          totalScore,
-          odsBadges: projectOds.slice(0, 5),
-        };
-      }).sort((a: { totalScore: number }, b: { totalScore: number }) => b.totalScore - a.totalScore);
+      const talentById = new Map(talents.map(talent => [talent.id, talent]));
 
-      return { shortlist: results, projectTitle: project.title };
+      return {
+        projectTitle: project.title,
+        shortlist: reranked.map(candidate => ({
+          talent: {
+            id: talentById.get(candidate.talentId)?.id || candidate.talentId,
+            fullName: talentById.get(candidate.talentId)?.fullName || "Talento",
+            skills: talentById.get(candidate.talentId)?.skills || [],
+            avatar: talentById.get(candidate.talentId)?.avatar || null,
+            course: talentById.get(candidate.talentId)?.course || null,
+            university: null,
+          },
+          totalScore: candidate.finalScore,
+          skillsFit: candidate.subscores.skills,
+          odsFit: candidate.subscores.ods,
+          contextFit: candidate.subscores.context,
+          odsBadges: (project.odsAlignment || []).slice(0, 5),
+          evidence: {
+            reasoning: candidate.reasoning,
+            confidence: candidate.confidence,
+          },
+        })),
+      };
     }),
 
   getTalentMatches: publicProcedure
@@ -115,107 +165,67 @@ export const aiRouter = router({
         limit: z.number().default(5),
       })
     )
-    .query(async ({ input }) => {
-      const db = await getDb();
-      if (!db) {
-        throw new Error("Database connection unavailable");
-      }
+    .query(async ({ ctx, input }) => {
+      const db = await resolveDb(ctx);
+      const { project, reranked } = await runReranking(db, {
+        projectId: input.projectId,
+        limit: input.limit,
+        candidatePoolLimit: Math.max(input.limit * 10, 40),
+      });
 
-      // 1. Context Retrieval: Get Project Details & Embedding
-      const [project] = await db
-        .select()
-        .from(projects)
-        .where(eq(projects.id, input.projectId))
-        .limit(1);
-
-      if (!project) {
-        throw new Error("Project not found");
-      }
-
-      // 2. Suzely Knowledge Injection: Generate embedding for project if missing
-      let projectEmbedding = project.embedding;
-      if (!projectEmbedding) {
-        console.log(`[Suzely] Project ${project.id} missing embedding. Generating...`);
-        const textToEmbed = `${project.title}: ${project.description}. Required: ${project.requiredSkills?.join(", ")}`;
-        projectEmbedding = await suzely.generateEmbedding(textToEmbed);
-        
-        // Save back to DB for future matches
-        await db.update(projects)
-          .set({ embedding: projectEmbedding })
-          .where(eq(projects.id, project.id));
-      }
-
-      // 3. Hybrid Retrieval Stage
-      
-      // Stage A: Vector Search (Semantic Intent)
-      // distance operator <=> is for cosine similarity in pgvector
-      const vectorCandidates = await db
-        .select({ id: talentProfiles.id })
-        .from(talentProfiles)
-        .where(eq(talentProfiles.isAvailable, true))
-        .orderBy(sql`${talentProfiles.embedding} <=> ${JSON.stringify(projectEmbedding)}`)
-        .limit(20);
-
-      const vectorIds = vectorCandidates.map(c => c.id);
-
-      // Stage B: Lexical Search (Keyword Skills)
-      const requiredSkills = project.requiredSkills || [];
-      const lexicalCandidates = await db
-        .select({ id: talentProfiles.id })
-        .from(talentProfiles)
-        .where(eq(talentProfiles.isAvailable, true))
-        .limit(20);
-        // Simple mock of lexical for now, RRF handles its ranking
-      
-      const lexicalIds = lexicalCandidates.map(c => c.id);
-
-      // 4. Fusion Layer: RRF (Reciprocal Rank Fusion)
-      const fusedResults = fuseRRF(vectorIds, lexicalIds);
-      const topFusedIds = fusedResults.slice(0, 10).map(r => r.id);
-
-      if (topFusedIds.length === 0) {
-        return { success: true, matches: [] };
-      }
-
-      // 5. Final Fetch & Agentic Reranking
-      const topTalents = await db
-        .select()
-        .from(talentProfiles)
-        .where(inArray(talentProfiles.id, topFusedIds));
-
-      // Prepare metadata for Suzely's reasoning
-      const candidatePayload = topTalents.map(t => ({
-        id: t.id,
-        content: `${t.fullName}: ${t.bio}`,
-        skills: t.skills || []
-      }));
-
-      const rerankedResults = await suzely.agenticRerank(
-        `${project.title}: ${project.description}`,
-        candidatePayload
-      );
-
-      // 6. Assembly & Return
-      const matches = rerankedResults
-        .map(rank => {
-          const talent = topTalents.find(t => t.id === rank.id);
-          return {
-            talent,
-            aiFitScore: rank.score,
-            aiMatchReason: rank.reason
-          };
-        })
-        .sort((a, b) => b.aiFitScore - a.aiFitScore)
-        .slice(0, input.limit);
+      const talentIds = reranked.map(candidate => candidate.talentId);
+      const talents = talentIds.length
+        ? await db
+            .select({
+              id: talentProfiles.id,
+              fullName: talentProfiles.fullName,
+              bio: talentProfiles.bio,
+              skills: talentProfiles.skills,
+              avatar: talentProfiles.avatar,
+              isAvailable: talentProfiles.isAvailable,
+            })
+            .from(talentProfiles)
+            .where(inArray(talentProfiles.id, talentIds))
+        : [];
+      const talentById = new Map(talents.map(talent => [talent.id, talent]));
 
       return {
         success: true,
-        suzelyEngine: "V3.0 (Unicorn-Active)",
+        suzelyEngine: "VNext pipeline active",
+        stageExecuted: "reranking",
+        pipelineVersion: suzely.pipelineVersion,
         projectContext: {
           title: project.title,
-          category: project.category
+          category: project.category,
         },
-        matches
+        matches: reranked.map(candidate => ({
+          talent: talentById.get(candidate.talentId),
+          aiFitScore: candidate.finalScore,
+          aiMatchReason: candidate.reasoning,
+          finalScore: candidate.finalScore,
+          subscores: candidate.subscores,
+          evidence: {
+            reasoning: candidate.reasoning,
+            evidenceQuotesFromTalent: candidate.evidenceQuotesFromTalent,
+            evidenceQuotesFromProject: candidate.evidenceQuotesFromProject,
+            confidence: candidate.confidence,
+          },
+          retrieval: candidate.retrieval,
+          confidence: candidate.confidence,
+          pipelineVersion: candidate.pipelineVersion,
+          fairnessAudit: candidate.fairnessAudit,
+        })),
       };
+    }),
+
+  runAllocationBatch: adminProcedure
+    .input(
+      z.object({
+        projectIds: z.array(z.number()).optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const db = await resolveDb(ctx);
+      return runAllocationBatch(db, input.projectIds);
     }),
 });

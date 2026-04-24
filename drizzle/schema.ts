@@ -98,6 +98,9 @@ export const talentProfiles = pgTable("talent_profiles", {
   github: varchar("github", { length: 255 }),
   avatar: varchar("avatar", { length: 500 }),
   embedding: vector("embedding", { dimensions: 768 }), // Suzely's brain node (Model: text-embedding-004)
+  bioEmbedding: vector("bio_embedding", { dimensions: 768 }),
+  skillsEmbedding: vector("skills_embedding", { dimensions: 768 }),
+  odsEmbedding: vector("ods_embedding", { dimensions: 768 }),
   isAvailable: boolean("is_available").default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -183,6 +186,9 @@ export const projects = pgTable("projects", {
   teamSize: integer("team_size").notNull(),
   requiredSkills: json("required_skills").$type<string[]>(),
   embedding: vector("embedding", { dimensions: 768 }), // Suzely's context node (Model: text-embedding-004)
+  briefEmbedding: vector("brief_embedding", { dimensions: 768 }),
+  skillsEmbedding: vector("skills_embedding", { dimensions: 768 }),
+  odsEmbedding: vector("ods_embedding", { dimensions: 768 }),
   hubLocalId: integer("hub_local_id"),
   odsAlignment: json("ods_alignment").$type<number[]>(),
   budget: integer("budget"), // in cents
@@ -205,9 +211,62 @@ export const applications = pgTable("applications", {
   status: applicationStatusEnum("status").default("pending").notNull(),
   odsFitScore: integer("ods_fit_score"),
   odsFitExplanation: text("ods_fit_explanation"),
+  matchAudit: json("match_audit").$type<{
+    pipelineVersion: string;
+    modelVersion: string;
+    stage: string;
+    score: number;
+    confidence: "high" | "medium" | "low";
+    reasoning: string;
+    subscores: {
+      skills: number;
+      ods: number;
+      context: number;
+      availability: number;
+      territory: number;
+    };
+    evidenceQuotesFromTalent: string[];
+    evidenceQuotesFromProject: string[];
+    fairnessAudit?: {
+      eligible: boolean;
+      reasons: string[];
+      version: string;
+    };
+  }>(),
   appliedAt: timestamp("applied_at").defaultNow().notNull(),
   reviewedAt: timestamp("reviewed_at"),
   reviewedBy: integer("reviewed_by"),
+});
+
+export const matchDecisions = pgTable("match_decisions", {
+  id: serial("id").primaryKey(),
+  projectId: integer("project_id").notNull(),
+  talentId: integer("talent_id").notNull(),
+  applicationId: integer("application_id"),
+  stage: varchar("stage", { length: 32 }).notNull(),
+  pipelineVersion: varchar("pipeline_version", { length: 32 }).notNull(),
+  modelVersion: varchar("model_version", { length: 64 }).notNull(),
+  score: integer("score").notNull(),
+  confidence: varchar("confidence", { length: 16 }).notNull(),
+  reasoning: text("reasoning").notNull(),
+  subscores: json("subscores").$type<{
+    skills: number;
+    ods: number;
+    context: number;
+    availability: number;
+    territory: number;
+  }>().notNull(),
+  evidenceQuotesFromTalent: json("evidence_quotes_from_talent").$type<string[]>().notNull(),
+  evidenceQuotesFromProject: json("evidence_quotes_from_project").$type<string[]>().notNull(),
+  fairnessAudit: json("fairness_audit").$type<{
+    eligible: boolean;
+    reasons: string[];
+    version: string;
+  }>(),
+  allocationStatus: varchar("allocation_status", { length: 24 }),
+  allocationRank: integer("allocation_rank"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 /**
@@ -593,6 +652,21 @@ export const applicationsRelations = relations(applications, ({ one }) => ({
   }),
 }));
 
+export const matchDecisionsRelations = relations(matchDecisions, ({ one }) => ({
+  project: one(projects, {
+    fields: [matchDecisions.projectId],
+    references: [projects.id],
+  }),
+  talent: one(talentProfiles, {
+    fields: [matchDecisions.talentId],
+    references: [talentProfiles.id],
+  }),
+  application: one(applications, {
+    fields: [matchDecisions.applicationId],
+    references: [applications.id],
+  }),
+}));
+
 export const squadsRelations = relations(squads, ({ one, many }) => ({
   project: one(projects, {
     fields: [squads.projectId],
@@ -696,6 +770,8 @@ export type Project = typeof projects.$inferSelect;
 export type InsertProject = typeof projects.$inferInsert;
 export type Application = typeof applications.$inferSelect;
 export type InsertApplication = typeof applications.$inferInsert;
+export type MatchDecision = typeof matchDecisions.$inferSelect;
+export type InsertMatchDecision = typeof matchDecisions.$inferInsert;
 export type Squad = typeof squads.$inferSelect;
 export type InsertSquad = typeof squads.$inferInsert;
 export type SquadMember = typeof squadMembers.$inferSelect;

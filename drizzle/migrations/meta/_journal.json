@@ -29,6 +29,13 @@
       "when": 1776658247000,
       "tag": "0003_territorial_grid",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1776918000000,
+      "tag": "0004_suzely_vnext",
+      "breakpoints": true
     }
   ]
 }

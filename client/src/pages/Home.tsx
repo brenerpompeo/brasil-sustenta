@@ -29,14 +29,8 @@ import { cn } from "@/lib/utils";
 import TerritoryMap from "@/components/TerritoryMap";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { SectionHeader } from "@/components/ds";
+import { ProofStrip, SectionHeader } from "@/components/ds";
 import { NewsletterForm } from "@/components/LeadCaptureComponents";
-
-// Fallback shown while DB has no active partners yet
-const MARQUEE_FALLBACK = [
-  "CAMPINAS", "AGENDA 2030", "ODS", "ESG", "UNIVERSIDADE",
-  "TERRITÓRIO", "SQUAD", "CURADORIA", "EVIDÊNCIA", "IMPACTO",
-];
 
 const personas = [
   {
@@ -174,7 +168,36 @@ export default function Home() {
   const partnersQuery = trpc.university.public.listPartners.useQuery(undefined, {
     staleTime: 5 * 60_000,
   });
-  const marqueeItems = partnersQuery.data?.length ? partnersQuery.data : MARQUEE_FALLBACK;
+  const partnerCount = partnersQuery.data?.length ?? 0;
+  const heroProofItems = [
+    {
+      value: partnerCount > 0 ? String(partnerCount).padStart(2, "0") : "Campinas",
+      label: partnerCount > 0 ? "Universidades parceiras ativas" : "Território-piloto em abertura",
+      note:
+        partnerCount > 0
+          ? "Rede viva já conectada ao shell público."
+          : "Primeiro laboratório operacional da rede.",
+      tone: "leaf" as const,
+    },
+    {
+      value: "4 etapas",
+      label: "Protocolo explicável",
+      note: "Brief, shortlist, sprint e evidência auditável.",
+      tone: "default" as const,
+    },
+    {
+      value: "18 ODS",
+      label: "Taxonomia base",
+      note: "Classificação de impacto orientando match e entrega.",
+      tone: "sun" as const,
+    },
+    {
+      value: "2026",
+      label: "Ano zero com transparência",
+      note: "Sem inflar maturidade nem prometer escala pronta.",
+      tone: "atlantic" as const,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-[color:var(--color-paper)] text-[color:var(--color-ink)]">
@@ -199,7 +222,7 @@ export default function Home() {
                 </span>
               </div>
               
-              <h1 className="font-display text-[9vw] md:text-[5vw] lg:text-[4.5rem] leading-[0.95] font-black lowercase tracking-tighter text-[color:var(--color-ink)] max-w-[16ch]">
+              <h1 className="font-display text-[9vw] md:text-[5vw] lg:text-[4.5rem] leading-[0.95] font-black lowercase tracking-tighter text-[color:var(--color-ink)] max-w-[16ch] text-balance">
                 Seu desafio ESG vira <span className="text-[color:var(--color-leaf)] italic">squad, sprint</span> e relatório.
               </h1>
               
@@ -236,6 +259,11 @@ export default function Home() {
                 <img 
                   src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" 
                   alt="Vista aérea de Campinas - Infraestrutura" 
+                  width={2070}
+                  height={1380}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full h-full object-cover grayscale contrast-[1.1] mix-blend-multiply transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute top-4 right-4 bg-[color:var(--color-paper)]/90 backdrop-blur px-3 py-1.5 border border-[color:var(--color-ink)] font-mono text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-[color:var(--color-ink)]">
@@ -288,25 +316,30 @@ export default function Home() {
             </div>
           </div>
           
-          {/* MARQUEE */}
-          <div className="border-b border-[color:var(--color-ink)] bg-[color:var(--color-leaf-bright)] py-3">
-            <div className="flex gap-12 overflow-hidden">
-              <div className="animate-marquee flex shrink-0 items-center gap-12 whitespace-nowrap px-6">
-                {[...marqueeItems, ...marqueeItems].map((name, i) => (
-                  <span
-                    key={`${name}-${i}`}
-                    className="font-mono text-[0.7rem] font-bold uppercase tracking-[0.3em] text-[color:var(--color-ink)] mix-blend-multiply"
-                  >
-                    {name}
-                  </span>
-                ))}
+          <div className="border-b border-[color:var(--color-ink)] bg-[color:var(--color-paper-2)] py-6 md:py-8">
+            <div className="container-editorial">
+              <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
+                <div>
+                  <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.24em] text-[color:var(--color-ink-4)]">
+                    Sinais de Confiança
+                  </p>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[color:var(--color-ink-3)]">
+                    Prova institucional antes de efeito visual: estado real da rede, protocolo legível e ponto de partida territorial explícito.
+                  </p>
+                </div>
+                <p className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.22em] text-[color:var(--color-ink-4)] md:text-right">
+                  {partnerCount > 0
+                    ? `${partnerCount} universidade${partnerCount > 1 ? "s" : ""} parceira${partnerCount > 1 ? "s" : ""} ativa${partnerCount > 1 ? "s" : ""}`
+                    : "Rede em abertura a partir de Campinas"}
+                </p>
               </div>
+
+              <ProofStrip
+                items={heroProofItems}
+                ariaLabel="Sinais institucionais de confiança"
+                className="mt-6 bg-[color:var(--color-paper)]"
+              />
             </div>
-            <p className="mt-1 text-center font-mono text-[0.6rem] font-bold uppercase tracking-[0.22em] text-[color:var(--color-ink)] mix-blend-multiply opacity-80">
-              {partnersQuery.data?.length
-                ? `${partnersQuery.data.length} universidade${partnersQuery.data.length > 1 ? "s" : ""} parceira${partnersQuery.data.length > 1 ? "s" : ""} ativo${partnersQuery.data.length > 1 ? "s" : ""}`
-                : "Construindo a partir de Campinas · Est. 2026"}
-            </p>
           </div>
         </section>
 
@@ -638,7 +671,14 @@ export default function Home() {
                 </p>
               </div>
               <div className="md:col-span-6 flex flex-col items-start md:items-end w-full">
-                <NewsletterForm variant="dark" className="w-full max-w-md bg-white/5 border-white/20 p-6 md:p-8 rounded-xl" />
+                <NewsletterForm
+                  variant="dark"
+                  label="E-mail para early access institucional"
+                  inputName="early_access_email"
+                  successMessage="Recebemos seu interesse. A priorização acontece por território, capacidade de campus e maturidade do buyer."
+                  source="home:early-access"
+                  className="w-full max-w-md bg-white/5 border-white/20 p-6 md:p-8 rounded-xl"
+                />
               </div>
             </div>
 

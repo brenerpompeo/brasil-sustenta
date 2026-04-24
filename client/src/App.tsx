@@ -14,13 +14,13 @@ const Stakeholders = lazy(() => import("./pages/Stakeholders"));
 const LoginHub = lazy(() => import("./pages/LoginHub"));
 const LoginEmpresa = lazy(() => import("./pages/LoginEmpresa"));
 const LoginJovem = lazy(() => import("./pages/LoginJovem"));
-const LoginUniversidade = lazy(() => import("./pages/LoginUniversidade"));
+const LoginIES = lazy(() => import("./pages/LoginUniversidade"));
 const PerfilEmpresa = lazy(() => import("./pages/PerfilEmpresa"));
 const PerfilJovem = lazy(() => import("./pages/PerfilJovem"));
-const PerfilUniversidade = lazy(() => import("./pages/PerfilUniversidade"));
+const PerfilIES = lazy(() => import("./pages/PerfilUniversidade"));
 const DashboardEmpresa = lazy(() => import("./pages/DashboardEmpresa"));
 const DashboardJovem = lazy(() => import("./pages/DashboardJovem"));
-const DashboardUniversidade = lazy(
+const DashboardIES = lazy(
   () => import("./pages/DashboardUniversidade")
 );
 const DashboardPrefeitura = lazy(
@@ -31,14 +31,14 @@ const DashboardHubLocal = lazy(
 );
 const ParaEmpresas = lazy(() => import("./pages/ParaEmpresas"));
 const ParaJovens = lazy(() => import("./pages/ParaJovens"));
-const ParaUniversidades = lazy(() => import("./pages/ParaUniversidades"));
+const ParaIES = lazy(() => import("./pages/ParaUniversidades"));
 const ParaPrefeituras = lazy(() => import("./pages/ParaPrefeituras"));
 const Comunidade = lazy(() => import("./pages/Comunidade"));
 const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
 const AdminUsuarios = lazy(() => import("./pages/admin/Usuarios"));
 const AdminEmpresas = lazy(() => import("./pages/admin/Empresas"));
 const AdminTalentos = lazy(() => import("./pages/admin/Talentos"));
-const AdminUniversidades = lazy(() => import("./pages/admin/Universidades"));
+const AdminIES = lazy(() => import("./pages/admin/Universidades"));
 const AdminProjetos = lazy(() => import("./pages/admin/Projetos"));
 const AdminSquads = lazy(() => import("./pages/admin/Squads"));
 const AdminBlog = lazy(() => import("./pages/admin/Blog"));
@@ -98,23 +98,23 @@ function Router() {
       <Route path="/login" component={LoginHub} />
       <Route path="/login/empresa" component={LoginEmpresa} />
       <Route path="/login/jovem" component={LoginJovem} />
-      <Route path="/login/universidade" component={LoginUniversidade} />
+      <Route path="/login/ies" component={LoginIES} />
       <Route path="/perfil/empresa" component={PerfilEmpresa} />
       <Route path="/perfil/jovem" component={PerfilJovem} />
-      <Route path="/perfil/universidade" component={PerfilUniversidade} />
+      <Route path="/perfil/ies" component={PerfilIES} />
       <Route path="/dashboard/empresa" component={DashboardEmpresa} />
       <Route path="/dashboard/jovem" component={DashboardJovem} />
-      <Route path="/dashboard/universidade" component={DashboardUniversidade} />
+      <Route path="/dashboard/ies" component={DashboardIES} />
       <Route path="/dashboard/prefeitura" component={DashboardPrefeitura} />
       <Route path="/dashboard/hub" component={DashboardHubLocal} />
       <Route path="/para-empresas" component={ParaEmpresas} />
       <Route path="/para-empresas/publicar" component={LoginEmpresa} />
       <Route path="/para-jovens" component={ParaJovens} />
       <Route path="/para-jovens/oportunidades" component={Oportunidades} />
-      <Route path="/para-universidades" component={ParaUniversidades} />
+      <Route path="/para-ies" component={ParaIES} />
       <Route
-        path="/para-universidades/parceria"
-        component={LoginUniversidade}
+        path="/para-ies/parceria"
+        component={LoginIES}
       />
       <Route path="/para-prefeituras" component={ParaPrefeituras} />
       <Route path="/comunidade" component={Comunidade} />
@@ -122,7 +122,7 @@ function Router() {
       <Route path="/admin/usuarios" component={AdminUsuarios} />
       <Route path="/admin/empresas" component={AdminEmpresas} />
       <Route path="/admin/talentos" component={AdminTalentos} />
-      <Route path="/admin/universidades" component={AdminUniversidades} />
+      <Route path="/admin/ies" component={AdminIES} />
       <Route path="/admin/projetos" component={AdminProjetos} />
       <Route path="/admin/squads" component={AdminSquads} />
       <Route path="/admin/blog" component={AdminBlog} />

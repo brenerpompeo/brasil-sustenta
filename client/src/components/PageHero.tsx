@@ -8,6 +8,8 @@ export type PageHeroProps = {
   lede: string;
   actions?: ReactNode;
   side?: ReactNode;
+  metaRail?: ReactNode;
+  trustRail?: ReactNode;
   variant?: "paper" | "ink" | "leaf" | "atlantic" | "sun";
 };
 
@@ -25,6 +27,8 @@ export function PageHero({
   lede,
   actions,
   side,
+  metaRail,
+  trustRail,
   variant = "paper",
 }: PageHeroProps) {
   const dark = variant === "ink" || variant === "leaf" || variant === "atlantic";
@@ -55,9 +59,11 @@ export function PageHero({
               </span>
             </div>
 
+            {metaRail ? <div className="mt-6">{metaRail}</div> : null}
+
             <h1
               className={cn(
-                "text-display mt-7 max-w-[20ch]",
+                "text-display mt-7 max-w-[20ch] text-balance",
                 dark ? "text-white" : ""
               )}
             >
@@ -74,6 +80,7 @@ export function PageHero({
             </p>
 
             {actions && <div className="mt-9 flex flex-wrap gap-3">{actions}</div>}
+            {trustRail ? <div className="mt-8">{trustRail}</div> : null}
           </div>
 
           {side && (

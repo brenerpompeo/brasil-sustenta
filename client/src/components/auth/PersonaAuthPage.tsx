@@ -6,7 +6,6 @@ import { AuthPortalLayout } from "@/components/AuthPortalLayout";
 import type {
   AccentTone,
   AuthField,
-  AuthModeConfig,
   AuthPersonaConfig,
   AuthTabKey,
 } from "@/constants/auth-personas";
@@ -15,10 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-const toneButtonVariant: Record<
-  AccentTone,
-  "leaf" | "atlantic" | "sun"
-> = {
+// ─── Tone Lookup Maps ─────────────────────────────────────────────────────────
+
+const toneButtonVariant: Record<AccentTone, "leaf" | "atlantic" | "sun"> = {
   green: "leaf",
   blue: "atlantic",
   yellow: "sun",
@@ -30,137 +28,161 @@ const toneText: Record<AccentTone, string> = {
   yellow: "text-[color:var(--color-sun-deep)]",
 };
 
-const toneBorder: Record<AccentTone, string> = {
-  green:
-    "focus-within:border-[color:var(--color-leaf)] focus-within:ring-[color:var(--color-leaf)]",
-  blue:
-    "focus-within:border-[color:var(--color-atlantic)] focus-within:ring-[color:var(--color-atlantic)]",
-  yellow:
-    "focus-within:border-[color:var(--color-sun-deep)] focus-within:ring-[color:var(--color-sun-deep)]",
-};
+// ─── PersonaAuthPage ──────────────────────────────────────────────────────────
 
 export function PersonaAuthPage({ persona }: { persona: AuthPersonaConfig }) {
   const [tab, setTab] = useState<AuthTabKey>(persona.defaultTab ?? "cadastro");
   const [lgpdConsent, setLgpdConsent] = useState(false);
+
   const active = persona[tab];
-  const inactiveTab = tab === "login" ? "cadastro" : "login";
+  const inactiveTab: AuthTabKey = tab === "login" ? "cadastro" : "login";
   const isCadastro = tab === "cadastro";
-  // Submit bloqueado sem consent LGPD em fluxo de cadastro
   const canSubmit = !isCadastro || lgpdConsent;
 
   return (
-    <AuthPortalLayout
+    <AuthPortalLayout.Root
       tone={persona.tone}
       secondaryTone={persona.secondaryTone}
-      portalLabel={persona.portalLabel}
-      eyebrow={persona.eyebrow}
-      title={persona.title}
-      description={persona.description}
-      icon={persona.icon}
-      metadata={persona.metadata}
-      metrics={persona.metrics}
-      highlights={persona.highlights}
+      personaKey={persona.key}
     >
-      <div className="space-y-8">
-        <div className="space-y-3">
-          <p className={cn("font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.24em]", toneText[persona.tone])}>
-            {active.eyebrow}
-          </p>
-          <h1 className="font-display text-[clamp(2rem,4vw,2.9rem)] font-black leading-[0.94] tracking-[-0.045em] text-[color:var(--color-ink)]">
-            {active.title}
-          </h1>
-          <p className="max-w-[34rem] text-base leading-7 text-[color:var(--color-ink-3)]">
-            {active.description}
-          </p>
+      {/* ── Left column: brand narrative ── */}
+      <AuthPortalLayout.Sidebar icon={persona.icon}>
+        <div>
+          <AuthPortalLayout.Nav />
+          <AuthPortalLayout.Hero
+            icon={persona.icon}
+            portalLabel={persona.portalLabel}
+            eyebrow={persona.eyebrow}
+            title={persona.title}
+            description={persona.description}
+          />
+          <AuthPortalLayout.Badges items={persona.metadata} />
         </div>
-
-        <TabSwitch
-          tone={persona.tone}
-          loginLabel={persona.login.label}
-          cadastroLabel={persona.cadastro.label}
-          tab={tab}
-          onChange={setTab}
+        <AuthPortalLayout.Stats
+          metrics={persona.metrics}
+          highlights={persona.highlights}
         />
+      </AuthPortalLayout.Sidebar>
 
-        <form className="space-y-6" onSubmit={event => event.preventDefault()}>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {active.fields.map(field => (
-              <FieldRenderer
-                key={`${tab}-${field.name}`}
-                field={field}
-                tone={persona.tone}
-              />
-            ))}
+      {/* ── Right column: auth card ── */}
+      <AuthPortalLayout.Main portalLabel={persona.portalLabel} icon={persona.icon}>
+        <div className="space-y-8">
+          {/* Mode header */}
+          <div className="space-y-3">
+            <p className={cn("font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.24em]", toneText[persona.tone])}>
+              {active.eyebrow}
+            </p>
+            <h1 className="font-display text-[clamp(2rem,4vw,2.9rem)] font-black leading-[0.94] tracking-[-0.045em] text-[color:var(--color-ink)]">
+              {active.title}
+            </h1>
+            <p className="max-w-[34rem] text-base leading-7 text-[color:var(--color-ink-3)]">
+              {active.description}
+            </p>
           </div>
 
-          {active.assistiveActionLabel ? (
-            <div className="flex justify-end">
-              <button
-                type="button"
-                className={cn(
-                  "font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] transition-colors",
-                  toneText[persona.tone]
-                )}
-              >
-                {active.assistiveActionLabel}
-              </button>
+          {/* Login / Register toggle */}
+          <TabSwitch
+            tone={persona.tone}
+            loginLabel={persona.login.label}
+            cadastroLabel={persona.cadastro.label}
+            tab={tab}
+            onChange={setTab}
+          />
+
+          {/* Form */}
+          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {active.fields.map((field) => (
+                <FieldRenderer
+                  key={`${tab}-${field.name}`}
+                  field={field}
+                  tone={persona.tone}
+                />
+              ))}
             </div>
-          ) : null}
 
-          {isCadastro && (
-            <LgpdConsentBox
-              checked={lgpdConsent}
-              onChange={setLgpdConsent}
-              tone={persona.tone}
-            />
-          )}
-
-          <Button
-            type="submit"
-            size="xl"
-            variant={toneButtonVariant[persona.tone]}
-            disabled={!canSubmit}
-            className="w-full justify-between rounded-[1.2rem] px-6 text-[0.8125rem] font-black uppercase tracking-[0.24em] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {active.submitLabel}
-            <ArrowUpRight className="size-4" />
-          </Button>
-
-          {active.callout ? (
-            <div className="rounded-[1.5rem] border border-[color:var(--color-border)] bg-white p-5">
-              <p className={cn("font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em]", toneText[persona.tone])}>
-                {active.callout.eyebrow}
-              </p>
-              <p className="mt-2.5 text-sm leading-6 text-[color:var(--color-ink-3)]">
-                {active.callout.body}
-              </p>
-            </div>
-          ) : null}
-
-          {active.legal ? (
-            <p className="text-center text-sm leading-6 text-[color:var(--color-ink-4)]">
-              {active.legal}
-            </p>
-          ) : null}
-        </form>
-
-        <div className="border-t border-[color:var(--color-border)] pt-6 text-center text-sm text-[color:var(--color-ink-3)]">
-          {active.footerPrompt}{" "}
-          <button
-            type="button"
-            onClick={() => setTab(inactiveTab)}
-            className={cn(
-              "font-mono text-[0.75rem] font-semibold uppercase tracking-[0.2em] transition-colors",
-              toneText[persona.tone]
+            {/* Forgot password (login only) */}
+            {active.assistiveActionLabel && (
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  className={cn(
+                    "font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] transition-colors",
+                    toneText[persona.tone]
+                  )}
+                >
+                  {active.assistiveActionLabel}
+                </button>
+              </div>
             )}
-          >
-            {active.footerActionLabel}
-          </button>
+
+            {/* LGPD consent (cadastro only) */}
+            {isCadastro && (
+              <LgpdConsentBox
+                checked={lgpdConsent}
+                onChange={setLgpdConsent}
+                tone={persona.tone}
+              />
+            )}
+
+            <Button
+              type="submit"
+              size="xl"
+              variant={toneButtonVariant[persona.tone]}
+              disabled={!canSubmit}
+              className="w-full justify-between rounded-[1.2rem] px-6 text-[0.8125rem] font-black uppercase tracking-[0.24em] disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {active.submitLabel}
+              <ArrowUpRight className="size-4" />
+            </Button>
+
+            {/* Callout box */}
+            {active.callout && (
+              <div className="rounded-[1.5rem] border border-[color:var(--color-border)] bg-white p-5">
+                <p className={cn("font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em]", toneText[persona.tone])}>
+                  {active.callout.eyebrow}
+                </p>
+                <p className="mt-2.5 text-sm leading-6 text-[color:var(--color-ink-3)]">
+                  {active.callout.body}
+                </p>
+              </div>
+            )}
+
+            {/* Legal copy */}
+            {active.legal && (
+              <p className="text-center text-sm leading-6 text-[color:var(--color-ink-4)]">
+                {active.legal}
+              </p>
+            )}
+          </form>
+
+          {/* Switch mode footer */}
+          <div className="border-t border-[color:var(--color-border)] pt-6 text-center text-sm text-[color:var(--color-ink-3)]">
+            {active.footerPrompt}{" "}
+            <button
+              type="button"
+              onClick={() => setTab(inactiveTab)}
+              className={cn(
+                "font-mono text-[0.75rem] font-semibold uppercase tracking-[0.2em] transition-colors",
+                toneText[persona.tone]
+              )}
+            >
+              {active.footerActionLabel}
+            </button>
+          </div>
         </div>
-      </div>
-    </AuthPortalLayout>
+      </AuthPortalLayout.Main>
+    </AuthPortalLayout.Root>
   );
 }
+
+// ─── TabSwitch ────────────────────────────────────────────────────────────────
+
+const activeTabClasses: Record<AccentTone, string> = {
+  green: "bg-[color:var(--color-leaf)] text-white shadow-sm",
+  blue: "bg-[color:var(--color-atlantic)] text-white shadow-sm",
+  yellow: "bg-[color:var(--color-sun)] text-[color:var(--color-ink)] shadow-sm",
+};
 
 function TabSwitch({
   tone,
@@ -201,21 +223,22 @@ function TabSwitch({
   );
 }
 
-const activeTabClasses: Record<AccentTone, string> = {
-  green: "bg-[color:var(--color-leaf)] text-white shadow-sm",
-  blue: "bg-[color:var(--color-atlantic)] text-white shadow-sm",
-  yellow: "bg-[color:var(--color-sun)] text-[color:var(--color-ink)] shadow-sm",
+// ─── FieldRenderer ────────────────────────────────────────────────────────────
+
+const toneBorder: Record<AccentTone, string> = {
+  green: "focus-within:border-[color:var(--color-leaf)] focus-within:ring-[color:var(--color-leaf)]",
+  blue: "focus-within:border-[color:var(--color-atlantic)] focus-within:ring-[color:var(--color-atlantic)]",
+  yellow: "focus-within:border-[color:var(--color-sun-deep)] focus-within:ring-[color:var(--color-sun-deep)]",
 };
 
-function FieldRenderer({
-  field,
-  tone,
-}: {
-  field: AuthField;
-  tone: AccentTone;
-}) {
-  const wrapperClass =
-    field.colSpan === 2 ? "sm:col-span-2" : "sm:col-span-1";
+const inputToneClasses: Record<AccentTone, string> = {
+  green: "focus-visible:border-[color:var(--color-leaf)] focus-visible:ring-[color:var(--color-leaf)]",
+  blue: "focus-visible:border-[color:var(--color-atlantic)] focus-visible:ring-[color:var(--color-atlantic)]",
+  yellow: "focus-visible:border-[color:var(--color-sun-deep)] focus-visible:ring-[color:var(--color-sun-deep)]",
+};
+
+function FieldRenderer({ field, tone }: { field: AuthField; tone: AccentTone }) {
+  const wrapperClass = field.colSpan === 2 ? "sm:col-span-2" : "sm:col-span-1";
 
   return (
     <div className={cn("space-y-2.5", wrapperClass)}>
@@ -225,7 +248,6 @@ function FieldRenderer({
       >
         {field.label}
       </Label>
-
       {renderControl(field, tone)}
     </div>
   );
@@ -246,13 +268,9 @@ function renderControl(field: AuthField, tone: AccentTone) {
           required={field.required}
           className="h-12 w-full appearance-none rounded-[1rem] bg-transparent px-4 pr-11 text-base font-medium text-[color:var(--color-ink)] outline-none"
         >
-          <option value="" disabled>
-            Selecione
-          </option>
-          {field.options?.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
+          <option value="" disabled>Selecione</option>
+          {field.options?.map((opt) => (
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
         <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[color:var(--color-ink-4)]" />
@@ -293,19 +311,18 @@ function renderControl(field: AuthField, tone: AccentTone) {
   );
 }
 
-const inputToneClasses: Record<AccentTone, string> = {
-  green:
-    "focus-visible:border-[color:var(--color-leaf)] focus-visible:ring-[color:var(--color-leaf)]",
-  blue:
-    "focus-visible:border-[color:var(--color-atlantic)] focus-visible:ring-[color:var(--color-atlantic)]",
-  yellow:
-    "focus-visible:border-[color:var(--color-sun-deep)] focus-visible:ring-[color:var(--color-sun-deep)]",
-};
+// ─── LgpdConsentBox ───────────────────────────────────────────────────────────
 
 /**
- * LgpdConsentBox — checkbox de consentimento LGPD.
- * Obrigatório para cadastro (Lei 13.709/2018, Art. 7º, I e Art. 8º).
+ * Caixa de consentimento LGPD.
+ * Obrigatória em qualquer fluxo de cadastro (Lei 13.709/2018, Art. 7º, I e Art. 8º).
  */
+const checkboxToneClasses: Record<AccentTone, string> = {
+  green: "bg-[color:var(--color-leaf)] border-[color:var(--color-leaf)]",
+  blue: "bg-[color:var(--color-atlantic)] border-[color:var(--color-atlantic)]",
+  yellow: "bg-[color:var(--color-sun)] border-[color:var(--color-sun-deep)] text-[color:var(--color-ink)]",
+};
+
 function LgpdConsentBox({
   checked,
   onChange,
@@ -315,15 +332,6 @@ function LgpdConsentBox({
   onChange: (checked: boolean) => void;
   tone: AccentTone;
 }) {
-  const checkboxToneClasses: Record<AccentTone, string> = {
-    green:
-      "bg-[color:var(--color-leaf)] border-[color:var(--color-leaf)]",
-    blue:
-      "bg-[color:var(--color-atlantic)] border-[color:var(--color-atlantic)]",
-    yellow:
-      "bg-[color:var(--color-sun)] border-[color:var(--color-sun-deep)] text-[color:var(--color-ink)]",
-  };
-
   return (
     <div className="rounded-[1rem] border border-[color:var(--color-border)] bg-[color:var(--color-paper-2)] p-4">
       <label className="flex cursor-pointer items-start gap-3">

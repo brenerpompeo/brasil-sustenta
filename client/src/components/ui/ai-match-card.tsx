@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Sparkles, CheckCircle2, TrendingUp, Target } from "lucide-react";
+import { Sparkles, CheckCircle2, ShieldCheck, Target } from "lucide-react";
 import { Badge } from "./badge";
 
 interface AiMatchCardProps {
@@ -8,9 +8,44 @@ interface AiMatchCardProps {
   fitScore: number;
   reasoning: string;
   skills: string[];
+  confidence?: "high" | "medium" | "low";
+  subscores?: {
+    skills: number;
+    ods: number;
+    context: number;
+    availability: number;
+    territory: number;
+  };
+  evidenceQuotesFromTalent?: string[];
+  evidenceQuotesFromProject?: string[];
 }
 
-export function AiMatchCard({ talentName, fitScore, reasoning, skills, avatarUrl }: AiMatchCardProps) {
+function confidenceLabel(confidence: AiMatchCardProps["confidence"]) {
+  if (confidence === "high") return "Alta confianca";
+  if (confidence === "medium") return "Confianca moderada";
+  return "Baixa confianca";
+}
+
+export function AiMatchCard({
+  talentName,
+  fitScore,
+  reasoning,
+  skills,
+  confidence = "low",
+  subscores,
+  evidenceQuotesFromTalent = [],
+  evidenceQuotesFromProject = [],
+}: AiMatchCardProps) {
+  const scoreEntries = subscores
+    ? [
+        { label: "Skills", value: subscores.skills },
+        { label: "ODS", value: subscores.ods },
+        { label: "Contexto", value: subscores.context },
+        { label: "Disponib.", value: subscores.availability },
+        { label: "Territ.", value: subscores.territory },
+      ]
+    : [];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -67,9 +102,15 @@ export function AiMatchCard({ talentName, fitScore, reasoning, skills, avatarUrl
                 )}
               </div>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-               <Sparkles className="w-4 h-4 text-primary-light" />
-               <span className="text-xs font-medium text-primary-light">GenAI Fit</span>
+            <div className="flex flex-col items-end gap-2">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+                <Sparkles className="w-4 h-4 text-primary-light" />
+                <span className="text-xs font-medium text-primary-light">GenAI Fit</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                <ShieldCheck className="w-4 h-4 text-white/70" />
+                <span className="text-[11px] font-medium text-white/70">{confidenceLabel(confidence)}</span>
+              </div>
             </div>
           </div>
 
@@ -79,6 +120,34 @@ export function AiMatchCard({ talentName, fitScore, reasoning, skills, avatarUrl
             </span>
             {reasoning}
           </div>
+
+          {scoreEntries.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+              {scoreEntries.map(entry => (
+                <div key={entry.label} className="rounded-xl border border-white/10 bg-black/20 px-3 py-2">
+                  <div className="text-[10px] uppercase tracking-widest text-white/40">{entry.label}</div>
+                  <div className="mt-1 text-lg font-bold text-white">{entry.value}</div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {(evidenceQuotesFromTalent.length > 0 || evidenceQuotesFromProject.length > 0) && (
+            <div className="grid gap-3 md:grid-cols-2">
+              <div className="rounded-xl border border-white/10 bg-black/20 p-4">
+                <p className="text-[11px] uppercase tracking-widest text-white/40 mb-2">Evidencia do talento</p>
+                <p className="text-sm text-white/80">
+                  {evidenceQuotesFromTalent[0] || "Sem evidencia textual capturada."}
+                </p>
+              </div>
+              <div className="rounded-xl border border-white/10 bg-black/20 p-4">
+                <p className="text-[11px] uppercase tracking-widest text-white/40 mb-2">Evidencia do projeto</p>
+                <p className="text-sm text-white/80">
+                  {evidenceQuotesFromProject[0] || "Sem evidencia textual capturada."}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

@@ -1,28 +1,10 @@
 import { ArrowUpRight, Instagram, Linkedin, Mail } from "lucide-react";
 import { Link } from "wouter";
-
-const NAV_PERSONAS = [
-  { label: "Para empresas", href: "/para-empresas" },
-  { label: "Para jovens", href: "/para-jovens" },
-  { label: "Para universidades", href: "/para-universidades" },
-  { label: "Para prefeituras", href: "/para-prefeituras" },
-];
-
-const NAV_REDE = [
-  { label: "Quem somos", href: "/quem-somos" },
-  { label: "Manifesto", href: "/quem-somos/manifesto" },
-  { label: "Impacto", href: "/quem-somos/impacto" },
-  { label: "HUBs ativos", href: "/quem-somos/hubs" },
-  { label: "Stakeholders", href: "/quem-somos/stakeholders" },
-];
-
-const NAV_CONTEUDO = [
-  { label: "Notícias", href: "/blog" },
-  { label: "Eventos", href: "/eventos" },
-  { label: "Artigos", href: "/artigos" },
-  { label: "Relatórios", href: "/relatorios" },
-  { label: "Biblioteca", href: "/biblioteca" },
-];
+import { memo } from "react";
+import {
+  NAV_FOOTER_GROUPS,
+  NAV_SUPPORT_LINKS,
+} from "@/constants/navigation-data";
 
 const NAV_SOCIAL = [
   { label: "Instagram", href: "https://instagram.com/brasilsustenta", icon: Instagram },
@@ -30,9 +12,9 @@ const NAV_SOCIAL = [
   { label: "Contato", href: "mailto:contato@brasilsustenta.org", icon: Mail },
 ];
 
-export default function Footer() {
+function Footer() {
   return (
-    <footer className="surface-ink relative overflow-hidden">
+    <footer style={{ viewTransitionName: "site-footer" }} className="surface-ink relative overflow-hidden">
       <div className="container-editorial relative section-y">
         {/* CTA banner */}
         <div className="grid gap-8 border-b border-white/12 pb-12 md:grid-cols-[1.4fr_auto] md:items-end md:gap-16 md:pb-16">
@@ -64,7 +46,7 @@ export default function Footer() {
         </div>
 
         {/* Nav grid */}
-        <div className="grid gap-12 pt-12 md:grid-cols-2 md:pt-16 lg:grid-cols-[1.5fr_repeat(3,1fr)]">
+        <div className="grid gap-12 pt-12 md:grid-cols-2 md:pt-16 xl:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
               <span className="inline-grid size-10 place-items-center rounded-md bg-white text-[color:var(--color-ink)]">
@@ -88,7 +70,9 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="inline-grid size-10 place-items-center rounded-full border border-white/16 text-white/72 transition hover:bg-white hover:text-[color:var(--color-ink)]"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="inline-grid size-10 place-items-center rounded-full border border-white/16 text-white/72 transition-colors hover:bg-white hover:text-[color:var(--color-ink)] focus-visible:ring-2 focus-visible:ring-white/60"
                 >
                   <Icon className="size-4" />
                 </a>
@@ -96,9 +80,9 @@ export default function Footer() {
             </div>
           </div>
 
-          <FooterColumn title="Personas" items={NAV_PERSONAS} />
-          <FooterColumn title="Rede" items={NAV_REDE} />
-          <FooterColumn title="Conteúdo" items={NAV_CONTEUDO} />
+          {NAV_FOOTER_GROUPS.map((group) => (
+            <FooterColumn key={group.id} title={group.title} items={group.items} />
+          ))}
         </div>
 
         {/* bottom rule */}
@@ -107,12 +91,11 @@ export default function Footer() {
             © {new Date().getFullYear()} Brasil Sustenta · Todos os direitos reservados
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link href="/quem-somos/parceiros" className="hover:text-white">
-              Parceiros
-            </Link>
-            <Link href="/quem-somos/manifesto" className="hover:text-white">
-              Princípios
-            </Link>
+            {NAV_SUPPORT_LINKS.map((link) => (
+              <Link key={link.href} href={link.href} className="hover:text-white">
+                {link.label}
+              </Link>
+            ))}
             <a href="mailto:contato@brasilsustenta.org" className="hover:text-white">
               contato@brasilsustenta.org
             </a>
@@ -132,13 +115,13 @@ export default function Footer() {
   );
 }
 
-function FooterColumn({
+const FooterColumn = memo(({
   title,
   items,
 }: {
   title: string;
   items: { label: string; href: string }[];
-}) {
+}) => {
   return (
     <div>
       <p className="text-eyebrow text-white/50">{title}</p>
@@ -157,4 +140,8 @@ function FooterColumn({
       </ul>
     </div>
   );
-}
+});
+
+FooterColumn.displayName = "FooterColumn";
+
+export default memo(Footer);

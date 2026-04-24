@@ -8,6 +8,11 @@ export interface RankedResult {
   rank: number;
 }
 
+export interface RankedListInput {
+  ids: number[];
+  weight?: number;
+}
+
 /**
  * Reciprocal Rank Fusion (RRF)
  * Merges multiple ranked lists into a single ranking.
@@ -18,16 +23,25 @@ export function fuseRRF(
   keywordResults: number[], // IDs in order of keyword score
   k: number = 60
 ): { id: number; rrfScore: number }[] {
+  return fuseRankedLists(
+    [
+      { ids: vectorResults, weight: 1 },
+      { ids: keywordResults, weight: 1 },
+    ],
+    k
+  );
+}
+
+export function fuseRankedLists(
+  rankedLists: RankedListInput[],
+  k: number = 60
+): { id: number; rrfScore: number }[] {
   const scores: Record<number, number> = {};
 
-  // Process Vector Rankings
-  vectorResults.forEach((id, index) => {
-    scores[id] = (scores[id] || 0) + 1 / (k + (index + 1));
-  });
-
-  // Process Keyword Rankings
-  keywordResults.forEach((id, index) => {
-    scores[id] = (scores[id] || 0) + 1 / (k + (index + 1));
+  rankedLists.forEach(({ ids, weight = 1 }) => {
+    ids.forEach((id, index) => {
+      scores[id] = (scores[id] || 0) + weight * (1 / (k + (index + 1)));
+    });
   });
 
   // Convert to sorted array

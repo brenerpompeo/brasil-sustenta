@@ -1,3 +1,4 @@
+import { type CSSProperties } from "react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 
@@ -11,6 +12,7 @@ import {
 } from "@/constants/auth-personas";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
 
 const accentClasses: Record<
   AccentTone,
@@ -46,52 +48,65 @@ const accentClasses: Record<
 
 export default function LoginHub() {
   return (
-    <div className="min-h-screen bg-[color:var(--color-paper)] text-[color:var(--color-ink)]">
+    <div className="min-h-screen bg-[color:var(--color-paper)] text-[color:var(--color-ink)] selection:bg-[color:var(--color-leaf-soft)] selection:text-[color:var(--color-leaf-deep)]">
       <SEO
-        title="Acesso por Persona | Brasil Sustenta"
-        description="Escolha o portal da sua operação: talento, empresa, IES, prefeitura ou liderança territorial."
+        title="Portais de Acesso | Brasil Sustenta"
+        description="Cinco portas de entrada, uma única infraestrutura de impacto. Escolha sua operação: Jovem, Empresa, IES, Embaixador ou Prefeitura."
       />
       <Header />
 
       <main className="pt-[4.75rem]">
         <section className="container-editorial section-y border-b border-[color:var(--color-border)]">
-          <div className="grid gap-8 xl:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] xl:items-end">
-            <div className="space-y-6">
-              <p className="text-eyebrow-bright">Acesso por persona</p>
-              <h1 className="max-w-[12ch] text-display">
-                Uma entrada clara para cada operação.
+          <div className="grid gap-12 xl:grid-cols-[minmax(0,1.2fr)_minmax(24rem,0.8fr)] xl:items-end">
+            <div className="space-y-8">
+              <p className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-[color:var(--color-leaf-deep)]">
+                Access_Protocol // Phase_One
+              </p>
+              <h1 className="max-w-[15ch] font-display text-[clamp(2.5rem,6vw,5rem)] font-black leading-[0.88] tracking-[-0.05em] text-[color:var(--color-ink)] text-balance">
+                Cinco portas paralelas, uma infraestrutura comum.
               </h1>
-              <p className="max-w-3xl text-lede">
-                O hub de acesso organiza a jornada por buyer, campus, juventude,
-                município e liderança local. Cada portal abre uma leitura própria
-                de produto, linguagem e próxima ação.
+              <p className="max-w-2xl text-balance font-body text-xl leading-relaxed text-[color:var(--color-ink-3)] md:text-2xl">
+                O hub de acesso organiza a jornada soberana de cada stakeholder. 
+                Cada portal ativa uma leitura própria de produto, linguagem e entrega de impacto territorial.
               </p>
             </div>
 
-            <div className="surface-ink overflow-hidden rounded-[2rem] border border-white/10 p-8">
-              <p className="text-eyebrow text-white/60">Operating brief</p>
-              <h2 className="mt-5 font-display text-[clamp(2rem,3vw,3.2rem)] font-black leading-[0.92] tracking-[-0.045em] text-white">
-                Cinco portas, uma operação coordenada.
-              </h2>
-              <div className="mt-7 grid gap-3">
-                {[
-                  "Brief, curadoria, sprint e relatório como linguagem comum.",
-                  "Persona-first para reduzir ruído de navegação e copy.",
-                  "Rotas /auth/* como entrada canônica para cada stakeholder.",
-                ].map(item => (
-                  <div
-                    key={item}
-                    className="rounded-[1.3rem] border border-white/10 bg-white/6 px-4 py-4 text-sm leading-6 text-white/72"
-                  >
-                    {item}
-                  </div>
-                ))}
+            <div className="surface-ink relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-[color:var(--color-ink)] p-8 shadow-2xl md:p-10">
+              <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 rounded-full border border-white/10 bg-white/5 p-20 blur-3xl" />
+              
+              <div className="relative z-10 space-y-8">
+                <div>
+                  <p className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.25em] text-white/40">
+                    System_Log // Authentication
+                  </p>
+                  <h2 className="mt-4 font-display text-4xl font-black leading-[0.92] tracking-[-0.04em] text-white">
+                    Sovereign entry.
+                  </h2>
+                </div>
+                
+                <div className="grid gap-3">
+                  {[
+                    "Briefing, curadoria e sprint auditável em tempo real.",
+                    "Soberania de dados por persona e território.",
+                    "Relatórios de evidência gerados na camada BS_INFRA.",
+                  ].map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-4 rounded-xl border border-white/5 bg-white/5 px-5 py-4 text-sm font-medium leading-relaxed text-white/70"
+                    >
+                      <span className="font-mono text-[0.625rem] font-bold text-[color:var(--color-leaf-bright)]">
+                        [0{i + 1}]
+                      </span>
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {AUTH_PERSONA_ORDER.map(key => {
+          <div className="mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {AUTH_PERSONA_ORDER.map((key, idx) => {
               const persona = AUTH_PERSONAS[key];
               const Icon = persona.icon;
               const accent = accentClasses[persona.tone];
@@ -99,23 +114,25 @@ export default function LoginHub() {
               return (
                 <article
                   key={persona.key}
+                  // View Transition: native browser shared-element morph to auth card
+                  style={{ viewTransitionName: `persona-card-${persona.key}` } as CSSProperties}
                   className={cn(
-                    "rounded-[2rem] border border-[color:var(--color-border)] bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(10,10,10,0.08)]",
+                    "group relative flex flex-col rounded-[2.5rem] border border-[color:var(--color-border)] bg-white p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[color:var(--color-leaf)] hover:shadow-[0_32px_64px_-16px_rgba(33,48,22,0.12)]",
                     accent.card
                   )}
                 >
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-center justify-between gap-4">
                     <span
                       className={cn(
-                        "rounded-full border px-3 py-1.5 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em]",
+                        "rounded-full border px-3 py-1 font-mono text-[0.6rem] font-black uppercase tracking-[0.2em]",
                         accent.badge
                       )}
                     >
-                      {persona.hubEyebrow}
+                      Portal 0{idx + 1}
                     </span>
                     <span
                       className={cn(
-                        "inline-flex size-12 items-center justify-center rounded-[1.1rem]",
+                        "inline-flex size-12 items-center justify-center rounded-2xl shadow-sm transition-transform duration-300 group-hover:scale-110",
                         accent.icon
                       )}
                     >
@@ -123,32 +140,35 @@ export default function LoginHub() {
                     </span>
                   </div>
 
-                  <h2 className="mt-6 font-display text-[2rem] font-black leading-[0.94] tracking-[-0.04em] text-[color:var(--color-ink)]">
-                    {persona.portalLabel}
-                  </h2>
-                  <p className="mt-3 text-base leading-7 text-[color:var(--color-ink-3)]">
-                    {persona.hubDescription}
-                  </p>
+                  <div className="mt-8 flex-1">
+                    <h2 className="font-display text-3xl font-black leading-[0.9] tracking-[-0.04em] text-[color:var(--color-ink)] transition-colors group-hover:text-[color:var(--color-leaf-deep)]">
+                      {persona.portalLabel}
+                    </h2>
+                    <p className="mt-4 font-body text-sm leading-relaxed text-[color:var(--color-ink-3)]">
+                      {persona.hubDescription}
+                    </p>
 
-                  <div className="mt-5 grid gap-2.5">
-                    {persona.hubBullets.map(bullet => (
-                      <div
-                        key={bullet}
-                        className="rounded-[1.2rem] border border-[color:var(--color-border)] bg-[color:var(--color-paper-2)] px-4 py-3 text-sm leading-6 text-[color:var(--color-ink-3)]"
-                      >
-                        {bullet}
-                      </div>
-                    ))}
+                    <div className="mt-6 space-y-2">
+                      {persona.hubBullets.slice(0, 2).map((bullet, i) => (
+                        <div
+                          key={i}
+                          className="flex items-start gap-2.5 font-mono text-[0.625rem] font-bold uppercase tracking-widest text-[color:var(--color-ink)]/40"
+                        >
+                          <span className="text-[color:var(--color-leaf)]">•</span>
+                          {bullet}
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
                   <Button
                     asChild
                     size="lg"
                     variant={accent.button}
-                    className="mt-6 w-full justify-between rounded-[1.1rem] text-[0.75rem] font-black uppercase tracking-[0.22em]"
+                    className="mt-10 w-full justify-between rounded-2xl py-7 font-mono text-[0.65rem] font-black uppercase tracking-[0.25em] shadow-none"
                   >
                     <Link href={persona.href}>
-                      Entrar no portal
+                      Acessar
                       <ArrowRight className="size-4" />
                     </Link>
                   </Button>

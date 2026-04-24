@@ -6,6 +6,7 @@
  */
 
 export { SectionHeader, type SectionHeaderProps } from "./SectionHeader";
+export { ProofStrip, type ProofStripProps, type ProofStripItem } from "./ProofStrip";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";
 export { LoadingSkeleton, type LoadingSkeletonProps } from "./LoadingSkeleton";
 export { ODSBadge } from "../ODSBadge";

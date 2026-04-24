@@ -1,17 +1,31 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function NewsletterForm({ 
-  className, 
-  variant = "dark" 
-}: { 
-  className?: string; 
-  variant?: "dark" | "light" 
-}) {
+type NewsletterFormProps = {
+  className?: string;
+  variant?: "dark" | "light";
+  label?: string;
+  inputName?: string;
+  autocomplete?: React.HTMLInputAutoCompleteAttribute;
+  successMessage?: string;
+  source?: string;
+};
+
+export function NewsletterForm({
+  className,
+  variant = "dark",
+  label = "E-mail para contato",
+  inputName = "email",
+  autocomplete = "email",
+  successMessage = "Entraremos em contato assim que abrirmos a alocação do seu território.",
+  source = "public-shell",
+}: NewsletterFormProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const inputId = useId();
 
   const isDark = variant === "dark";
 
@@ -28,14 +42,33 @@ export function NewsletterForm({
 
   if (status === "success") {
     return (
-      <div className={cn("flex flex-col items-start gap-4 p-6 border", isDark ? "border-white/20 bg-white/5" : "border-[color:var(--color-ink)]/20 bg-black/5", className)}>
-        <CheckCircle2 className={cn("size-6", isDark ? "text-[color:var(--color-leaf-bright)]" : "text-[color:var(--color-leaf)]")} />
+      <div
+        role="status"
+        aria-live="polite"
+        data-source={source}
+        className={cn(
+          "flex flex-col items-start gap-4 border p-6",
+          isDark
+            ? "border-white/20 bg-white/5"
+            : "border-[color:var(--color-ink)]/20 bg-black/5",
+          className
+        )}
+      >
+        <CheckCircle2
+          aria-hidden="true"
+          className={cn(
+            "size-6",
+            isDark
+              ? "text-[color:var(--color-leaf-bright)]"
+              : "text-[color:var(--color-leaf)]"
+          )}
+        />
         <div>
           <h4 className={cn("font-display text-xl font-bold", isDark ? "text-white" : "text-[color:var(--color-ink)]")}>
             Acesso requisitado com sucesso.
           </h4>
           <p className={cn("font-mono text-sm mt-2", isDark ? "text-white/70" : "text-[color:var(--color-ink-3)]")}>
-            Entraremos em contato assim que abrirmos a alocação do seu território.
+            {successMessage}
           </p>
         </div>
       </div>
@@ -43,12 +76,31 @@ export function NewsletterForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={cn("flex flex-col gap-3", className)}>
+    <form
+      data-source={source}
+      onSubmit={handleSubmit}
+      className={cn("flex flex-col gap-3", className)}
+    >
+      <label
+        htmlFor={inputId}
+        className={cn(
+          "font-mono text-[0.68rem] font-semibold uppercase tracking-[0.2em]",
+          isDark ? "text-white/70" : "text-[color:var(--color-ink-4)]"
+        )}
+      >
+        {label}
+      </label>
       <div className="flex w-full items-center">
         <input
+          id={inputId}
           type="email"
+          name={inputName}
           required
-          placeholder="Seu melhor e-mail corporativo ou pessoal"
+          autoComplete={autocomplete}
+          inputMode="email"
+          spellCheck={false}
+          aria-describedby={`${inputId}-hint ${inputId}-status`}
+          placeholder="nome@empresa.com…"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={status === "loading"}
@@ -69,11 +121,27 @@ export function NewsletterForm({
               : "border-[color:var(--color-ink)] bg-[color:var(--color-ink)] text-white hover:bg-[color:var(--color-paper-2)] hover:text-[color:var(--color-ink)]"
           )}
         >
-          {status === "loading" ? <Loader2 className="size-5 animate-spin" /> : "Garantir Vaga"}
+          {status === "loading" ? (
+            <>
+              <Loader2 className="size-5 animate-spin" aria-hidden="true" />
+              <span>Enviando…</span>
+            </>
+          ) : (
+            "Garantir Vaga"
+          )}
         </Button>
       </div>
-      <p className={cn("font-mono text-[0.65rem] uppercase tracking-widest", isDark ? "text-white/50" : "text-[color:var(--color-ink-4)]")}>
+      <p
+        id={`${inputId}-hint`}
+        className={cn(
+          "font-mono text-[0.65rem] uppercase tracking-widest",
+          isDark ? "text-white/50" : "text-[color:var(--color-ink-4)]"
+        )}
+      >
         *Operação restrita neste estágio. Receba priority access.
+      </p>
+      <p id={`${inputId}-status`} aria-live="polite" className="sr-only">
+        {status === "loading" ? "Enviando solicitação de acesso…" : ""}
       </p>
     </form>
   );
@@ -96,12 +164,19 @@ export function WaitlistCTA({ personaLabel, href, isDark = false, className }: {
       </div>
       {href ? (
         <Button asChild size="lg" className={cn("shrink-0 relative z-10 rounded-none border-2 font-mono text-xs font-bold uppercase tracking-widest", isDark ? "bg-white text-black border-white hover:bg-[color:var(--color-paper-2)]" : "bg-[color:var(--color-ink)] text-white border-[color:var(--color-ink)] hover:bg-[color:var(--color-paper-2)] hover:text-black")}>
-          <a href={href}>
+          <Link href={href}>
             Solicitar acesso piloto <ArrowRight className="ml-2 size-4" />
-          </a>
+          </Link>
         </Button>
       ) : (
-        <NewsletterForm variant={isDark ? "dark" : "light"} className="w-full md:w-auto relative z-10" />
+        <NewsletterForm
+          variant={isDark ? "dark" : "light"}
+          label={`Contato para ${personaLabel}`}
+          inputName="waitlist_email"
+          successMessage="Recebemos sua solicitação. O próximo contato acontece conforme a capacidade operacional do HUB."
+          source={`waitlist:${personaLabel}`}
+          className="relative z-10 w-full md:w-auto"
+        />
       )}
     </div>
   );

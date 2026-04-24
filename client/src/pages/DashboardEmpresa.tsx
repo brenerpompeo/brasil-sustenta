@@ -604,6 +604,10 @@ export default function DashboardEmpresa() {
                           fitScore={match.aiFitScore}
                           reasoning={match.aiMatchReason}
                           skills={match.talent?.skills || []}
+                          confidence={match.confidence}
+                          subscores={match.subscores}
+                          evidenceQuotesFromTalent={match.evidence?.evidenceQuotesFromTalent || []}
+                          evidenceQuotesFromProject={match.evidence?.evidenceQuotesFromProject || []}
                         />
                       ))
                     )}

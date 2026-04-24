@@ -1,15 +1,11 @@
 import { motion } from "framer-motion";
-import { SectionHeader } from "@/components/ds";
+import { ProofStrip, SectionHeader } from "@/components/ds";
 import {
   ArrowRight,
-  ArrowUpRight,
   Award,
-  CheckCircle2,
-  Compass,
   GraduationCap,
   MapPin,
   Sparkles,
-  Trophy,
 } from "lucide-react";
 import { WaitlistCTA } from "@/components/LeadCaptureComponents";
 import { Link } from "wouter";
@@ -22,48 +18,61 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { editorialEase, editorialViewport } from "@/lib/motion";
 
-const benefits = [
-  {
-    icon: Trophy,
-    title: "Match explicado",
-    body: "\"Você tem fit com ODS 13 por causa de...\" — sem caixa-preta, sem promessa vaga.",
-  },
-  {
-    icon: Compass,
-    title: "Empresa real na sua cidade",
-    body: "Squad com empresa real da sua cidade — não simulação, não case fictício.",
-  },
-  {
-    icon: Award,
-    title: "Portfolio que empresas veem",
-    body: "Cada projeto vira prova no seu portfolio público com evidência auditável.",
-  },
-];
-
 const journey = [
   {
     n: "01",
     title: "Crie seu perfil",
     body: "Skills, ODS de interesse, histórico acadêmico e disponibilidade.",
+    verb: "Construa",
   },
   {
     n: "02",
     title: "Receba matches",
     body: "Projetos abertos no HUB da sua cidade com Fit Score explicado.",
+    verb: "Descubra",
   },
   {
     n: "03",
     title: "Candidate-se",
     body: "Curadoria humana valida. Você fica na shortlist da empresa.",
+    verb: "Aplique",
   },
   {
     n: "04",
     title: "Entregue & cresça",
     body: "Sprint com squad, avaliação e portfolio público crescente.",
+    verb: "Comprove",
   },
 ];
 
 const odsBadges = [4, 7, 8, 11, 12, 13, 15, 17];
+
+const portfolioItems = [
+  {
+    title: "Diagnóstico ESG · Fornecedores",
+    empresa: "Empresa Beta",
+    ods: [12, 13],
+    rate: 5,
+  },
+  {
+    title: "Estudo de impacto · Logística reversa",
+    empresa: "Indústria Gama",
+    ods: [11, 12],
+    rate: 5,
+  },
+  {
+    title: "Pilot de educação ambiental",
+    empresa: "ONG Delta",
+    ods: [4, 13],
+    rate: 4,
+  },
+];
+
+const heroTrustItems = [
+  { value: "Campinas", label: "Primeiro HUB ativo", tone: "leaf" as const },
+  { value: "91", label: "Fit score demonstrativo", tone: "sun" as const },
+  { value: "6 sem", label: "Sprint médio de entrega", tone: "default" as const },
+];
 
 export default function ParaJovens() {
   return (
@@ -101,114 +110,199 @@ export default function ParaJovens() {
               </Button>
             </>
           }
+          trustRail={
+            <ProofStrip
+              compact
+              ariaLabel="Sinais de confiança para jovens"
+              items={heroTrustItems}
+            />
+          }
           side={<JovemMatchPreview />}
         />
 
-        {/* Benefits ============== */}
-        <section className="container-editorial section-y border-t border-[color:var(--color-border)]">
-          <div className="grid gap-6 md:grid-cols-12 md:items-end md:gap-12">
-            <SectionHeader
-              eyebrow="Por que aqui"
-              title="Não é vaga. É curadoria."
-              tone="bright"
-              showRule
-              className="md:col-span-7"
-            />
-            <p className="text-body md:col-span-5">
-              Aqui você não compete em job board. Aqui você é convidado para
-              um projeto onde seu perfil tem fit explicado.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] md:grid-cols-3">
-            {benefits.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="bg-white p-7">
-                <Icon className="size-7 text-[color:var(--color-sun-deep)]" strokeWidth={1.5} />
-                <h3 className="mt-7 font-display text-2xl font-bold tracking-[-0.025em]">
-                  {title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-ink-3)]">
-                  {body}
-                </p>
-              </div>
-            ))}
+        {/* FULL-BLEED VERDE STRIP — energy, stat callouts */}
+        <section className="bg-[color:var(--color-leaf)] border-y border-[color:var(--color-leaf-deep)]">
+          <div className="container-editorial py-12 md:py-16">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:divide-x md:divide-white/20">
+              {[
+                { value: "+3.200", label: "Jovens na plataforma · projeção 2027" },
+                { value: "91", label: "Fit score alto · match explicado" },
+                { value: "6 sem", label: "Sprint médio para o primeiro projeto" },
+              ].map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={editorialViewport}
+                  transition={{ duration: 0.4, delay: i * 0.08, ease: editorialEase }}
+                  className="md:px-8 first:md:pl-0 last:md:pr-0"
+                >
+                  <p className="font-mono text-[3.5rem] md:text-[4rem] font-bold leading-none tracking-[-0.04em] text-white">
+                    {stat.value}
+                  </p>
+                  <p className="mt-3 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-white/60">
+                    {stat.label}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* Jornada ================ */}
-        <section className="surface-sun border-y border-[color:var(--color-sun-deep)]/20 section-y">
+        {/* JORNADA — staggered steps with strong verb headlines */}
+        <section className="section-y border-b border-[color:var(--color-ink)]">
           <div className="container-editorial">
-            <div className="max-w-2xl">
-              <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-sun-deep)]">
-                Sua jornada
-              </span>
-              <h2 className="text-headline mt-5 text-[color:var(--color-ink)]">
-                Do perfil ao portfolio em 4 passos.
+            <div className="mb-14 grid gap-4 md:grid-cols-2 md:items-end">
+              <h2 className="font-display text-[clamp(2.25rem,5vw,3.75rem)] font-black leading-[0.95] tracking-[-0.035em] lowercase">
+                Do perfil ao{" "}
+                <span className="text-[color:var(--color-sun-deep)] italic">portfolio</span>{" "}
+                em 4 passos.
               </h2>
+              <p className="text-base leading-relaxed text-[color:var(--color-ink-3)] md:self-end">
+                Aqui você não compete em job board. Aqui você é convidado para um projeto onde seu
+                perfil tem fit explicado.
+              </p>
             </div>
 
-            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--color-sun-deep)]/20 bg-[color:var(--color-sun-deep)]/20 md:grid-cols-2 lg:grid-cols-4">
-              {journey.map(({ n, title, body }) => (
-                <li key={n} className="bg-[color:var(--color-sun)] p-7 md:p-8">
-                  <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--color-sun-deep)]">
-                    Passo {n}
-                  </p>
-                  <h3 className="mt-6 font-display text-xl font-bold leading-snug tracking-[-0.02em] text-[color:var(--color-ink)]">
-                    {title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-ink-2)]">
-                    {body}
-                  </p>
-                </li>
+            {/* Staggered: alternating indent on desktop */}
+            <ol className="space-y-0 divide-y divide-[color:var(--color-ink)]">
+              {journey.map(({ n, title, body, verb }, i) => (
+                <motion.li
+                  key={n}
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={editorialViewport}
+                  transition={{ duration: 0.5, delay: i * 0.07, ease: editorialEase }}
+                  /* Alternate indent creates staggered feel */
+                  className={`grid grid-cols-12 gap-4 py-10 md:py-12 items-center ${i % 2 !== 0 ? "md:pl-16" : ""}`}
+                >
+                  {/* Oversized step number */}
+                  <span className="col-span-2 font-mono text-[2rem] font-bold leading-none text-[color:var(--color-sun-deep)] opacity-40">
+                    {n}
+                  </span>
+                  {/* Strong verb — the "action" */}
+                  <div className="col-span-10 md:col-span-3">
+                    <span className="font-display text-[2.5rem] md:text-[3rem] font-black leading-none tracking-[-0.04em] text-[color:var(--color-ink)] block">
+                      {verb}
+                    </span>
+                  </div>
+                  <div className="col-span-12 md:col-span-7">
+                    <h3 className="font-display text-xl font-bold tracking-[-0.02em] mb-2">
+                      {title}
+                    </h3>
+                    <p className="text-base leading-relaxed text-[color:var(--color-ink-3)]">
+                      {body}
+                    </p>
+                  </div>
+                </motion.li>
               ))}
             </ol>
           </div>
         </section>
 
-        {/* ODS ==================== */}
-        <section className="container-editorial section-y">
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-14 lg:items-center">
-            <div className="lg:col-span-6">
-              <SectionHeader
-                eyebrow="ODS em foco"
-                title="Sua área de impacto, mapeada."
-                subtitle="Você escolhe seus ODS prioritários. O sistema aprende com seu histórico de projetos. O Fit Score evolui com você."
-                tone="bright"
-                showRule
-              />
+        {/* ODS + PORTFOLIO — 2-col, ODS badges left, portfolio right */}
+        <section className="surface-sun border-b border-[color:var(--color-sun-deep)]/20 section-y">
+          <div className="container-editorial">
+            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-start">
+              {/* ODS side */}
+              <div>
+                <SectionHeader
+                  eyebrow="ODS em foco"
+                  title="Sua área de impacto, mapeada."
+                  subtitle="Você escolhe seus ODS prioritários. O sistema aprende com seu histórico. O Fit Score evolui com você."
+                  tone="bright"
+                  showRule
+                />
+                <div className="mt-9 flex flex-wrap gap-3">
+                  {odsBadges.map(n => (
+                    <motion.span
+                      key={n}
+                      initial={{ opacity: 0, scale: 0.6 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={editorialViewport}
+                      transition={{
+                        duration: 0.35,
+                        delay: n * 0.025,
+                        ease: editorialEase,
+                      }}
+                      className="inline-grid size-14 place-items-center rounded-full border-2 border-[color:var(--color-sun-deep)]/30 bg-white font-mono text-base font-bold text-[color:var(--color-ink)] shadow-sm"
+                    >
+                      {n}
+                    </motion.span>
+                  ))}
+                </div>
 
-              <div className="mt-9 flex flex-wrap gap-2.5">
-                {odsBadges.map(n => (
-                  <motion.span
-                    key={n}
-                    initial={{ opacity: 0, scale: 0.6 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={editorialViewport}
-                    transition={{
-                      duration: 0.35,
-                      delay: n * 0.025,
-                      ease: editorialEase,
-                    }}
-                    className="inline-grid size-12 place-items-center rounded-full border border-[color:var(--color-border)] bg-white font-mono text-sm font-bold text-[color:var(--color-ink)]"
-                  >
-                    {n}
-                  </motion.span>
-                ))}
+                {/* Emphasized callout below badges */}
+                <div className="mt-10 border-l-4 border-[color:var(--color-sun-deep)] pl-5">
+                  <p className="font-display text-xl font-semibold italic leading-snug text-[color:var(--color-ink)]">
+                    "Não é vaga. É curadoria. Você sabe por que foi escolhido."
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div className="lg:col-span-6">
-              <PortfolioMockup />
+              {/* Portfolio mockup */}
+              <div className="rounded-3xl border border-[color:var(--color-sun-deep)]/20 bg-white overflow-hidden">
+                <div className="flex items-center justify-between border-b border-[color:var(--color-border)] p-7">
+                  <div>
+                    <span className="text-eyebrow">Portfolio público</span>
+                    <p className="mt-2 font-display text-2xl font-bold tracking-[-0.025em]">
+                      Marina Souza
+                    </p>
+                    <p className="mt-1 flex items-center gap-1.5 text-xs text-[color:var(--color-ink-4)]">
+                      <GraduationCap className="size-3.5" />
+                      UNICAMP · Eng. Ambiental ·{" "}
+                      <MapPin className="size-3" /> Campinas
+                    </p>
+                  </div>
+                  <Award className="size-7 text-[color:var(--color-sun-deep)]" strokeWidth={1.5} />
+                </div>
+                <ul className="divide-y divide-[color:var(--color-border)]">
+                  {portfolioItems.map(item => (
+                    <li key={item.title} className="p-6">
+                      <p className="font-display text-base font-semibold tracking-tight">
+                        {item.title}
+                      </p>
+                      <p className="mt-1 text-xs text-[color:var(--color-ink-4)]">
+                        {item.empresa}
+                      </p>
+                      <div className="mt-3 flex items-center justify-between">
+                        <div className="flex gap-1">
+                          {item.ods.map(o => (
+                            <span
+                              key={o}
+                              className="inline-grid size-6 place-items-center rounded-full bg-[color:var(--color-paper-2)] font-mono text-[0.625rem] font-bold"
+                            >
+                              {o}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <span
+                              key={i}
+                              className={
+                                i < item.rate
+                                  ? "text-[color:var(--color-sun-deep)]"
+                                  : "text-[color:var(--color-ink-5)]"
+                              }
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* CTA ==================== */}
+        {/* CTA */}
         <section className="container-editorial pb-16 md:pb-24">
           <div className="surface-ink relative overflow-hidden rounded-3xl p-10 md:p-14 lg:p-16">
-              <div className="md:col-span-12">
-                <WaitlistCTA personaLabel="talento jovem" isDark />
-              </div>
+            <WaitlistCTA personaLabel="talento jovem" isDark />
             <Sparkles
               className="pointer-events-none absolute -right-6 -bottom-6 size-48 text-white/8"
               strokeWidth={1}
@@ -269,85 +363,6 @@ function JovemMatchPreview() {
         Tenho interesse
         <ArrowRight className="size-4" />
       </Button>
-    </div>
-  );
-}
-
-function PortfolioMockup() {
-  const items = [
-    {
-      title: "Diagnóstico ESG · Fornecedores",
-      empresa: "Empresa Beta",
-      ods: [12, 13],
-      rate: 5,
-    },
-    {
-      title: "Estudo de impacto · Logística reversa",
-      empresa: "Indústria Gama",
-      ods: [11, 12],
-      rate: 5,
-    },
-    {
-      title: "Pilot de educação ambiental",
-      empresa: "ONG Delta",
-      ods: [4, 13],
-      rate: 4,
-    },
-  ];
-  return (
-    <div className="rounded-3xl border border-[color:var(--color-border)] bg-white">
-      <div className="flex items-center justify-between border-b border-[color:var(--color-border)] p-7">
-        <div>
-          <span className="text-eyebrow">Portfolio público</span>
-          <p className="mt-2 font-display text-2xl font-bold tracking-[-0.025em]">
-            Marina Souza
-          </p>
-          <p className="mt-1 flex items-center gap-1.5 text-xs text-[color:var(--color-ink-4)]">
-            <GraduationCap className="size-3.5" />
-            UNICAMP · Eng. Ambiental ·{" "}
-            <MapPin className="size-3" /> Campinas
-          </p>
-        </div>
-        <Award className="size-7 text-[color:var(--color-sun-deep)]" strokeWidth={1.5} />
-      </div>
-      <ul className="divide-y divide-[color:var(--color-border)]">
-        {items.map(item => (
-          <li key={item.title} className="p-6">
-            <p className="font-display text-base font-semibold tracking-tight">
-              {item.title}
-            </p>
-            <p className="mt-1 text-xs text-[color:var(--color-ink-4)]">
-              {item.empresa}
-            </p>
-            <div className="mt-3 flex items-center justify-between">
-              <div className="flex gap-1">
-                {item.ods.map(o => (
-                  <span
-                    key={o}
-                    className="inline-grid size-6 place-items-center rounded-full bg-[color:var(--color-paper-2)] font-mono text-[0.625rem] font-bold"
-                  >
-                    {o}
-                  </span>
-                ))}
-              </div>
-              <div className="flex items-center gap-0.5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <span
-                    key={i}
-                    className={
-                      i < item.rate
-                        ? "text-[color:var(--color-sun-deep)]"
-                        : "text-[color:var(--color-ink-5)]"
-                    }
-                  >
-                    ★
-                  </span>
-                ))}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
